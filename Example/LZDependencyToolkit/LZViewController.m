@@ -34,14 +34,13 @@
 
 // MARK: - Private
 - (void)appInfo {
-#if 0
+
     NSLog(@"%@", LZAppInfo.name());
     NSLog(@"%@", LZAppInfo.bundleID());
     NSLog(@"%@", LZAppInfo.version());
     NSLog(@"%@", LZAppInfo.build());
     NSLog(@"%@", LZAppInfo.compareBuild(@"12") ? @"YES" : @"NO");
     NSLog(@"%@", LZAppInfo.compareVersion(@"10.2.1") ? @"YES" : @"NO");
-#endif
 }
 
 - (void)deviceInfo {

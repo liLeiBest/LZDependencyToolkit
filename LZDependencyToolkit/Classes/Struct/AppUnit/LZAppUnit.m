@@ -41,36 +41,41 @@ void _exitApp(void) {
 NSString * _displayName(void){
 
     NSString *displayNameKey = @"CFBundleDisplayName";
-    NSString *currentDisplayName = [_infoDict() objectForKey:displayNameKey];
+    NSString *displayName = [_infoDict() objectForKey:displayNameKey];
     
-    return currentDisplayName;
+    if (nil == displayName || 0 == displayName.length) {
+        displayNameKey = @"CFBundleName";
+        displayName = [_infoDict() objectForKey:displayNameKey];
+    }
+    
+    return displayName;
 }
 
 /** App Bundle Identifier */
 NSString * _bundleID(void) {
 
-    NSString *bundleIdKey = (__bridge NSString *)kCFBundleIdentifierKey;
-    NSString *currentBundelIdentifier = [_infoDict() objectForKey:bundleIdKey];
+    NSString *bundleIDKey = (__bridge NSString *)kCFBundleIdentifierKey;
+    NSString *bundleIdentifier = [_infoDict() objectForKey:bundleIDKey];
     
-    return currentBundelIdentifier;
+    return bundleIdentifier;
 }
 
 /** App Version */
 NSString * _version(void) {
 
     NSString *versionKey = @"CFBundleShortVersionString";
-    NSString *currentVersion = [_infoDict() objectForKey:versionKey];
+    NSString *version = [_infoDict() objectForKey:versionKey];
     
-    return currentVersion;
+    return version;
 }
 
 /** App Bundle */
 NSString * _build(void) {
 
-    NSString *versionKey = (__bridge NSString *)kCFBundleVersionKey;
-    NSString *currentVersion = [_infoDict() objectForKey:versionKey];
+    NSString *buildKey = (__bridge NSString *)kCFBundleVersionKey;
+    NSString *build = [_infoDict() objectForKey:buildKey];
     
-    return currentVersion;
+    return build;
 }
 
 /** compare build version */
