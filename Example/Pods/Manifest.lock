@@ -1,11 +1,11 @@
 PODS:
-  - LZDependencyToolkit (0.0.1):
-    - LZDependencyToolkit/Unit (= 0.0.1)
-  - LZDependencyToolkit/Unit (0.0.1):
-    - LZDependencyToolkit/Unit/AppUnit (= 0.0.1)
-    - LZDependencyToolkit/Unit/DeviceUnit (= 0.0.1)
-  - LZDependencyToolkit/Unit/AppUnit (0.0.1)
-  - LZDependencyToolkit/Unit/DeviceUnit (0.0.1)
+  - LZDependencyToolkit (0.1.0):
+    - LZDependencyToolkit/Unit (= 0.1.0)
+  - LZDependencyToolkit/Unit (0.1.0):
+    - LZDependencyToolkit/Unit/AppUnit (= 0.1.0)
+    - LZDependencyToolkit/Unit/DeviceUnit (= 0.1.0)
+  - LZDependencyToolkit/Unit/AppUnit (0.1.0)
+  - LZDependencyToolkit/Unit/DeviceUnit (0.1.0)
 
 DEPENDENCIES:
   - LZDependencyToolkit (from `../`)
@@ -15,7 +15,7 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  LZDependencyToolkit: 857cec039d521d25bbf5d6a979aecfbb993271a7
+  LZDependencyToolkit: 22c9a258e72c601fd58bbaaab512782b6f71bbfd
 
 PODFILE CHECKSUM: b0c7171b0652b3b2aaf1354b7fc5599d83f886ac
 
