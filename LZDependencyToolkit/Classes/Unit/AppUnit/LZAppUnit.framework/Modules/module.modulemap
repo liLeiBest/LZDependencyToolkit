@@ -1,6 +1,0 @@
-framework module LZAppUnit {
-  umbrella header "LZAppUnit.h"
-
-  export *
-  module * { export * }
-}

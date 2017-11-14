@@ -10,7 +10,7 @@
 #define LZDependencyToolkit_h
 
 
-#import "LZDependencyUnit.h"
-
+#import "LZDependencyStruct.h"
+#import "LZCategory.h"
 
 #endif /* LZDependencyToolkit_h */

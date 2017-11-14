@@ -1,0 +1,649 @@
+//
+//  LZDeviceUnit.m
+//  LZDeviceUnit
+//
+//  Created by Dear.Q on 2017/11/10.
+//  Copyright © 2017年 Dear.Q. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+#import <CoreTelephony/CTTelephonyNetworkInfo.h>
+#import <CoreTelephony/CTCarrier.h>
+#import <sys/utsname.h>
+#import "LZDeviceUnit.h"
+
+// MARK: - Private
+/** 当前设备 */
+UIDevice * _device(void) {
+    
+    static UIDevice *device;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        device = [UIDevice currentDevice];
+    });
+    
+    return device;
+}
+
+/** 获取设备标识 */
+NSString * _deviceIdentifier(void) {
+    
+    struct utsname systemInfo;
+    uname(&systemInfo);
+    NSString *deviceIdentifier = [NSString stringWithCString:systemInfo.machine encoding:NSUTF8StringEncoding];
+    
+    return deviceIdentifier;
+}
+
+// MARK: - 设备信息
+/** 用户界面类型 */
+LZUserInterfaceIdiom _userInterfaceIdiom(void) {
+
+    switch (UI_USER_INTERFACE_IDIOM()) {
+        case UIUserInterfaceIdiomPhone:
+            return LZUserInterfaceIdiomPhone;
+            break;
+        case UIUserInterfaceIdiomPad:
+            return LZUserInterfaceIdiomPad;
+            break;
+        case UIUserInterfaceIdiomTV:
+            return LZUserInterfaceIdiomTV;
+            break;
+        case UIUserInterfaceIdiomCarPlay:
+            return LZUserInterfaceIdiomCarPlay;
+            break;
+        default:
+            return LZUserInterfaceIdiomUnspecified;
+            break;
+    }
+}
+
+/** 型号 */
+LZDeviceGeneration _generation(void) {
+
+    NSString *deviceIdentifier = _deviceIdentifier();
+    
+    // 模拟器
+    if ([deviceIdentifier isEqualToString:@"i386"] ||
+        [deviceIdentifier isEqualToString:@"x86_64"]) return LZDeviceGenerationSimulator;
+    
+    // 真机
+    // iPhone 型号
+    if ([deviceIdentifier isEqualToString:@"iPhone1,1"]) return LZDeviceGenerationiPhone1G;
+    if ([deviceIdentifier isEqualToString:@"iPhone1,2"]) return LZDeviceGenerationiPhone3G;
+    if ([deviceIdentifier isEqualToString:@"iPhone2,1"]) return LZDeviceGenerationiPhone3GS;
+    if ([deviceIdentifier isEqualToString:@"iPhone3,1"] ||
+        [deviceIdentifier isEqualToString:@"iPhone3,2"] ||
+        [deviceIdentifier isEqualToString:@"iPhone3,3"]) return LZDeviceGenerationiPhone4;
+    if ([deviceIdentifier isEqualToString:@"iPhone4,1"]) return LZDeviceGenerationiPhone4S;
+    if ([deviceIdentifier isEqualToString:@"iPhone5,1"] ||
+        [deviceIdentifier isEqualToString:@"iPhone5,2"]) return LZDeviceGenerationiPhone5;
+    if ([deviceIdentifier isEqualToString:@"iPhone5,3"] ||
+        [deviceIdentifier isEqualToString:@"iPhone5,4"]) return LZDeviceGenerationiPhone5c;
+    if ([deviceIdentifier isEqualToString:@"iPhone6,1"] ||
+        [deviceIdentifier isEqualToString:@"iPhone6,2"]) return LZDeviceGenerationiPhone5s;
+    if ([deviceIdentifier isEqualToString:@"iPhone7,2"]) return LZDeviceGenerationiPhone6;
+    if ([deviceIdentifier isEqualToString:@"iPhone7,1"]) return LZDeviceGenerationiPhone6_plus;
+    if ([deviceIdentifier isEqualToString:@"iPhone8,1"]) return LZDeviceGenerationiPhone6s;
+    if ([deviceIdentifier isEqualToString:@"iPhone8,2"]) return LZDeviceGenerationiPhone6s_plus;
+    if ([deviceIdentifier isEqualToString:@"iPhone8,4"]) return LZDeviceGenerationiPhoneSE;
+    if ([deviceIdentifier isEqualToString:@"iPhone9,1"] ||
+        [deviceIdentifier isEqualToString:@"iPhone9,3"]) return LZDeviceGenerationiPhone7;
+    if ([deviceIdentifier isEqualToString:@"iPhone9,2"] ||
+        [deviceIdentifier isEqualToString:@"iPhone9,4"]) return LZDeviceGenerationiPhone7_plus;
+    if ([deviceIdentifier isEqualToString:@"iPhone10,1"] ||
+        [deviceIdentifier isEqualToString:@"iPhone10,4"]) return LZDeviceGenerationiPhone8;
+    if ([deviceIdentifier isEqualToString:@"iPhone10,2"] ||
+        [deviceIdentifier isEqualToString:@"iPhone10,5"]) return LZDeviceGenerationiPhone8_plus;
+    if ([deviceIdentifier isEqualToString:@"iPhone10,3"] ||
+        [deviceIdentifier isEqualToString:@"iPhone10,6"]) return LZDeviceGenerationiPhoneX;
+    // iPod 型号
+    if ([deviceIdentifier isEqualToString:@"iPod1,1"]) return LZDeviceGenerationiPodtouch1st;
+    if ([deviceIdentifier isEqualToString:@"iPod2,1"]) return LZDeviceGenerationiPodtouch2nd;
+    if ([deviceIdentifier isEqualToString:@"iPod3,1"]) return LZDeviceGenerationiPodtouch3rd;
+    if ([deviceIdentifier isEqualToString:@"iPod4,1"]) return LZDeviceGenerationiPodtouch4th;
+    if ([deviceIdentifier isEqualToString:@"iPod5,1"]) return LZDeviceGenerationiPodtouch5th;
+    if ([deviceIdentifier isEqualToString:@"iPod7,1"]) return LZDeviceGenerationiPodtouch6th;
+    // iWatch 型号
+    if ([deviceIdentifier isEqualToString:@"Watch1,1"] ||
+        [deviceIdentifier isEqualToString:@"Watch1,2"]) return LZDeviceGenerationiWatch1st;
+    if ([deviceIdentifier isEqualToString:@"Watch2,6"] ||
+        [deviceIdentifier isEqualToString:@"Watch2,7"]) return LZDeviceGenerationiWatch_series1;
+    if ([deviceIdentifier isEqualToString:@"Watch2,3"] ||
+        [deviceIdentifier isEqualToString:@"Watch2,4"]) return LZDeviceGenerationiWatch_series2;
+    if ([deviceIdentifier isEqualToString:@"Watch3,1"] ||
+        [deviceIdentifier isEqualToString:@"Watch3,2"] ||
+        [deviceIdentifier isEqualToString:@"Watch3,3"] ||
+        [deviceIdentifier isEqualToString:@"Watch3,4"]) return LZDeviceGenerationiWatch_series3;
+    // iPad 型号
+    if ([deviceIdentifier isEqualToString:@"iPad1,1"]) return LZDeviceGenerationiPad;
+    if ([deviceIdentifier isEqualToString:@"iPad2,1"] ||
+        [deviceIdentifier isEqualToString:@"iPad2,2"] ||
+        [deviceIdentifier isEqualToString:@"iPad2,3"] ||
+        [deviceIdentifier isEqualToString:@"iPad2,4"]) return LZDeviceGenerationiPad2;
+    if ([deviceIdentifier isEqualToString:@"iPad3,1"] ||
+        [deviceIdentifier isEqualToString:@"iPad3,2"] ||
+        [deviceIdentifier isEqualToString:@"iPad3,3"]) return LZDeviceGenerationiPad3;
+    if ([deviceIdentifier isEqualToString:@"iPad3,4"] ||
+        [deviceIdentifier isEqualToString:@"iPad3,5"] ||
+        [deviceIdentifier isEqualToString:@"iPad3,6"]) return LZDeviceGenerationiPad4;
+    if ([deviceIdentifier isEqualToString:@"iPad6,11"] ||
+        [deviceIdentifier isEqualToString:@"iPad6,12"]) return LZDeviceGenerationiPad5;
+    if ([deviceIdentifier isEqualToString:@"iPad4,1"] ||
+        [deviceIdentifier isEqualToString:@"iPad4,2"] ||
+        [deviceIdentifier isEqualToString:@"iPad4,3"]) return LZDeviceGenerationiPad_air;
+    if ([deviceIdentifier isEqualToString:@"iPad5,3"] ||
+        [deviceIdentifier isEqualToString:@"iPad5,4"]) return LZDeviceGenerationiPad_air2;
+    if ([deviceIdentifier isEqualToString:@"iPad6,3"] ||
+        [deviceIdentifier isEqualToString:@"iPad6,4"]) return LZDeviceGenerationiPad_pro_inch_9__7;
+    if ([deviceIdentifier isEqualToString:@"iPad6,7"] ||
+        [deviceIdentifier isEqualToString:@"iPad6,8"]) return LZDeviceGenerationiPad_pro_inch_12__9;
+    if ([deviceIdentifier isEqualToString:@"iPad7,1"] ||
+        [deviceIdentifier isEqualToString:@"iPad7,2"]) return LZDeviceGenerationiPad_pro_inch_12__9_2nd;
+    if ([deviceIdentifier isEqualToString:@"iPad7,3"] ||
+        [deviceIdentifier isEqualToString:@"iPad7,4"]) return LZDeviceGenerationiPad_pro_inch_10__5;
+    if ([deviceIdentifier isEqualToString:@"iPad2,5"] ||
+        [deviceIdentifier isEqualToString:@"iPad2,6"] ||
+        [deviceIdentifier isEqualToString:@"iPad2,7"]) return LZDeviceGenerationiPad_mini;
+    if ([deviceIdentifier isEqualToString:@"iPad4,4"] ||
+        [deviceIdentifier isEqualToString:@"iPad4,5"] ||
+        [deviceIdentifier isEqualToString:@"iPad4,6"]) return LZDeviceGenerationiPad_mini2;
+    if ([deviceIdentifier isEqualToString:@"iPad4,7"] ||
+        [deviceIdentifier isEqualToString:@"iPad4,8"] ||
+        [deviceIdentifier isEqualToString:@"iPad4,9"]) return LZDeviceGenerationiPad_mini3;
+    if ([deviceIdentifier isEqualToString:@"iPad5,1"] ||
+        [deviceIdentifier isEqualToString:@"iPad5,2"]) return LZDeviceGenerationiPad_mini4;
+    // iTV 型号
+    if ([deviceIdentifier isEqualToString:@"AppleTV2,1"]) return LZDeviceGenerationiTV2nd;
+    if ([deviceIdentifier isEqualToString:@"AppleTV3,1"] ||
+        [deviceIdentifier isEqualToString:@"AppleTV3,2"]) return LZDeviceGenerationiTV3rd;
+    if ([deviceIdentifier isEqualToString:@"AppleTV5,3"]) return LZDeviceGenerationiTV4th;
+    if ([deviceIdentifier isEqualToString:@"AppleTV6,2"]) return LZDeviceGenerationiTV4K;
+    
+    return LZDeviceGenerationUnspecified;
+}
+
+/** 型号描述 */
+NSString * _generation_string(void) {
+    
+    switch (_generation()) {
+            // 模拟器
+        case LZDeviceGenerationSimulator:
+            return @"Simulator";
+            break;
+            // iPhone 型号
+        case LZDeviceGenerationiPhone1G:
+            return @"iPhone 1G";
+            break;
+        case LZDeviceGenerationiPhone3G:
+            return @"iPhone 3G";
+            break;
+        case LZDeviceGenerationiPhone3GS:
+            return @"iPhone 3GS";
+            break;
+        case LZDeviceGenerationiPhone4:
+            return @"iPhone 4";
+            break;
+        case LZDeviceGenerationiPhone4S:
+            return @"iPhone 4S";
+            break;
+        case LZDeviceGenerationiPhone5:
+            return @"iPhone 5";
+            break;
+        case LZDeviceGenerationiPhone5c:
+            return @"iPhone 5c";
+            break;
+        case LZDeviceGenerationiPhone5s:
+            return @"iPhone 5s";
+            break;
+        case LZDeviceGenerationiPhone6:
+            return @"iPhone 6";
+            break;
+        case LZDeviceGenerationiPhone6_plus:
+            return @"iPhone 6 Plus";
+            break;
+        case LZDeviceGenerationiPhone6s:
+            return @"iPhone 6s";
+            break;
+        case LZDeviceGenerationiPhone6s_plus:
+            return @"iPhone 6s Plus";
+            break;
+        case LZDeviceGenerationiPhoneSE:
+            return @"iPhone SE";
+            break;
+        case LZDeviceGenerationiPhone7:
+            return @"iPhone 7";
+            break;
+        case LZDeviceGenerationiPhone7_plus:
+            return @"iPhone 7 Plus";
+            break;
+        case LZDeviceGenerationiPhone8:
+            return @"iPhone 8";
+            break;
+        case LZDeviceGenerationiPhone8_plus:
+            return @"iPhone 8 Plus";
+            break;
+        case LZDeviceGenerationiPhoneX:
+            return @"iPhone X";
+            break;
+            // iPod 型号
+        case LZDeviceGenerationiPodtouch1st:
+            return @"iPod touch";
+            break;
+        case LZDeviceGenerationiPodtouch2nd:
+            return @"iPod touch (2nd generation)";
+            break;
+        case LZDeviceGenerationiPodtouch3rd:
+            return @"iPod touch (3rd generation)";
+            break;
+        case LZDeviceGenerationiPodtouch4th:
+            return @"iPod touch (4th generation)";
+            break;
+        case LZDeviceGenerationiPodtouch5th:
+            return @"iPod touch (5th generation)";
+            break;
+        case LZDeviceGenerationiPodtouch6th:
+            return @"iPod touch (6th generation)";
+            break;
+            // iWatch 型号
+        case LZDeviceGenerationiWatch1st:
+            return @"Apple Watch (1st generation)";
+            break;
+        case LZDeviceGenerationiWatch_series1:
+            return @"Apple Watch Series 1";
+            break;
+        case LZDeviceGenerationiWatch_series2:
+            return @"Apple Watch Series 2";
+            break;
+        case LZDeviceGenerationiWatch_series3:
+            return @"Apple Watch Series 3";
+            break;
+            // iPad 型号
+        case LZDeviceGenerationiPad:
+            return @"iPad 1";
+            break;
+        case LZDeviceGenerationiPad2:
+            return @"iPad 2";
+            break;
+        case LZDeviceGenerationiPad3:
+            return @"iPad (3rd generation)";
+            break;
+        case LZDeviceGenerationiPad4:
+            return @"iPad (4th generation)";
+            break;
+        case LZDeviceGenerationiPad5:
+            return @"iPad (5th generation)";
+            break;
+        case LZDeviceGenerationiPad_air:
+            return @"iPad Air 1";
+            break;
+        case LZDeviceGenerationiPad_air2:
+            return @"iPad Air 2";
+            break;
+        case LZDeviceGenerationiPad_pro_inch_9__7:
+            return @"iPad Pro (9.7-inch)";
+            break;
+        case LZDeviceGenerationiPad_pro_inch_12__9:
+            return @"iPad Pro (12.9-inch)";
+            break;
+        case LZDeviceGenerationiPad_pro_inch_12__9_2nd:
+            return @"iPad Pro (12.9-inch, 2nd generation)";
+            break;
+        case LZDeviceGenerationiPad_pro_inch_10__5:
+            return @"iPad Pro (10.5-inch)";
+            break;
+        case LZDeviceGenerationiPad_mini:
+            return @"iPad mini 1";
+            break;
+        case LZDeviceGenerationiPad_mini2:
+            return @"iPad mini 2";
+            break;
+        case LZDeviceGenerationiPad_mini3:
+            return @"iPad mini 3";
+            break;
+        case LZDeviceGenerationiPad_mini4:
+            return @"iPad mini 4";
+            break;
+            // iTV 型号
+        case LZDeviceGenerationiTV2nd:
+            return @"Apple TV (2nd generation)";
+            break;
+        case LZDeviceGenerationiTV3rd:
+            return @"Apple TV (3rd generation)";
+            break;
+        case LZDeviceGenerationiTV4th:
+            return @"Apple TV (4th generation)";
+            break;
+        case LZDeviceGenerationiTV4K:
+            return @"Apple TV 4K";
+            break;
+        default:
+            return @"设备类型未知";
+            break;
+    }
+}
+
+/** UUID */
+NSString * _UUID(void) {
+    
+    return _device().identifierForVendor.UUIDString;
+}
+
+/** 别名，用户定义的名称 */
+NSString * _name(void) {
+    
+    return _device().name;
+}
+
+/** 类型名称 */
+NSString * _model(void){
+    
+    return _device().model;
+}
+
+/** 国际化区域名称 */
+NSString * _localizedModel(void) {
+    
+    return _device().localizedModel;
+}
+
+/** 系统名称，e.g iOS */
+NSString * _systemName(void) {
+    
+    return _device().systemName;
+}
+
+/** 系统版本 */
+static NSString * _systemVersion(void) {
+    
+    static NSString *systemVersion;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        systemVersion = _device().systemVersion;
+    });
+    
+    return systemVersion;
+}
+
+/** 方向 */
+LZDeviceOrientation _orientation(void) {
+    
+    switch (_device().orientation) {
+        case UIDeviceOrientationPortrait:
+            return LZDeviceOrientationPortrait;
+            break;
+        case UIDeviceOrientationPortraitUpsideDown:
+            return LZDeviceOrientationPortraitUpsideDown;
+            break;
+        case UIDeviceOrientationLandscapeLeft:
+            return LZDeviceOrientationLandscapeLeft;
+            break;
+        case UIDeviceOrientationLandscapeRight:
+            return LZDeviceOrientationLandscapeRight;
+            break;
+        case UIDeviceOrientationFaceUp:
+            return LZDeviceOrientationFaceUp;
+            break;
+        case UIDeviceOrientationFaceDown:
+            return LZDeviceOrientationFaceDown;
+            break;
+        default:
+            return LZDeviceOrientationUnknown;
+            break;
+    }
+}
+
+/** 电池状态 */
+LZDeviceBatteryState _batteryState(void) {
+
+    if (NO == _device().isBatteryMonitoringEnabled) [_device() setBatteryMonitoringEnabled:YES];
+    switch (_device().batteryState) {
+        case UIDeviceBatteryStateUnplugged:
+            return LZDeviceBatteryStateUnplugged;
+            break;
+        case UIDeviceBatteryStateCharging:
+            return LZDeviceBatteryStateCharging;
+            break;
+        case UIDeviceBatteryStateFull:
+            return LZDeviceBatteryStateFull;
+            break;
+        default:
+            return LZDeviceBatteryStateUnknown;
+            break;
+    }
+}
+
+/** 电池状态描述 */
+NSString * _batteryState_string(void) {
+    
+    switch (_batteryState()) {
+        case UIDeviceBatteryStateUnplugged:
+            return @"电池使用中";
+            break;
+        case UIDeviceBatteryStateCharging:
+            return @"电池充电中";
+            break;
+        case UIDeviceBatteryStateFull:
+            return @"电池充满电";
+            break;
+        default:
+            return @"电池状态未知";
+            break;
+    }
+}
+
+/** 电池电量 */
+float _batteryLevel(void) {
+
+    if (NO == _device().isBatteryMonitoringEnabled) [_device() setBatteryMonitoringEnabled:YES];
+    float batteryLevel = _device().batteryLevel;
+    
+    return batteryLevel;
+}
+
+/** 电池电量描述，百分比 */
+NSString * _batteryLevel_string(void) {
+
+    float batteryLevel = _batteryLevel();
+    if (-1 == batteryLevel) return @"电池电量未知";
+    NSString *percentPower = [NSString stringWithFormat:@"%.0f%%", batteryLevel * 100];
+    
+    return percentPower;
+}
+
+/** iPhone */
+BOOL _is_iPhone(void) {
+    
+    return (_userInterfaceIdiom() == LZUserInterfaceIdiomPhone ? YES : NO);
+}
+
+/** iPad */
+BOOL _is_iPad(void) {
+    
+    return (_userInterfaceIdiom() == LZUserInterfaceIdiomPad ? YES : NO);
+}
+
+/** iTV */
+BOOL _is_iTV(void) {
+    
+    return (_userInterfaceIdiom() == LZUserInterfaceIdiomTV ? YES : NO);
+}
+
+/** carPlay */
+BOOL _is_carPlay(void) {
+    
+    return (_userInterfaceIdiom() == LZUserInterfaceIdiomCarPlay ? YES : NO);
+}
+
+/** == */
+BOOL _version_equal_to(NSString *version) {
+    
+    return ([_systemVersion() compare:version options:NSNumericSearch] == NSOrderedSame);
+}
+
+/** > */
+BOOL _version_greater_than(NSString *version) {
+    
+    return ([_systemVersion() compare:version options:NSNumericSearch] == NSOrderedDescending);
+}
+
+/** >= */
+BOOL _version_greater_than_or_equal_to(NSString *version) {
+    
+    return ([_systemVersion() compare:version options:NSNumericSearch] != NSOrderedAscending);
+}
+
+/** < */
+BOOL _version_less_than(NSString *version) {
+    
+    return ([_systemVersion() compare:version options:NSNumericSearch] == NSOrderedAscending);
+}
+
+/** <= */
+BOOL _version_less_than_or_equal_to(NSString *version) {
+    
+    return ([_systemVersion() compare:version options:NSNumericSearch] != NSOrderedDescending);
+}
+
+// MARK: - 系统语言
+/** 支持的语言列表 */
+NSArray * _languages_support(void) {
+    
+    static NSArray *languageArrI;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        languageArrI = [NSLocale preferredLanguages];
+    });
+    
+    return languageArrI;
+}
+
+/** 当前语言全名,e.g zh-Hans-CN */
+NSString * _language_full_name(void) {
+    
+    return ([_languages_support() objectAtIndex:0]);
+}
+
+/** 当前语言简写,e.g  zh */
+NSString * _language_short_name(void) {
+    
+    static NSString *languageShortName;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        languageShortName = [[NSLocale currentLocale] objectForKey:NSLocaleLanguageCode];
+    });
+    
+    return languageShortName;
+}
+
+// MARK: - 设备屏幕
+/** 屏幕尺寸 */
+CGSize _screen_size(void) {
+    
+    static CGSize size;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        size = [UIScreen mainScreen].bounds.size;
+        if (size.height < size.width) {
+            CGFloat tmp = size.height;
+            size.height = size.width;
+            size.width = tmp;
+        }
+    });
+    
+    return size;
+}
+
+/** 屏幕的宽 */
+CGFloat _screen_width(void) {
+
+    return (_screen_size().width);
+}
+
+/** 屏幕的高 */
+CGFloat _screen_height(void) {
+
+    return (_screen_size().height);
+}
+
+/** 屏幕的最大长度 */
+CGFloat _screen_max_lenght(void) {
+
+    return (MAX(_screen_width(), _screen_height()));
+}
+
+/** 屏幕的最小长度 */
+CGFloat _screen_min_lenght(void) {
+    
+    return (MIN(_screen_width(), _screen_height()));
+}
+
+/** 屏幕的 Scale */
+CGFloat _screen_scale(void) {
+
+    static CGFloat scale;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        scale = [[UIScreen mainScreen] scale];
+    });
+    
+    return scale;
+}
+
+/** 屏幕是否是 Retina */
+BOOL _screen_retina(void) {
+    
+    return (_screen_scale() > 1 ? YES : NO);
+}
+
+// MARK: - • 运营商
+NSString * _carrierName(void) {
+    
+    CTTelephonyNetworkInfo *info = [[CTTelephonyNetworkInfo alloc] init];
+    CTCarrier *carrier = info.subscriberCellularProvider;
+    NSString *carrierName = carrier.carrierName;
+    
+    return carrierName;
+}
+
+/** 初始化结构体 */
+struct LZDeviceUnit_type LZDeviceInfo = {
+    
+    .userInterfaceIdiom = _userInterfaceIdiom,
+    .generation = _generation,
+    .generation_string = _generation_string,
+    .name = _name,
+    .model = _model,
+    .localizedModel = _localizedModel,
+    .systemName = _systemName,
+    .systemVersion = _systemVersion,
+    .orientation = _orientation,
+    .batteryState = _batteryState,
+    .batteryState_string = _batteryState_string,
+    .batteryLevel = _batteryLevel,
+    .batteryLevel_string = _batteryLevel_string,
+    .UUID = _UUID,
+    .is_iPad = _is_iPad,
+    .is_iPhone = _is_iPhone,
+    .is_iTV = _is_iTV,
+    .is_carPlay = _is_carPlay,
+    .version_equal_to = _version_equal_to,
+    .version_greater_than = _version_greater_than,
+    .version_greater_than_or_equal_to = _version_greater_than_or_equal_to,
+    .version_less_than = _version_less_than,
+    .version_less_than_or_equal_to = _version_less_than_or_equal_to,
+    
+    .languages_support = _languages_support,
+    .language_full_name = _language_full_name,
+    .language_short_name = _language_short_name,
+    
+    .screen_size = _screen_size,
+    .screen_width = _screen_width,
+    .screen_height = _screen_height,
+    .screen_max_lenght = _screen_max_lenght,
+    .screen_min_lenght = _screen_min_lenght,
+    .screen_scale = _screen_scale,
+    .screen_retina = _screen_retina,
+    
+    .carrierName = _carrierName,
+};

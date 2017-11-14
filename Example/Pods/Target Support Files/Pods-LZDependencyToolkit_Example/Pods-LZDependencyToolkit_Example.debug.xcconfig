@@ -1,9 +1,8 @@
-FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/../../LZDependencyToolkit/Classes/Unit/AppUnit" "${PODS_ROOT}/../../LZDependencyToolkit/Classes/Unit/DeviceUnit"
+FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/DZNEmptyDataSet" "${PODS_CONFIGURATION_BUILD_DIR}/LZDependencyToolkit" "${PODS_CONFIGURATION_BUILD_DIR}/MJRefresh"
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
-HEADER_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/LZDependencyToolkit"
 LD_RUNPATH_SEARCH_PATHS = $(inherited) '@executable_path/Frameworks' '@loader_path/Frameworks'
-OTHER_CFLAGS = $(inherited)  -isystem "${PODS_ROOT}/Headers/Public" -isystem "${PODS_ROOT}/Headers/Public/LZDependencyToolkit"
-OTHER_LDFLAGS = $(inherited) -framework "CoreGraphics" -framework "CoreTelephony" -framework "Foundation" -framework "LZAppUnit" -framework "LZDeviceUnit" -framework "UIKit"
+OTHER_CFLAGS = $(inherited) -iquote "${PODS_CONFIGURATION_BUILD_DIR}/DZNEmptyDataSet/DZNEmptyDataSet.framework/Headers" -iquote "${PODS_CONFIGURATION_BUILD_DIR}/LZDependencyToolkit/LZDependencyToolkit.framework/Headers" -iquote "${PODS_CONFIGURATION_BUILD_DIR}/MJRefresh/MJRefresh.framework/Headers"
+OTHER_LDFLAGS = $(inherited) -framework "DZNEmptyDataSet" -framework "LZDependencyToolkit" -framework "MJRefresh"
 PODS_BUILD_DIR = ${BUILD_DIR}
 PODS_CONFIGURATION_BUILD_DIR = ${PODS_BUILD_DIR}/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)
 PODS_PODFILE_DIR_PATH = ${SRCROOT}/.

@@ -28,13 +28,27 @@
   "public_header_files": "LZDependencyToolkit/Classes/LZDependencyToolkit.h",
   "subspecs": [
     {
-      "name": "Unit",
-      "source_files": "LZDependencyToolkit/Classes/Unit/LZDependencyUnit.h",
-      "public_header_files": "LZDependencyToolkit/Classes/Unit/LZDependencyUnit.h",
+      "name": "Category",
+      "source_files": "LZDependencyToolkit/Classes/Category/*.{h,m}",
+      "public_header_files": "LZDependencyToolkit/Classes/Category/*.h",
+      "dependencies": {
+        "MJRefresh": [
+
+        ],
+        "DZNEmptyDataSet": [
+
+        ]
+      }
+    },
+    {
+      "name": "Struct",
+      "source_files": "LZDependencyToolkit/Classes/Struct/LZDependencyStruct.h",
+      "public_header_files": "LZDependencyToolkit/Classes/Struct/LZDependencyStruct.h",
       "subspecs": [
         {
           "name": "DeviceUnit",
-          "vendored_frameworks": "LZDependencyToolkit/Classes/Unit/DeviceUnit/LZDeviceUnit.framework",
+          "source_files": "LZDependencyToolkit/Classes/Struct/DeviceUnit/*.{h,m}",
+          "public_header_files": "LZDependencyToolkit/Classes/Struct/DeviceUnit/*.h",
           "frameworks": [
             "CoreGraphics",
             "CoreTelephony"
@@ -42,7 +56,8 @@
         },
         {
           "name": "AppUnit",
-          "vendored_frameworks": "LZDependencyToolkit/Classes/Unit/AppUnit/LZAppUnit.framework"
+          "source_files": "LZDependencyToolkit/Classes/Struct/AppUnit/*.{h,m}",
+          "public_header_files": "LZDependencyToolkit/Classes/Struct/AppUnit/*.h"
         }
       ]
     }

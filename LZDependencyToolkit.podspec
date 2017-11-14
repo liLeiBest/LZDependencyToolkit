@@ -15,18 +15,26 @@ Pod::Spec.new do |s|
     s.source_files        = 'LZDependencyToolkit/Classes/LZDependencyToolkit.h'
     s.public_header_files = 'LZDependencyToolkit/Classes/LZDependencyToolkit.h'
 
-    s.subspec 'Unit' do |unit|
+    s.subspec 'Category' do |category|
+        category.source_files        = 'LZDependencyToolkit/Classes/Category/*.{h,m}'
+        category.public_header_files = 'LZDependencyToolkit/Classes/Category/*.h'
+        category.dependency 'MJRefresh'
+        category.dependency 'DZNEmptyDataSet'
+    end
 
-        unit.source_files        = 'LZDependencyToolkit/Classes/Unit/LZDependencyUnit.h'
-        unit.public_header_files = 'LZDependencyToolkit/Classes/Unit/LZDependencyUnit.h'
+    s.subspec 'Struct' do |struct|
+        struct.source_files        = 'LZDependencyToolkit/Classes/Struct/LZDependencyStruct.h'
+        struct.public_header_files = 'LZDependencyToolkit/Classes/Struct/LZDependencyStruct.h'
 
-        unit.subspec 'DeviceUnit' do |deviceUnit|
-            deviceUnit.vendored_frameworks = 'LZDependencyToolkit/Classes/Unit/DeviceUnit/LZDeviceUnit.framework'
-            deviceUnit.frameworks           = 'CoreGraphics','CoreTelephony'
+        struct.subspec 'DeviceUnit' do |deviceUnit|
+            deviceUnit.source_files        = 'LZDependencyToolkit/Classes/Struct/DeviceUnit/*.{h,m}'
+            deviceUnit.public_header_files = 'LZDependencyToolkit/Classes/Struct/DeviceUnit/*.h'
+            deviceUnit.frameworks          = 'CoreGraphics','CoreTelephony'
         end
 
-        unit.subspec 'AppUnit' do |appUnit|
-            appUnit.vendored_frameworks = 'LZDependencyToolkit/Classes/Unit/AppUnit/LZAppUnit.framework'
+        struct.subspec 'AppUnit' do |appUnit|
+            appUnit.source_files        = 'LZDependencyToolkit/Classes/Struct/AppUnit/*.{h,m}'
+            appUnit.public_header_files = 'LZDependencyToolkit/Classes/Struct/AppUnit/*.h'
         end
     end
 
