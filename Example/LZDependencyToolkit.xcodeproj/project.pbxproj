@@ -307,10 +307,12 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-LZDependencyToolkit_Example/Pods-LZDependencyToolkit_Example-frameworks.sh",
+				"${PODS_ROOT}/../../LZDependencyToolkit/Classes/Unit/AppUnit/LZAppUnit.framework",
 				"${PODS_ROOT}/../../LZDependencyToolkit/Classes/Unit/DeviceUnit/LZDeviceUnit.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/LZAppUnit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/LZDeviceUnit.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;

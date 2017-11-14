@@ -24,6 +24,10 @@ Pod::Spec.new do |s|
             deviceUnit.vendored_frameworks = 'LZDependencyToolkit/Classes/Unit/DeviceUnit/LZDeviceUnit.framework'
             deviceUnit.frameworks           = 'CoreGraphics','CoreTelephony'
         end
+
+        unit.subspec 'AppUnit' do |appUnit|
+            appUnit.vendored_frameworks = 'LZDependencyToolkit/Classes/Unit/AppUnit/LZAppUnit.framework'
+        end
     end
 
     # s.resource_bundles = {

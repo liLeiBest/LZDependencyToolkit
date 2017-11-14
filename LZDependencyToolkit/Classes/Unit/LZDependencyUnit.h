@@ -10,6 +10,7 @@
 #define LZDependencyUnit_h
 
 #import "LZDeviceUnit/LZDeviceUnit.h"
+#import "LZAppUnit/LZAppUnit.h"
 
 
 #endif /* LZDependencyUnit_h */

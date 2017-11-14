@@ -12,7 +12,7 @@
 
 #import "LZDependencyToolkit.h"
 #import "LZDependencyUnit.h"
-#import "LZDeviceUnit.h"
+#import "LZAppUnit.h"
 
 FOUNDATION_EXPORT double LZDependencyToolkitVersionNumber;
 FOUNDATION_EXPORT const unsigned char LZDependencyToolkitVersionString[];

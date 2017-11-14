@@ -39,6 +39,10 @@
             "CoreGraphics",
             "CoreTelephony"
           ]
+        },
+        {
+          "name": "AppUnit",
+          "vendored_frameworks": "LZDependencyToolkit/Classes/Unit/AppUnit/LZAppUnit.framework"
         }
       ]
     }

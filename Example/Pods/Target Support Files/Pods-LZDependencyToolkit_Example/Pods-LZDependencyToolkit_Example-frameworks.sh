@@ -111,9 +111,11 @@ strip_invalid_archs() {
 
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
+  install_framework "${PODS_ROOT}/../../LZDependencyToolkit/Classes/Unit/AppUnit/LZAppUnit.framework"
   install_framework "${PODS_ROOT}/../../LZDependencyToolkit/Classes/Unit/DeviceUnit/LZDeviceUnit.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
+  install_framework "${PODS_ROOT}/../../LZDependencyToolkit/Classes/Unit/AppUnit/LZAppUnit.framework"
   install_framework "${PODS_ROOT}/../../LZDependencyToolkit/Classes/Unit/DeviceUnit/LZDeviceUnit.framework"
 fi
 if [ "${COCOAPODS_PARALLEL_CODE_SIGN}" == "true" ]; then
