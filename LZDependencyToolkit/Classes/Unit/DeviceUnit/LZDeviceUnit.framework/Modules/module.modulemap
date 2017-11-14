@@ -1,0 +1,6 @@
+framework module LZDeviceUnit {
+  umbrella header "LZDeviceUnit.h"
+
+  export *
+  module * { export * }
+}
