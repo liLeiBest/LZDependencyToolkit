@@ -357,7 +357,7 @@
     
     
     NSTimeInterval time=[current_date timeIntervalSinceDate:confromTimesp];//间隔的秒数
-    
+    if (time < 0) return @"刚刚";
 //    NSString *confromTimespStr = [dateFormatter stringFromDate:confromTimesp];
     
     int month=((int)time)/(3600*24*30);
