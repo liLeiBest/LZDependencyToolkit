@@ -10,7 +10,7 @@
 
 @implementation NSDictionary (LZDescription)
 
-- (NSString *)descriptionWithLocale:(id)locale
+- (NSString *)description
 {
     NSMutableString *str = [NSMutableString string];
     
@@ -37,7 +37,7 @@
 
 @implementation NSArray (LZDescription)
 
-- (NSString *)descriptionWithLocale:(id)locale
+- (NSString *)description
 {
     NSMutableString *str = [NSMutableString string];
     
@@ -45,7 +45,7 @@
     
     // 遍历数组的所有元素
     [self enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        [str appendFormat:@"%@,\n", obj];
+        [str appendFormat:@"\t%@,\n", obj];
     }];
     
     [str appendString:@"]"];
