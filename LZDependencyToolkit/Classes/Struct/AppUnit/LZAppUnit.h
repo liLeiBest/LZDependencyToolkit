@@ -42,7 +42,6 @@ typedef struct _LZAppUnit_type {
      *  compare build with lastest build
      *
      *  @param lastestBuild 最新 build 号
-     *
      *  @return 指定版本是否是最新版本(YES : 是最新版本 ; NO : 不是最新版本)
      */
     BOOL (* compareBuild)(NSString *lastestBuild);
@@ -51,7 +50,6 @@ typedef struct _LZAppUnit_type {
      *  compare version with lastest version
      *
      *  @param lastestVersion 最新 version
-     *
      *  @return 指定版本是否是最新版本(YES : 是最新版本 ; NO : 不是最新版本)
      */
     BOOL (* compareVersion)(NSString *lastestVersion);

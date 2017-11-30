@@ -10,6 +10,9 @@
 #import <CoreTelephony/CTTelephonyNetworkInfo.h>
 #import <CoreTelephony/CTCarrier.h>
 #import <sys/utsname.h>
+#import <sys/mount.h>
+#import <sys/sysctl.h>
+#import <mach/mach.h>
 #import "LZDeviceUnit.h"
 
 // MARK: - Private
@@ -30,7 +33,8 @@ NSString * _deviceIdentifier(void) {
     
     struct utsname systemInfo;
     uname(&systemInfo);
-    NSString *deviceIdentifier = [NSString stringWithCString:systemInfo.machine encoding:NSUTF8StringEncoding];
+    NSString *deviceIdentifier = [NSString stringWithCString:systemInfo.machine
+                                                    encoding:NSUTF8StringEncoding];
     
     return deviceIdentifier;
 }
@@ -164,7 +168,7 @@ LZDeviceGeneration _generation(void) {
 }
 
 /** 型号描述 */
-NSString * _generation_string(void) {
+NSString * _generation_desc(void) {
     
     switch (_generation()) {
             // 模拟器
@@ -325,31 +329,26 @@ NSString * _generation_string(void) {
 
 /** UUID */
 NSString * _UUID(void) {
-    
     return _device().identifierForVendor.UUIDString;
 }
 
 /** 别名，用户定义的名称 */
 NSString * _name(void) {
-    
     return _device().name;
 }
 
 /** 类型名称 */
-NSString * _model(void){
-    
+NSString * _model(void) {
     return _device().model;
 }
 
 /** 国际化区域名称 */
 NSString * _localizedModel(void) {
-    
     return _device().localizedModel;
 }
 
 /** 系统名称，e.g iOS */
 NSString * _systemName(void) {
-    
     return _device().systemName;
 }
 
@@ -414,7 +413,7 @@ LZDeviceBatteryState _batteryState(void) {
 }
 
 /** 电池状态描述 */
-NSString * _batteryState_string(void) {
+NSString * _batteryState_desc(void) {
     
     switch (_batteryState()) {
         case UIDeviceBatteryStateUnplugged:
@@ -442,66 +441,230 @@ float _batteryLevel(void) {
 }
 
 /** 电池电量描述，百分比 */
-NSString * _batteryLevel_string(void) {
+NSString * _batteryLevel_desc(void) {
 
     float batteryLevel = _batteryLevel();
-    if (-1 == batteryLevel) return @"电池电量未知";
+    if (-1 == batteryLevel) return @"未知";
     NSString *percentPower = [NSString stringWithFormat:@"%.0f%%", batteryLevel * 100];
     
     return percentPower;
 }
 
+/** 总磁盘空间 */
+int64_t _diskTotalSpace(void) {
+    NSError *error = nil;
+    NSDictionary *attrs = [[NSFileManager defaultManager] attributesOfFileSystemForPath:NSHomeDirectory()
+                                                                       error:&error];
+    if (error) {
+        return -1;
+    }
+    int64_t space =  [[attrs objectForKey:NSFileSystemSize] longLongValue];
+    if (space < 0) space = -1;
+    
+    return space;
+}
+
+/** 总磁盘空间描述 */
+NSString * _diskTotalSpace_desc(void) {
+
+    int64_t totalSpace = _diskTotalSpace();
+    if (totalSpace == -1) {
+        return @"未知";
+    }
+    NSString *totalSpaceDesc = [NSString stringWithFormat:@"%.2lfG", totalSpace * 0.001 * 0.001 * 0.001];
+    
+    return totalSpaceDesc;
+}
+
+/** 剩余磁盘空间 */
+int64_t _diskFreeSpace(void) {
+    
+    NSError *error = nil;
+    NSDictionary *attrs = [[NSFileManager defaultManager] attributesOfFileSystemForPath:NSHomeDirectory()
+                                                                                  error:&error];
+    if (error) {
+        return -1;
+    }
+    int64_t space =  [[attrs objectForKey:NSFileSystemFreeSize] longLongValue];
+    if (space < 0) {
+        space = -1;
+    }
+    
+    return space;
+}
+
+/** 剩余磁盘空间描述 */
+NSString * _diskFreeSpace_desc(void) {
+
+    int64_t freeSpace = _diskFreeSpace();
+    if (freeSpace == -1) {
+        return @"未知";
+    }
+    NSString *freeSpaceDesc = [NSString stringWithFormat:@"%.2lfG", freeSpace * 0.001 * 0.001 * 0.001];
+    
+    return freeSpaceDesc;
+}
+
+/** 已使用磁盘空间 */
+int64_t _diskusedSpace(void) {
+    
+    int64_t totalSpace = _diskTotalSpace();
+    int64_t freeSpace = _diskFreeSpace();
+    if (totalSpace < 0 || freeSpace < 0) {
+        return -1;
+    }
+    int64_t usedSpace = totalSpace - freeSpace;
+    if (usedSpace < 0) {
+        usedSpace = -1;
+    }
+
+    return usedSpace;
+}
+
+/** 已使用磁盘空间描述 */
+NSString * _diskUsedSpace_desc(void) {
+
+    int64_t usedSpace = _diskusedSpace();
+    if (usedSpace == -1) {
+        return @"未知";
+    }
+    NSString *usedSpaceDesc = [NSString stringWithFormat:@"%.2lfG", usedSpace * 0.001 * 0.001 * 0.001];
+    
+    return usedSpaceDesc;
+}
+
+/** CPU 核数 */
+NSString * _CPUCount(void) {
+
+    NSUInteger CPUCount = [NSProcessInfo processInfo].activeProcessorCount;
+    NSString *CPUCountDesc = [NSString stringWithFormat:@"%ld", CPUCount];
+    
+    return CPUCountDesc;
+}
+
+/** 获取每个 CPU 的使用比例 */
+NSArray * _PerCPUUsage(void) {
+    
+    processor_info_array_t _cpuInfo, _prevCPUInfo = nil;
+    mach_msg_type_number_t _numCPUInfo, _numPrevCPUInfo = 0;
+    unsigned _numCPUs;
+    NSLock *_cpuUsageLock;
+    
+    int _mib[2U] = { CTL_HW, HW_NCPU };
+    size_t _sizeOfNumCPUs = sizeof(_numCPUs);
+    int _status = sysctl(_mib, 2U, &_numCPUs, &_sizeOfNumCPUs, NULL, 0U);
+    if (_status) {
+        _numCPUs = 1;
+    }
+    
+    _cpuUsageLock = [[NSLock alloc] init];
+    
+    natural_t _numCPUsU = 0U;
+    kern_return_t err = host_processor_info(mach_host_self(), PROCESSOR_CPU_LOAD_INFO, &_numCPUsU, &_cpuInfo, &_numCPUInfo);
+    if (err == KERN_SUCCESS) {
+        
+        [_cpuUsageLock lock];
+        
+        NSMutableArray *cpus = [NSMutableArray new];
+        for (unsigned i = 0U; i < _numCPUs; ++i) {
+            
+            Float32 _inUse, _total;
+            if (_prevCPUInfo) {
+                
+                _inUse = (
+                          (_cpuInfo[(CPU_STATE_MAX * i) + CPU_STATE_USER]   - _prevCPUInfo[(CPU_STATE_MAX * i) + CPU_STATE_USER])
+                          + (_cpuInfo[(CPU_STATE_MAX * i) + CPU_STATE_SYSTEM] - _prevCPUInfo[(CPU_STATE_MAX * i) + CPU_STATE_SYSTEM])
+                          + (_cpuInfo[(CPU_STATE_MAX * i) + CPU_STATE_NICE]   - _prevCPUInfo[(CPU_STATE_MAX * i) + CPU_STATE_NICE])
+                          );
+                _total = _inUse + (_cpuInfo[(CPU_STATE_MAX * i) + CPU_STATE_IDLE] - _prevCPUInfo[(CPU_STATE_MAX * i) + CPU_STATE_IDLE]);
+            } else {
+                
+                _inUse = _cpuInfo[(CPU_STATE_MAX * i) + CPU_STATE_USER] + _cpuInfo[(CPU_STATE_MAX * i) + CPU_STATE_SYSTEM] + _cpuInfo[(CPU_STATE_MAX * i) + CPU_STATE_NICE];
+                _total = _inUse + _cpuInfo[(CPU_STATE_MAX * i) + CPU_STATE_IDLE];
+            }
+            [cpus addObject:@(_inUse / _total)];
+        }
+        
+        [_cpuUsageLock unlock];
+        if (_prevCPUInfo) {
+            
+            size_t prevCpuInfoSize = sizeof(integer_t) * _numPrevCPUInfo;
+            vm_deallocate(mach_task_self(), (vm_address_t)_prevCPUInfo, prevCpuInfoSize);
+        }
+        
+        return cpus;
+    } else {
+        return nil;
+    }
+}
+
+/** CPU 使用率 */
+NSString * _CPUUsageRate(void) {
+
+    float cpu = 0;
+    NSArray *cpus = _PerCPUUsage();
+    if (cpus.count == 0) {
+        return @"未知";
+    }
+    for (NSNumber *n in cpus) {
+        cpu += n.floatValue;
+    }
+    NSString *CPUUsageRateDesc = [NSString stringWithFormat:@"%.2f%%", cpu * 100];
+    
+    return CPUUsageRateDesc;
+}
+
+/** 最后一次重启时间 */
+NSDate * _restartDate(void) {
+
+    NSTimeInterval time = [[NSProcessInfo processInfo] systemUptime];
+    NSDate *lastRestartDate = [[NSDate alloc] initWithTimeIntervalSinceNow:(0 - time)];
+    
+    return lastRestartDate;
+}
+
 /** iPhone */
 BOOL _is_iPhone(void) {
-    
     return (_userInterfaceIdiom() == LZUserInterfaceIdiomPhone ? YES : NO);
 }
 
 /** iPad */
 BOOL _is_iPad(void) {
-    
     return (_userInterfaceIdiom() == LZUserInterfaceIdiomPad ? YES : NO);
 }
 
 /** iTV */
 BOOL _is_iTV(void) {
-    
     return (_userInterfaceIdiom() == LZUserInterfaceIdiomTV ? YES : NO);
 }
 
 /** carPlay */
 BOOL _is_carPlay(void) {
-    
     return (_userInterfaceIdiom() == LZUserInterfaceIdiomCarPlay ? YES : NO);
 }
 
 /** == */
 BOOL _version_equal_to(NSString *version) {
-    
     return ([_systemVersion() compare:version options:NSNumericSearch] == NSOrderedSame);
 }
 
 /** > */
 BOOL _version_greater_than(NSString *version) {
-    
     return ([_systemVersion() compare:version options:NSNumericSearch] == NSOrderedDescending);
 }
 
 /** >= */
 BOOL _version_greater_than_or_equal_to(NSString *version) {
-    
     return ([_systemVersion() compare:version options:NSNumericSearch] != NSOrderedAscending);
 }
 
 /** < */
 BOOL _version_less_than(NSString *version) {
-    
     return ([_systemVersion() compare:version options:NSNumericSearch] == NSOrderedAscending);
 }
 
 /** <= */
 BOOL _version_less_than_or_equal_to(NSString *version) {
-    
     return ([_systemVersion() compare:version options:NSNumericSearch] != NSOrderedDescending);
 }
 
@@ -520,7 +683,6 @@ NSArray * _languages_support(void) {
 
 /** 当前语言全名,e.g zh-Hans-CN */
 NSString * _language_full_name(void) {
-    
     return ([_languages_support() objectAtIndex:0]);
 }
 
@@ -556,25 +718,21 @@ CGSize _screen_size(void) {
 
 /** 屏幕的宽 */
 CGFloat _screen_width(void) {
-
     return (_screen_size().width);
 }
 
 /** 屏幕的高 */
 CGFloat _screen_height(void) {
-
     return (_screen_size().height);
 }
 
 /** 屏幕的最大长度 */
 CGFloat _screen_max_lenght(void) {
-
     return (MAX(_screen_width(), _screen_height()));
 }
 
 /** 屏幕的最小长度 */
 CGFloat _screen_min_lenght(void) {
-    
     return (MIN(_screen_width(), _screen_height()));
 }
 
@@ -592,7 +750,6 @@ CGFloat _screen_scale(void) {
 
 /** 屏幕是否是 Retina */
 BOOL _screen_retina(void) {
-    
     return (_screen_scale() > 1 ? YES : NO);
 }
 
@@ -611,7 +768,8 @@ struct LZDeviceUnit_type LZDeviceInfo = {
     
     .userInterfaceIdiom = _userInterfaceIdiom,
     .generation = _generation,
-    .generation_string = _generation_string,
+    .generation_desc = _generation_desc,
+    .UUID = _UUID,
     .name = _name,
     .model = _model,
     .localizedModel = _localizedModel,
@@ -619,10 +777,18 @@ struct LZDeviceUnit_type LZDeviceInfo = {
     .systemVersion = _systemVersion,
     .orientation = _orientation,
     .batteryState = _batteryState,
-    .batteryState_string = _batteryState_string,
+    .batteryState_desc = _batteryState_desc,
     .batteryLevel = _batteryLevel,
-    .batteryLevel_string = _batteryLevel_string,
-    .UUID = _UUID,
+    .batteryLevel_desc = _batteryLevel_desc,
+    .diskTotalSpace = _diskTotalSpace,
+    .diskTotalSpace_desc = _diskTotalSpace_desc,
+    .diskFreeSpace = _diskFreeSpace,
+    .diskFreeSpace_desc = _diskFreeSpace_desc,
+    .diskUsedSpace = _diskusedSpace,
+    .diskUsedSpace_desc = _diskUsedSpace_desc,
+    .CPUCount = _CPUCount,
+    .CPUUsageRate = _CPUUsageRate,
+    .restartDate= _restartDate,
     .is_iPad = _is_iPad,
     .is_iPhone = _is_iPhone,
     .is_iTV = _is_iTV,
