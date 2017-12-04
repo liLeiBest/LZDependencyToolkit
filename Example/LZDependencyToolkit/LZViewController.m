@@ -22,6 +22,7 @@
 {
     [super viewDidLoad];
     
+    [self setupNavBarItem];
     [self deviceInfo];
     [self appInfo];
 }
@@ -35,7 +36,54 @@
 
 }
 
+#pragma mark - -> UI Action
+- (void)leftDidClick {
+    NSLog(@"点击了左边按钮");
+}
+
+- (void)rightDidClick{
+    NSLog(@"点击了右边按钮");
+}
+
 // MARK: - Private
+- (void)setupNavBarItem
+{
+    UIBarButtonItem *left1 =
+    [[UIBarButtonItem alloc] initWithTitle:@"左边按钮"
+                                     style:UIBarButtonItemStylePlain
+                                    target:self
+                                    action:@selector(leftDidClick)];;
+    UIBarButtonItem *left2 =
+    [UIBarButtonItem itemWithTitle:@"左边按钮"
+                       normalImage:@"fda"
+                    highlightImage:@"abc"
+                      disableImage:@"egf"
+                            target:self
+                            action:@selector(leftDidClick)];
+    //self.navigationItem.leftBarButtonItem = left1;
+    self.navigationItem.leftBarButtonItems = @[left2, left1];
+    //[self.navigationItem.leftBarButtonItem setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor orangeColor]}
+    //                                                     forState:UIControlStateNormal];
+    //[self.navigationItem.leftBarButtonItem setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor blueColor]}
+    //                                                     forState:UIControlStateDisabled];
+/*
+    UIBarButtonItem *right1 =
+    [[UIBarButtonItem alloc] initWithTitle:@"右边按钮1"
+                                     style:UIBarButtonItemStylePlain
+                                    target:self
+                                    action:@selector(rightDidClick)];
+    
+    UIBarButtonItem *right2 =
+    [UIBarButtonItem itemWithTitle:@"右边按钮2"
+                            target:self
+                            action:@selector(rightDidClick)];
+    //self.navigationItem.rightBarButtonItem = right1;
+    self.navigationItem.rightBarButtonItems = @[right2, right1];
+    //[self.navigationItem.rightBarButtonItem setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor blackColor]}
+    //                                                      forState:UIControlStateNormal];
+ */
+}
+
 - (void)appInfo {
 
     NSLog(@"App Name: %@", LZAppInfo.name());
