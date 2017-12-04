@@ -17,7 +17,6 @@
  */
 @interface UIBarButtonItem (LZExtension)
 
-
 /**
  @author Lilei
  
@@ -51,5 +50,9 @@
 + (UIBarButtonItem *)itemWithTitle:(NSString *)title
                             target:(id)target
                             action:(SEL)action;
+
+@end
+
+@interface UINavigationItem (HXExtension)
 
 @end

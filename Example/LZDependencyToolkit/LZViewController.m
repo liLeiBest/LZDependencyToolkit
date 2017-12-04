@@ -38,11 +38,15 @@
 
 #pragma mark - -> UI Action
 - (void)leftDidClick {
+    
     NSLog(@"点击了左边按钮");
+    self.navigationItem.rightBarButtonItem.customView.hidden = !self.navigationItem.rightBarButtonItem.customView.hidden;
 }
 
-- (void)rightDidClick{
+- (void)rightDidClick {
+    
     NSLog(@"点击了右边按钮");
+    self.navigationItem.leftBarButtonItem.enabled = !self.navigationItem.leftBarButtonItem.enabled;
 }
 
 // MARK: - Private

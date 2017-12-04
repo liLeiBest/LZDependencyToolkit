@@ -59,100 +59,95 @@
                         disableImg:(NSString *)disableImg
                             target:(id)target
                             action:(SEL)action {
+        
+    UIButton *barButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    barButton.opaque = YES;
+    barButton.backgroundColor = [UIColor clearColor];
+    barButton.adjustsImageWhenDisabled = YES;
+    barButton.adjustsImageWhenHighlighted = NO;
+    barButton.imageView.contentMode = UIViewContentModeLeft;
     
-    if (self = [super init]) {
+    if (nil != title && title.length) {
         
-        if (!self.enabled) {
-            self.enabled = YES;
-        }
-        
-        UIButton *barButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        barButton.opaque = YES;
-        barButton.backgroundColor = [UIColor clearColor];
-        barButton.adjustsImageWhenDisabled = YES;
-        barButton.adjustsImageWhenHighlighted = NO;
-        barButton.imageView.contentMode = UIViewContentModeLeft;
-        
-        if (nil != title && title.length) {
+        [barButton setTitle:title forState:UIControlStateNormal];
+        [barButton setTitle:title forState:UIControlStateHighlighted];
+        [barButton setTitle:title forState:UIControlStateDisabled];
+        UIBarButtonItem *theme = [UIBarButtonItem appearance];
+        NSDictionary *normalAttributes = [theme titleTextAttributesForState:UIControlStateNormal];
+        NSDictionary *highlightAttributes = [theme titleTextAttributesForState:UIControlStateHighlighted];
+        NSDictionary *disableAttributes = [theme titleTextAttributesForState:UIControlStateDisabled];
+        if (nil != normalAttributes || normalAttributes.allKeys.count ? YES : NO) {
             
-            [barButton setTitle:title forState:UIControlStateNormal];
-            [barButton setTitle:title forState:UIControlStateHighlighted];
-            [barButton setTitle:title forState:UIControlStateDisabled];
-            UIBarButtonItem *theme = [UIBarButtonItem appearance];
-            NSDictionary *normalAttributes = [theme titleTextAttributesForState:UIControlStateNormal];
-            NSDictionary *highlightAttributes = [theme titleTextAttributesForState:UIControlStateHighlighted];
-            NSDictionary *disableAttributes = [theme titleTextAttributesForState:UIControlStateDisabled];
-            if (nil != normalAttributes || normalAttributes.allKeys.count ? YES : NO) {
-                
-                NSAttributedString *normalAttributedString =
-                [[NSAttributedString alloc] initWithString:title
-                                                attributes:normalAttributes];
-                [barButton setAttributedTitle:normalAttributedString
-                                     forState:UIControlStateNormal];
-            } else {
-                
-            }
-            if (nil != highlightAttributes || highlightAttributes.allKeys.count ? YES : NO) {
-                
-                NSAttributedString *hightlightAttributedString =
-                [[NSAttributedString alloc] initWithString:title
-                                                attributes:highlightAttributes];
-                [barButton setAttributedTitle:hightlightAttributedString
-                                     forState:UIControlStateHighlighted];
-            }
-            if (nil != disableAttributes || highlightAttributes.allKeys.count ? YES : NO) {
-                
-                NSAttributedString *disableAttributedString =
-                [[NSAttributedString alloc] initWithString:title
-                                                attributes:disableAttributes];
-                [barButton setAttributedTitle:disableAttributedString
-                                     forState:UIControlStateDisabled];
-            }
-            if (nil == normalAttributes && nil == highlightAttributes && nil == disableAttributes) {
-                
-                barButton.titleLabel.font = [UIFont systemFontOfSize:16];
-                [barButton setTitleColor:LZColorWithHexString(@"#333333")
-                                forState:UIControlStateNormal];
-                [barButton setTitleColor:LZColorWithHexString(@"#333333")
-                                forState:UIControlStateHighlighted];
-                [barButton setTitleColor:LZColorWithHexString(@"#A8A8A8")
-                                forState:UIControlStateDisabled];
-            }
-            if (nil != normalImg && normalImg.length) {
-                
-                [barButton setImage:[self img:normalImg] forState:UIControlStateNormal];
-                [barButton setImage:[self img:highlightImg] forState:UIControlStateHighlighted];
-                [barButton setImage:[self img:disableImg] forState:UIControlStateDisabled];
-            }
+            NSAttributedString *normalAttributedString =
+            [[NSAttributedString alloc] initWithString:title
+                                            attributes:normalAttributes];
+            [barButton setAttributedTitle:normalAttributedString
+                                 forState:UIControlStateNormal];
         } else {
-            if (nil != normalImg && normalImg.length) {
-                
-                [barButton setBackgroundImage:[self img:normalImg] forState:UIControlStateNormal];
-                [barButton setBackgroundImage:[self img:highlightImg] forState:UIControlStateHighlighted];
-                [barButton setBackgroundImage:[self img:disableImg] forState:UIControlStateDisabled];
-            }
-        }
-        if (nil != barButton.currentImage || nil != barButton.currentTitle) {
             
-            barButton.frame = (CGRect){{0,0},barButton.currentImage.size};
-            if (nil != barButton.currentTitle) {
-                
-                CGSize titleSize = [title sizeWithAttributes:@{NSFontAttributeName:barButton.titleLabel.font}];
-                CGRect oldFrame = barButton.frame;
-                oldFrame.size.width = titleSize.width + barButton.currentImage.size.width;
-                if (0 == oldFrame.size.height) oldFrame.size.height = titleSize.height;
-                oldFrame.size.height = 28;
-                barButton.frame = oldFrame;
-            }
         }
-        if (nil != barButton.currentBackgroundImage) {
-            barButton.frame = (CGRect){{0,0},barButton.currentBackgroundImage.size};
+        if (nil != highlightAttributes || highlightAttributes.allKeys.count ? YES : NO) {
+            
+            NSAttributedString *hightlightAttributedString =
+            [[NSAttributedString alloc] initWithString:title
+                                            attributes:highlightAttributes];
+            [barButton setAttributedTitle:hightlightAttributedString
+                                 forState:UIControlStateHighlighted];
         }
-        [barButton addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
-        self.customView = barButton;
+        if (nil != disableAttributes || highlightAttributes.allKeys.count ? YES : NO) {
+            
+            NSAttributedString *disableAttributedString =
+            [[NSAttributedString alloc] initWithString:title
+                                            attributes:disableAttributes];
+            [barButton setAttributedTitle:disableAttributedString
+                                 forState:UIControlStateDisabled];
+        }
+        if (nil == normalAttributes && nil == highlightAttributes && nil == disableAttributes) {
+            
+            barButton.titleLabel.font = [UIFont systemFontOfSize:16];
+            [barButton setTitleColor:LZColorWithHexString(@"#333333")
+                            forState:UIControlStateNormal];
+            [barButton setTitleColor:LZColorWithHexString(@"#333333")
+                            forState:UIControlStateHighlighted];
+            [barButton setTitleColor:LZColorWithHexString(@"#A8A8A8")
+                            forState:UIControlStateDisabled];
+        }
+        if (nil != normalImg && normalImg.length) {
+            
+            [barButton setImage:[self img:normalImg] forState:UIControlStateNormal];
+            [barButton setImage:[self img:highlightImg] forState:UIControlStateHighlighted];
+            [barButton setImage:[self img:disableImg] forState:UIControlStateDisabled];
+        }
+    } else {
+        if (nil != normalImg && normalImg.length) {
+            
+            [barButton setBackgroundImage:[self img:normalImg] forState:UIControlStateNormal];
+            [barButton setBackgroundImage:[self img:highlightImg] forState:UIControlStateHighlighted];
+            [barButton setBackgroundImage:[self img:disableImg] forState:UIControlStateDisabled];
+        }
     }
-    
-    return self;
+    if (nil != barButton.currentImage || nil != barButton.currentTitle) {
+        
+        barButton.frame = (CGRect){{0,0},barButton.currentImage.size};
+        if (nil != barButton.currentTitle) {
+            
+            CGSize titleSize = [title sizeWithAttributes:@{NSFontAttributeName:barButton.titleLabel.font}];
+            CGRect oldFrame = barButton.frame;
+            oldFrame.size.width = titleSize.width + barButton.currentImage.size.width;
+            if (0 == oldFrame.size.height) oldFrame.size.height = titleSize.height;
+            oldFrame.size.height = 28;
+            barButton.frame = oldFrame;
+        }
+    }
+    if (nil != barButton.currentBackgroundImage) {
+        barButton.frame = (CGRect){{0,0},barButton.currentBackgroundImage.size};
+    }
+    [barButton addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *barBtnItem = [[UIBarButtonItem alloc] initWithCustomView:barButton];
+    barBtnItem.target = target;
+    barBtnItem.action = action;
+
+    return barBtnItem;
 }
 #pragma clang pop
 
@@ -208,6 +203,133 @@
     }
     
     return image;
+}
+
+@end
+
+@implementation UINavigationItem (HXExtension)
+
+#if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_6_1
+- (UIBarButtonItem *)leftBarButtonItem {
+    
+    __block UIBarButtonItem *leftItem = nil;
+    [self.leftBarButtonItems enumerateObjectsUsingBlock:^(UIBarButtonItem * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        
+        if ([obj.target respondsToSelector:obj.action]) {
+            
+            leftItem = obj;
+            *stop = YES;
+        }
+    }];
+    
+    return leftItem;
+}
+
+- (UIBarButtonItem *)rightBarButtonItem {
+    
+    __block UIBarButtonItem *rightItem = nil;
+    [self.rightBarButtonItems enumerateObjectsUsingBlock:^(UIBarButtonItem * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        
+        if ([obj.target respondsToSelector:obj.action]) {
+            
+            rightItem = obj;
+            *stop = YES;
+        }
+    }];
+    
+    return rightItem;
+}
+
+- (void)setLeftBarButtonItem:(UIBarButtonItem *)_leftBarButtonItem {
+    
+    if ([UIDevice currentDevice].systemVersion.floatValue >= 7.0 &&
+        nil != _leftBarButtonItem.customView) {
+        
+        UIBarButtonItem *negativeSeperator = [self fixedSpaceItem];
+        if (_leftBarButtonItem) {
+            [self setLeftBarButtonItems:@[negativeSeperator, _leftBarButtonItem]];
+        } else {
+            [self setLeftBarButtonItems:@[negativeSeperator]];
+        }
+    } else {
+        [self setLeftBarButtonItem:_leftBarButtonItem animated:NO];
+    }
+}
+
+- (void)setRightBarButtonItem:(UIBarButtonItem *)_rightBarButtonItem {
+    
+    if ([UIDevice currentDevice].systemVersion.floatValue >= 7.0 &&
+        nil != _rightBarButtonItem.customView) {
+        
+        UIBarButtonItem *negativeSeperator = [self fixedSpaceItem];
+        if (_rightBarButtonItem) {
+            [self setRightBarButtonItems:@[negativeSeperator, _rightBarButtonItem]];
+        } else {
+            [self setRightBarButtonItems:@[negativeSeperator]];
+        }
+    } else {
+        [self setRightBarButtonItem:_rightBarButtonItem animated:NO];
+    }
+}
+
+- (void)setLeftBarButtonItems:(NSArray<UIBarButtonItem *> *)_leftBarButtonItems {
+    
+    if ([UIDevice currentDevice].systemVersion.floatValue >= 7.0) {
+        
+        UIBarButtonItem *negativeSeperator = [self fixedSpaceItem];
+        if (_leftBarButtonItems && 0 < _leftBarButtonItems.count) {
+            
+            UIBarButtonItem *tempBarBtnItem = [_leftBarButtonItems firstObject];
+            if (tempBarBtnItem.customView) {
+                
+                NSMutableArray *tempArrM = [NSMutableArray arrayWithObject:negativeSeperator];
+                [tempArrM addObjectsFromArray:_leftBarButtonItems];
+                [self setLeftBarButtonItems:[tempArrM copy]];
+            } else {
+                [self setLeftBarButtonItems:_leftBarButtonItems animated:NO];
+            }
+        } else {
+            [self setLeftBarButtonItems:@[negativeSeperator]];
+        }
+    } else {
+        [self setLeftBarButtonItems:_leftBarButtonItems animated:NO];
+    }
+}
+
+- (void)setRightBarButtonItems:(NSArray<UIBarButtonItem *> *)_rightBarButtonItems {
+    
+    if ([UIDevice currentDevice].systemVersion.floatValue >= 7.0) {
+        
+        UIBarButtonItem *negativeSeperator = [self fixedSpaceItem];
+        if (_rightBarButtonItems && 0 < _rightBarButtonItems.count) {
+            
+            UIBarButtonItem *tempBarBtnItem = [_rightBarButtonItems firstObject];
+            if (tempBarBtnItem.customView) {
+                
+                NSMutableArray *tempArrM = [NSMutableArray arrayWithObject:negativeSeperator];
+                [tempArrM addObjectsFromArray:_rightBarButtonItems];
+                [self setRightBarButtonItems:[tempArrM copy]];
+            } else {
+                [self setRightBarButtonItems:_rightBarButtonItems animated:NO];
+            }
+        } else {
+            [self setRightBarButtonItems:@[negativeSeperator]];
+        }
+    } else {
+        [self setRightBarButtonItems:_rightBarButtonItems animated:NO];
+    }
+}
+#endif
+
+//MARK: - Private
+- (UIBarButtonItem *)fixedSpaceItem {
+    
+    UIBarButtonItem *seperator = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
+                                                                               target:nil
+                                                                               action:nil];
+    seperator.width = -7;
+    
+    return seperator;
 }
 
 @end
