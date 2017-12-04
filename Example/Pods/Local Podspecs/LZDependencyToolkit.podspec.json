@@ -17,8 +17,8 @@
   },
   "social_media_url": "https://github.com/liLeiBest",
   "frameworks": [
-    "Foundation",
-    "UIKit"
+    "UIKit",
+    "Foundation"
   ],
   "requires_arc": true,
   "platforms": {
@@ -31,7 +31,10 @@
       "name": "Category",
       "source_files": "LZDependencyToolkit/Classes/Category/*.{h,m}",
       "public_header_files": "LZDependencyToolkit/Classes/Category/*.h",
-      "frameworks": "CoreGraphics",
+      "frameworks": [
+        "CoreGraphics",
+        "QuartzCore"
+      ],
       "dependencies": {
         "MJRefresh": [
 

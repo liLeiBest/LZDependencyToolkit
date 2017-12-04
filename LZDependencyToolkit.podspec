@@ -8,7 +8,7 @@ Pod::Spec.new do |s|
     s.author           = { 'lilei' => 'lilei_hapy@163.com' }
     s.source           = { :git => 'https://github.com/liLeiBest/LZDependencyToolkit.git', :tag => s.version.to_s }
     s.social_media_url = 'https://github.com/liLeiBest'
-    s.frameworks       = 'Foundation','UIKit'
+    s.frameworks       = 'UIKit', 'Foundation'
     s.requires_arc     = true
     s.ios.deployment_target = '8.0'
 
@@ -18,7 +18,7 @@ Pod::Spec.new do |s|
     s.subspec 'Category' do |category|
         category.source_files        = 'LZDependencyToolkit/Classes/Category/*.{h,m}'
         category.public_header_files = 'LZDependencyToolkit/Classes/Category/*.h'
-        category.frameworks          = 'CoreGraphics'
+        category.frameworks          = 'CoreGraphics', 'QuartzCore'
         category.dependency 'MJRefresh'
         category.dependency 'DZNEmptyDataSet'
     end

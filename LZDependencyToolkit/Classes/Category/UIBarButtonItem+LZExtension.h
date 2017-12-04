@@ -14,8 +14,6 @@
  UIBarButtonItem 分类
  
  @discussion 扩展 UIBarButtonItem 的实例方法，可以通过其父类的 setTitleTextAttributes:forState: 设置各种状态的文字颜色
- @remark 需要保存实例的 UIBarButtonItem，然后才能设置其 hidden 和 enable 属性；或者 self.navigationItem.leftBarButtonItems = @[实例]，可以直接使用 self.navigationItem.leftBarButtonItem 设置其 hidden 和 enable 属性（应该是系统的 Bug）
- @code @property (weak, nonatomic) UIBarButtonItem *myLeftNavigationItem;
  */
 @interface UIBarButtonItem (LZExtension)
 
@@ -53,9 +51,5 @@
 + (UIBarButtonItem *)itemWithTitle:(NSString *)title
                             target:(id)target
                             action:(SEL)action;
-
-@end
-
-@interface UINavigationItem (LZExtension)
 
 @end
