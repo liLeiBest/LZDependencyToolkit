@@ -1,16 +1,16 @@
 PODS:
   - DZNEmptyDataSet (1.8.1)
-  - LZDependencyToolkit (1.0.4):
-    - LZDependencyToolkit/Category (= 1.0.4)
-    - LZDependencyToolkit/Struct (= 1.0.4)
-  - LZDependencyToolkit/Category (1.0.4):
+  - LZDependencyToolkit (1.0.5):
+    - LZDependencyToolkit/Category (= 1.0.5)
+    - LZDependencyToolkit/Struct (= 1.0.5)
+  - LZDependencyToolkit/Category (1.0.5):
     - DZNEmptyDataSet
     - MJRefresh
-  - LZDependencyToolkit/Struct (1.0.4):
-    - LZDependencyToolkit/Struct/AppUnit (= 1.0.4)
-    - LZDependencyToolkit/Struct/DeviceUnit (= 1.0.4)
-  - LZDependencyToolkit/Struct/AppUnit (1.0.4)
-  - LZDependencyToolkit/Struct/DeviceUnit (1.0.4)
+  - LZDependencyToolkit/Struct (1.0.5):
+    - LZDependencyToolkit/Struct/AppUnit (= 1.0.5)
+    - LZDependencyToolkit/Struct/DeviceUnit (= 1.0.5)
+  - LZDependencyToolkit/Struct/AppUnit (1.0.5)
+  - LZDependencyToolkit/Struct/DeviceUnit (1.0.5)
   - MJRefresh (3.1.15.1)
 
 DEPENDENCIES:
@@ -22,7 +22,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
-  LZDependencyToolkit: 7f8a229d98b91250239ded1614bf2cbac9a992d4
+  LZDependencyToolkit: 1899c24ef1cae20b2447b986bc19dfb4faf87324
   MJRefresh: 5f8552bc25ca8751c010f621c1098dbdaacbccd6
 
 PODFILE CHECKSUM: b0c7171b0652b3b2aaf1354b7fc5599d83f886ac
