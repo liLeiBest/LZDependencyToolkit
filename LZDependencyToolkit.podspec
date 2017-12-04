@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
     s.name             = 'LZDependencyToolkit'
-    s.version          = '1.0.3'
+    s.version          = '1.0.4'
     s.summary          = 'A short description of LZDependencyToolkit.'
     s.description      = '工具箱'
     s.homepage         = 'https://github.com/liLeiBest/LZDependencyToolkit'
@@ -18,6 +18,7 @@ Pod::Spec.new do |s|
     s.subspec 'Category' do |category|
         category.source_files        = 'LZDependencyToolkit/Classes/Category/*.{h,m}'
         category.public_header_files = 'LZDependencyToolkit/Classes/Category/*.h'
+        category.frameworks          = 'CoreGraphics'
         category.dependency 'MJRefresh'
         category.dependency 'DZNEmptyDataSet'
     end

@@ -1,6 +1,6 @@
 {
   "name": "LZDependencyToolkit",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "summary": "A short description of LZDependencyToolkit.",
   "description": "工具箱",
   "homepage": "https://github.com/liLeiBest/LZDependencyToolkit",
@@ -13,7 +13,7 @@
   },
   "source": {
     "git": "https://github.com/liLeiBest/LZDependencyToolkit.git",
-    "tag": "1.0.3"
+    "tag": "1.0.4"
   },
   "social_media_url": "https://github.com/liLeiBest",
   "frameworks": [
@@ -31,6 +31,7 @@
       "name": "Category",
       "source_files": "LZDependencyToolkit/Classes/Category/*.{h,m}",
       "public_header_files": "LZDependencyToolkit/Classes/Category/*.h",
+      "frameworks": "CoreGraphics",
       "dependencies": {
         "MJRefresh": [
 
