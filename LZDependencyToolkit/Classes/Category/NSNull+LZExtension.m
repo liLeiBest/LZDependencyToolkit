@@ -11,23 +11,22 @@
 
 @implementation NSNull (LZExtension)
 
-- (id)forwardingTargetForSelector:(SEL)aSelector
-{
+- (id)forwardingTargetForSelector:(SEL)aSelector {
+    
     // 处理 NSNumber,NSString,NSArray,NSDictionary
     NSArray *supporttedTypes = @[@"NSNumber",
                                  @"NSString",
                                  @"NSArray",
                                  @"NSDictionary"];
     
-    for (NSUInteger i = 0; i < 4; ++i)
-    {
+    for (NSUInteger i = 0; i < 4; ++i) {
+        
         Method m = class_getInstanceMethod(NSClassFromString(supporttedTypes[i]) , aSelector);
         const char *returnType = method_copyReturnType(m);
-        if (returnType)
-        {
+        if (returnType) {
+            
             free((void *)returnType);
-            switch (i)
-            {
+            switch (i) {
                 case 0:
                     return @(0);
                 case 1:

@@ -53,6 +53,6 @@
 
 @end
 
-@interface UINavigationItem (HXExtension)
+@interface UINavigationItem (LZExtension)
 
 @end

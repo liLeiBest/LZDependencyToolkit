@@ -10,20 +10,22 @@
 #import "UIScrollView+EmptyDataSet.h"
 #import "UIImage+LZInstance.h"
 #import "UIColor+LZExtension.h"
-#import <objc/runtime.h>
+#import "NSObject+LZRuntime.h"
 
 @interface LZWeakObjectContainer : NSObject
+
 @property (nonatomic, readonly, strong) id weakObject;
 
+/** 构造方法 */
 - (instancetype)initWithWeakObject:(id)object;
+
 @end
 
 @implementation LZWeakObjectContainer
 
-- (instancetype)initWithWeakObject:(id)object
-{
-    if (self = [super init])
-    {
+- (instancetype)initWithWeakObject:(id)object {
+    
+    if (self = [super init]) {
         _weakObject = object;
     }
     
@@ -42,137 +44,150 @@ static char const * const kEmptyDataSetButtonTitleColor = "emptyDataSetButtonTit
 static char const * const kEmptyDataSetButtonBackgroundColor = "emptyDataSetButtonBackgroundColor";
 static char const * const kEmptyDataSetButtonBackgroundImage = "emptyDataSetButtonBackgroundImage";
 
-@interface UIViewController ()<DZNEmptyDataSetSource, DZNEmptyDataSetDelegate>
+@interface UIViewController (LZEmptyDataSet)<DZNEmptyDataSetSource, DZNEmptyDataSetDelegate>
 @end
 
 @implementation UIViewController (LZEmptyDataSet)
 
-- (UIImage *)emptyDataSetImage
-{
-    LZWeakObjectContainer *container = objc_getAssociatedObject(self, kEmptyDataSetImage);
+//MARK: - Public
+//MARK: Setter/Getter
+- (UIImage *)emptyDataSetImage {
+    
+    LZWeakObjectContainer *container = LZ_getAssociatedObject(self, kEmptyDataSetImage);
+    
     return container.weakObject;
 }
 
-- (void)setEmptyDataSetImage:(UIImage *)emptyDataSetImage
-{
-    objc_setAssociatedObject(self, kEmptyDataSetImage, [[LZWeakObjectContainer alloc] initWithWeakObject:emptyDataSetImage], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+- (void)setEmptyDataSetImage:(UIImage *)emptyDataSetImage {
+    
+    LZ_setAssociatedObject(self, kEmptyDataSetImage, [[LZWeakObjectContainer alloc] initWithWeakObject:emptyDataSetImage]);
 }
 
-- (NSString *)emptyDataSetTitle
-{
-    LZWeakObjectContainer *container = objc_getAssociatedObject(self, kEmptyDataSetTitle);
+- (NSString *)emptyDataSetTitle {
+    
+    LZWeakObjectContainer *container = LZ_getAssociatedObject(self, kEmptyDataSetTitle);
+    
     return container.weakObject;
 }
 
-- (void)setEmptyDataSetTitle:(NSString *)emptyDataSetTitle
-{
-    objc_setAssociatedObject(self, kEmptyDataSetTitle, [[LZWeakObjectContainer alloc] initWithWeakObject:emptyDataSetTitle], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+- (void)setEmptyDataSetTitle:(NSString *)emptyDataSetTitle {
+    
+    LZ_setAssociatedObject(self, kEmptyDataSetTitle, [[LZWeakObjectContainer alloc] initWithWeakObject:emptyDataSetTitle]);
 }
 
-- (UIColor *)emptyDataSetTitleColor
-{
-    LZWeakObjectContainer *container = objc_getAssociatedObject(self, kEmptyDataSetTitleColor);
+- (UIColor *)emptyDataSetTitleColor {
+    
+    LZWeakObjectContainer *container = LZ_getAssociatedObject(self, kEmptyDataSetTitleColor);
+    
     return container.weakObject;
 }
 
-- (void)setEmptyDataSetTitleColor:(UIColor *)emptyDataSetTitleColor
-{
-    objc_setAssociatedObject(self, kEmptyDataSetTitleColor, [[LZWeakObjectContainer alloc] initWithWeakObject:emptyDataSetTitleColor], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+- (void)setEmptyDataSetTitleColor:(UIColor *)emptyDataSetTitleColor {
+    
+    LZ_setAssociatedObject(self, kEmptyDataSetTitleColor, [[LZWeakObjectContainer alloc] initWithWeakObject:emptyDataSetTitleColor]);
 }
 
-- (NSString *)emptyDataSetDetail
-{
-    LZWeakObjectContainer *container = objc_getAssociatedObject(self, kEmptyDataSetDetail);
+- (NSString *)emptyDataSetDetail {
+    
+    LZWeakObjectContainer *container = LZ_getAssociatedObject(self, kEmptyDataSetDetail);
+    
     return container.weakObject;
 }
 
-- (void)setEmptyDataSetDetail:(NSString *)emptyDataSetDetail
-{
-    objc_setAssociatedObject(self, kEmptyDataSetDetail, [[LZWeakObjectContainer alloc] initWithWeakObject:emptyDataSetDetail], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+- (void)setEmptyDataSetDetail:(NSString *)emptyDataSetDetail {
+    
+    LZ_setAssociatedObject(self, kEmptyDataSetDetail, [[LZWeakObjectContainer alloc] initWithWeakObject:emptyDataSetDetail]);
 }
 
-- (UIColor *)emptyDataSetDetailColor
-{
-    LZWeakObjectContainer *container = objc_getAssociatedObject(self, kEmptyDataSetDetailColor);
+- (UIColor *)emptyDataSetDetailColor {
+    
+    LZWeakObjectContainer *container = LZ_getAssociatedObject(self, kEmptyDataSetDetailColor);
+    
     return container.weakObject;
 }
 
-- (void)setEmptyDataSetDetailColor:(UIColor *)emptyDataSetDetailColor
-{
-    objc_setAssociatedObject(self, kEmptyDataSetDetailColor, [[LZWeakObjectContainer alloc] initWithWeakObject:emptyDataSetDetailColor], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+- (void)setEmptyDataSetDetailColor:(UIColor *)emptyDataSetDetailColor {
+    
+    LZ_setAssociatedObject(self, kEmptyDataSetDetailColor, [[LZWeakObjectContainer alloc] initWithWeakObject:emptyDataSetDetailColor]);
 }
 
-- (NSString *)emptyDataSetButtonTitle
-{
-    LZWeakObjectContainer *container = objc_getAssociatedObject(self, kEmptyDataSetButtonTitle);
+- (NSString *)emptyDataSetButtonTitle {
+    
+    LZWeakObjectContainer *container = LZ_getAssociatedObject(self, kEmptyDataSetButtonTitle);
+    
     return container.weakObject;
 }
 
-- (void)setEmptyDataSetButtonTitle:(NSString *)emptyDataSetButtonTitle
-{
-    objc_setAssociatedObject(self, kEmptyDataSetButtonTitle, [[LZWeakObjectContainer alloc] initWithWeakObject:emptyDataSetButtonTitle], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+- (void)setEmptyDataSetButtonTitle:(NSString *)emptyDataSetButtonTitle {
+    
+    LZ_setAssociatedObject(self, kEmptyDataSetButtonTitle, [[LZWeakObjectContainer alloc] initWithWeakObject:emptyDataSetButtonTitle]);
 }
 
-- (UIColor *)emptyDataSetButtonTitleColor
-{
-    LZWeakObjectContainer *container = objc_getAssociatedObject(self, kEmptyDataSetButtonTitleColor);
+- (UIColor *)emptyDataSetButtonTitleColor {
+    
+    LZWeakObjectContainer *container = LZ_getAssociatedObject(self, kEmptyDataSetButtonTitleColor);
+    
     return container.weakObject;
 }
 
-- (void)setEmptyDataSetButtonTitleColor:(UIColor *)emptyDataSetButtonTitleColor
-{
-    objc_setAssociatedObject(self, kEmptyDataSetButtonTitleColor, [[LZWeakObjectContainer alloc] initWithWeakObject:emptyDataSetButtonTitleColor], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+- (void)setEmptyDataSetButtonTitleColor:(UIColor *)emptyDataSetButtonTitleColor {
+    
+    LZ_setAssociatedObject(self, kEmptyDataSetButtonTitleColor, [[LZWeakObjectContainer alloc] initWithWeakObject:emptyDataSetButtonTitleColor]);
 }
 
-- (NSString *)emptyDataSetButtonBackgroundColor
-{
-    LZWeakObjectContainer *container = objc_getAssociatedObject(self, kEmptyDataSetButtonBackgroundColor);
+- (NSString *)emptyDataSetButtonBackgroundColor {
+    
+    LZWeakObjectContainer *container = LZ_getAssociatedObject(self, kEmptyDataSetButtonBackgroundColor);
+    
     return container.weakObject;
 }
 
-- (void)setEmptyDataSetButtonBackgroundColor:(NSString *)emptyDataSetButtonBackgroundColor
-{
-    objc_setAssociatedObject(self, kEmptyDataSetButtonBackgroundColor, [[LZWeakObjectContainer alloc] initWithWeakObject:emptyDataSetButtonBackgroundColor], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+- (void)setEmptyDataSetButtonBackgroundColor:(NSString *)emptyDataSetButtonBackgroundColor {
+    
+    LZ_setAssociatedObject(self, kEmptyDataSetButtonBackgroundColor, [[LZWeakObjectContainer alloc] initWithWeakObject:emptyDataSetButtonBackgroundColor]);
 }
 
-- (UIImage *)emptyDataSetButtonBackgroundImage
-{
-    LZWeakObjectContainer *container = objc_getAssociatedObject(self, kEmptyDataSetButtonBackgroundImage);
+- (UIImage *)emptyDataSetButtonBackgroundImage {
+    
+    LZWeakObjectContainer *container = LZ_getAssociatedObject(self, kEmptyDataSetButtonBackgroundImage);
+    
     return container.weakObject;
 }
 
-- (void)setEmptyDataSetButtonBackgroundImage:(UIImage *)emptyDataSetButtonBackgroundImage
-{
-    objc_setAssociatedObject(self, kEmptyDataSetButtonBackgroundImage, [[LZWeakObjectContainer alloc] initWithWeakObject:emptyDataSetButtonBackgroundImage], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+- (void)setEmptyDataSetButtonBackgroundImage:(UIImage *)emptyDataSetButtonBackgroundImage {
+    
+    LZ_setAssociatedObject(self, kEmptyDataSetButtonBackgroundImage, [[LZWeakObjectContainer alloc] initWithWeakObject:emptyDataSetButtonBackgroundImage]);
 }
 
-/** 设置空白页 */
-- (void)showEmptyDataSet:(UIScrollView *)scrollView
-{
+//MARK: Method
+- (void)showEmptyDataSet:(UIScrollView *)scrollView {
+    
     scrollView.emptyDataSetSource = self;
     scrollView.emptyDataSetDelegate = self;
     [scrollView reloadEmptyDataSet];
 }
 
-- (void)hideEmptyDataSet:(UIScrollView *)scrollView
-{
+- (void)hideEmptyDataSet:(UIScrollView *)scrollView {
+    
     scrollView.emptyDataSetSource = nil;
     scrollView.emptyDataSetDelegate = nil;
 }
 
-- (NSAttributedString *)LZEmptyDataSetTitleAttribute:(NSString *)title
-{
+//MARK: - Private
+- (NSAttributedString *)emptyDataTitleAttribute:(NSString *)title {
+    
     NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
     [attributes setObject:[UIFont systemFontOfSize:15]
                    forKey:NSFontAttributeName];
     [attributes setObject:self.emptyDataSetTitleColor ? self.emptyDataSetTitleColor : [UIColor lightGrayColor]
                    forKey:NSForegroundColorAttributeName];
+    
     return [[NSAttributedString alloc] initWithString:title
                                            attributes:attributes];
 }
 
-- (NSAttributedString *)LZEmptyDataSetDetailAttribute:(NSString *)detail
-{
+- (NSAttributedString *)emptyDataDetailAttribute:(NSString *)detail {
+    
     NSMutableParagraphStyle *paragraph = [[NSMutableParagraphStyle alloc] init];
     paragraph.lineBreakMode = NSLineBreakByWordWrapping;
     paragraph.alignment = NSTextAlignmentCenter;
@@ -183,64 +198,66 @@ static char const * const kEmptyDataSetButtonBackgroundImage = "emptyDataSetButt
                    forKey:NSForegroundColorAttributeName];
     [attributes setObject:paragraph
                    forKey:NSParagraphStyleAttributeName];
+    
     return [[NSMutableAttributedString alloc] initWithString:detail
                                                   attributes:attributes];
 }
 
-- (NSAttributedString *)LZEmptyDataSetButtonTitleAttribute:(NSString *)title
-{
+- (NSAttributedString *)LZEmptyDataSetButtonTitleAttribute:(NSString *)title {
+    
     NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
     [attributes setObject:[UIFont systemFontOfSize:13]
                    forKey:NSFontAttributeName];
     [attributes setObject:self.emptyDataSetButtonTitleColor ? self.emptyDataSetButtonTitleColor : [UIColor whiteColor]
                    forKey:NSForegroundColorAttributeName];
+    
     return [[NSAttributedString alloc] initWithString:title
                                            attributes:attributes];
 }
 
-#pragma mark - DZNEmptyDataSet
-#pragma mark <DZNEmptyDataSetSource>
-- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView
-{
+//MARK: - DZNEmptyDataSet
+//MARK: <DZNEmptyDataSetSource>
+- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
+    
     return self.emptyDataSetImage;
 }
 
-- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView
-{
-    if (nil != self.emptyDataSetTitle && self.emptyDataSetTitle.length)
-    {        
-        return [self LZEmptyDataSetTitleAttribute:self.emptyDataSetTitle];
+- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView {
+    
+    if (nil != self.emptyDataSetTitle && self.emptyDataSetTitle.length) {
+        return [self emptyDataTitleAttribute:self.emptyDataSetTitle];
     }
+    
     return nil;
 }
 
-- (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView
-{
-    if (nil != self.emptyDataSetDetail && self.emptyDataSetDetail.length)
-    {
-        return [self LZEmptyDataSetDetailAttribute:self.emptyDataSetDetail];
+- (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView {
+    
+    if (nil != self.emptyDataSetDetail && self.emptyDataSetDetail.length) {
+        return [self emptyDataDetailAttribute:self.emptyDataSetDetail];
     }
+    
     return nil;
 }
 
-- (NSAttributedString *)buttonTitleForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state
-{
-    if (nil != self.emptyDataSetButtonTitle && self.emptyDataSetButtonTitle.length)
-    {
+- (NSAttributedString *)buttonTitleForEmptyDataSet:(UIScrollView *)scrollView
+                                          forState:(UIControlState)state {
+    
+    if (nil != self.emptyDataSetButtonTitle && self.emptyDataSetButtonTitle.length) {
         return [self LZEmptyDataSetButtonTitleAttribute:self.emptyDataSetButtonTitle];
     }
+    
     return nil;
 }
 
-- (UIImage *)buttonBackgroundImageForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state
-{
-    if (nil != self.emptyDataSetButtonBackgroundImage)
-    {
+- (UIImage *)buttonBackgroundImageForEmptyDataSet:(UIScrollView *)scrollView
+                                         forState:(UIControlState)state {
+    
+    if (nil != self.emptyDataSetButtonBackgroundImage) {
         return self.emptyDataSetButtonBackgroundImage;
     }
     
-    if (nil != self.emptyDataSetButtonBackgroundColor && self.emptyDataSetButtonBackgroundColor.length)
-    {
+    if (nil != self.emptyDataSetButtonBackgroundColor && self.emptyDataSetButtonBackgroundColor.length) {
         return [UIImage imageWithColor:[UIColor colorWithHexString:self.emptyDataSetButtonBackgroundColor]
                                   size:CGSizeMake(100, 100)];
     }
@@ -248,67 +265,60 @@ static char const * const kEmptyDataSetButtonBackgroundImage = "emptyDataSetButt
     return nil;
 }
 
-- (UIColor *)backgroundColorForEmptyDataSet:(UIScrollView *)scrollView
-{
+- (UIColor *)backgroundColorForEmptyDataSet:(UIScrollView *)scrollView {
     return [UIColor clearColor];
 }
 
-- (UIView *)customViewForEmptyDataSet:(UIScrollView *)scrollView
-{
-    if ([self respondsToSelector:@selector(emptyDataCustomView)])
-    {
-        UIView *customView = [self emptyDataCustomView];
+- (UIView *)customViewForEmptyDataSet:(UIScrollView *)scrollView {
+    
+    if ([self respondsToSelector:@selector(emptyDataCustomView)]) {
         
+        UIView *customView = [self emptyDataCustomView];
         NSAssert(nil != customView, @"自定义 View 不能为空");
         
         return customView;
     }
+    
     return nil;
 }
 
-- (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView
-{    
+- (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView {
     return -scrollView.contentOffset.y * 0.5;
 }
 
-- (CGFloat)spaceHeightForEmptyDataSet:(UIScrollView *)scrollView
-{
+- (CGFloat)spaceHeightForEmptyDataSet:(UIScrollView *)scrollView {
     return 0.0;
 }
 
-#pragma mark <DZNEmptyDataSetDelegate>
-- (BOOL)emptyDataSetShouldDisplay:(UIScrollView *)scrollView
-{
+//MARK: <DZNEmptyDataSetDelegate>
+- (BOOL)emptyDataSetShouldDisplay:(UIScrollView *)scrollView {
     return YES;
 }
 
-- (BOOL)emptyDataSetShouldAllowTouch:(UIScrollView *)scrollView
-{
+- (BOOL)emptyDataSetShouldAllowTouch:(UIScrollView *)scrollView {
     return YES;
 }
 
-- (BOOL)emptyDataSetShouldAllowScroll:(UIScrollView *)scrollView
-{
+- (BOOL)emptyDataSetShouldAllowScroll:(UIScrollView *)scrollView {
     return NO;
 }
 
-- (BOOL)emptyDataSetShouldAnimateImageView:(UIScrollView *)scrollView
-{
+- (BOOL)emptyDataSetShouldAnimateImageView:(UIScrollView *)scrollView {
     return YES;
 }
 
-- (void)emptyDataSet:(UIScrollView *)scrollView didTapView:(UIView *)view
-{
-    if ([self respondsToSelector:@selector(emptyDidTapView)])
-    {
+- (void)emptyDataSet:(UIScrollView *)scrollView
+          didTapView:(UIView *)view {
+    
+    if ([self respondsToSelector:@selector(emptyDidTapView)]) {
         [self emptyDidTapView];
     }
 }
 
-- (void)emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button
-{
-    if ([self respondsToSelector:@selector(emptyDidTapButton)])
-    {
+- (void)emptyDataSet:(UIScrollView *)scrollView
+        didTapButton:(UIButton *)button {
+    
+    if ([self respondsToSelector:@selector(emptyDidTapButton)]) {
         [self emptyDidTapButton];
     }
 }

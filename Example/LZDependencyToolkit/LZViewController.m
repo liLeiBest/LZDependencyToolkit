@@ -18,8 +18,7 @@
 
 @implementation LZViewController
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     
     [self setupNavBarItem];
@@ -50,8 +49,8 @@
 }
 
 // MARK: - Private
-- (void)setupNavBarItem
-{
+- (void)setupNavBarItem {
+    
     self.navigationItem.leftBarButtonItem =
     [UIBarButtonItem itemWithTitle:@"左边按钮"
                        normalImage:@"fda"

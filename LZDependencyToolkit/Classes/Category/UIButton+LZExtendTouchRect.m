@@ -7,54 +7,50 @@
 //
 
 #import "UIButton+LZExtendTouchRect.h"
-#import <objc/runtime.h>
+#import "NSObject+LZRuntime.h"
 
-void Swizzle(Class c, SEL orig, SEL new)
-{
-    Method origMethod = class_getInstanceMethod(c, orig);
-    Method newMethod = class_getInstanceMethod(c, new);
-    if (class_addMethod(c, orig, method_getImplementation(newMethod), method_getTypeEncoding(newMethod))){
-        class_replaceMethod(c, new, method_getImplementation(origMethod), method_getTypeEncoding(origMethod));
-    } else {
-        method_exchangeImplementations(origMethod, newMethod);
-    }
+@implementation UIButton (LZExtendTouchRect)
+
+//MARK: - runtime
++ (void)load {
+    
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        
+        SEL originSelector = @selector(pointInside:withEvent:);
+        SEL swizzleSelector = @selector(LZ_pointInside:withEvent:);
+        LZ_exchangeInstanceMethod(self, originSelector, swizzleSelector);
+    });
 }
 
-@implementation UIView (LZExtendTouchRect)
-
-+ (void)load
-{
-    Swizzle(self,
-            @selector(pointInside:withEvent:),
-            @selector(myPointInside:withEvent:));
-}
-
-- (BOOL)myPointInside:(CGPoint)point withEvent:(UIEvent *)event
-{
-    if (UIEdgeInsetsEqualToEdgeInsets(self.touchExtendInset, UIEdgeInsetsZero) ||
+- (BOOL)LZ_pointInside:(CGPoint)point withEvent:(UIEvent *)event {
+    
+    UIEdgeInsets edgeInsets = self.touchExtendInset;
+    if (UIEdgeInsetsEqualToEdgeInsets(edgeInsets, UIEdgeInsetsZero) ||
         self.hidden ||
-        ([self isKindOfClass:UIControl.class] && !((UIControl *)self).enabled))
-    {
-        return [self myPointInside:point withEvent:event];
+        ([self isKindOfClass:UIControl.class] && !((UIControl *)self).enabled)) {
+        return [super pointInside:point withEvent:event];
     }
-    CGRect hitFrame = UIEdgeInsetsInsetRect(self.bounds, self.touchExtendInset);
+    CGRect hitFrame = UIEdgeInsetsInsetRect(self.bounds, edgeInsets);
     hitFrame.size.width = MAX(hitFrame.size.width, 0);
     hitFrame.size.height = MAX(hitFrame.size.height, 0);
     
     return CGRectContainsPoint(hitFrame, point);
 }
 
-static char touchExtendInsetKey;
-- (void)setTouchExtendInset:(UIEdgeInsets)touchExtendInset
-{
-    objc_setAssociatedObject(self, &touchExtendInsetKey,
-                             [NSValue valueWithUIEdgeInsets:touchExtendInset],
-                             OBJC_ASSOCIATION_RETAIN);
+//MARK: - Setter、Getter
+- (void)setTouchExtendInset:(UIEdgeInsets)touchExtendInset {
+    LZ_setAssociatedObject(self, _cmd, [NSValue valueWithUIEdgeInsets:touchExtendInset]);
 }
 
-- (UIEdgeInsets)touchExtendInset
-{
-    return [objc_getAssociatedObject(self, &touchExtendInsetKey) UIEdgeInsetsValue];
+- (UIEdgeInsets)touchExtendInset {
+    
+    NSValue *value = LZ_getAssociatedObject(self, @selector(setTouchExtendInset:));
+    if (value) {
+        return [value UIEdgeInsetsValue];
+    } else {
+        return UIEdgeInsetsZero;
+    }
 }
 
 @end

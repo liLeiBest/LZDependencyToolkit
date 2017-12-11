@@ -8,21 +8,25 @@
 
 #import "UIImage+LZRuntime.h"
 #import "UIImage+LZInstance.h"
-#import <objc/runtime.h>
+#import "NSObject+LZRuntime.h"
 
 @implementation UIImage (LZRuntime)
 
-+ (void)load
-{
-    Method exchangeMethod = class_getClassMethod(self, @selector(imageWithName:));
-    Method originMethod = class_getClassMethod(self, @selector(imageNamed:));
-    method_exchangeImplementations(exchangeMethod, originMethod);
++ (void)load {
+    
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        
+        SEL originSelector = @selector(imageNamed:);
+        SEL swizzleSelector = @selector(LZ_imageNamed:);
+        LZ_exchangeClassMethod(self, originSelector, swizzleSelector);
+    });
 }
 
-+ (UIImage *)imageWithName:(NSString *)name
-{
++ (UIImage *)LZ_imageNamed:(NSString *)name {
+    
     if (![name isKindOfClass:[NSString class]]) name = @"";
-    UIImage *img = [UIImage imageWithName:name];
+    UIImage *img = [UIImage LZ_imageNamed:name];
     if (nil == img) return [UIImage imageWithString:name size:CGSizeMake(100.0, 100.0)];
     
     return img;

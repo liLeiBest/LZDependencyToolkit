@@ -8,7 +8,7 @@
 
 #import "UIBarButtonItem+LZExtension.h"
 #import <CoreGraphics/CGGeometry.h>
-#import <objc/runtime.h>
+#import "NSObject+LZRuntime.h"
 #import "UIColor+LZExtension.h"
 #import "UIImage+LZClipping.h"
 
@@ -19,17 +19,10 @@
     
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        Class class = [self class];
+        
         SEL originSelector = @selector(setTitleTextAttributes:forState:);
         SEL swizzleSelector = @selector(LZ_setTitleTextAttributes:forState:);
-        Method originMethod = class_getInstanceMethod(class, originSelector);
-        Method swizzleMethod = class_getInstanceMethod(class, swizzleSelector);
-        BOOL exit = class_addMethod(class, swizzleSelector, method_getImplementation(swizzleMethod), method_getTypeEncoding(swizzleMethod));
-        if (exit) {
-            class_replaceMethod(self, originSelector, method_getImplementation(swizzleMethod), method_getTypeEncoding(swizzleMethod));
-        } else {
-            method_exchangeImplementations(originMethod, swizzleMethod);
-        }
+        LZ_exchangeInstanceMethod(self, originSelector, swizzleSelector);
     });
 }
 
@@ -207,7 +200,7 @@
 
 @end
 
-@implementation UINavigationItem (HXExtension)
+@implementation UINavigationItem (LZExtension)
 
 #if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_6_1
 - (UIBarButtonItem *)leftBarButtonItem {

@@ -5,7 +5,7 @@
 
 #import "NSDate+LZExtension.h"
 #import "NSNull+LZExtension.h"
-#import "NSObject+LZDescription.h"
+#import "NSObject+LZRuntime.h"
 #import "NSString+LZEmoji.h"
 #import "NSString+LZPinYin.h"
 #import "NSString+LZRegular.h"
