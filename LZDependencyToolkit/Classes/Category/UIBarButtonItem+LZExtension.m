@@ -59,7 +59,7 @@
     UIButton *barButton = [UIButton buttonWithType:UIButtonTypeCustom];
     barButton.opaque = YES;
     barButton.backgroundColor = [UIColor clearColor];
-    barButton.adjustsImageWhenDisabled = YES;
+    barButton.adjustsImageWhenDisabled = nil == disableImg || 0 == disableImg.length ? YES : NO;
     barButton.adjustsImageWhenHighlighted = NO;
     barButton.imageView.contentMode = UIViewContentModeLeft;
     
