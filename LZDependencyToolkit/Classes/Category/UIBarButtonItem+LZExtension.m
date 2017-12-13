@@ -33,6 +33,9 @@
         
         if ([customView isKindOfClass:[UIButton class]]) {
             UIButton *tempBtn = (UIButton *)customView;
+            if (nil == tempBtn.currentTitle && 0 == tempBtn.currentTitle.length) {
+                return;
+            }
             NSAttributedString *attributedStr = [[NSAttributedString alloc] initWithString:tempBtn.currentTitle
                                                                                 attributes:attributes];
             [tempBtn setAttributedTitle:attributedStr forState:state];
