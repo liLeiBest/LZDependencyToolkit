@@ -45,6 +45,15 @@
     }
 }
 
+//MARK: - Getter/Setter
+- (BOOL)isHidden {
+    return self.customView.isHidden;
+}
+
+- (void)setHidden:(BOOL)hidden {
+    self.customView.hidden = hidden;
+}
+
 //MARK: - Public
 /** 创建一个自定义导航按钮(标题、默认状态图片、高亮状态图片、代理、点击事件) */
 #pragma clang push
@@ -238,6 +247,10 @@
 
 - (void)setLeftBarButtonItem:(UIBarButtonItem *)_leftBarButtonItem {
     
+    if (nil == _leftBarButtonItem || nil != self.leftBarButtonItem) {
+        [self setLeftBarButtonItems:nil];
+    }
+    
     if ([UIDevice currentDevice].systemVersion.floatValue >= 7.0 &&
         nil != _leftBarButtonItem.customView) {
         
@@ -253,6 +266,10 @@
 }
 
 - (void)setRightBarButtonItem:(UIBarButtonItem *)_rightBarButtonItem {
+    
+    if (nil == _rightBarButtonItem || nil != self.rightBarButtonItem) {
+        [self setRightBarButtonItems:nil];
+    }
     
     if ([UIDevice currentDevice].systemVersion.floatValue >= 7.0 &&
         nil != _rightBarButtonItem.customView) {

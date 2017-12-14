@@ -17,6 +17,10 @@
  */
 @interface UIBarButtonItem (LZExtension)
 
+/** 隐藏或显示自定义导航按钮，对系统方式创建的导航按钮无消 */
+@property (nonatomic, assign, getter=isHidden) BOOL hidden;
+
+
 /**
  @author Lilei
  

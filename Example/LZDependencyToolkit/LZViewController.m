@@ -21,7 +21,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self setupNavBarItem];
     [self deviceInfo];
     [self appInfo];
 }
@@ -32,20 +31,24 @@
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-
+    [self setupNavBarItem];
 }
 
 #pragma mark - -> UI Action
 - (void)leftDidClick {
     
     NSLog(@"点击了左边按钮");
-    self.navigationItem.rightBarButtonItem.customView.hidden = !self.navigationItem.rightBarButtonItem.customView.hidden;
+    self.navigationItem.rightBarButtonItem.hidden = !self.navigationItem.rightBarButtonItem.isHidden;
 }
 
 - (void)rightDidClick {
     
     NSLog(@"点击了右边按钮");
     self.navigationItem.leftBarButtonItem.enabled = !self.navigationItem.leftBarButtonItem.enabled;
+}
+
+- (void)sysDidClick {
+    self.navigationItem.rightBarButtonItems = nil;
 }
 
 // MARK: - Private
@@ -64,12 +67,14 @@
                                                          forState:UIControlStateDisabled];
     
     UIBarButtonItem *right1 =
-    [UIBarButtonItem itemWithTitle:@"右边按钮"
+    [UIBarButtonItem itemWithTitle:@"右边自定"
                             target:self
                             action:@selector(rightDidClick)];
     self.navigationItem.rightBarButtonItems = @[right1];
     [self.navigationItem.rightBarButtonItem setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor blackColor]}
                                                           forState:UIControlStateDisabled];
+    UIBarButtonItem *sys = [[UIBarButtonItem alloc] initWithTitle:@"右边系统" style:UIBarButtonItemStyleDone target:self action:@selector(sysDidClick)];
+    self.navigationItem.rightBarButtonItems = @[right1, sys];
 }
 
 - (void)appInfo {
