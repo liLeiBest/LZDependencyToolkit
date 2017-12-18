@@ -41,7 +41,7 @@
             [tempBtn setAttributedTitle:attributedStr forState:state];
         }
     } else {
-        [self LZ_setTitleTextAttributes:attributes forState:state];
+        [super setTitleTextAttributes:attributes forState:state];
     }
 }
 
