@@ -214,7 +214,7 @@
 
 @implementation UINavigationItem (LZExtension)
 
-#if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_6_1
+#if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_6_1 && __IPHONE_OS_VERSION_MAX_ALLOWED < __IPHONE_11_0
 - (UIBarButtonItem *)leftBarButtonItem {
     
     __block UIBarButtonItem *leftItem = nil;
@@ -332,7 +332,6 @@
         [self setRightBarButtonItems:_rightBarButtonItems animated:NO];
     }
 }
-#endif
 
 //MARK: - Private
 - (UIBarButtonItem *)fixedSpaceItem {
@@ -344,5 +343,5 @@
     
     return seperator;
 }
-
+#endif
 @end
