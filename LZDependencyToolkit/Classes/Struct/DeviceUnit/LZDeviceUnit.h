@@ -220,9 +220,9 @@ struct LZDeviceUnit_type {
     BOOL (* is_iPhone)(void);
     /** iPad */
     BOOL (* is_iPad)(void);
-    /** iTV */
+    /** iTV,仅支持 iOS9 以上 */
     BOOL (* is_iTV)(void);
-    /** carPlay */
+    /** carPlay,仅支持 iOS9 以上 */
     BOOL (* is_carPlay)(void);
     
     // MARK: 系统版本比较

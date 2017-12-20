@@ -43,21 +43,24 @@ NSString * _deviceIdentifier(void) {
 /** 用户界面类型 */
 LZUserInterfaceIdiom _userInterfaceIdiom(void) {
 
-    switch (UI_USER_INTERFACE_IDIOM()) {
+    UIUserInterfaceIdiom interfaceIdiom = UI_USER_INTERFACE_IDIOM();
+    switch (interfaceIdiom) {
         case UIUserInterfaceIdiomPhone:
             return LZUserInterfaceIdiomPhone;
             break;
         case UIUserInterfaceIdiomPad:
             return LZUserInterfaceIdiomPad;
             break;
-        case UIUserInterfaceIdiomTV:
-            return LZUserInterfaceIdiomTV;
-            break;
-        case UIUserInterfaceIdiomCarPlay:
-            return LZUserInterfaceIdiomCarPlay;
-            break;
-        default:
+        default: {
+            if (@available(iOS 9.0, *)) {
+                if (interfaceIdiom == UIUserInterfaceIdiomTV) {
+                    return LZUserInterfaceIdiomTV;
+                } else if (interfaceIdiom == UIUserInterfaceIdiomCarPlay) {
+                    return LZUserInterfaceIdiomCarPlay;
+                }
+            }
             return LZUserInterfaceIdiomUnspecified;
+        }
             break;
     }
 }
@@ -635,12 +638,22 @@ BOOL _is_iPad(void) {
 
 /** iTV */
 BOOL _is_iTV(void) {
-    return (_userInterfaceIdiom() == LZUserInterfaceIdiomTV ? YES : NO);
+    
+    if (@available(iOS 9, *)) {
+        return (_userInterfaceIdiom() == LZUserInterfaceIdiomTV ? YES : NO);
+    } else {
+        return NO;
+    }
 }
 
 /** carPlay */
 BOOL _is_carPlay(void) {
-    return (_userInterfaceIdiom() == LZUserInterfaceIdiomCarPlay ? YES : NO);
+    
+    if (@available(iOS 9, *)) {
+        return (_userInterfaceIdiom() == LZUserInterfaceIdiomCarPlay ? YES : NO);
+    } else {
+        return NO;
+    }
 }
 
 /** == */
