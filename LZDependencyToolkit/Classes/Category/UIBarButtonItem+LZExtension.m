@@ -59,16 +59,16 @@
 #pragma clang push
 #pragma clang diagnostic ignored "-Wobjc-designated-initializers"
 - (UIBarButtonItem *)initWithTitle:(NSString *)title
-                         normalImg:(NSString *)normalImg
-                      highlightImg:(NSString *)highlightImg
-                        disableImg:(NSString *)disableImg
+                         normalImg:(NSObject *)normalImg
+                      highlightImg:(NSObject *)highlightImg
+                        disableImg:(NSObject *)disableImg
                             target:(id)target
                             action:(SEL)action {
         
     UIButton *barButton = [UIButton buttonWithType:UIButtonTypeCustom];
     barButton.opaque = YES;
     barButton.backgroundColor = [UIColor clearColor];
-    barButton.adjustsImageWhenDisabled = nil == disableImg || 0 == disableImg.length ? YES : NO;
+    barButton.adjustsImageWhenDisabled = nil == disableImg ? YES : NO;
     barButton.adjustsImageWhenHighlighted = NO;
     barButton.imageView.contentMode = UIViewContentModeLeft;
     
@@ -117,14 +117,14 @@
             [barButton setTitleColor:LZColorWithHexString(@"#A8A8A8")
                             forState:UIControlStateDisabled];
         }
-        if (nil != normalImg && normalImg.length) {
+        if (nil != normalImg) {
             
             [barButton setImage:[self img:normalImg] forState:UIControlStateNormal];
             [barButton setImage:[self img:highlightImg] forState:UIControlStateHighlighted];
             [barButton setImage:[self img:disableImg] forState:UIControlStateDisabled];
         }
     } else {
-        if (nil != normalImg && normalImg.length) {
+        if (nil != normalImg) {
             
             [barButton setBackgroundImage:[self img:normalImg] forState:UIControlStateNormal];
             [barButton setBackgroundImage:[self img:highlightImg] forState:UIControlStateHighlighted];
@@ -194,15 +194,23 @@
  @param imgNameOrPath 文件名或路径
  @return UIImage
  */
-- (UIImage *)img:(NSString *)imgNameOrPath {
+- (UIImage *)img:(NSObject *)imgNameOrPath {
     
-    if (nil == imgNameOrPath || !imgNameOrPath.length) {
+    if (nil == imgNameOrPath || !([imgNameOrPath isKindOfClass:[UIImage class]] || [imgNameOrPath isKindOfClass:[NSString class]])) {
         return nil;
     }
-    UIImage *image = [UIImage imageNamed:imgNameOrPath];
-    if (nil == image) {
-        image = [UIImage imageWithContentsOfFile:imgNameOrPath];
+    
+    UIImage *image = nil;
+    if ([imgNameOrPath isKindOfClass:[UIImage class]]) {
+        image = (UIImage *)imgNameOrPath;
     }
+    if ([imgNameOrPath isKindOfClass:[NSString class]]) {
+        image = [UIImage imageNamed:(NSString *)imgNameOrPath];
+        if (nil == image) {
+            image = [UIImage imageWithContentsOfFile:(NSString *)imgNameOrPath];
+        }
+    }
+    
     if (image.size.width > 32) {
         image = [image scaledToSize:CGSizeMake(32, 32)];
     }

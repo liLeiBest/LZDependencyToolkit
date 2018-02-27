@@ -27,17 +27,17 @@
  @brief 创建一个自定义导航按钮(标题、默认状态图片/高亮状态图片/不可用图片/代理/点击事件)
  
  @param title           标题
- @param normalImage     默认状态图片
- @param highlightImage  高亮状态图片
- @param disableImage    不可用状态图片
+ @param normalImage     默认状态图片(UIImage/NSString)
+ @param highlightImage  高亮状态图片(UIImage/NSString)
+ @param disableImage    不可用状态图片(UIImage/NSString)
  @param target          代理
  @param action          点击事件
  @return UIBarButtonItem
  */
 + (UIBarButtonItem *)itemWithTitle:(NSString *)title
-                       normalImage:(NSString *)normalImage
-                    highlightImage:(NSString *)highlightImage
-                      disableImage:(NSString *)disableImage
+                       normalImage:(NSObject *)normalImage
+                    highlightImage:(NSObject *)highlightImage
+                      disableImage:(NSObject *)disableImage
                             target:(id)target
                             action:(SEL)action;
 
