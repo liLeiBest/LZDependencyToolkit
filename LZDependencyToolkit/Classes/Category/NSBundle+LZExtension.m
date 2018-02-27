@@ -77,10 +77,15 @@
          referenceClass:(NSString *)className
 {
     NSBundle *resourceBundle = [self bundleForResource:bundleName referenceClass:className];
-    UIView *view = [[resourceBundle loadNibNamed:xibName owner:nil options:nil]
-                    lastObject];
+    NSArray *nibs = [resourceBundle loadNibNamed:xibName owner:nil options:nil];
+    UIView *xibView = nil;
+    if (nibs.count > 1) {
+        xibView = [nibs firstObject];
+    } else {
+        xibView = [nibs lastObject];
+    }
     
-    return view;
+    return xibView;
 }
 
 /** 加载资源目录下的 ViewController XIB */

@@ -85,7 +85,6 @@
 - (void)footerWithRefreshingBlock:(LZRefreshingBlock)refreshingBlock
 {
     MJRefreshAutoNormalFooter *footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:refreshingBlock];
-    footer.automaticallyHidden = YES;
     [footer setTitle:@"" forState:MJRefreshStateIdle];
     [footer setTitle:@"已经没有更多了" forState:MJRefreshStateNoMoreData];
     self.mj_footer = footer;
@@ -96,7 +95,6 @@
 {
     MJRefreshAutoNormalFooter *footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:target
                                                                  refreshingAction:action];
-    footer.automaticallyHidden = YES;
     [footer setTitle:@"" forState:MJRefreshStateIdle];
     [footer setTitle:@"已经没有更多了" forState:MJRefreshStateNoMoreData];
     self.mj_footer = footer;
