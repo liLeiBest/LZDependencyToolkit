@@ -122,12 +122,12 @@
 
 #pragma mark - Deprecated
 + (UIImage *)imageWithColor:(UIColor *)color
-                    andSize:(CGSize)size __attribute__((deprecated("请使用 [imageWithColor:size:]")));
+                    andSize:(CGSize)size __deprecated_msg("请使用 [imageWithColor:size:]");
 + (UIImage *)imageWithString:(NSString *)string
-                     andSize:(CGSize)size __attribute__((deprecated("请使用 [imageWithString:size:]")));
-+ (UIImage *)imageNameToMiddleStretch:(NSString *)imageName;
+                     andSize:(CGSize)size __deprecated_msg("请使用 [imageWithString:size:]");
++ (UIImage *)imageNameToMiddleStretch:(NSString *)imageName __deprecated_msg("请使用 [middleStretchImage:]");
 + (UIImage *)imageNameToStretch:(NSString *)imageNmae
                       leftRatio:(CGFloat)leftRatio
-                       topRatio:(CGFloat)topRatio;
+                       topRatio:(CGFloat)topRatio __deprecated_msg("请使用 [stretchImage:leftRatio:topRatio:]");
 
 @end

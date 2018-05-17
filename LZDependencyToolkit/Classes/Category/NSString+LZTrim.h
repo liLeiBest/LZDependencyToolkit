@@ -166,8 +166,8 @@
 - (NSString *)trimmingNewlineCharacterSet;
 
 #pragma mark - Deprecated
-- (NSString *)stringByTrimmingLeftCharactersInSet:(NSCharacterSet *)characterSet __attribute__((deprecated("trimmingLeftCharactersInSet:")));
-- (NSString *)stringByTrimmingRightCharactersInSet:(NSCharacterSet *)characterSet __attribute__((deprecated("trimmingRightCharactersInSet")));
-+ (NSString *)trimWhitespaceAndNewline:(NSString *)val __attribute__((deprecated("trimmingWhitespaceAndNewlineCharacterSet")));
+- (NSString *)stringByTrimmingLeftCharactersInSet:(NSCharacterSet *)characterSet __deprecated_msg("请使用 [trimmingLeftCharactersInSet:]");
+- (NSString *)stringByTrimmingRightCharactersInSet:(NSCharacterSet *)characterSet __deprecated_msg("请使用 [trimmingRightCharactersInSet:]");
++ (NSString *)trimWhitespaceAndNewline:(NSString *)val __deprecated_msg("请使用 [trimmingWhitespaceAndNewlineCharacterSet]");
 
 @end
