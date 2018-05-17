@@ -13,7 +13,7 @@
 
 - (void)beginHeaderRefresh
 {
-    if (self.mj_footer.state == MJRefreshStateNoMoreData) [self.mj_footer resetNoMoreData];
+	if (self.mj_footer.state == MJRefreshStateNoMoreData) [self.mj_footer resetNoMoreData];
     [self.mj_header beginRefreshing];
 }
 
@@ -64,13 +64,21 @@
 
 - (void)setupHideFooterNoData
 {
-    if ([self totalDataCount]) self.mj_footer.hidden = NO;
+	if ([self totalDataCount]) {
+		self.mj_footer.hidden = NO;
+	}
     else self.mj_footer.hidden = YES;
 }
 
 - (void)headerWithRefreshingBlock:(LZRefreshingBlock)refreshingBlock
 {
     MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingBlock:refreshingBlock];
+	header.refreshingBlock = ^{
+		
+		if (self.mj_footer) {
+			[self.mj_footer resetNoMoreData];
+		}
+	};
     self.mj_header = header;
 }
 
@@ -79,6 +87,12 @@
 {
     MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingTarget:target
                                                                      refreshingAction:action];
+	header.refreshingBlock = ^{
+		
+		if (self.mj_footer) {
+			[self.mj_footer resetNoMoreData];
+		}
+	};
     self.mj_header = header;
 }
 
