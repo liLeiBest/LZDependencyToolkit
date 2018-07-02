@@ -26,12 +26,12 @@ NSDictionary * _infoDict(void) {
 /** Forced Exit App */
 void _exitApp(void) {
 
-    UIApplication *app = [UIApplication sharedApplication];
-    UIWindow *window = app.keyWindow;
-    
+	
+	UIApplication *app = [UIApplication sharedApplication];
+	UIWindow *window = app.keyWindow;
     [UIView animateWithDuration:1.0f animations:^{
         window.alpha = 0;
-        window.frame = CGRectMake(0, window.bounds.size.width, 0, 0);
+        window.frame = CGRectMake(window.bounds.size.width * 0.5, window.bounds.size.height * 0.5, 0, 0);
     } completion:^(BOOL finished) {
         exit(0);
     }];
