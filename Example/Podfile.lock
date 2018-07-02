@@ -17,7 +17,7 @@ DEPENDENCIES:
   - LZDependencyToolkit (from `../`)
 
 SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
+  https://github.com/cocoapods/specs.git:
     - DZNEmptyDataSet
     - MJRefresh
 
@@ -32,4 +32,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 60606e547da352d9554be0d7bcdc584b7794ebdd
 
-COCOAPODS: 1.5.0.beta.1
+COCOAPODS: 1.5.3
