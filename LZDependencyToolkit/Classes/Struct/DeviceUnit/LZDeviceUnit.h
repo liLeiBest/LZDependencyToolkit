@@ -292,6 +292,11 @@ struct LZDeviceUnit_type {
      *  屏幕是否是 Retina 
      */
     BOOL (* screen_retina)(void);
+	
+	/**
+	 *  屏幕是否是齐刘海
+	 */
+	BOOL (* is_notch)(void);
     
     // MARK: - • 运营商
     /** 

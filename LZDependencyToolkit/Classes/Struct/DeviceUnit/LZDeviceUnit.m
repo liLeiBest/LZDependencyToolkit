@@ -786,6 +786,11 @@ BOOL _screen_retina(void) {
     return (_screen_scale() > 1 ? YES : NO);
 }
 
+/** 屏幕是否是齐刘海 */
+BOOL _is_notch(void) {
+	return _is_iPhone() && _generation() >= LZDeviceGenerationiPhoneX;
+}
+
 // MARK: - • 运营商
 NSString * _carrierName(void) {
     
@@ -843,6 +848,7 @@ struct LZDeviceUnit_type LZDeviceInfo = {
     .screen_min_lenght = _screen_min_lenght,
     .screen_scale = _screen_scale,
     .screen_retina = _screen_retina,
+	.is_notch = _is_notch,
     
     .carrierName = _carrierName,
 };

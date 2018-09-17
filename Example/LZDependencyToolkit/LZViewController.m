@@ -104,6 +104,7 @@
     NSLog(@"CPU 核数: %@", LZDeviceInfo.CPUCount());
     NSLog(@"CPU 使用率: %@", LZDeviceInfo.CPUUsageRate());
     NSLog(@"最后一次重启时间: %@", [LZDeviceInfo.restartDate() dateFormat:@"yyyy-MM-dd aa HH:mm:ss.S EEEE Z"]);
+	NSLog(@"是否是齐刘海: %@", LZDeviceInfo.is_notch() ? @"YES" : @"NO");
 }
 
 @end
