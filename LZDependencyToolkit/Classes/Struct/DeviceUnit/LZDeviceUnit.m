@@ -104,6 +104,10 @@ LZDeviceGeneration _generation(void) {
         [deviceIdentifier isEqualToString:@"iPhone10,5"]) return LZDeviceGenerationiPhone8_plus;
     if ([deviceIdentifier isEqualToString:@"iPhone10,3"] ||
         [deviceIdentifier isEqualToString:@"iPhone10,6"]) return LZDeviceGenerationiPhoneX;
+	if ([deviceIdentifier isEqualToString:@"iPhone11,8"]) return LZDeviceGenerationiPhoneXR;
+	if ([deviceIdentifier isEqualToString:@"iPhone11,2"]) return LZDeviceGenerationiPhoneXS;
+	if ([deviceIdentifier isEqualToString:@"iPhone11,4"] ||
+		[deviceIdentifier isEqualToString:@"iPhone11,6"]) return LZDeviceGenerationiPhoneXS_max;
     // iPod 型号
     if ([deviceIdentifier isEqualToString:@"iPod1,1"]) return LZDeviceGenerationiPodtouch1st;
     if ([deviceIdentifier isEqualToString:@"iPod2,1"]) return LZDeviceGenerationiPodtouch2nd;
@@ -122,6 +126,10 @@ LZDeviceGeneration _generation(void) {
         [deviceIdentifier isEqualToString:@"Watch3,2"] ||
         [deviceIdentifier isEqualToString:@"Watch3,3"] ||
         [deviceIdentifier isEqualToString:@"Watch3,4"]) return LZDeviceGenerationiWatch_series3;
+	if ([deviceIdentifier isEqualToString:@"Watch4,1"] ||
+		[deviceIdentifier isEqualToString:@"Watch4,2"] ||
+		[deviceIdentifier isEqualToString:@"Watch4,3"] ||
+		[deviceIdentifier isEqualToString:@"Watch4,4"]) return LZDeviceGenerationiWatch_series4;
     // iPad 型号
     if ([deviceIdentifier isEqualToString:@"iPad1,1"]) return LZDeviceGenerationiPad;
     if ([deviceIdentifier isEqualToString:@"iPad2,1"] ||
@@ -233,6 +241,15 @@ NSString * _generation_desc(void) {
         case LZDeviceGenerationiPhoneX:
             return @"iPhone X";
             break;
+		case LZDeviceGenerationiPhoneXR:
+			return @"iPhone XR";
+			break;
+		case LZDeviceGenerationiPhoneXS:
+			return @"iPhone XS";
+			break;
+		case LZDeviceGenerationiPhoneXS_max:
+			return @"iPhone XS Max";
+			break;
             // iPod 型号
         case LZDeviceGenerationiPodtouch1st:
             return @"iPod touch";
@@ -265,6 +282,9 @@ NSString * _generation_desc(void) {
         case LZDeviceGenerationiWatch_series3:
             return @"Apple Watch Series 3";
             break;
+		case LZDeviceGenerationiWatch_series4:
+			return @"Apple Watch Series 4";
+			break;
             // iPad 型号
         case LZDeviceGenerationiPad:
             return @"iPad 1";

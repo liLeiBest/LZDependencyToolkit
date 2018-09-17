@@ -60,6 +60,9 @@ typedef NS_ENUM(NSUInteger, LZDeviceGeneration) {
     LZDeviceGenerationiPhone8,
     LZDeviceGenerationiPhone8_plus,
     LZDeviceGenerationiPhoneX,
+	LZDeviceGenerationiPhoneXR,
+	LZDeviceGenerationiPhoneXS,
+	LZDeviceGenerationiPhoneXS_max,
     // iPod 型号
     LZDeviceGenerationiPodtouch1st,
     LZDeviceGenerationiPodtouch2nd,
@@ -72,6 +75,7 @@ typedef NS_ENUM(NSUInteger, LZDeviceGeneration) {
     LZDeviceGenerationiWatch_series1,
     LZDeviceGenerationiWatch_series2,
     LZDeviceGenerationiWatch_series3,
+	LZDeviceGenerationiWatch_series4,
     // iPad 型号
     LZDeviceGenerationiPad,
     LZDeviceGenerationiPad2,
