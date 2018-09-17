@@ -16,6 +16,15 @@ typedef void (^LZRefreshingBlock)(void);
 /**
  @author Lilei
  
+ @brief 是否正在刷新
+ 
+ @return YES: 刷新中;NO:其它
+ */
+- (BOOL)isRefreshing;
+
+/**
+ @author Lilei
+ 
  @brief 开始下拉刷新
  */
 - (void)beginHeaderRefresh;
@@ -96,7 +105,7 @@ typedef void (^LZRefreshingBlock)(void);
  
  @brief 添加下拉刷新
  
- @param refreshingBlock LZRefreshingBlock
+ @param refreshingBlock HXRefreshingBlock
  */
 - (void)headerWithRefreshingBlock:(LZRefreshingBlock)refreshingBlock;
 
@@ -109,14 +118,14 @@ typedef void (^LZRefreshingBlock)(void);
  @param action Action
  */
 - (void)headerWithRefreshingTarget:(id)target
-                  refreshingAction:(SEL)action;
+				  refreshingAction:(SEL)action;
 
 /**
  @author Lilei
  
  @brief 添加上拉加载
  
- @param refreshingBlock LZRefreshingBlock
+ @param refreshingBlock HXRefreshingBlock
  */
 - (void)footerWithRefreshingBlock:(LZRefreshingBlock)refreshingBlock;
 
@@ -129,7 +138,7 @@ typedef void (^LZRefreshingBlock)(void);
  @param action Action
  */
 - (void)footerWithRefreshingTarget:(id)target
-                  refreshingAction:(SEL)action;
+				  refreshingAction:(SEL)action;
 /**
  @author Lilei
  

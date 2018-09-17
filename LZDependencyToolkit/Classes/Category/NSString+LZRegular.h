@@ -13,6 +13,15 @@
 /**
  @author Lilei
  
+ @brief 判断是有效的 String
+ 
+ @return BOOL
+ */
+- (BOOL)isValideString;
+
+/**
+ @author Lilei
+ 
  @brief 判断是有效的 URL 地址
 
  @return BOOL

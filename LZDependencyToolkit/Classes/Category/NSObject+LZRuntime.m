@@ -11,24 +11,6 @@
 
 @implementation NSObject (LZRuntime)
 
-//MARK: - Private
-/** 方法交换 */
-void LZ_exchangeMethod(BOOL classMethod, Class class, SEL originSelector, SEL swizzleSelector) {
-    
-    Method swizzleMethod = classMethod ? class_getClassMethod(class, swizzleSelector) : class_getInstanceMethod(class, swizzleSelector);
-    IMP swizzleIMP = method_getImplementation(swizzleMethod);
-    const char *swizzleType = method_getTypeEncoding(swizzleMethod);
-    
-    BOOL exist = class_addMethod(class, swizzleSelector, swizzleIMP, swizzleType);
-    if (!exist) {
-        class_replaceMethod(class, originSelector, swizzleIMP, swizzleType);
-    } else {
-        
-        Method originMethod = classMethod ? class_getClassMethod(class, originSelector) : class_getInstanceMethod(class, originSelector);
-        method_exchangeImplementations(originMethod, swizzleMethod);
-    }
-}
-
 //MARK: - Public
 /** 类方法交换 */
 void LZ_exchangeClassMethod(Class class, SEL originSelector, SEL swizzleSelector) {
@@ -48,6 +30,24 @@ void LZ_setAssociatedObject(id object, const void *key, id value) {
 /** 获取属性 */
 id LZ_getAssociatedObject(id object, const void *key) {
     return objc_getAssociatedObject(object, key);
+}
+
+//MARK: - Private
+/** 方法交换 */
+void LZ_exchangeMethod(BOOL classMethod, Class destClass, SEL originSelector, SEL swizzleSelector) {
+	
+	Method swizzleMethod = classMethod ? class_getClassMethod(destClass, swizzleSelector) : class_getInstanceMethod(destClass, swizzleSelector);
+	IMP swizzleIMP = method_getImplementation(swizzleMethod);
+	const char *swizzleType = method_getTypeEncoding(swizzleMethod);
+	
+	BOOL exist = class_addMethod(destClass, swizzleSelector, swizzleIMP, swizzleType);
+	if (!exist) {
+		class_replaceMethod(destClass, originSelector, swizzleIMP, swizzleType);
+	} else {
+		
+		Method originMethod = classMethod ? class_getClassMethod(destClass, originSelector) : class_getInstanceMethod(destClass, originSelector);
+		method_exchangeImplementations(originMethod, swizzleMethod);
+	}
 }
 
 @end

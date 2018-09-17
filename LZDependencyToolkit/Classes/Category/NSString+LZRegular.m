@@ -10,6 +10,12 @@
 
 @implementation NSString (LZRegular)
 
+/** 判断是有效的 String */
+- (BOOL)isValideString
+{
+	return self && [self isKindOfClass:[NSString class]] && 0 < self.length;
+}
+
 /** 判断是有效的 URL 地址 */
 - (BOOL)isValidURL
 {

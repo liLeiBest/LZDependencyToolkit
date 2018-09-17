@@ -22,6 +22,7 @@
 #import "NSString+LZRegular.h"
 #import "NSString+LZSize.h"
 #import "NSString+LZTrim.h"
+#import "NSString+LZURL.h"
 #import "UIBarButtonItem+LZExtension.h"
 #import "UIButton+LZExtendTouchRect.h"
 #import "UIColor+LZExtension.h"

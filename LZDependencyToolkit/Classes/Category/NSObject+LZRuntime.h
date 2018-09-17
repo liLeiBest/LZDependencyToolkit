@@ -13,12 +13,12 @@
 /**
  *  类交换方法
  */
-void LZ_exchangeClassMethod(Class class, SEL originSelector, SEL swizzleSelector);
+void LZ_exchangeClassMethod(Class destClass, SEL originSelector, SEL swizzleSelector);
 
 /**
  *  对象交换方法
  */
-void LZ_exchangeInstanceMethod(Class class, SEL originSelector, SEL swizzleSelector);
+void LZ_exchangeInstanceMethod(Class destClass, SEL originSelector, SEL swizzleSelector);
 
 /**
  *  添加属性

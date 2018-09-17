@@ -11,141 +11,140 @@
 
 @implementation UIScrollView (LZRefreshControl)
 
-- (void)beginHeaderRefresh
-{
-	if (self.mj_footer.state == MJRefreshStateNoMoreData) [self.mj_footer resetNoMoreData];
-    [self.mj_header beginRefreshing];
+- (BOOL)isRefreshing {
+	return [self.mj_header isRefreshing];
 }
 
-- (void)endHeaderRefresh
-{
-    [self.mj_header endRefreshing];
+- (void)beginHeaderRefresh {
+	
+	if (self.mj_footer.state == MJRefreshStateNoMoreData) {
+		[self.mj_footer resetNoMoreData];
+	}
+	[self.mj_header beginRefreshing];
 }
 
-- (void)beginFooterRefresh
-{
-    [self.mj_footer beginRefreshing];
+- (void)endHeaderRefresh {
+	[self.mj_header endRefreshing];
 }
 
-- (void)endFooterRefresh
-{
-    [self.mj_footer endRefreshing];
+- (void)beginFooterRefresh {
+	[self.mj_footer beginRefreshing];
 }
 
-- (void)hideHeader
-{
-    [self.mj_header setHidden:YES];
+- (void)endFooterRefresh {
+	[self.mj_footer endRefreshing];
 }
 
-- (void)showHeader
-{
-    [self.mj_header setHidden:NO];
+- (void)hideHeader {
+	[self.mj_header setHidden:YES];
 }
 
-- (void)hideFooter
-{
-    [self.mj_footer setHidden:YES];
+- (void)showHeader {
+	[self.mj_header setHidden:NO];
 }
 
-- (void)showFooter
-{
-    [self.mj_footer setHidden:NO];
+- (void)hideFooter {
+	[self.mj_footer setHidden:YES];
 }
 
-- (void)endFooterRefreshingWithNoMoreData
-{
-    [self.mj_footer endRefreshingWithNoMoreData];
+- (void)showFooter {
+	[self.mj_footer setHidden:NO];
 }
 
-- (void)resetFooterNoMoreData
-{
-    [self.mj_footer resetNoMoreData];
+- (void)endFooterRefreshingWithNoMoreData {
+	[self.mj_footer endRefreshingWithNoMoreData];
 }
 
-- (void)setupHideFooterNoData
-{
+- (void)resetFooterNoMoreData {
+	[self.mj_footer resetNoMoreData];
+}
+
+- (void)setupHideFooterNoData {
+	
 	if ([self totalDataCount]) {
 		self.mj_footer.hidden = NO;
+	} else {
+		self.mj_footer.hidden = YES;
 	}
-    else self.mj_footer.hidden = YES;
 }
 
-- (void)headerWithRefreshingBlock:(LZRefreshingBlock)refreshingBlock
-{
-    MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingBlock:refreshingBlock];
-	header.refreshingBlock = ^{
+- (void)headerWithRefreshingBlock:(LZRefreshingBlock)refreshingBlock {
+	
+	MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
 		
-		if (self.mj_footer) {
+		if (self.mj_footer.state == MJRefreshStateNoMoreData) {
 			[self.mj_footer resetNoMoreData];
 		}
-	};
-    self.mj_header = header;
+		
+		if (refreshingBlock) {
+			refreshingBlock();
+		}
+	}];
+	
+	self.mj_header = header;
 }
 
 - (void)headerWithRefreshingTarget:(id)target
-                  refreshingAction:(SEL)action
-{
-    MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingTarget:target
-                                                                     refreshingAction:action];
+				  refreshingAction:(SEL)action {
+	MJRefreshNormalHeader *header =
+	[MJRefreshNormalHeader headerWithRefreshingTarget:target
+									 refreshingAction:action];
 	header.refreshingBlock = ^{
 		
-		if (self.mj_footer) {
+		if (self.mj_footer.state == MJRefreshStateNoMoreData) {
 			[self.mj_footer resetNoMoreData];
 		}
 	};
-    self.mj_header = header;
+	self.mj_header = header;
 }
 
-- (void)footerWithRefreshingBlock:(LZRefreshingBlock)refreshingBlock
-{
-    MJRefreshAutoNormalFooter *footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:refreshingBlock];
-    [footer setTitle:@"" forState:MJRefreshStateIdle];
-    [footer setTitle:@"已经没有更多了" forState:MJRefreshStateNoMoreData];
-    self.mj_footer = footer;
+- (void)footerWithRefreshingBlock:(LZRefreshingBlock)refreshingBlock {
+	
+	MJRefreshAutoNormalFooter *footer =
+	[MJRefreshAutoNormalFooter footerWithRefreshingBlock:refreshingBlock];
+	[footer setTitle:@"" forState:MJRefreshStateIdle];
+	[footer setTitle:@"已经没有更多了" forState:MJRefreshStateNoMoreData];
+	self.mj_footer = footer;
 }
 
 - (void)footerWithRefreshingTarget:(id)target
-                  refreshingAction:(SEL)action
-{
-    MJRefreshAutoNormalFooter *footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:target
-                                                                 refreshingAction:action];
-    [footer setTitle:@"" forState:MJRefreshStateIdle];
-    [footer setTitle:@"已经没有更多了" forState:MJRefreshStateNoMoreData];
-    self.mj_footer = footer;
+				  refreshingAction:(SEL)action {
+	
+	MJRefreshAutoNormalFooter *footer =
+	[MJRefreshAutoNormalFooter footerWithRefreshingTarget:target
+										 refreshingAction:action];
+	[footer setTitle:@"" forState:MJRefreshStateIdle];
+	[footer setTitle:@"已经没有更多了" forState:MJRefreshStateNoMoreData];
+	self.mj_footer = footer;
 }
 
 
-- (void)removeHeader
-{
-    [self.mj_header removeFromSuperview];
+- (void)removeHeader {
+	[self.mj_header removeFromSuperview];
 }
 
-- (void)removeFooter
-{
-    [self.mj_footer removeFromSuperview];
+- (void)removeFooter {
+	[self.mj_footer removeFromSuperview];
 }
 
-- (NSInteger)totalDataCount
-{
-    NSInteger totalCount = 0;
-    if ([self isKindOfClass:[UITableView class]])
-    {
-        UITableView *tableView = (UITableView *)self;
-        for (NSInteger section = 0; section<tableView.numberOfSections; section++)
-        {
-            totalCount += [tableView numberOfRowsInSection:section];
-        }
-    }
-    else if ([self isKindOfClass:[UICollectionView class]])
-    {
-        UICollectionView *collectionView = (UICollectionView *)self;
-        for (NSInteger section = 0; section<collectionView.numberOfSections; section++)
-        {
-            totalCount += [collectionView numberOfItemsInSection:section];
-        }
-    }
-    
-    return totalCount;
+- (NSInteger)totalDataCount {
+	
+	NSInteger totalCount = 0;
+	if ([self isKindOfClass:[UITableView class]]) {
+		
+		UITableView *tableView = (UITableView *)self;
+		for (NSInteger section = 0; section<tableView.numberOfSections; section++) {
+			totalCount += [tableView numberOfRowsInSection:section];
+		}
+	} else if ([self isKindOfClass:[UICollectionView class]]) {
+		
+		UICollectionView *collectionView = (UICollectionView *)self;
+		for (NSInteger section = 0; section<collectionView.numberOfSections; section++) {
+			totalCount += [collectionView numberOfItemsInSection:section];
+		}
+	}
+	
+	return totalCount;
 }
 
 @end
