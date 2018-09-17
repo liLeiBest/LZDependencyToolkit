@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
     s.name             = 'LZDependencyToolkit'
-    s.version          = '1.2.1'
+    s.version          = '1.2.1.1'
     s.summary          = 'A short description of LZDependencyToolkit.'
     s.description      = '工具箱'
     s.homepage         = 'https://github.com/liLeiBest/LZDependencyToolkit'
