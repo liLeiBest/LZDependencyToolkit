@@ -140,7 +140,7 @@
             CGRect oldFrame = barButton.frame;
             oldFrame.size.width = titleSize.width + barButton.currentImage.size.width;
             if (0 == oldFrame.size.height) oldFrame.size.height = titleSize.height;
-            oldFrame.size.height = 28;
+            oldFrame.size.height = titleSize.height > oldFrame.size.height ? oldFrame.size.height : titleSize.height;
             barButton.frame = oldFrame;
         }
     }

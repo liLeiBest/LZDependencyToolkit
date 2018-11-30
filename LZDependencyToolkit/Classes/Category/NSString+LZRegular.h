@@ -225,6 +225,13 @@
 /**
  @author Lilei
  
+ @return 验证字符串是否为由26个不区分大小写的英文字母和汉字组成的字符串
+ */
+- (BOOL)validateisEnglishLetterAndChineseText;
+
+/**
+ @author Lilei
+ 
  @brief 验证字符串是否为由数字和26个英文字母组成的字符串
  
  @return BOOL

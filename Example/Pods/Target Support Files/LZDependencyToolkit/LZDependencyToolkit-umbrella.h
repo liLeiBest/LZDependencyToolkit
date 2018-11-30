@@ -33,6 +33,7 @@
 #import "UIImage+LZRuntime.h"
 #import "UINavigationBar+LZExtension.h"
 #import "UIScrollView+LZRefreshControl.h"
+#import "UIScrollView+LZRegisterReuseView.h"
 #import "UIView+LZExtension.h"
 #import "UIViewController+LZEmptyDataSet.h"
 #import "UIViewController+LZExtension.h"

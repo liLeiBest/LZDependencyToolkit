@@ -195,6 +195,14 @@
     return [self verifyRegular:regular];
 }
 
+/** 验证字符串是否为由26个不区分大小写的英文字母和汉字组成的字符串 */
+- (BOOL)validateisEnglishLetterAndChineseText
+{
+    NSString *regular = @"^[a-zA-Z_\u4e00-\u9fa5_/]+$";
+    
+    return [self verifyRegular:regular];
+}
+
 /** 验证字符串是否为由数字和26个英文字母组成的字符串 */
 - (BOOL)validateIsNumbersAnd26EnglishLetter
 {

@@ -38,8 +38,4 @@ Pod::Spec.new do |s|
             appUnit.public_header_files = 'LZDependencyToolkit/Classes/Struct/AppUnit/*.h'
         end
     end
-
-    # s.resource_bundles = {
-    #   'LZDependencyToolkit' => ['LZDependencyToolkit/Assets/*.png']
-    # }
 end

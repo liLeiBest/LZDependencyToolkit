@@ -105,7 +105,7 @@ typedef void (^LZRefreshingBlock)(void);
  
  @brief 添加下拉刷新
  
- @param refreshingBlock HXRefreshingBlock
+ @param refreshingBlock LZRefreshingBlock
  */
 - (void)headerWithRefreshingBlock:(LZRefreshingBlock)refreshingBlock;
 
@@ -125,7 +125,7 @@ typedef void (^LZRefreshingBlock)(void);
  
  @brief 添加上拉加载
  
- @param refreshingBlock HXRefreshingBlock
+ @param refreshingBlock LZRefreshingBlock
  */
 - (void)footerWithRefreshingBlock:(LZRefreshingBlock)refreshingBlock;
 

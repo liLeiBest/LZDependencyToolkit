@@ -1,4 +1,7 @@
 
+#ifndef LZCategory_h
+#define LZCategory_h
+
 #import "NSBundle+LZExtension.h"
 
 #import "CALayer+LZFrame.h"
@@ -23,6 +26,9 @@
 #import "UIImage+LZRuntime.h"
 #import "UINavigationBar+LZExtension.h"
 #import "UIScrollView+LZRefreshControl.h"
+#import "UIScrollView+LZRegisterReuseView.h"
 #import "UIViewController+LZEmptyDataSet.h"
 #import "UIView+LZExtension.h"
 #import "UIViewController+LZExtension.h"
+
+#endif

@@ -120,7 +120,7 @@
 
 @end
 
-@implementation UIViewController (HXBundle)
+@implementation UIViewController (LZBundle)
 
 /** UIViewController 的资源目录 */
 - (NSBundle *)bundleForResource:(NSString *)resource {
