@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
     s.name             = 'LZDependencyToolkit'
-    s.version          = '1.2.1.1'
+    s.version          = '1.2.2'
     s.summary          = 'Toolkit.'
     s.description      = <<-DESC
     Toolkit 常用工具箱，包括两部分内容
@@ -9,7 +9,7 @@ Pod::Spec.new do |s|
                         DESC
     s.homepage         = 'https://github.com/liLeiBest/LZDependencyToolkit'
     s.license          = { :type => 'MIT', :file => 'LICENSE' }
-    s.author           = { 'lilei' => 'lilei_hapy@163.com' }
+    s.author           = { 'lilei' => 'lilei0502@139.com' }
     s.source           = { :git => 'https://github.com/liLeiBest/LZDependencyToolkit.git', :tag => s.version.to_s }
     s.social_media_url = 'https://github.com/liLeiBest'
     s.frameworks       = 'UIKit', 'Foundation'
