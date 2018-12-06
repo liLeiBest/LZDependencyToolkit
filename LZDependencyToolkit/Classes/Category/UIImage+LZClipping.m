@@ -224,11 +224,8 @@
 
 -(UIImage *)resizedImageToFitInSize:(CGSize)boundingSize scaleIfSmaller:(BOOL)scale
 {
-    // get the image size (independant of imageOrientation)
     CGImageRef imgRef = self.CGImage;
-    CGSize srcSize = CGSizeMake(CGImageGetWidth(imgRef), CGImageGetHeight(imgRef)); // not equivalent to self.size (which depends on the imageOrientation)!
-    
-    // adjust boundingSize to make it independant on imageOrientation too for farther computations
+    CGSize srcSize = CGSizeMake(CGImageGetWidth(imgRef), CGImageGetHeight(imgRef));
     UIImageOrientation orient = self.imageOrientation;
     switch (orient) {
         case UIImageOrientationLeft:
@@ -238,25 +235,19 @@
             boundingSize = CGSizeMake(boundingSize.height, boundingSize.width);
             break;
         default:
-            // NOP
             break;
     }
     
-    // Compute the target CGRect in order to keep aspect-ratio
     CGSize dstSize;
-    
     if ( !scale && (srcSize.width < boundingSize.width) && (srcSize.height < boundingSize.height) ) {
-        //NSLog(@"Image is smaller, and we asked not to scale it in this case (scaleIfSmaller:NO)");
-        dstSize = srcSize; // no resize (we could directly return 'self' here, but we draw the image anyway to take image orientation into account)
+        dstSize = srcSize;
     } else {
         CGFloat wRatio = boundingSize.width / srcSize.width;
         CGFloat hRatio = boundingSize.height / srcSize.height;
         
         if (wRatio < hRatio) {
-            //NSLog(@"Width imposed, Height scaled ; ratio = %f",wRatio);
             dstSize = CGSizeMake(boundingSize.width, floorf(srcSize.height * wRatio));
         } else {
-            //NSLog(@"Height imposed, Width scaled ; ratio = %f",hRatio);
             dstSize = CGSizeMake(floorf(srcSize.width * hRatio), boundingSize.height);
         }
     }
@@ -330,12 +321,9 @@ static void addRoundedRectToPath(CGContextRef context, CGRect rect, float ovalWi
     CGImageRef newImageRef = CGBitmapContextCreateImage(bitmap);
     UIImage *newImage;
     if ([self respondsToSelector:@selector(scale)] &&
-        [UIImage respondsToSelector:@selector(imageWithCGImage:scale:orientation:)])
-    {
+        [UIImage respondsToSelector:@selector(imageWithCGImage:scale:orientation:)]) {
         newImage = [UIImage imageWithCGImage:newImageRef scale:self.scale orientation:self.imageOrientation];
-    }
-    else
-    {
+    } else {
         newImage = [UIImage imageWithCGImage:newImageRef];
     }
     

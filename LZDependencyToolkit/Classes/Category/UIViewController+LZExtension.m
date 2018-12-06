@@ -137,20 +137,20 @@
 }
 
 /** 加载资源目录下的 ViewController XIB */
-- (instancetype)viewControllerFromXib:(NSString *)xibName
++ (instancetype)viewControllerFromXib:(NSString *)xibName
 							 inBundle:(NSString *)bundleName {
 	return [NSBundle viewControllerFromXib:xibName
 								  inBundle:bundleName
-							referenceClass:NSStringFromClass([self class])];
+							referenceClass:NSStringFromClass(self)];
 }
 
 /** 加载资源目录下的 Storyboard */
-- (instancetype)viewControllerFromstoryboard:(NSString *)storyboardName
++ (instancetype)viewControllerFromstoryboard:(NSString *)storyboardName
 									inBundle:(NSString *)bundleName {
 	
 	UIStoryboard *storyboard = [NSBundle storyboard:storyboardName
 										   inBundle:bundleName
-									 referenceClass:NSStringFromClass([self class])];
+									 referenceClass:NSStringFromClass(self)];
 	return storyboard.instantiateInitialViewController;
 }
 

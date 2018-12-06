@@ -74,7 +74,7 @@
  @param bundleName 资源名称
  @return instancetype
  */
-- (nullable instancetype)viewFromXib:(nonnull NSString *)xibName
++ (nullable instancetype)viewFromXib:(nonnull NSString *)xibName
 							inBundle:(nullable NSString *)bundleName;
 
 /**

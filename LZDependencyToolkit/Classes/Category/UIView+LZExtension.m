@@ -177,7 +177,7 @@
 			referenceClass:NSStringFromClass([self class])];
 }
 
-- (instancetype)viewFromXib:(NSString *)xibName
++ (instancetype)viewFromXib:(NSString *)xibName
 				   inBundle:(NSString *)bundleName {
 	return [NSBundle viewFromXib:xibName
 						inBundle:bundleName

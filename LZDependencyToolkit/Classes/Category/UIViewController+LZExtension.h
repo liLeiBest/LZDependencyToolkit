@@ -61,7 +61,7 @@
  @param bundleName 资源名称
  @return 实例
  */
-- (nonnull instancetype)viewControllerFromXib:(nonnull NSString *)xibName
++ (nonnull instancetype)viewControllerFromXib:(nonnull NSString *)xibName
 									 inBundle:(nullable NSString *)bundleName;
 
 /**
@@ -73,7 +73,7 @@
  @param bundleName 资源名称
  @return UIStoryboard
  */
-- (nonnull instancetype)viewControllerFromstoryboard:(nonnull NSString *)storyboardName
++ (nonnull instancetype)viewControllerFromstoryboard:(nonnull NSString *)storyboardName
 											inBundle:(nullable NSString *)bundleName;
 
 @end
