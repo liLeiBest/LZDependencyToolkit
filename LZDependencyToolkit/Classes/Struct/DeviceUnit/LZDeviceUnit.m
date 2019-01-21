@@ -798,7 +798,7 @@ NSString * _carrierName(void) {
     CTCarrier *carrier = info.subscriberCellularProvider;
     NSString *carrierName = carrier.carrierName;
     
-    return carrierName;
+	return carrierName ? carrierName : @"未知";
 }
 
 /** 初始化结构体 */
