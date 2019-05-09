@@ -37,7 +37,7 @@ typedef NS_ENUM(NSInteger, LZDeviceBatteryState) {
     LZDeviceBatteryStateFull,        // 充电完毕,100%
 } __TVOS_PROHIBITED;
 
-typedef NS_ENUM(NSUInteger, LZDeviceGeneration) {
+typedef NS_ENUM(NSInteger, LZDeviceGeneration) {
     // 模拟器
     LZDeviceGenerationSimulator = -1,
     // 真机

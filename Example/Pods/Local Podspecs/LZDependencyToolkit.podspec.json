@@ -22,7 +22,7 @@
   ],
   "requires_arc": true,
   "platforms": {
-    "ios": "7.0"
+    "ios": "8.0"
   },
   "source_files": "LZDependencyToolkit/Classes/LZDependencyToolkit.h",
   "public_header_files": "LZDependencyToolkit/Classes/LZDependencyToolkit.h",

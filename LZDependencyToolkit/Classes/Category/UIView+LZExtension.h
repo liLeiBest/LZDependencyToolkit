@@ -37,7 +37,7 @@
  
  @return UIViewController
  */
-- (UIViewController *)viewController;
+- (nullable UIViewController *)viewController;
 
 @end
 

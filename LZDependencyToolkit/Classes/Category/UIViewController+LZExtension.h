@@ -24,7 +24,7 @@
  
  @return 活动控制器
  */
-- (UIViewController *)currentActivityViewController;
+- (nullable UIViewController *)currentActivityViewController;
 
 @end
 

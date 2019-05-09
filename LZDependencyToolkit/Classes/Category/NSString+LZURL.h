@@ -15,7 +15,7 @@
  @param paraDict 字典
  @return NSString
  */
-- (NSString *)urlByAppendingParameter:(NSDictionary * _Nonnull)paraDict;
+- (NSString * _Nonnull)urlByAppendingParameter:(NSDictionary * _Nonnull)paraDict;
 
 /**
  拼接参数
@@ -23,6 +23,6 @@
  @param paraString 参数字符串 key=value
  @return NSString
  */
-- (NSString *)urlByAppendingKeyAndValue:(NSString * _Nonnull)paraString;
+- (NSString * _Nonnull)urlByAppendingKeyAndValue:(NSString * _Nonnull)paraString;
 
 @end

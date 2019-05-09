@@ -11,7 +11,7 @@ PODS:
     - LZDependencyToolkit/Struct/DeviceUnit (= 1.2.4.2)
   - LZDependencyToolkit/Struct/AppUnit (1.2.4.2)
   - LZDependencyToolkit/Struct/DeviceUnit (1.2.4.2)
-  - MJRefresh (3.1.15.7)
+  - MJRefresh (3.2.0)
 
 DEPENDENCIES:
   - LZDependencyToolkit (from `../`)
@@ -27,9 +27,9 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
-  LZDependencyToolkit: c8eae5189137fdd7d4a7ee558159df4f9ac4a514
-  MJRefresh: 697f8ec75ebdbe9207767bb682cf0f51b0d8a41f
+  LZDependencyToolkit: fcac06c1ead067eb1e0fcef49718abde6d743ef0
+  MJRefresh: ed450d6eb9d3346a2cb033ab7eb6de090aeef437
 
-PODFILE CHECKSUM: 60606e547da352d9554be0d7bcdc584b7794ebdd
+PODFILE CHECKSUM: b0c7171b0652b3b2aaf1354b7fc5599d83f886ac
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.7.0.rc.1

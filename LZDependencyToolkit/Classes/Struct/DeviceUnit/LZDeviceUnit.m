@@ -352,7 +352,7 @@ NSString * _generation_desc(void) {
 
 /** UUID */
 NSString * _UUID(void) {
-    return _device().identifierForVendor.UUIDString;
+    return [NSUUID UUID].UUIDString;
 }
 
 /** 别名，用户定义的名称 */
