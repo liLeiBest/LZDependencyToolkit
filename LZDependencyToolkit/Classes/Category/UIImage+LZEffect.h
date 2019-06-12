@@ -15,6 +15,14 @@ typedef enum : NSUInteger {
     UIImageGrayLevelTypeInverse     = 3
 } UIImageGrayLevelType;
 
+typedef NS_ENUM(NSUInteger, HXWatermarkPoint) {
+	HXWatermarkPointCenter,
+	HXWatermarkPointLeftTop,
+	HXWatermarkPointLeftBottom,
+	HXWatermarkPointRightTop,
+	HXWatermarkPointRightBottom,
+};
+
 @interface UIImage (LZEffect)
 
 /**
@@ -64,13 +72,58 @@ typedef enum : NSUInteger {
 /**
  @author Lilei
  
- @brief 添加水印
+ @brief 中心位置添加文字水印
  
- @param content 内容
+ @param content 文字
  
  @return UIImage
  */
 - (UIImage *)watermark:(NSString *)content
-            attributes:(NSDictionary *)attributes;
+			attributes:(NSDictionary *)attributes;
+
+/**
+ @author Lilei
+ 
+ @brief 指定位置添加文字水印
+ 
+ @param content 文字
+ @param attributes 文字样式
+ @param point HXWatermarkPoint
+ 
+ @return UIImage
+ */
+- (UIImage *)watermark:(NSString *)content
+			attributes:(NSDictionary *)attributes
+				 point:(HXWatermarkPoint)point;
+
+/**
+ @author Lilei
+ 
+ @brief 指定位置添加图片水印
+ 
+ @param image 图片
+ @param point HXWatermarkPoint
+ 
+ @return UIImage
+ */
+- (UIImage *)watermark:(UIImage *)image
+				 point:(HXWatermarkPoint)point;
+
+/**
+ @author Lilei
+ 
+ @brief 指定位置添加文字和图片水印
+ 
+ @param word 文字
+ @param attributes 文字样式
+ @param markImage 图片
+ @param point HXWatermarkPoint
+ 
+ @return UIImage
+ */
+- (UIImage *)watermarkWord:(NSString *)word
+			wordAttributes:(NSDictionary *)attributes
+				 markImage:(UIImage *)markImage
+					 point:(HXWatermarkPoint)point;
 
 @end

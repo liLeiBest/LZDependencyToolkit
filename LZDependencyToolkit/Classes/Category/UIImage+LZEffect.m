@@ -8,6 +8,7 @@
 
 #import "UIImage+LZEffect.h"
 #import <Accelerate/Accelerate.h>
+#import "UIImage+LZClipping.h"
 
 @implementation UIImage (LZEffect)
 
@@ -265,44 +266,147 @@
     return returnImage;
 }
 
-/** 添加水印 */
+/** 中心位置添加水印 */
 - (UIImage *)watermark:(NSString *)content
-            attributes:(NSDictionary *)attributes
+			attributes:(NSDictionary *)attributes
 {
-    UIGraphicsBeginImageContextWithOptions(self.size, NO, 0.0f);
-    
-    [self drawInRect:CGRectMake(0, 0, self.size.width, self.size.height)];
-    
-    NSMutableDictionary *tempAttributes = [NSMutableDictionary dictionaryWithDictionary:attributes];
-    UIFont *myFont = [attributes objectForKey:NSFontAttributeName];
-    if (nil == myFont)
-    {
-        myFont = [UIFont systemFontOfSize:self.size.width / 4];
-        [tempAttributes setObject:myFont
-                           forKey:NSFontAttributeName];
-    }
-    
-    UIColor *myColor = [attributes objectForKey:NSForegroundColorAttributeName];
-    if (nil == myColor)
-    {
-        myColor = [UIColor whiteColor];
-        [tempAttributes setObject:myColor
-                           forKey:NSForegroundColorAttributeName];
-    }
-    
-    CGSize theStringSize = [content sizeWithAttributes:tempAttributes];
-    CGRect rect = CGRectMake(self.size.width / 2 - theStringSize.width / 2,
-                             self.size.height / 2 - theStringSize.height / 2,
-                             theStringSize.width,
-                             theStringSize.height);
-    
-    [tempAttributes removeObjectForKey:NSStrokeColorAttributeName];
-    [content drawInRect:rect withAttributes:tempAttributes];
-    
-    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    
-    return newImage;
+	return [self watermark:content attributes:attributes point:HXWatermarkPointCenter];
+}
+
+/** 指定位置添加水印 */
+- (UIImage *)watermark:(NSString *)content
+			attributes:(NSDictionary *)attributes
+				 point:(HXWatermarkPoint)point
+{
+	return [self watermarkWord:content wordAttributes:attributes markImage:nil point:point];
+}
+
+/** 指定位置添加图片水印 */
+- (UIImage *)watermark:(UIImage *)image
+				 point:(HXWatermarkPoint)point
+{
+	return [self watermarkWord:nil wordAttributes:nil markImage:image point:point];
+}
+
+/** 指定位置添加文字和图片水印 */
+- (UIImage *)watermarkWord:(NSString *)word
+			wordAttributes:(NSDictionary *)attributes
+				 markImage:(UIImage *)markImage
+					 point:(HXWatermarkPoint)point
+{
+	UIImage *resultImage = self;
+	CGSize screenSize = [UIScreen mainScreen].bounds.size;
+	CGFloat maxWidth = screenSize.width * 2.0f;
+	CGFloat maxHeight = screenSize.height * 2.0f;
+	if (resultImage.size.width > maxWidth || resultImage.size.height > maxHeight) {
+		resultImage = [self ratioToSize:CGSizeMake(maxWidth, maxHeight)];
+	}
+	
+	UIGraphicsBeginImageContextWithOptions(resultImage.size, NO, 0.0f);
+	
+	[resultImage drawInRect:CGRectMake(0, 0, resultImage.size.width, resultImage.size.height)];
+	
+	NSMutableDictionary *tempAttributes = [NSMutableDictionary dictionaryWithDictionary:attributes];
+	UIFont *myFont = [attributes objectForKey:NSFontAttributeName];
+	if (nil == myFont) {
+		
+		CGFloat fontSize = 20.0f;
+		if (resultImage.size.width < 300) {
+			fontSize = resultImage.size.width * 0.25;
+		} else {
+			fontSize = resultImage.size.width * 0.05f;
+		}
+		myFont = [UIFont systemFontOfSize:fontSize];
+		[tempAttributes setObject:myFont forKey:NSFontAttributeName];
+	}
+	
+	UIColor *myColor = [attributes objectForKey:NSForegroundColorAttributeName];
+	if (nil == myColor) {
+		
+		myColor = [UIColor whiteColor];
+		[tempAttributes setObject:myColor forKey:NSForegroundColorAttributeName];
+	}
+	[tempAttributes removeObjectForKey:NSStrokeColorAttributeName];
+	
+	CGSize theStringSize = [word sizeWithAttributes:tempAttributes];
+	CGFloat wordW = theStringSize.width;
+	CGFloat wordH = theStringSize.height;
+	CGFloat spacing = nil == word || 0 == word.length || nil == markImage ? 0.0f : 10.0f;
+	CGFloat margin = 20.0f;
+	CGFloat scale = 1.0f;
+	CGFloat imageW = markImage.size.width * scale;
+	CGFloat imageH = markImage.size.height * scale;
+	
+	CGPoint wordAtPoint = CGPointZero, imageAtPoint = CGPointZero;
+	switch (point) {
+		case HXWatermarkPointCenter: {
+			
+			CGFloat resultWidth = wordW + imageW + spacing;
+			CGFloat resultCenter = resultImage.size.width * 0.5 - resultWidth * 0.5;
+			imageAtPoint = CGPointMake(resultCenter, resultImage.size.height * 0.5 - imageH * 0.5);
+			wordAtPoint = CGPointMake(imageAtPoint.x + imageW + spacing, resultImage.size.height * 0.5 - wordH * 0.5);
+		}
+			break;
+		case HXWatermarkPointLeftTop: {
+			
+			wordAtPoint = CGPointMake(margin, margin);
+			imageAtPoint = CGPointMake(wordAtPoint.x + wordW + spacing, margin);
+		}
+			break;
+		case HXWatermarkPointLeftBottom: {
+			
+			wordAtPoint = CGPointMake(margin, resultImage.size.height - wordH - margin);
+			imageAtPoint = CGPointMake(wordAtPoint.x + wordW + spacing, resultImage.size.height - imageH - margin);
+		}
+			break;
+		case HXWatermarkPointRightTop: {
+			
+			wordAtPoint = CGPointMake(resultImage.size.width - wordW - spacing - margin, margin);
+			imageAtPoint = CGPointMake(wordAtPoint.x - imageW - spacing, margin);
+		}
+			break;
+		case HXWatermarkPointRightBottom: {
+			
+			wordAtPoint = CGPointMake(resultImage.size.width - wordW - spacing - margin, resultImage.size.height - wordH - margin);
+			imageAtPoint = CGPointMake(wordAtPoint.x - imageW - spacing, resultImage.size.height - imageH - margin);
+		}
+			break;
+		default:
+			wordAtPoint = CGPointZero;
+			imageAtPoint = CGPointZero;
+			break;
+	}
+	
+	// 微调，文字和图片居中对齐
+	CGFloat gap = fabs(wordH - imageH);
+	switch (point) {
+		case HXWatermarkPointLeftTop:
+		case HXWatermarkPointRightTop: {
+			if (wordH > imageH) {
+				imageAtPoint.y = imageAtPoint.y + gap * 0.5;
+			} else {
+				wordAtPoint.y = wordAtPoint.y + gap * 0.5;
+			}
+		}
+			break;
+		case HXWatermarkPointLeftBottom:
+		case HXWatermarkPointRightBottom: {
+			if (wordH > imageH) {
+				imageAtPoint.y = imageAtPoint.y - gap * 0.5;
+			} else {
+				wordAtPoint.y = wordAtPoint.y - gap * 0.5;
+			}
+		}
+			break;
+		default:
+			break;
+	}
+	
+	[word drawAtPoint:wordAtPoint withAttributes:tempAttributes];
+	[markImage drawAtPoint:imageAtPoint];
+	UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+	UIGraphicsEndImageContext();
+	return newImage;
 }
 
 #pragma mark - Private

@@ -115,6 +115,7 @@ LZDeviceGeneration _generation(void) {
     if ([deviceIdentifier isEqualToString:@"iPod4,1"]) return LZDeviceGenerationiPodtouch4th;
     if ([deviceIdentifier isEqualToString:@"iPod5,1"]) return LZDeviceGenerationiPodtouch5th;
     if ([deviceIdentifier isEqualToString:@"iPod7,1"]) return LZDeviceGenerationiPodtouch6th;
+	if ([deviceIdentifier isEqualToString:@"iPod9,1"]) return LZDeviceGenerationiPodtouch7th;
     // iWatch 型号
     if ([deviceIdentifier isEqualToString:@"Watch1,1"] ||
         [deviceIdentifier isEqualToString:@"Watch1,2"]) return LZDeviceGenerationiWatch1st;
@@ -144,19 +145,31 @@ LZDeviceGeneration _generation(void) {
         [deviceIdentifier isEqualToString:@"iPad3,6"]) return LZDeviceGenerationiPad4;
     if ([deviceIdentifier isEqualToString:@"iPad6,11"] ||
         [deviceIdentifier isEqualToString:@"iPad6,12"]) return LZDeviceGenerationiPad5;
+	if ([deviceIdentifier isEqualToString:@"iPad7,5"] ||
+		[deviceIdentifier isEqualToString:@"iPad7,6"]) return LZDeviceGenerationiPad6;
     if ([deviceIdentifier isEqualToString:@"iPad4,1"] ||
         [deviceIdentifier isEqualToString:@"iPad4,2"] ||
         [deviceIdentifier isEqualToString:@"iPad4,3"]) return LZDeviceGenerationiPad_air;
     if ([deviceIdentifier isEqualToString:@"iPad5,3"] ||
         [deviceIdentifier isEqualToString:@"iPad5,4"]) return LZDeviceGenerationiPad_air2;
+	if ([deviceIdentifier isEqualToString:@"iPad11,3"] ||
+		[deviceIdentifier isEqualToString:@"iPad11,4"]) return LZDeviceGenerationiPad_air3;
     if ([deviceIdentifier isEqualToString:@"iPad6,3"] ||
         [deviceIdentifier isEqualToString:@"iPad6,4"]) return LZDeviceGenerationiPad_pro_inch_9__7;
     if ([deviceIdentifier isEqualToString:@"iPad6,7"] ||
         [deviceIdentifier isEqualToString:@"iPad6,8"]) return LZDeviceGenerationiPad_pro_inch_12__9;
     if ([deviceIdentifier isEqualToString:@"iPad7,1"] ||
         [deviceIdentifier isEqualToString:@"iPad7,2"]) return LZDeviceGenerationiPad_pro_inch_12__9_2nd;
+	if ([deviceIdentifier isEqualToString:@"iPad8,5"] ||
+		[deviceIdentifier isEqualToString:@"iPad8,6"] ||
+		[deviceIdentifier isEqualToString:@"iPad8,7"] ||
+		[deviceIdentifier isEqualToString:@"iPad8,8"]) return LZDeviceGenerationiPad_pro_inch_12__9_3nd;
     if ([deviceIdentifier isEqualToString:@"iPad7,3"] ||
         [deviceIdentifier isEqualToString:@"iPad7,4"]) return LZDeviceGenerationiPad_pro_inch_10__5;
+	if ([deviceIdentifier isEqualToString:@"iPad8,1"] ||
+		[deviceIdentifier isEqualToString:@"iPad8,2"] ||
+		[deviceIdentifier isEqualToString:@"iPad8,3"] ||
+		[deviceIdentifier isEqualToString:@"iPad8,4"]) return LZDeviceGenerationiPad_pro_inch_11;
     if ([deviceIdentifier isEqualToString:@"iPad2,5"] ||
         [deviceIdentifier isEqualToString:@"iPad2,6"] ||
         [deviceIdentifier isEqualToString:@"iPad2,7"]) return LZDeviceGenerationiPad_mini;
@@ -168,6 +181,8 @@ LZDeviceGeneration _generation(void) {
         [deviceIdentifier isEqualToString:@"iPad4,9"]) return LZDeviceGenerationiPad_mini3;
     if ([deviceIdentifier isEqualToString:@"iPad5,1"] ||
         [deviceIdentifier isEqualToString:@"iPad5,2"]) return LZDeviceGenerationiPad_mini4;
+	if ([deviceIdentifier isEqualToString:@"iPad11,1"] ||
+		[deviceIdentifier isEqualToString:@"iPad11,2"]) return LZDeviceGenerationiPad_mini5;
     // iTV 型号
     if ([deviceIdentifier isEqualToString:@"AppleTV2,1"]) return LZDeviceGenerationiTV2nd;
     if ([deviceIdentifier isEqualToString:@"AppleTV3,1"] ||
@@ -351,8 +366,8 @@ NSString * _generation_desc(void) {
 }
 
 /** UUID */
-NSString * _UUID(void) {
-    return [NSUUID UUID].UUIDString;
+NSString * _DeviceUUID(void) {
+	return [UIDevice currentDevice].identifierForVendor.UUIDString;
 }
 
 /** 别名，用户定义的名称 */
@@ -807,7 +822,7 @@ struct LZDeviceUnit_type LZDeviceInfo = {
     .userInterfaceIdiom = _userInterfaceIdiom,
     .generation = _generation,
     .generation_desc = _generation_desc,
-    .UUID = _UUID,
+    .UUID = _DeviceUUID,
     .name = _name,
     .model = _model,
     .localizedModel = _localizedModel,

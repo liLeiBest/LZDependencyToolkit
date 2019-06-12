@@ -48,15 +48,15 @@
 /** 等比例缩放图片 */
 - (instancetype)ratioToSize:(CGSize)newSize
 {
-    CGFloat width = self.size.width;
-    CGFloat height = self.size.height;
-    float verticalRadio = newSize.height/height;
-    float horizontalRadio = newSize.width/width;
-    float radio = verticalRadio > horizontalRadio ? horizontalRadio : verticalRadio;
-    width = width*radio + 50 * radio;
-    height = height*radio + 50 * radio;
-    
-    return [self scaledToSize:CGSizeMake(width,height)];
+	CGFloat width = self.size.width;
+	CGFloat height = self.size.height;
+	float verticalRadio = newSize.height / height;
+	float horizontalRadio = newSize.width / width;
+	float radio = verticalRadio > horizontalRadio ? horizontalRadio : verticalRadio;
+	width = width * radio;
+	height = height * radio;
+	
+	return [self scaledToSize:CGSizeMake(width,height)];
 }
 
 /** 按最短边等比压缩 */
