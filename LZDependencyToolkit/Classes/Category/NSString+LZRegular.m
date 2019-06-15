@@ -19,7 +19,7 @@
 /** 判断是有效的 URL 地址 */
 - (BOOL)isValidURL
 {
-    NSString *URLRegular = @"http+:[^\\s]*";
+    NSString *URLRegular = @"https?:[^\\s]*";
     
     return [self verifyRegular:URLRegular];
 }
