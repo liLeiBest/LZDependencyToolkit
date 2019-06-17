@@ -14,15 +14,20 @@
 
 @interface LZViewController ()
 
+@property (nonatomic, strong) id observer;
+
 @end
 
 @implementation LZViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+	
+	[self setupNavBarItem];
     [self deviceInfo];
     [self appInfo];
+	[self crypto];
+	[self quick];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -31,24 +36,27 @@
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-    [self setupNavBarItem];
+	
+	UIAlertAction *ok = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+		LZQuickUnit.notificationPost(@"abc", @"2", nil);
+	}];
+	LZQuickUnit.alert(@"title", @"message", @[ok]);
 }
 
 #pragma mark - -> UI Action
 - (void)leftDidClick {
     
     NSLog(@"点击了左边按钮");
-    self.navigationItem.rightBarButtonItem.hidden = !self.navigationItem.rightBarButtonItem.isHidden;
 }
 
 - (void)rightDidClick {
     
     NSLog(@"点击了右边按钮");
-    self.navigationItem.leftBarButtonItem.enabled = !self.navigationItem.leftBarButtonItem.enabled;
 }
 
 - (void)sysDidClick {
-    self.navigationItem.rightBarButtonItems = nil;
+
+	NSLog(@"==%@", [@" a b C D" trimmingWhitespaceAndNewlineCharacterSet]);
 }
 
 // MARK: - Private
@@ -75,6 +83,23 @@
                                                           forState:UIControlStateDisabled];
     UIBarButtonItem *sys = [[UIBarButtonItem alloc] initWithTitle:@"右边系统" style:UIBarButtonItemStyleDone target:self action:@selector(sysDidClick)];
     self.navigationItem.rightBarButtonItems = @[right1, sys];
+}
+
+- (void)quick {
+	
+	NSLog(@"CacheDir: %@", LZQuickUnit.cacheDir());
+	NSLog(@"%@", LZQuickUnit.toString(@{@"key1": @"value1", @"key2":@"value2"}));
+	
+	void (^a)(NSNotification *note) = ^(NSNotification *note) {
+		NSLog(@"noti: %@", note);
+	};
+	self.observer = LZQuickUnit.notificationObserver(@"abc", a);
+}
+
+- (void)crypto {
+	
+	NSString *plaintext = @"lilei";
+	NSLog(@"MD5: %@", LZCryptoUnit.MD5(plaintext));
 }
 
 - (void)appInfo {

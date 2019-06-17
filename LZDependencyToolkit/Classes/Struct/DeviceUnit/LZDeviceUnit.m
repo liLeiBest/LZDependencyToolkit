@@ -6,6 +6,7 @@
 //  Copyright © 2017年 Dear.Q. All rights reserved.
 //
 
+#import "LZDeviceUnit.h"
 #import <UIKit/UIKit.h>
 #import <CoreTelephony/CTTelephonyNetworkInfo.h>
 #import <CoreTelephony/CTCarrier.h>
@@ -13,7 +14,6 @@
 #import <sys/mount.h>
 #import <sys/sysctl.h>
 #import <mach/mach.h>
-#import "LZDeviceUnit.h"
 
 // MARK: - Private
 /** 当前设备 */
@@ -575,7 +575,7 @@ NSString * _diskUsedSpace_desc(void) {
 NSString * _CPUCount(void) {
 
     NSUInteger CPUCount = [NSProcessInfo processInfo].activeProcessorCount;
-    NSString *CPUCountDesc = [NSString stringWithFormat:@"%ld", CPUCount];
+	NSString *CPUCountDesc = [NSString stringWithFormat:@"%lu", (unsigned long)CPUCount];
     
     return CPUCountDesc;
 }
@@ -806,13 +806,13 @@ BOOL _is_notch(void) {
 	return _is_iPhone() && _generation() >= LZDeviceGenerationiPhoneX;
 }
 
-// MARK: - • 运营商
+// MARK: - 运营商
 NSString * _carrierName(void) {
     
     CTTelephonyNetworkInfo *info = [[CTTelephonyNetworkInfo alloc] init];
     CTCarrier *carrier = info.subscriberCellularProvider;
     NSString *carrierName = carrier.carrierName;
-    
+
 	return carrierName ? carrierName : @"未知";
 }
 

@@ -37,9 +37,14 @@
 #import "UIView+LZExtension.h"
 #import "UIViewController+LZEmptyDataSet.h"
 #import "UIViewController+LZExtension.h"
+#import "LZDependencyDefine.h"
+#import "LZLogDefine.h"
+#import "LZSingletonDefine.h"
 #import "LZDependencyStruct.h"
 #import "LZAppUnit.h"
+#import "LZCryptoUnit.h"
 #import "LZDeviceUnit.h"
+#import "LZQuickUnit.h"
 
 FOUNDATION_EXPORT double LZDependencyToolkitVersionNumber;
 FOUNDATION_EXPORT const unsigned char LZDependencyToolkitVersionString[];

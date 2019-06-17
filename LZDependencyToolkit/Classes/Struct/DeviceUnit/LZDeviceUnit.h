@@ -309,8 +309,9 @@ struct LZDeviceUnit_type {
      *  运营商名称 e.g 中国联通 
      */
     NSString * (* carrierName)(void);
+	
 };
 
-extern struct LZDeviceUnit_type LZDeviceInfo;
+FOUNDATION_EXTERN struct LZDeviceUnit_type LZDeviceInfo;
 
 #endif

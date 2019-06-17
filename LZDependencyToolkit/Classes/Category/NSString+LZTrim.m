@@ -54,6 +54,26 @@
     return [self trimmingCharacterSet:[NSCharacterSet whitespaceCharacterSet]];
 }
 
+/** 截去所有的空白符 */
+- (NSString *)trimmingAllWhitespace
+{
+	NSRange range = {0, self.length};
+	return [self stringByReplacingOccurrencesOfString:@" " withString:@"" options:NSLiteralSearch range:range];
+}
+
+/** 截去两侧换行符 */
+- (NSString *)trimmingNewlineCharacterSet
+{
+	return [self trimmingCharacterSet:[NSCharacterSet newlineCharacterSet]];
+}
+
+/** 截去所有换行符 */
+- (NSString *)trimmingAllNewline
+{
+	NSRange range = {0, self.length};
+	return [self stringByReplacingOccurrencesOfString:@"\n" withString:@"" options:NSLiteralSearch range:range];
+}
+
 /** 截去两侧的空格和换行符 */
 - (NSString *)trimmingWhitespaceAndNewlineCharacterSet
 {
@@ -124,12 +144,6 @@
 - (NSString *)trimmingSymbolCharacterSet
 {
     return [self trimmingCharacterSet:[NSCharacterSet symbolCharacterSet]];
-}
-
-/** */
-- (NSString *)trimmingNewlineCharacterSet
-{
-    return [self trimmingCharacterSet:[NSCharacterSet newlineCharacterSet]];
 }
 
 #pragma mark - -> Private

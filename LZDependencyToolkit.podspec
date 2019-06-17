@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
     s.author           = { 'lilei' => 'lilei0502@139.com' }
     s.source           = { :git => 'https://github.com/liLeiBest/LZDependencyToolkit.git', :tag => s.version.to_s }
     s.social_media_url = 'https://github.com/liLeiBest'
-    s.frameworks       = 'UIKit', 'Foundation'
+    s.frameworks       = 'UIKit', 'Foundation', 'CoreGraphics'
     s.requires_arc     = true
     s.ios.deployment_target = '8.0'
 
@@ -41,5 +41,20 @@ Pod::Spec.new do |s|
             appUnit.source_files        = 'LZDependencyToolkit/Classes/Struct/AppUnit/*.{h,m}'
             appUnit.public_header_files = 'LZDependencyToolkit/Classes/Struct/AppUnit/*.h'
         end
+		
+		struct.subspec 'QuickUnit' do |quickUnit|
+			quickUnit.source_files        = 'LZDependencyToolkit/Classes/Struct/QuickUnit/*.{h,m}'
+			quickUnit.public_header_files = 'LZDependencyToolkit/Classes/Struct/QuickUnit/*.h'
+		end
+		
+		struct.subspec 'CryptoUnit' do |cryptoUnit|
+			cryptoUnit.source_files        = 'LZDependencyToolkit/Classes/Struct/CryptoUnit/*.{h,m}'
+			cryptoUnit.public_header_files = 'LZDependencyToolkit/Classes/Struct/CryptoUnit/*.h'
+		end
     end
+	
+	s.subspec 'Define' do |define|
+		define.source_files        = 'LZDependencyToolkit/Classes/Define/*.{h,m}'
+		define.public_header_files = 'LZDependencyToolkit/Classes/Define/*.h'
+	end
 end

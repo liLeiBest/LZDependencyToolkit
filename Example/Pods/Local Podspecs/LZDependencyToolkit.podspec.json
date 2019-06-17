@@ -18,7 +18,8 @@
   "social_media_url": "https://github.com/liLeiBest",
   "frameworks": [
     "UIKit",
-    "Foundation"
+    "Foundation",
+    "CoreGraphics"
   ],
   "requires_arc": true,
   "platforms": {
@@ -62,8 +63,23 @@
           "name": "AppUnit",
           "source_files": "LZDependencyToolkit/Classes/Struct/AppUnit/*.{h,m}",
           "public_header_files": "LZDependencyToolkit/Classes/Struct/AppUnit/*.h"
+        },
+        {
+          "name": "QuickUnit",
+          "source_files": "LZDependencyToolkit/Classes/Struct/QuickUnit/*.{h,m}",
+          "public_header_files": "LZDependencyToolkit/Classes/Struct/QuickUnit/*.h"
+        },
+        {
+          "name": "CryptoUnit",
+          "source_files": "LZDependencyToolkit/Classes/Struct/CryptoUnit/*.{h,m}",
+          "public_header_files": "LZDependencyToolkit/Classes/Struct/CryptoUnit/*.h"
         }
       ]
+    },
+    {
+      "name": "Define",
+      "source_files": "LZDependencyToolkit/Classes/Define/*.{h,m}",
+      "public_header_files": "LZDependencyToolkit/Classes/Define/*.h"
     }
   ]
 }

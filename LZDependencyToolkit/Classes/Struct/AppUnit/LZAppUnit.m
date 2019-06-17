@@ -6,8 +6,8 @@
 //
 //
 
-#import <UIKit/UIKit.h>
 #import "LZAppUnit.h"
+#import <UIKit/UIKit.h>
 
 // MARK: - Private
 /** info.plist */
@@ -98,7 +98,7 @@ BOOL _compareVersion(NSString *lastestVersion) {
     return NO;;
 }
 
-LZAppUnit_type LZAppInfo = {
+struct LZAppUnit_type LZAppInfo = {
 
     .exit = _exitApp,
     .name = _displayName,

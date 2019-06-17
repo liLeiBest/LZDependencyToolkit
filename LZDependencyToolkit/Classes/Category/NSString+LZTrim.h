@@ -51,11 +51,47 @@
 /**
  @author lilei
  
+ @brief 截去所有的空白符
+ 
+ @return NSString
+ */
+- (NSString *)trimmingAllWhitespace;
+
+/**
+ @author lilei
+ 
+ @brief 截去两侧换行符
+ 
+ @return NSString
+ */
+- (NSString *)trimmingNewlineCharacterSet;
+
+/**
+ @author lilei
+ 
+ @brief 截去杨有的换行符
+ 
+ @return NSString
+ */
+- (NSString *)trimmingAllNewline;
+
+/**
+ @author lilei
+ 
  @brief 截去两侧的空格、换行符
  
  @return NSString
  */
 - (NSString *)trimmingWhitespaceAndNewlineCharacterSet;
+
+/**
+ @author lilei
+ 
+ @brief 截去所有的空格、换行符
+ 
+ @return NSString
+ */
+- (NSString *)trimmingAllWhitespaceAndNewline;
 
 /**
  @author lilei
@@ -155,15 +191,6 @@
  @return NSString
  */
 - (NSString *)trimmingSymbolCharacterSet;
-
-/**
- @author lilei
- 
- @brief 截去两侧换行符
- 
- @return NSString
- */
-- (NSString *)trimmingNewlineCharacterSet;
 
 #pragma mark - Deprecated
 - (NSString *)stringByTrimmingLeftCharactersInSet:(NSCharacterSet *)characterSet __deprecated_msg("请使用 [trimmingLeftCharactersInSet:]");

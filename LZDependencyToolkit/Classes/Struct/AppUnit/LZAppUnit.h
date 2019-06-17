@@ -11,7 +11,7 @@
 
 #import <Foundation/Foundation.h>
 
-typedef struct _LZAppUnit_type {
+struct LZAppUnit_type {
     
     /** 
      *  Forced Exit App
@@ -54,8 +54,8 @@ typedef struct _LZAppUnit_type {
      */
     BOOL (* compareVersion)(NSString *lastestVersion);
     
-} LZAppUnit_type;
+};
 
-FOUNDATION_EXTERN LZAppUnit_type LZAppInfo;
+FOUNDATION_EXTERN struct LZAppUnit_type LZAppInfo;
 
 #endif /* LZAppUnit_h */

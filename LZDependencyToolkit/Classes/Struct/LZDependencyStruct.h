@@ -9,8 +9,9 @@
 #ifndef LZDependencyStruct_h
 #define LZDependencyStruct_h
 
-#import "LZDeviceUnit.h"
 #import "LZAppUnit.h"
-
+#import "LZCryptoUnit.h"
+#import "LZDeviceUnit.h"
+#import "LZQuickUnit.h"
 
 #endif /* LZDependencyStruct_h */
