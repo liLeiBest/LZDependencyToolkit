@@ -30,7 +30,6 @@
 #import "UIImage+LZEffect.h"
 #import "UIImage+LZEntend.h"
 #import "UIImage+LZInstance.h"
-#import "UIImage+LZRuntime.h"
 #import "UINavigationBar+LZExtension.h"
 #import "UIScrollView+LZRefreshControl.h"
 #import "UIScrollView+LZRegisterReuseView.h"
