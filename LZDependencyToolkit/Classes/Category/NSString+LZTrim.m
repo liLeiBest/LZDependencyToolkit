@@ -80,6 +80,13 @@
     return [self trimmingCharacterSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 }
 
+- (NSString *)trimmingAllWhitespaceAndNewline
+{
+	NSString *tmpString = [self trimmingAllWhitespace];
+	tmpString = [tmpString trimmingAllNewline];
+	return tmpString;
+}
+
 /** 截去十进制数字，即阿拉伯数字 */
 - (NSString *)trimmingDecimalDigitCharacterSet
 {

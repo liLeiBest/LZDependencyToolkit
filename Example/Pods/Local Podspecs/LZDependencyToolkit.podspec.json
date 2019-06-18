@@ -73,8 +73,7 @@
         {
           "name": "CryptoUnit",
           "source_files": "LZDependencyToolkit/Classes/Struct/CryptoUnit/*.{h,m}",
-          "public_header_files": "LZDependencyToolkit/Classes/Struct/CryptoUnit/*.h",
-          "frameworks": "CommonCrypto"
+          "public_header_files": "LZDependencyToolkit/Classes/Struct/CryptoUnit/*.h"
         }
       ]
     },

@@ -52,7 +52,6 @@ Pod::Spec.new do |s|
 		struct.subspec 'CryptoUnit' do |cryptoUnit|
 			cryptoUnit.source_files        	= 'LZDependencyToolkit/Classes/Struct/CryptoUnit/*.{h,m}'
 			cryptoUnit.public_header_files 	= 'LZDependencyToolkit/Classes/Struct/CryptoUnit/*.h'
-			cryptoUnit.frameworks			= 'CommonCrypto'
 		end
     end
 	
