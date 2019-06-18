@@ -26,6 +26,14 @@
     [super tearDown];
 }
 
+- (void)testTimestampToDate {
+	
+	NSString *today = [NSDate currentTimeStamp];
+	NSDate *date = [NSDate dateFormatToDate:today formats:@[@"yyyy-MM-dd"]];
+	NSString *dateDesc = [date dateFormatToYMD];
+	XCTAssertNotNil(dateDesc, @"出错了");
+}
+
 - (void)testExample
 {
     XCTFail(@"No implementation for \"%s\"", __PRETTY_FUNCTION__);

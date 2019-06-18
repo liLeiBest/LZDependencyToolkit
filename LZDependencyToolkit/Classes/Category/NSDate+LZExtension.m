@@ -64,7 +64,7 @@ NSDate * stringToDate(NSString *dateStr, NSString *dateFormat) {
     NSDateFormatter *dateF = dateFormatter();
     dateF.dateFormat = dateFormat;
     NSDate *tempDate = [dateF dateFromString:dateStr];
-    if (nil == tempDate && (nil == dateFormat || 0 == dateFormat.length)) {
+    if (nil == tempDate || (nil == dateFormat || 0 == dateFormat.length)) {
         
         NSTimeInterval timeStamp = dateStr.doubleValue / 1000;
         NSDate *date = [NSDate dateWithTimeIntervalSince1970:timeStamp];
