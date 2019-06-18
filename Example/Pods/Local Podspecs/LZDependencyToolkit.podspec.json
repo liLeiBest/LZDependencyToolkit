@@ -1,8 +1,8 @@
 {
   "name": "LZDependencyToolkit",
-  "version": "1.2.5",
+  "version": "1.2.5.1",
   "summary": "Toolkit.",
-  "description": "Toolkit 常用工具箱，包括两部分内容\n1.分类，常用系统类方法扩展。\n2.自定义结构体，封装App 及 设备的常用属性。",
+  "description": "Toolkit 常用工具箱，包括两部分内容\n   1.分类，常用系统类方法扩展。\n   2.自定义结构体，封装App 及 设备的常用属性。\n3.宏定义。",
   "homepage": "https://github.com/liLeiBest/LZDependencyToolkit",
   "license": {
     "type": "MIT",
@@ -13,7 +13,7 @@
   },
   "source": {
     "git": "https://github.com/liLeiBest/LZDependencyToolkit.git",
-    "tag": "1.2.5"
+    "tag": "1.2.5.1"
   },
   "social_media_url": "https://github.com/liLeiBest",
   "frameworks": [
@@ -67,12 +67,14 @@
         {
           "name": "QuickUnit",
           "source_files": "LZDependencyToolkit/Classes/Struct/QuickUnit/*.{h,m}",
-          "public_header_files": "LZDependencyToolkit/Classes/Struct/QuickUnit/*.h"
+          "public_header_files": "LZDependencyToolkit/Classes/Struct/QuickUnit/*.h",
+          "frameworks": "CoreGraphics"
         },
         {
           "name": "CryptoUnit",
           "source_files": "LZDependencyToolkit/Classes/Struct/CryptoUnit/*.{h,m}",
-          "public_header_files": "LZDependencyToolkit/Classes/Struct/CryptoUnit/*.h"
+          "public_header_files": "LZDependencyToolkit/Classes/Struct/CryptoUnit/*.h",
+          "frameworks": "CommonCrypto"
         }
       ]
     },

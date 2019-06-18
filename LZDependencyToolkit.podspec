@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
     s.name             = 'LZDependencyToolkit'
-    s.version          = '1.2.5'
+    s.version          = '1.2.5.1'
     s.summary          = 'Toolkit.'
     s.description      = <<-DESC
     Toolkit 常用工具箱，包括两部分内容
@@ -39,7 +39,7 @@ Pod::Spec.new do |s|
         end
 
         struct.subspec 'AppUnit' do |appUnit|
-            appUnit.source_filee			= 'LZDependencyToolkit/Classes/Struct/AppUnit/*.{h,m}'
+            appUnit.source_files			= 'LZDependencyToolkit/Classes/Struct/AppUnit/*.{h,m}'
             appUnit.public_header_files		= 'LZDependencyToolkit/Classes/Struct/AppUnit/*.h'
         end
 		
