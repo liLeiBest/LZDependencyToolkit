@@ -80,6 +80,7 @@
     return [self trimmingCharacterSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 }
 
+/** 截去所有的空格、换行符 */
 - (NSString *)trimmingAllWhitespaceAndNewline
 {
 	NSString *tmpString = [self trimmingAllWhitespace];
