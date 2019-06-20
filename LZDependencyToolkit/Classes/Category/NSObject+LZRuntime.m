@@ -32,6 +32,21 @@ id LZ_getAssociatedObject(id object, const void *key) {
     return objc_getAssociatedObject(object, key);
 }
 
+- (NSArray *)properties {
+	
+	unsigned int count = 0;
+	NSMutableArray *propertyArrM = [NSMutableArray arrayWithCapacity:count];
+	objc_property_t *properties = class_copyPropertyList([self class], &count);
+	for (NSUInteger i = 0; i < count; i++) {
+		
+		objc_property_t property = properties[i];
+		const char *propertyChar = property_getName(property);
+		NSString *propertyString = [NSString stringWithUTF8String:propertyChar];
+		[propertyArrM addObject:propertyString];
+	}
+	return [propertyArrM copy];
+}
+
 //MARK: - Private
 /** 方法交换 */
 void LZ_exchangeMethod(BOOL classMethod, Class destClass, SEL originSelector, SEL swizzleSelector) {

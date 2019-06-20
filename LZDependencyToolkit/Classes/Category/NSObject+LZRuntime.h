@@ -30,4 +30,9 @@ void LZ_setAssociatedObject(id object, const void *key, id value);
  */
 id LZ_getAssociatedObject(id object, const void *key);
 
+/**
+ *  获取对象属性列表
+ */
+- (NSArray *)properties;
+
 @end

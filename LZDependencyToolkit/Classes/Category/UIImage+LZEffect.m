@@ -270,20 +270,20 @@
 - (UIImage *)watermark:(NSString *)content
 			attributes:(NSDictionary *)attributes
 {
-	return [self watermark:content attributes:attributes point:HXWatermarkPointCenter];
+	return [self watermark:content attributes:attributes point:LZWatermarkPointCenter];
 }
 
 /** 指定位置添加水印 */
 - (UIImage *)watermark:(NSString *)content
 			attributes:(NSDictionary *)attributes
-				 point:(HXWatermarkPoint)point
+				 point:(LZWatermarkPoint)point
 {
 	return [self watermarkWord:content wordAttributes:attributes markImage:nil point:point];
 }
 
 /** 指定位置添加图片水印 */
 - (UIImage *)watermark:(UIImage *)image
-				 point:(HXWatermarkPoint)point
+				 point:(LZWatermarkPoint)point
 {
 	return [self watermarkWord:nil wordAttributes:nil markImage:image point:point];
 }
@@ -292,7 +292,7 @@
 - (UIImage *)watermarkWord:(NSString *)word
 			wordAttributes:(NSDictionary *)attributes
 				 markImage:(UIImage *)markImage
-					 point:(HXWatermarkPoint)point
+					 point:(LZWatermarkPoint)point
 {
 	UIImage *resultImage = self;
 	CGSize screenSize = [UIScreen mainScreen].bounds.size;
@@ -339,7 +339,7 @@
 	
 	CGPoint wordAtPoint = CGPointZero, imageAtPoint = CGPointZero;
 	switch (point) {
-		case HXWatermarkPointCenter: {
+		case LZWatermarkPointCenter: {
 			
 			CGFloat resultWidth = wordW + imageW + spacing;
 			CGFloat resultCenter = resultImage.size.width * 0.5 - resultWidth * 0.5;
@@ -347,25 +347,25 @@
 			wordAtPoint = CGPointMake(imageAtPoint.x + imageW + spacing, resultImage.size.height * 0.5 - wordH * 0.5);
 		}
 			break;
-		case HXWatermarkPointLeftTop: {
+		case LZWatermarkPointLeftTop: {
 			
 			wordAtPoint = CGPointMake(margin, margin);
 			imageAtPoint = CGPointMake(wordAtPoint.x + wordW + spacing, margin);
 		}
 			break;
-		case HXWatermarkPointLeftBottom: {
+		case LZWatermarkPointLeftBottom: {
 			
 			wordAtPoint = CGPointMake(margin, resultImage.size.height - wordH - margin);
 			imageAtPoint = CGPointMake(wordAtPoint.x + wordW + spacing, resultImage.size.height - imageH - margin);
 		}
 			break;
-		case HXWatermarkPointRightTop: {
+		case LZWatermarkPointRightTop: {
 			
 			wordAtPoint = CGPointMake(resultImage.size.width - wordW - spacing - margin, margin);
 			imageAtPoint = CGPointMake(wordAtPoint.x - imageW - spacing, margin);
 		}
 			break;
-		case HXWatermarkPointRightBottom: {
+		case LZWatermarkPointRightBottom: {
 			
 			wordAtPoint = CGPointMake(resultImage.size.width - wordW - spacing - margin, resultImage.size.height - wordH - margin);
 			imageAtPoint = CGPointMake(wordAtPoint.x - imageW - spacing, resultImage.size.height - imageH - margin);
@@ -380,8 +380,8 @@
 	// 微调，文字和图片居中对齐
 	CGFloat gap = fabs(wordH - imageH);
 	switch (point) {
-		case HXWatermarkPointLeftTop:
-		case HXWatermarkPointRightTop: {
+		case LZWatermarkPointLeftTop:
+		case LZWatermarkPointRightTop: {
 			if (wordH > imageH) {
 				imageAtPoint.y = imageAtPoint.y + gap * 0.5;
 			} else {
@@ -389,8 +389,8 @@
 			}
 		}
 			break;
-		case HXWatermarkPointLeftBottom:
-		case HXWatermarkPointRightBottom: {
+		case LZWatermarkPointLeftBottom:
+		case LZWatermarkPointRightBottom: {
 			if (wordH > imageH) {
 				imageAtPoint.y = imageAtPoint.y - gap * 0.5;
 			} else {

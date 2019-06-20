@@ -11,6 +11,7 @@
 #import <sys/mount.h>
 #import <sys/sysctl.h>
 #import <mach/mach.h>
+#import "LZPerson.h"
 
 @interface LZViewController ()
 
@@ -47,16 +48,25 @@
 - (void)leftDidClick {
     
     NSLog(@"点击了左边按钮");
+	
+	LZPerson *person = [[LZPerson alloc] init];
+	NSLog(@"%@", person.properties);
 }
 
 - (void)rightDidClick {
     
     NSLog(@"点击了右边按钮");
+	
+	NSDictionary *dict = @{@"key":@"value",@"key1":@"value1",@"key2":@"value2",@"key3":@"value3",};
+	NSLog(@"%@", dict.description);
+	
+	NSArray *array = @[@"key", @"key1", @"key2", @"key3"];
+	NSLog(@"%@", array.description);
 }
 
 - (void)sysDidClick {
 
-	NSLog(@"==%@", [@" a b C D" trimmingWhitespaceAndNewlineCharacterSet]);
+	NSLog(@"==%@", [@" a b C D" trimmingAllWhitespaceAndNewline]);
 }
 
 // MARK: - Private
