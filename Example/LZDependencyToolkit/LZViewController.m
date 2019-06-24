@@ -15,6 +15,7 @@
 
 @interface LZViewController ()
 
+@property (nonatomic, weak) IBOutlet UIImageView *imgView;
 @property (nonatomic, strong) id observer;
 
 @end
@@ -29,6 +30,9 @@
     [self appInfo];
 	[self crypto];
 	[self quick];
+	
+	UIImage *image = [UIImage imageWithColor:LZOrangeColor size:CGSizeMake(100, 100)];
+	self.imgView.image = image;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -51,6 +55,9 @@
 	
 	LZPerson *person = [[LZPerson alloc] init];
 	NSLog(@"%@", person.properties);
+	
+	UIImage *image = [UIImage imageWithColor:LZOrangeColor size:CGSizeMake(100, 100) isRound:YES];
+	self.imgView.image = image;
 }
 
 - (void)rightDidClick {
@@ -62,6 +69,9 @@
 	
 	NSArray *array = @[@"key", @"key1", @"key2", @"key3"];
 	NSLog(@"%@", array.description);
+	
+	UIImage *image = [UIImage imageWithColor:LZOrangeColor size:CGSizeMake(100, 100) isRound:NO];
+	self.imgView.image = image;
 }
 
 - (void)sysDidClick {

@@ -14,23 +14,37 @@
 @implementation UIImage (LZInstance)
 
 #pragma mark - Public
+/** 创建指定大小、指定颜色的纯色图片、是否为圆角 */
++ (UIImage *)imageWithColor:(UIColor *)color
+					   size:(CGSize)size
+					isRound:(BOOL)isRound {
+	
+	CGFloat width = size.width >= MAXFLOAT ? 1.0f : size.width;
+	CGFloat height = size.height >= MAXFLOAT ? 1.0f : size.height;
+	CGRect rect = CGRectMake(0.0f, 0.0f, width, height);
+	UIGraphicsBeginImageContextWithOptions(rect.size, NO, 0.0);
+	
+	if (isRound) {
+		
+		UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:rect cornerRadius:height * 0.5f];
+		CGContextRef ctx = UIGraphicsGetCurrentContext();
+		CGContextAddPath(ctx, path.CGPath);
+		CGContextClip(ctx);
+	}
+	
+	[color set];
+	UIRectFill(rect);
+	
+	UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+	UIGraphicsEndImageContext();
+	
+	return image;
+}
+
 /** 根据传入参数的颜色创建相应颜色的图片 */
 + (UIImage *)imageWithColor:(UIColor *)color
-                       size:(CGSize)size
-{
-    CGFloat width = size.width >= MAXFLOAT ? 1.0f : size.width;
-    CGFloat height = size.height >= MAXFLOAT ? 1.0f : size.height;
-    CGRect rect = CGRectMake(0.0f, 0.0f, width, height);
-    UIGraphicsBeginImageContext(rect.size);
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    
-    CGContextSetFillColorWithColor(context, [color CGColor]);
-    CGContextFillRect(context, rect);
-    
-    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    
-    return image;
+                       size:(CGSize)size {
+    return [self imageWithColor:color size:size isRound:NO];
 }
 
 /** 根据字符串内容，创建指定大小的图片 */

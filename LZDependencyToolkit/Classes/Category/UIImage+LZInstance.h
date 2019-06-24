@@ -11,6 +11,20 @@
 @interface UIImage (LZInstance)
 
 /**
+ @author Lilei
+ 
+ @brief 创建指定大小、指定颜色的纯色图片、是否为圆角
+ 
+ @param color UIColor
+ @param size  CGSize
+ @param isRound BOOL
+ @return UIImage
+ */
++ (UIImage *)imageWithColor:(UIColor *)color
+					   size:(CGSize)size
+					isRound:(BOOL)isRound;
+
+/**
 @author Lilei
 
 @brief 创建指定大小、指定颜色的纯色图片
