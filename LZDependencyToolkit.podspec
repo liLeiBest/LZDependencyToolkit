@@ -25,7 +25,6 @@ Pod::Spec.new do |s|
         category.public_header_files 		= 'LZDependencyToolkit/Classes/Category/*.h'
         category.frameworks          		= 'CoreGraphics', 'QuartzCore'
         category.dependency 'MJRefresh'
-        category.dependency 'DZNEmptyDataSet'
     end
 
     s.subspec 'Struct' do |struct|

@@ -1,11 +1,9 @@
 PODS:
-  - DZNEmptyDataSet (1.8.1)
   - LZDependencyToolkit (1.2.5.5):
     - LZDependencyToolkit/Category (= 1.2.5.5)
     - LZDependencyToolkit/Define (= 1.2.5.5)
     - LZDependencyToolkit/Struct (= 1.2.5.5)
   - LZDependencyToolkit/Category (1.2.5.5):
-    - DZNEmptyDataSet
     - MJRefresh
   - LZDependencyToolkit/Define (1.2.5.5)
   - LZDependencyToolkit/Struct (1.2.5.5):
@@ -24,7 +22,6 @@ DEPENDENCIES:
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
-    - DZNEmptyDataSet
     - MJRefresh
 
 EXTERNAL SOURCES:
@@ -32,8 +29,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
-  LZDependencyToolkit: 305ac01ab4c9cde10488f8c263b0d0c143028db1
+  LZDependencyToolkit: e3942377cbca9f06b88f87762b19b9290d4e494d
   MJRefresh: ed450d6eb9d3346a2cb033ab7eb6de090aeef437
 
 PODFILE CHECKSUM: b0c7171b0652b3b2aaf1354b7fc5599d83f886ac

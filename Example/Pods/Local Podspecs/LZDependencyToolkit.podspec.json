@@ -39,9 +39,6 @@
       "dependencies": {
         "MJRefresh": [
 
-        ],
-        "DZNEmptyDataSet": [
-
         ]
       }
     },
