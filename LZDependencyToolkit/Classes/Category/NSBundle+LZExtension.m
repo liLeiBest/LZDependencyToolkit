@@ -42,29 +42,28 @@
 	BOOL imageNameValide = imageName && [imageName isKindOfClass:[NSString class]] && imageName.length;
 	NSAssert(imageNameValide, @"Image 名称非法");
 	
+	UIImage *img = nil;
 	NSBundle *resourceBundle = [self bundleForResource:bundleName referenceClass:className];
+	if (@available(iOS 8.0, *)) {
+		
+		img = [UIImage imageNamed:imageName inBundle:resourceBundle compatibleWithTraitCollection:nil];
+		if (img) {
+			return img;
+		}
+	}
+	
 	NSString *name = [NSString stringWithFormat:@"%@.png", imageName];
 	NSString *path =[resourceBundle pathForResource:name ofType:nil];
-	
-	UIImage *img = [UIImage imageWithContentsOfFile:path];
+	img = [UIImage imageWithContentsOfFile:path];
 	if (img) {
 		return img;
 	}
 	
-	if (@available(iOS 8.0, *)) {
-		
-		img = [UIImage imageNamed:name inBundle:resourceBundle compatibleWithTraitCollection:nil];
-		if (img) {
-			return img;
-		}
-	} else {
-		
-		name = [NSString stringWithFormat:@"%@@%.0fx.png", imageName, [[UIScreen mainScreen] scale]];
-		path = [resourceBundle pathForResource:name ofType:nil];
-		img = [UIImage imageWithContentsOfFile:path];
-		if (img) {
-			return img;
-		}
+	name = [NSString stringWithFormat:@"%@@%.0fx.png", imageName, [[UIScreen mainScreen] scale]];
+	path = [resourceBundle pathForResource:name ofType:nil];
+	img = [UIImage imageWithContentsOfFile:path];
+	if (img) {
+		return img;
 	}
 	
 	if (img) {
