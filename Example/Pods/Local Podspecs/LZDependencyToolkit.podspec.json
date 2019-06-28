@@ -78,6 +78,11 @@
       "name": "Define",
       "source_files": "LZDependencyToolkit/Classes/Define/*.{h,m}",
       "public_header_files": "LZDependencyToolkit/Classes/Define/*.h"
+    },
+    {
+      "name": "Object",
+      "source_files": "LZDependencyToolkit/Classes/Object/*.{h,m}",
+      "public_header_files": "LZDependencyToolkit/Classes/Object/*.h"
     }
   ]
 }

@@ -16,7 +16,9 @@
 @interface LZViewController ()
 
 @property (nonatomic, weak) IBOutlet UIImageView *imgView;
+
 @property (nonatomic, strong) id observer;
+@property (nonatomic, strong) LZWeakTimer *time;
 
 @end
 
@@ -75,8 +77,20 @@
 }
 
 - (void)sysDidClick {
-
-	NSLog(@"==%@", [@" a b C D" trimmingAllWhitespaceAndNewline]);
+	
+	self.time =
+	[[LZWeakTimer alloc] initWithTimeInterval:1 repeats:YES dispatchQueue:dispatch_get_main_queue() eventHandler:^{
+		
+		self.time.tolerance = 1.0f;
+		static NSUInteger number = 0;
+		number++;
+		NSLog(@"%@ %@", @"============", LZQuickUnit.toString(@(number)));
+		if (number >= 10) {
+			[self.time invalidate];
+		}
+	}];
+	self.time.tolerance = 1.0f;
+	[self.time schedule];
 }
 
 // MARK: - Private

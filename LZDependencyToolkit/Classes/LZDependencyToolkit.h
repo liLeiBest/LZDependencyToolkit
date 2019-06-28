@@ -12,5 +12,6 @@
 #import "LZCategory.h"
 #import "LZDependencyDefine.h"
 #import "LZDependencyStruct.h"
+#import "LZObject.h"
 
 #endif /* LZDependencyToolkit_h */

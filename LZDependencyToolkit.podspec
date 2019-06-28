@@ -58,4 +58,9 @@ Pod::Spec.new do |s|
 		define.source_files        = 'LZDependencyToolkit/Classes/Define/*.{h,m}'
 		define.public_header_files = 'LZDependencyToolkit/Classes/Define/*.h'
 	end
+	
+	s.subspec 'Object' do |object|
+		object.source_files        = 'LZDependencyToolkit/Classes/Object/*.{h,m}'
+		object.public_header_files = 'LZDependencyToolkit/Classes/Object/*.h'
+	end
 end
