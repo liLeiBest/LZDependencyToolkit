@@ -26,6 +26,13 @@
  */
 - (nullable UIViewController *)currentActivityViewController;
 
+/**
+ @author Lilei
+ 
+ @brief 关闭当前控制器
+ */
+- (void)dismiss;
+
 @end
 
 @interface UIViewController (LZBundle)

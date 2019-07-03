@@ -77,6 +77,16 @@
 	return activityViewController;
 }
 
+/** 关闭当前控制器 */
+- (void)dismiss {
+	
+	if ([self.navigationController.topViewController isEqual:self] && 1 < self.navigationController.viewControllers.count) {
+		[self.navigationController popViewControllerAnimated:YES];
+	} else {
+		[self dismissViewControllerAnimated:YES completion:nil];
+	}
+}
+
 /** 隐藏导航栏 */
 - (void)hideNavigationBar {
 	self.navigationController.delegate = self;
