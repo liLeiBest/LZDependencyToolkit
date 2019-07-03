@@ -1,22 +1,22 @@
 PODS:
-  - LZDependencyToolkit (1.2.5.8):
-    - LZDependencyToolkit/Category (= 1.2.5.8)
-    - LZDependencyToolkit/Define (= 1.2.5.8)
-    - LZDependencyToolkit/Object (= 1.2.5.8)
-    - LZDependencyToolkit/Struct (= 1.2.5.8)
-  - LZDependencyToolkit/Category (1.2.5.8):
+  - LZDependencyToolkit (1.2.5.9):
+    - LZDependencyToolkit/Category (= 1.2.5.9)
+    - LZDependencyToolkit/Define (= 1.2.5.9)
+    - LZDependencyToolkit/Object (= 1.2.5.9)
+    - LZDependencyToolkit/Struct (= 1.2.5.9)
+  - LZDependencyToolkit/Category (1.2.5.9):
     - MJRefresh
-  - LZDependencyToolkit/Define (1.2.5.8)
-  - LZDependencyToolkit/Object (1.2.5.8)
-  - LZDependencyToolkit/Struct (1.2.5.8):
-    - LZDependencyToolkit/Struct/AppUnit (= 1.2.5.8)
-    - LZDependencyToolkit/Struct/CryptoUnit (= 1.2.5.8)
-    - LZDependencyToolkit/Struct/DeviceUnit (= 1.2.5.8)
-    - LZDependencyToolkit/Struct/QuickUnit (= 1.2.5.8)
-  - LZDependencyToolkit/Struct/AppUnit (1.2.5.8)
-  - LZDependencyToolkit/Struct/CryptoUnit (1.2.5.8)
-  - LZDependencyToolkit/Struct/DeviceUnit (1.2.5.8)
-  - LZDependencyToolkit/Struct/QuickUnit (1.2.5.8)
+  - LZDependencyToolkit/Define (1.2.5.9)
+  - LZDependencyToolkit/Object (1.2.5.9)
+  - LZDependencyToolkit/Struct (1.2.5.9):
+    - LZDependencyToolkit/Struct/AppUnit (= 1.2.5.9)
+    - LZDependencyToolkit/Struct/CryptoUnit (= 1.2.5.9)
+    - LZDependencyToolkit/Struct/DeviceUnit (= 1.2.5.9)
+    - LZDependencyToolkit/Struct/QuickUnit (= 1.2.5.9)
+  - LZDependencyToolkit/Struct/AppUnit (1.2.5.9)
+  - LZDependencyToolkit/Struct/CryptoUnit (1.2.5.9)
+  - LZDependencyToolkit/Struct/DeviceUnit (1.2.5.9)
+  - LZDependencyToolkit/Struct/QuickUnit (1.2.5.9)
   - MJRefresh (3.2.0)
 
 DEPENDENCIES:
@@ -31,7 +31,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  LZDependencyToolkit: 095f266fd2524266714bc6c796e71b3b203da1bf
+  LZDependencyToolkit: 5cb183bd2adbceb1404013842424c31023e77089
   MJRefresh: ed450d6eb9d3346a2cb033ab7eb6de090aeef437
 
 PODFILE CHECKSUM: b0c7171b0652b3b2aaf1354b7fc5599d83f886ac
