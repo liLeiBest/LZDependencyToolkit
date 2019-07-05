@@ -194,3 +194,16 @@
 }
 
 @end
+
+@implementation UIView (LZRoundCorner)
+
+- (void)roundingCorners:(UIRectCorner)corners
+				 radius:(CGFloat)radius {
+	
+	UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:self.bounds byRoundingCorners:corners cornerRadii:CGSizeMake(radius, radius)];
+	CAShapeLayer *shapeLayer = [CAShapeLayer layer];
+	shapeLayer.path = path.CGPath;
+	self.layer.mask = shapeLayer;
+}
+
+@end

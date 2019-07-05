@@ -90,3 +90,15 @@
 								 inBundle:(nullable NSString *)bundleName;
 
 @end
+
+@interface UIView (LZRoundCorner)
+
+/**
+ 圆角任意角
+
+ @param corners UIRectCorner
+ @param radius CGFloat
+ */
+- (void)roundingCorners:(UIRectCorner)corners radius:(CGFloat)radius;
+
+@end
