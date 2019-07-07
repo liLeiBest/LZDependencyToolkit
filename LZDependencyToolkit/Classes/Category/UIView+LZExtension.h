@@ -101,4 +101,13 @@
  */
 - (void)roundingCorners:(UIRectCorner)corners radius:(CGFloat)radius;
 
+/**
+ 圆角任意角
+ 
+ @param rect View 精确区域
+ @param corners UIRectCorner
+ @param radius CGFloat
+ */
+- (void)roundedRect:(CGRect)rect roundingCorners:(UIRectCorner)corners radius:(CGFloat)radius;
+
 @end

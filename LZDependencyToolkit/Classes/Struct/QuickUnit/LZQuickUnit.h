@@ -68,10 +68,26 @@ struct LZQuickUnit_type {
 	NSArray * (* installedFontNames)(void);
 	
 	/**
-	 根据大小返回系统字体
+	 根据大小返回系统常规字体
 	 */
 	UIFont * (* font)(CGFloat fontSize);
 	
+	/**
+	 根据大小返回系统加粗字体
+	 */
+	UIFont * (* boldFont)(CGFloat fontSize);
+	
+	/**
+	 根据大小返回系统斜体字体
+	 */
+	UIFont * (* italicFont)(CGFloat fontSize);
+	
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_8_2
+	/**
+	 根据大小及 UIFontWeight 返回系统字体
+	 */
+	UIFont * (* fontWeight)(CGFloat fontSize, UIFontWeight weight);
+#endif
 	/**
 	 根据名称和大小返回指定字体
 	 */

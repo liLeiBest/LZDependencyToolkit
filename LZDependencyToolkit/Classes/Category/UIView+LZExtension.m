@@ -200,7 +200,16 @@
 - (void)roundingCorners:(UIRectCorner)corners
 				 radius:(CGFloat)radius {
 	
-	UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:self.bounds byRoundingCorners:corners cornerRadii:CGSizeMake(radius, radius)];
+	[self roundedRect:self.bounds roundingCorners:corners radius:radius];
+}
+
+- (void)roundedRect:(CGRect)rect
+	roundingCorners:(UIRectCorner)corners
+			 radius:(CGFloat)radius {
+	
+	UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:rect
+											   byRoundingCorners:corners
+													 cornerRadii:CGSizeMake(radius, radius)];
 	CAShapeLayer *shapeLayer = [CAShapeLayer layer];
 	shapeLayer.path = path.CGPath;
 	self.layer.mask = shapeLayer;
