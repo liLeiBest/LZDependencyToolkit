@@ -20,4 +20,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+@interface UILabel (LZAlertActionFont)
+
+/** font */
+@property (nonatomic,copy) UIFont *appearanceFont UI_APPEARANCE_SELECTOR;
+
+@end
+
 NS_ASSUME_NONNULL_END

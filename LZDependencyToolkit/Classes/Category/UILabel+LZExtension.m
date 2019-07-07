@@ -27,3 +27,16 @@
 }
 
 @end
+
+@implementation UILabel (LZAlertActionFont)
+
+- (void)setAppearanceFont:(UIFont *)appearanceFont {
+	if(appearanceFont) {
+		[self setFont:appearanceFont];
+	}
+}
+
+- (UIFont *)appearanceFont {
+	return self.font;
+}
+@end
