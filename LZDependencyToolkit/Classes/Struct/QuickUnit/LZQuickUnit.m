@@ -201,7 +201,10 @@ struct LZQuickUnit_type LZQuickUnit = {
 	.fontName = fontName,
 	
 	.alert = alert,
+	
+	.notificationCenter = notificationCenter,
 	.notificationObserver = notificationObserver,
+	.notificationAdd = notificationAdd,
 	.notificationPost = notificationPost,
 	.notificationRemove = notificationRemove,
 };
