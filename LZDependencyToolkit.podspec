@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
     s.name             = 'LZDependencyToolkit'
-    s.version          = '1.2.6.3'
+    s.version          = '1.2.7'
     s.summary          = 'Toolkit.'
     s.description      = <<-DESC
     Toolkit 常用工具箱，包括两部分内容

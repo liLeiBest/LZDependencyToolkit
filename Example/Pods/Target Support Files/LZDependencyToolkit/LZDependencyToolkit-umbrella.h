@@ -43,6 +43,7 @@
 #import "LZDependencyDefine.h"
 #import "LZLogDefine.h"
 #import "LZSingletonDefine.h"
+#import "LZWeakDefine.h"
 #import "LZObject.h"
 #import "LZWeakTimer.h"
 #import "LZDependencyStruct.h"

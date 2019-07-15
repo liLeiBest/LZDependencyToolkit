@@ -10,5 +10,6 @@
 
 #import "LZLogDefine.h"
 #import "LZSingletonDefine.h"
+#import "LZWeakDefine.h"
 
 #endif /* LZDependencyDefine_h */
