@@ -8,20 +8,26 @@
 #ifndef LZWeakDefine_h
 #define LZWeakDefine_h
 
-#ifndef weakify
-#define weakify(...) \
+#ifndef lzweakify
+#define lzweakify(...) \
 lz_keywordify \
-metamacro_foreach_cxt(sd_weakify_,, __weak, __VA_ARGS__)
+metamacro_foreach_cxt(lz_weakify_,, __weak, __VA_ARGS__)
 #endif
 
-#ifndef strongify
-#define strongify(...) \
+#ifndef lzstrongify
+#define lzstrongify(...) \
 lz_keywordify \
 _Pragma("clang diagnostic push") \
 _Pragma("clang diagnostic ignored \"-Wshadow\"") \
-metamacro_foreach(sd_strongify_,, __VA_ARGS__) \
+metamacro_foreach(lz_strongify_,, __VA_ARGS__) \
 _Pragma("clang diagnostic pop")
 #endif
+
+#define lz_weakify_(INDEX, CONTEXT, VAR) \
+CONTEXT __typeof__(VAR) metamacro_concat(VAR, _weak_) = (VAR);
+
+#define lz_strongify_(INDEX, VAR) \
+__strong __typeof__(VAR) VAR = metamacro_concat(VAR, _weak_);
 
 #if DEBUG
 #define lz_keywordify autoreleasepool {}
