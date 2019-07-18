@@ -32,6 +32,7 @@ id LZ_getAssociatedObject(id object, const void *key) {
     return objc_getAssociatedObject(object, key);
 }
 
+/** 获取对象属性列表 */
 - (NSArray *)properties {
 	
 	unsigned int count = 0;
