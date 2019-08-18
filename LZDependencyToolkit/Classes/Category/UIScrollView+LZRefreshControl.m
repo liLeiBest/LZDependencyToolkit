@@ -12,9 +12,16 @@
 @implementation UIScrollView (LZRefreshControl)
 
 - (BOOL)isRefreshing {
+	return [self.mj_header isRefreshing] || [self.mj_footer isRefreshing];
+}
+
+- (BOOL)isHeaderRefreshing {
 	return [self.mj_header isRefreshing];
 }
 
+- (BOOL)isFooterRefreshing {
+	return [self.mj_footer isRefreshing];
+}
 - (void)beginHeaderRefresh {
 	
 	if (self.mj_footer.state == MJRefreshStateNoMoreData) {

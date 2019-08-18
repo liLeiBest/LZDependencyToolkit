@@ -1,22 +1,22 @@
 PODS:
-  - LZDependencyToolkit (1.2.7.1):
-    - LZDependencyToolkit/Category (= 1.2.7.1)
-    - LZDependencyToolkit/Define (= 1.2.7.1)
-    - LZDependencyToolkit/Object (= 1.2.7.1)
-    - LZDependencyToolkit/Struct (= 1.2.7.1)
-  - LZDependencyToolkit/Category (1.2.7.1):
+  - LZDependencyToolkit (1.2.7.2):
+    - LZDependencyToolkit/Category (= 1.2.7.2)
+    - LZDependencyToolkit/Define (= 1.2.7.2)
+    - LZDependencyToolkit/Object (= 1.2.7.2)
+    - LZDependencyToolkit/Struct (= 1.2.7.2)
+  - LZDependencyToolkit/Category (1.2.7.2):
     - MJRefresh
-  - LZDependencyToolkit/Define (1.2.7.1)
-  - LZDependencyToolkit/Object (1.2.7.1)
-  - LZDependencyToolkit/Struct (1.2.7.1):
-    - LZDependencyToolkit/Struct/AppUnit (= 1.2.7.1)
-    - LZDependencyToolkit/Struct/CryptoUnit (= 1.2.7.1)
-    - LZDependencyToolkit/Struct/DeviceUnit (= 1.2.7.1)
-    - LZDependencyToolkit/Struct/QuickUnit (= 1.2.7.1)
-  - LZDependencyToolkit/Struct/AppUnit (1.2.7.1)
-  - LZDependencyToolkit/Struct/CryptoUnit (1.2.7.1)
-  - LZDependencyToolkit/Struct/DeviceUnit (1.2.7.1)
-  - LZDependencyToolkit/Struct/QuickUnit (1.2.7.1)
+  - LZDependencyToolkit/Define (1.2.7.2)
+  - LZDependencyToolkit/Object (1.2.7.2)
+  - LZDependencyToolkit/Struct (1.2.7.2):
+    - LZDependencyToolkit/Struct/AppUnit (= 1.2.7.2)
+    - LZDependencyToolkit/Struct/CryptoUnit (= 1.2.7.2)
+    - LZDependencyToolkit/Struct/DeviceUnit (= 1.2.7.2)
+    - LZDependencyToolkit/Struct/QuickUnit (= 1.2.7.2)
+  - LZDependencyToolkit/Struct/AppUnit (1.2.7.2)
+  - LZDependencyToolkit/Struct/CryptoUnit (1.2.7.2)
+  - LZDependencyToolkit/Struct/DeviceUnit (1.2.7.2)
+  - LZDependencyToolkit/Struct/QuickUnit (1.2.7.2)
   - MJRefresh (3.2.0)
 
 DEPENDENCIES:
@@ -31,9 +31,9 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  LZDependencyToolkit: 79992648a6b51b9d18e0a94bc15dc8c1f7499fca
+  LZDependencyToolkit: f270a27bb12a1490ba049fabe9bf34ec02310d7c
   MJRefresh: ed450d6eb9d3346a2cb033ab7eb6de090aeef437
 
 PODFILE CHECKSUM: b0c7171b0652b3b2aaf1354b7fc5599d83f886ac
 
-COCOAPODS: 1.7.0.rc.1
+COCOAPODS: 1.7.4

@@ -25,6 +25,24 @@ typedef void (^LZRefreshingBlock)(void);
 /**
  @author Lilei
  
+ @brief 是否头部正在刷新
+ 
+ @return YES: 刷新中;NO:其它
+ */
+- (BOOL)isHeaderRefreshing;
+
+/**
+ @author Lilei
+ 
+ @brief 是否尾部正在刷新
+ 
+ @return YES: 刷新中;NO:其它
+ */
+- (BOOL)isFooterRefreshing;
+
+/**
+ @author Lilei
+ 
  @brief 开始下拉刷新
  */
 - (void)beginHeaderRefresh;
