@@ -16,7 +16,7 @@ typedef void (^LZRefreshingBlock)(void);
 /**
  @author Lilei
  
- @brief 配置文本属性
+ @brief 配置文本属性，目前只支持字体颜色
  */
 - (void)configTextAttibutes:(NSDictionary *)attributes;
 

@@ -84,22 +84,17 @@ static NSDictionary *RefreshTextAttributes = nil;
 - (void)headerWithRefreshingBlock:(LZRefreshingBlock)refreshingBlock {
 	
 	MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-		
 		if (self.mj_footer.state == MJRefreshStateNoMoreData) {
 			[self.mj_footer resetNoMoreData];
 		}
-		
 		if (refreshingBlock) {
 			refreshingBlock();
 		}
 	}];
 	if (nil != RefreshTextAttributes) {
-		header.stateLabel.attributedText =
-		[[NSAttributedString alloc] initWithString:header.stateLabel.text
-										attributes:RefreshTextAttributes];
-		header.lastUpdatedTimeLabel.attributedText =
-		[[NSAttributedString alloc] initWithString:header.lastUpdatedTimeLabel.text
-										attributes:RefreshTextAttributes];
+		
+		header.stateLabel.textColor = RefreshTextAttributes[NSForegroundColorAttributeName];
+		header.lastUpdatedTimeLabel.textColor = RefreshTextAttributes[NSForegroundColorAttributeName];
 	}
 	self.mj_header = header;
 }
@@ -110,18 +105,14 @@ static NSDictionary *RefreshTextAttributes = nil;
 	[MJRefreshNormalHeader headerWithRefreshingTarget:target
 									 refreshingAction:action];
 	header.refreshingBlock = ^{
-		
 		if (self.mj_footer.state == MJRefreshStateNoMoreData) {
 			[self.mj_footer resetNoMoreData];
 		}
 	};
 	if (nil != RefreshTextAttributes) {
-		header.stateLabel.attributedText =
-		[[NSAttributedString alloc] initWithString:header.stateLabel.text
-										attributes:RefreshTextAttributes];
-		header.lastUpdatedTimeLabel.attributedText =
-		[[NSAttributedString alloc] initWithString:header.lastUpdatedTimeLabel.text
-										attributes:RefreshTextAttributes];
+		
+		header.stateLabel.textColor = RefreshTextAttributes[NSForegroundColorAttributeName];
+		header.lastUpdatedTimeLabel.textColor = RefreshTextAttributes[NSForegroundColorAttributeName];
 	}
 	self.mj_header = header;
 }
@@ -133,9 +124,7 @@ static NSDictionary *RefreshTextAttributes = nil;
 	[footer setTitle:@"" forState:MJRefreshStateIdle];
 	[footer setTitle:@"已经没有更多了" forState:MJRefreshStateNoMoreData];
 	if (nil != RefreshTextAttributes) {
-		footer.stateLabel.attributedText =
-		[[NSAttributedString alloc] initWithString:footer.stateLabel.text
-										attributes:RefreshTextAttributes];
+		footer.stateLabel.textColor = RefreshTextAttributes[NSForegroundColorAttributeName];
 	}
 	self.mj_footer = footer;
 }
@@ -149,9 +138,7 @@ static NSDictionary *RefreshTextAttributes = nil;
 	[footer setTitle:@"" forState:MJRefreshStateIdle];
 	[footer setTitle:@"已经没有更多了" forState:MJRefreshStateNoMoreData];
 	if (nil != RefreshTextAttributes) {
-		footer.stateLabel.attributedText =
-		[[NSAttributedString alloc] initWithString:footer.stateLabel.text
-										attributes:RefreshTextAttributes];
+		footer.stateLabel.textColor = RefreshTextAttributes[NSForegroundColorAttributeName];
 	}
 	self.mj_footer = footer;
 }
