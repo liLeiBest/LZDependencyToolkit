@@ -16,11 +16,9 @@ typedef void (^LZRefreshingBlock)(void);
 /**
  @author Lilei
  
- @brief 是否正在刷新
- 
- @return YES: 刷新中;NO:其它
+ @brief 配置文本属性
  */
-- (BOOL)isRefreshing;
+- (void)configTextAttibutes:(NSDictionary *)attributes;
 
 /**
  @author Lilei
@@ -39,6 +37,15 @@ typedef void (^LZRefreshingBlock)(void);
  @return YES: 刷新中;NO:其它
  */
 - (BOOL)isFooterRefreshing;
+
+/**
+ @author Lilei
+ 
+ @brief 是否正在刷新
+ 
+ @return YES: 刷新中;NO:其它
+ */
+- (BOOL)isRefreshing;
 
 /**
  @author Lilei

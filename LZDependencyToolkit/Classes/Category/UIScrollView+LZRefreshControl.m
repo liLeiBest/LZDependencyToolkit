@@ -9,10 +9,11 @@
 #import "UIScrollView+LZRefreshControl.h"
 #import "MJRefresh.h"
 
+static NSDictionary *RefreshTextAttributes = nil;
 @implementation UIScrollView (LZRefreshControl)
 
-- (BOOL)isRefreshing {
-	return [self.mj_header isRefreshing] || [self.mj_footer isRefreshing];
+- (void)configTextAttibutes:(NSDictionary *)attributes {
+	RefreshTextAttributes = attributes;
 }
 
 - (BOOL)isHeaderRefreshing {
@@ -22,6 +23,11 @@
 - (BOOL)isFooterRefreshing {
 	return [self.mj_footer isRefreshing];
 }
+
+- (BOOL)isRefreshing {
+	return [self isHeaderRefreshing] || [self isFooterRefreshing];
+}
+
 - (void)beginHeaderRefresh {
 	
 	if (self.mj_footer.state == MJRefreshStateNoMoreData) {
@@ -87,7 +93,14 @@
 			refreshingBlock();
 		}
 	}];
-	
+	if (nil != RefreshTextAttributes) {
+		header.stateLabel.attributedText =
+		[[NSAttributedString alloc] initWithString:header.stateLabel.text
+										attributes:RefreshTextAttributes];
+		header.lastUpdatedTimeLabel.attributedText =
+		[[NSAttributedString alloc] initWithString:header.lastUpdatedTimeLabel.text
+										attributes:RefreshTextAttributes];
+	}
 	self.mj_header = header;
 }
 
@@ -102,6 +115,14 @@
 			[self.mj_footer resetNoMoreData];
 		}
 	};
+	if (nil != RefreshTextAttributes) {
+		header.stateLabel.attributedText =
+		[[NSAttributedString alloc] initWithString:header.stateLabel.text
+										attributes:RefreshTextAttributes];
+		header.lastUpdatedTimeLabel.attributedText =
+		[[NSAttributedString alloc] initWithString:header.lastUpdatedTimeLabel.text
+										attributes:RefreshTextAttributes];
+	}
 	self.mj_header = header;
 }
 
@@ -111,6 +132,11 @@
 	[MJRefreshAutoNormalFooter footerWithRefreshingBlock:refreshingBlock];
 	[footer setTitle:@"" forState:MJRefreshStateIdle];
 	[footer setTitle:@"已经没有更多了" forState:MJRefreshStateNoMoreData];
+	if (nil != RefreshTextAttributes) {
+		footer.stateLabel.attributedText =
+		[[NSAttributedString alloc] initWithString:footer.stateLabel.text
+										attributes:RefreshTextAttributes];
+	}
 	self.mj_footer = footer;
 }
 
@@ -122,6 +148,11 @@
 										 refreshingAction:action];
 	[footer setTitle:@"" forState:MJRefreshStateIdle];
 	[footer setTitle:@"已经没有更多了" forState:MJRefreshStateNoMoreData];
+	if (nil != RefreshTextAttributes) {
+		footer.stateLabel.attributedText =
+		[[NSAttributedString alloc] initWithString:footer.stateLabel.text
+										attributes:RefreshTextAttributes];
+	}
 	self.mj_footer = footer;
 }
 
