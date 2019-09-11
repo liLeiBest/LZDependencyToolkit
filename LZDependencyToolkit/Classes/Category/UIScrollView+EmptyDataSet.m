@@ -831,7 +831,9 @@ Class dzn_baseClassToSwizzleForTarget(id target)
         _button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
         _button.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
         _button.accessibilityIdentifier = @"empty set button";
-        
+		_button.layer.cornerRadius = 8.0f;
+		_button.layer.masksToBounds = YES;
+		
         [_button addTarget:self action:@selector(didTapButton:) forControlEvents:UIControlEventTouchUpInside];
         
         [_contentView addSubview:_button];
@@ -990,8 +992,47 @@ Class dzn_baseClassToSwizzleForTarget(id target)
             [subviewStrings addObject:@"button"];
             views[[subviewStrings lastObject]] = _button;
             
-            [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(padding@750)-[button(>=0)]-(padding@750)-|"
-                                                                                     options:0 metrics:metrics views:views]];
+//            [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(padding@750)-[button(>=0)]-(padding@750)-|"
+//                                                                                     options:0 metrics:metrics views:views]];
+			
+			CGFloat width = [_button.currentTitle
+							 boundingRectWithSize:CGSizeMake(MAXFLOAT, MAXFLOAT)
+							 options:NSStringDrawingUsesLineFragmentOrigin
+							 attributes:@{NSFontAttributeName : _button.titleLabel.font}
+							 context:nil].size.width;
+			if (!width) {
+				
+				width = 120;
+			} else {
+				
+				width += 20;
+			}
+			[self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_button
+																		 attribute:NSLayoutAttributeWidth
+																		 relatedBy:NSLayoutRelationEqual
+																			toItem:nil
+																		 attribute:NSLayoutAttributeNotAnAttribute
+																		multiplier:1.0f
+																		  constant:width]];
+			[self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_button
+																		 attribute:NSLayoutAttributeHeight
+																		 relatedBy:NSLayoutRelationEqual
+																			toItem:nil
+																		 attribute:NSLayoutAttributeNotAnAttribute
+																		multiplier:1.0f
+																		  constant:40.0f]];
+			[self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_button
+																		 attribute:NSLayoutAttributeCenterX
+																		 relatedBy:NSLayoutRelationEqual
+																			toItem:self.contentView
+																		 attribute:NSLayoutAttributeCenterX
+																		multiplier:1.0f
+																		  constant:0.0f]];
+			
+			
+			CGRect frame = _button.frame;
+			frame.size.height = 60;
+			_button.frame = frame;
         }
         // or removes from its superview
         else {
