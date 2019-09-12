@@ -8,6 +8,8 @@
 #ifndef LZWeakDefine_h
 #define LZWeakDefine_h
 
+#import "LZmetamacro.h"
+
 #ifndef lzweakify
 #define lzweakify(...) \
 lz_keywordify \

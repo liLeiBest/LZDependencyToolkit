@@ -42,6 +42,7 @@
 #import "UIViewController+LZExtension.h"
 #import "LZDependencyDefine.h"
 #import "LZLogDefine.h"
+#import "LZmetamacro.h"
 #import "LZSingletonDefine.h"
 #import "LZWeakDefine.h"
 #import "LZObject.h"
