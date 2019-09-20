@@ -83,9 +83,9 @@ BOOL _compareBuild(NSString *lastestBuild) {
 
     NSComparisonResult comparisonResult = [_build() compare:lastestBuild
                                                     options:NSNumericSearch];
-    if (comparisonResult == NSOrderedAscending) return YES;
+    if (comparisonResult == NSOrderedDescending) return NO;
     
-    return NO;
+    return YES;
 }
 
 /** compare version */
@@ -93,9 +93,9 @@ BOOL _compareVersion(NSString *lastestVersion) {
 
     NSComparisonResult comparisonResult = [_version() compare:lastestVersion
                                                     options:NSNumericSearch];
-    if (comparisonResult == NSOrderedAscending) return YES;
+    if (comparisonResult == NSOrderedDescending) return NO;
     
-    return NO;;
+    return YES;;
 }
 
 struct LZAppUnit_type LZAppInfo = {
