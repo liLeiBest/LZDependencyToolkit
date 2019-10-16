@@ -108,6 +108,9 @@ LZDeviceGeneration _generation(void) {
 	if ([deviceIdentifier isEqualToString:@"iPhone11,2"]) return LZDeviceGenerationiPhoneXS;
 	if ([deviceIdentifier isEqualToString:@"iPhone11,4"] ||
 		[deviceIdentifier isEqualToString:@"iPhone11,6"]) return LZDeviceGenerationiPhoneXS_max;
+    if ([deviceIdentifier isEqualToString:@"iPhone12,1"]) return LZDeviceGenerationiPhone11;
+    if ([deviceIdentifier isEqualToString:@"iPhone12,3"]) return LZDeviceGenerationiPhone11_pro;
+    if ([deviceIdentifier isEqualToString:@"iPhone12,5"]) return LZDeviceGenerationiPhone11_pro_max;
     // iPod 型号
     if ([deviceIdentifier isEqualToString:@"iPod1,1"]) return LZDeviceGenerationiPodtouch1st;
     if ([deviceIdentifier isEqualToString:@"iPod2,1"]) return LZDeviceGenerationiPodtouch2nd;
@@ -147,6 +150,8 @@ LZDeviceGeneration _generation(void) {
         [deviceIdentifier isEqualToString:@"iPad6,12"]) return LZDeviceGenerationiPad5;
 	if ([deviceIdentifier isEqualToString:@"iPad7,5"] ||
 		[deviceIdentifier isEqualToString:@"iPad7,6"]) return LZDeviceGenerationiPad6;
+    if ([deviceIdentifier isEqualToString:@"iPad7,11"] ||
+        [deviceIdentifier isEqualToString:@"iPad7,12"]) return LZDeviceGenerationiPad7;
     if ([deviceIdentifier isEqualToString:@"iPad4,1"] ||
         [deviceIdentifier isEqualToString:@"iPad4,2"] ||
         [deviceIdentifier isEqualToString:@"iPad4,3"]) return LZDeviceGenerationiPad_air;
@@ -803,7 +808,19 @@ BOOL _screen_retina(void) {
 
 /** 屏幕是否是齐刘海 */
 BOOL _is_notch(void) {
-	return _is_iPhone() && _generation() >= LZDeviceGenerationiPhoneX;
+    
+    BOOL isNotch = NO;
+    if (NO == _is_iPhone()) {
+        return isNotch;
+    }
+    if (@available(iOS 11.0, *)) {
+        
+        UIWindow *mainWindow = [[[UIApplication sharedApplication] delegate] window];
+        if (mainWindow.safeAreaInsets.bottom > 0.0) {
+            isNotch = YES;
+        }
+    }
+	return isNotch;
 }
 
 // MARK: - 运营商
