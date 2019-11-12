@@ -270,6 +270,15 @@ NSString * _generation_desc(void) {
 		case LZDeviceGenerationiPhoneXS_max:
 			return @"iPhone XS Max";
 			break;
+        case LZDeviceGenerationiPhone11:
+            return @"iPhone 11";
+            break;
+        case LZDeviceGenerationiPhone11_pro:
+            return @"iPhone 11 Pro";
+            break;
+        case LZDeviceGenerationiPhone11_pro_max:
+            return @"iPhone 11 Pro Max";
+            break;
             // iPod 型号
         case LZDeviceGenerationiPodtouch1st:
             return @"iPod touch";
@@ -288,6 +297,9 @@ NSString * _generation_desc(void) {
             break;
         case LZDeviceGenerationiPodtouch6th:
             return @"iPod touch (6th generation)";
+            break;
+        case LZDeviceGenerationiPodtouch7th:
+            return @"iPod touch (7th generation)";
             break;
             // iWatch 型号
         case LZDeviceGenerationiWatch1st:
@@ -321,11 +333,20 @@ NSString * _generation_desc(void) {
         case LZDeviceGenerationiPad5:
             return @"iPad (5th generation)";
             break;
+        case LZDeviceGenerationiPad6:
+            return @"iPad (6th generation)";
+            break;
+        case LZDeviceGenerationiPad7:
+            return @"iPad (7th generation)";
+            break;
         case LZDeviceGenerationiPad_air:
             return @"iPad Air 1";
             break;
         case LZDeviceGenerationiPad_air2:
             return @"iPad Air 2";
+            break;
+        case LZDeviceGenerationiPad_air3:
+            return @"iPad Air 3";
             break;
         case LZDeviceGenerationiPad_pro_inch_9__7:
             return @"iPad Pro (9.7-inch)";
@@ -339,6 +360,12 @@ NSString * _generation_desc(void) {
         case LZDeviceGenerationiPad_pro_inch_10__5:
             return @"iPad Pro (10.5-inch)";
             break;
+        case LZDeviceGenerationiPad_pro_inch_11:
+            return @"iPad Pro (11.0-inch)";
+            break;
+        case LZDeviceGenerationiPad_pro_inch_12__9_3nd:
+            return @"iPad Pro (12.9-inch, 3nd generation)";
+            break;
         case LZDeviceGenerationiPad_mini:
             return @"iPad mini 1";
             break;
@@ -350,6 +377,9 @@ NSString * _generation_desc(void) {
             break;
         case LZDeviceGenerationiPad_mini4:
             return @"iPad mini 4";
+            break;
+        case LZDeviceGenerationiPad_mini5:
+            return @"iPad mini 5";
             break;
             // iTV 型号
         case LZDeviceGenerationiTV2nd:
@@ -364,6 +394,7 @@ NSString * _generation_desc(void) {
         case LZDeviceGenerationiTV4K:
             return @"Apple TV 4K";
             break;
+        case LZDeviceGenerationUnspecified:
         default:
             return @"设备类型未知";
             break;
