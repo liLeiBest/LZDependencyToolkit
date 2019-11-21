@@ -7,11 +7,10 @@
 //
 
 #import "LZViewController.h"
-#import "LZDependencyToolkit.h"
 #import <sys/mount.h>
 #import <sys/sysctl.h>
 #import <mach/mach.h>
-#import "LZPerson.h"
+#import "LZStudent.h"
 
 @interface LZViewController ()
 
@@ -56,7 +55,26 @@
     NSLog(@"点击了左边按钮");
 	
 	LZPerson *person = [[LZPerson alloc] init];
-	NSLog(@"%@", person.properties);
+    person.name = @"Zhangsan";
+    person.age = 20;
+    person.sex = @"1";
+	NSLog(@"%@", person);
+    
+    LZStudent *student = [[LZStudent alloc] init];
+    student.name = @"Lisi";
+    student.age = 18;
+    student.sex = @"0";
+    student.school = @"xxx";
+    student.grade = @"5";
+    student.graduation = YES;
+    student.graduateCallback = ^{
+    };
+    LZBook *book = [[LZBook alloc] init];
+    book.name = @"正面教育 100 讲";
+    book.author = @"阿三";
+    book.price = 10.00;
+    student.book = book;
+    NSLog(@"%@", student);
 	
 	UIImage *image = [UIImage imageWithColor:LZOrangeColor size:CGSizeMake(100, 100) isRound:YES];
 	self.imgView.image = image;
@@ -68,9 +86,17 @@
 	
 	NSDictionary *dict = @{@"key":@"value",@"key1":@"value1",@"key2":@"value2",@"key3":@"value3",};
 	NSLog(@"%@", dict.description);
-	
+    NSLog(@"%@", dict.parameterString);
+    
+    NSMutableDictionary *dictM = [NSMutableDictionary dictionaryWithDictionary:dict];
+	NSLog(@"%@", dictM.description);
+    
 	NSArray *array = @[@"key", @"key1", @"key2", @"key3"];
 	NSLog(@"%@", array.description);
+    NSLog(@"%@", array.parameterString);
+    
+    NSMutableArray *arrayM = [NSMutableArray arrayWithArray:array];
+    NSLog(@"%@", arrayM.description);
 	
 	UIImage *image = [UIImage imageWithColor:LZOrangeColor size:CGSizeMake(100, 100) isRound:NO];
 	self.imgView.image = image;
@@ -123,6 +149,7 @@
 	
 	NSLog(@"CacheDir: %@", LZQuickUnit.cacheDir());
 	NSLog(@"%@", LZQuickUnit.toString(@{@"key1": @"value1", @"key2":@"value2"}));
+    NSLog(@"%@", LZQuickUnit.toString(@[@"key1", @"key2"]));
 	
 	void (^a)(NSNotification *note) = ^(NSNotification *note) {
 		NSLog(@"noti: %@", note);

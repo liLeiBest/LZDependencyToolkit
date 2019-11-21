@@ -8,13 +8,15 @@
 
 #import <Foundation/Foundation.h>
 
-typedef NS_ENUM(NSUInteger, DateSepartorType) {
-    DateSepartorTypeDefault,    // e.g 2000-01-01 00:00:00
-    DateSepartorTypeChinese,    // e.g 2000年01月01日 00时00分00秒
-    DateSepartorTypeSlash,      // e.g 2000/01/01 00/00/00
-    DateSepartorTypeNone,       // e.g 20000101000000
+// 日期分隔符类型
+typedef NS_ENUM(NSUInteger, LZDateSepartorType) {
+    LZDateSepartorTypeDefault,    // e.g 2000-01-01 00:00:00
+    LZDateSepartorTypeChinese,    // e.g 2000年01月01日 00时00分00秒
+    LZDateSepartorTypeSlash,      // e.g 2000/01/01 00/00/00
+    LZDateSepartorTypeNone,       // e.g 20000101000000
 };
 
+// 日期间隔
 typedef struct _date_interval_type {
     NSInteger year;
     NSInteger month;
@@ -22,17 +24,18 @@ typedef struct _date_interval_type {
     NSInteger hour;
     NSInteger minute;
     NSInteger second;
-} DateInterval;
+} LZDateInterval;
 
-typedef NS_ENUM(NSUInteger, WeekType) {
-    WeekTypeMonday,
-    WeekTypeTuesday,
-    WeekTypeWednesday,
-    WeekTypeThursday,
-    WeekTypeFriday,
-    WeekTypeSaturday,
-    WeekTypeSunday,
-    WeekTypeUnknow,
+// 星期
+typedef NS_ENUM(NSUInteger, LZWeekType) {
+    LZWeekTypeMonday,
+    LZWeekTypeTuesday,
+    LZWeekTypeWednesday,
+    LZWeekTypeThursday,
+    LZWeekTypeFriday,
+    LZWeekTypeSaturday,
+    LZWeekTypeSunday,
+    LZWeekTypeUnknow,
 };
 
 @interface NSDate (LZExtension)
@@ -85,7 +88,7 @@ typedef NS_ENUM(NSUInteger, WeekType) {
  *
  *  @return WeekType
  */
-- (WeekType)weekday;
+- (LZWeekType)weekday;
 
 /**
  *  是否为今年
@@ -114,14 +117,14 @@ typedef NS_ENUM(NSUInteger, WeekType) {
  *
  *  @return NSString
  */
-- (NSString *)dateFormatToYMDWithSepartorType:(DateSepartorType)separtorType;
+- (NSString *)dateFormatToYMDWithSepartorType:(LZDateSepartorType)separtorType;
 
 /**
  *  根据分隔线类型格式化日期
  *
  *  @return NSString
  */
-- (NSString *)dateFormatWithSepartorType:(DateSepartorType)separtorType;
+- (NSString *)dateFormatWithSepartorType:(LZDateSepartorType)separtorType;
 
 /**
  *  根据指定格式格式化日期
@@ -287,8 +290,8 @@ typedef NS_ENUM(NSUInteger, WeekType) {
  *  @discussion 可以计算将来的日期距离现在的间隔
  *  @remark 如果是字符串类格式时间，则必填；如果是时间戳，则填 nil 或 @""。
  */
-+ (DateInterval)dateInterval:(NSString *)dateStr
-            originDateFormat:(NSString *)dateFormat;
++ (LZDateInterval)dateInterval:(NSString *)dateStr
+              originDateFormat:(NSString *)dateFormat;
 
 /**
  *  返回距离现在日期间隔的总天数

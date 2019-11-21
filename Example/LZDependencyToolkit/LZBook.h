@@ -1,8 +1,8 @@
 //
-//  LZPerson.h
+//  LZBook.h
 //  LZDependencyToolkit_Example
 //
-//  Created by Dear.Q on 2019/6/20.
+//  Created by Dear.Q on 2019/11/21.
 //  Copyright © 2019 lilei_hapy@163.com. All rights reserved.
 //
 
@@ -10,14 +10,14 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface LZPerson : NSObject
+@interface LZBook : NSObject
 
-/** name */
+/** 书名 */
 @property (copy, nonatomic) NSString *name;
-/** age */
-@property (assign, nonatomic) NSUInteger age;
-/** sex */
-@property (copy, nonatomic) NSString *sex;
+/** 作者 */
+@property (copy, nonatomic) NSString *author;
+/** 价格 */
+@property (assign, nonatomic) CGFloat price;
 
 @end
 

@@ -14,12 +14,9 @@
 
 #pragma mark - Public
 /** 根据色值改变图片的暗度 */
-- (UIImage *)darkToValue:(float)darkValue
-{
-    return [self pixelOperationBlock:^(UInt8 *redRef,
-                                       UInt8 *greenRef,
-                                       UInt8 *blueRef)
-    {
+- (UIImage *)darkToValue:(float)darkValue {
+    return [self pixelOperationBlock:^(UInt8 *redRef, UInt8 *greenRef, UInt8 *blueRef) {
+        
         *redRef = *redRef * darkValue;
         *greenRef = *greenRef * darkValue;
         *blueRef = *blueRef * darkValue;
@@ -27,39 +24,35 @@
 }
 
 /** 根据灰度级别改变图片的灰度 */
-- (UIImage *)grayToLevelType:(UIImageGrayLevelType)type
-{
-    return [self pixelOperationBlock:^(UInt8 *redRef,
-                                       UInt8 *greenRef,
-                                       UInt8 *blueRef)
-    {
+- (UIImage *)grayToLevelType:(LZImageGrayLevel)type {
+    return [self pixelOperationBlock:^(UInt8 *redRef, UInt8 *greenRef, UInt8 *blueRef) {
+        
         UInt8 red = *redRef , green = *greenRef , blue = *blueRef;
-        switch (type)
-        {
-            case 0:
-            {
+        switch (type) {
+            case LZImageGrayLevelHalfGray: {
+                
                 *redRef = red * 0.5;
                 *greenRef = green * 0.5;
                 *blueRef = blue * 0.5;
             }
                 break;
-            case 1:
-            {
+            case LZImageGrayLevelFullGray: {
+                
                 UInt8 brightness = (77 * red + 28 * green + 151 * blue) / 256;
                 *redRef = brightness;
                 *greenRef = brightness;
                 *blueRef = brightness;
             }
                 break;
-            case 2:
-            {
+            case LZImageGrayLevelDarkBrown: {
+                
                 *redRef = red;
                 *greenRef = green * 0.7;
                 *blueRef = blue * 0.4;
             }
                 break;
-            case 3:
-            {
+            case LZImageGrayLevelInverse: {
+                
                 *redRef = 255 - red;
                 *greenRef = 255 - green;
                 *blueRef = 255 - blue;
@@ -70,13 +63,7 @@
 }
 
 /** 给图片加模糊效果 */
-- (UIImage *)blurToLevel:(CGFloat)blur
-{
-    //需要引入#import <Accelerate/Accelerate.h>
-    /*
-     This document describes the Accelerate Framework, which contains C APIs for vector and matrix math, digital signal processing, large number handling, and image processing.
-     本文档介绍了Accelerate Framework，其中包含C语言应用程序接口（API）的向量和矩阵数学，数字信号处理，大量处理和图像处理。
-     */
+- (UIImage *)blurToLevel:(CGFloat)blur {
     
     // 模糊度,
     if ((blur < 0.1f) || (blur > 2.0f)) blur = 0.5f;
@@ -125,12 +112,9 @@
     
     // Convolves a region of interest within an ARGB8888 source image by an implicit M x N kernel that has the effect of a box filter.
     error = vImageBoxConvolve_ARGB8888(&inBuffer, &outBuffer2, NULL, 0, 0, boxSize, boxSize, NULL, kvImageEdgeExtend);
-    if (!error)
-    {
+    if (!error) {
         error = vImageBoxConvolve_ARGB8888(&outBuffer2, &inBuffer, NULL, 0, 0, boxSize, boxSize, NULL, kvImageEdgeExtend);
-    }
-    else if (!error)
-    {
+    } else if (!error) {
         error = vImageBoxConvolve_ARGB8888(&inBuffer, &outBuffer, NULL, 0, 0, boxSize, boxSize, NULL, kvImageEdgeExtend);
     }
     
@@ -140,33 +124,31 @@
     // 颜色空间DeviceRGB
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
     // 用图片创建上下文,CGImageGetBitsPerComponent(img),7,8
-    CGContextRef ctx = CGBitmapContextCreate(
-                                             outBuffer.data,
-                                             outBuffer.width,
-                                             outBuffer.height,
-                                             8,
-                                             outBuffer.rowBytes,
-                                             colorSpace,
-                                             CGImageGetBitmapInfo(self.CGImage));
+    CGContextRef ctx =
+    CGBitmapContextCreate(outBuffer.data,
+                          outBuffer.width,
+                          outBuffer.height,
+                          8,
+                          outBuffer.rowBytes,
+                          colorSpace,
+                          CGImageGetBitmapInfo(self.CGImage));
     
     // 根据上下文，处理过的图片，重新组件
     CGImageRef imageRef = CGBitmapContextCreateImage (ctx);
     UIImage *returnImage = [UIImage imageWithCGImage:imageRef];
     
-    // clean up
     CGContextRelease(ctx);
-//    CGColorSpaceRelease(colorSpace);
+    CGColorSpaceRelease(colorSpace);
     free(pixelBuffer);
     free(pixelBuffer2);
     CFRelease(inBitmapData);
     CGImageRelease(imageRef);
-    
     return returnImage;
 }
 
 /** 高斯模糊 */
-- (UIImage *)gaussBlur:(CGFloat)blurLevel
-{
+- (UIImage *)gaussBlur:(CGFloat)blurLevel {
+    
     // CGImage
     NSData *imageData = UIImageJPEGRepresentation(self, 1);
     UIImage *tmpImage = [UIImage imageWithData:imageData];
@@ -181,7 +163,6 @@
     
     // create vImage_Buffer with data from CGImageRef
     CGDataProviderRef inProvider = CGImageGetDataProvider(img);
-
     CFDataRef inBitmapData = CGDataProviderCopyData(inProvider);
     
     // 宽，高，字节/行，data
@@ -200,9 +181,8 @@
     
     // 模糊度
     blurLevel = MIN(1.0,MAX(0.0, blurLevel));
-    
     int boxSize = (int)(blurLevel * 0.1 * MIN(self.size.width, self.size.height));
-    //    int boxSize = 20;
+    // int boxSize = 20;
     
     boxSize = boxSize - (boxSize % 2) + 1;
     NSInteger windowR = boxSize / 2;
@@ -215,18 +195,16 @@
     
     int32_t  sum = 0;
     
-    for(NSInteger i=0; i<boxSize; ++i)
-    {
-        kernel[i] = 255*exp(sig2*(i-windowR)*(i-windowR));
+    for (NSInteger i = 0; i < boxSize; ++i) {
+        
+        kernel[i] = 255 * exp(sig2 * (i - windowR) * (i - windowR));
         sum += kernel[i];
     }
     
     // convolution
-    
     error = vImageConvolve_ARGB8888(&inBuffer, &outBuffer,NULL, 0, 0, kernel, boxSize, 1, sum, NULL, kvImageEdgeExtend);
     
-    if (!error)
-    {
+    if (!error) {
         error = vImageConvolve_ARGB8888(&outBuffer, &inBuffer,NULL, 0, 0, kernel, 1, boxSize, sum, NULL, kvImageEdgeExtend);
     }
     
@@ -238,53 +216,43 @@
     
     CGColorSpaceRef colorSpace =CGColorSpaceCreateDeviceRGB();
     
-    CGContextRef ctx = CGBitmapContextCreate(outBuffer.data,
-                                             
-                                             outBuffer.width,
-                                             
-                                             outBuffer.height,
-                                             
-                                             8,
-                                             
-                                             outBuffer.rowBytes,
-                                             
-                                             colorSpace,
-                                             
-                                             kCGBitmapAlphaInfoMask &kCGImageAlphaNoneSkipLast);
+    CGContextRef ctx =
+    CGBitmapContextCreate(outBuffer.data,
+                          outBuffer.width,
+                          outBuffer.height,
+                          8,
+                          outBuffer.rowBytes,
+                          colorSpace,
+                          kCGBitmapAlphaInfoMask & kCGImageAlphaNoneSkipLast);
     
     CGImageRef imageRef =CGBitmapContextCreateImage(ctx);
     
     UIImage *returnImage = [UIImage imageWithCGImage:imageRef];
     
-    // clean up
     CGContextRelease(ctx);
     CGColorSpaceRelease(colorSpace);
     free(pixelBuffer);
     CFRelease(inBitmapData);
     CGImageRelease(imageRef);
-    
     return returnImage;
 }
 
 /** 中心位置添加水印 */
 - (UIImage *)watermark:(NSString *)content
-			attributes:(NSDictionary *)attributes
-{
+			attributes:(NSDictionary *)attributes {
 	return [self watermark:content attributes:attributes point:LZWatermarkPointCenter];
 }
 
 /** 指定位置添加水印 */
 - (UIImage *)watermark:(NSString *)content
 			attributes:(NSDictionary *)attributes
-				 point:(LZWatermarkPoint)point
-{
+				 point:(LZWatermarkPoint)point {
 	return [self watermarkWord:content wordAttributes:attributes markImage:nil point:point];
 }
 
 /** 指定位置添加图片水印 */
 - (UIImage *)watermark:(UIImage *)image
-				 point:(LZWatermarkPoint)point
-{
+				 point:(LZWatermarkPoint)point {
 	return [self watermarkWord:nil wordAttributes:nil markImage:image point:point];
 }
 
@@ -292,8 +260,8 @@
 - (UIImage *)watermarkWord:(NSString *)word
 			wordAttributes:(NSDictionary *)attributes
 				 markImage:(UIImage *)markImage
-					 point:(LZWatermarkPoint)point
-{
+					 point:(LZWatermarkPoint)point {
+    
 	UIImage *resultImage = self;
 	CGSize screenSize = [UIScreen mainScreen].bounds.size;
 	CGFloat maxWidth = screenSize.width * 2.0f;
@@ -410,16 +378,11 @@
 }
 
 #pragma mark - Private
-- (UIImage *)pixelOperationBlock:(void(^)(UInt8 *redRef,
-                                          UInt8 *greenRef,
-                                          UInt8 *blueRef))block
-{
-    if(block == nil)
-        return self;
+- (UIImage *)pixelOperationBlock:(void(^)(UInt8 *redRef, UInt8 *greenRef, UInt8 *blueRef))block {
     
+    if(block == nil) return self;
     CGImageRef  imageRef = self.CGImage;
-    if(imageRef == NULL)
-        return nil;
+    if(imageRef == NULL) return nil;
     
     size_t width  = CGImageGetWidth(imageRef);
     size_t height = CGImageGetHeight(imageRef);
@@ -477,7 +440,6 @@
     CFRelease(effectedDataProvider);
     CFRelease(effectedData);
     CFRelease(data);
-    
     return effectedImage;
 }
 

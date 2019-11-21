@@ -17,11 +17,11 @@ BOOL greaterThanOrEqualToiOS8(void) {
     static BOOL iOS8;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
+        
         NSString *version = [UIDevice currentDevice].systemVersion;
         NSComparisonResult result = [version compare:@"8.0" options:NSNumericSearch];
         iOS8 = result != NSOrderedAscending;
     });
-    
     return iOS8;
 }
 
@@ -32,14 +32,11 @@ NSCalendar * calendar(void) {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         if (greaterThanOrEqualToiOS8()) {
-            
             calendar = [NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian];
         } else {
-            
             calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
         }
     });
-    
     return calendar;
 }
 
@@ -49,11 +46,11 @@ NSDateFormatter * dateFormatter(void) {
     static NSDateFormatter *dateFormatter;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
+        
         dateFormatter = [[NSDateFormatter alloc] init];
         dateFormatter.locale = [NSLocale currentLocale];
         dateFormatter.calendar = calendar();
     });
-    
     return dateFormatter;
 }
 
@@ -72,7 +69,6 @@ NSDate * stringToDate(NSString *dateStr, NSString *dateFormat) {
         NSString *dateString = [dateF stringFromDate:date];
         tempDate = [dateF dateFromString:dateString];
     }
-    
     return tempDate;
 }
 
@@ -81,7 +77,6 @@ NSString * DateToString(NSDate *date, NSString *dateFormat) {
     
     NSDateFormatter *dateF = dateFormatter();
     dateF.dateFormat = dateFormat;
-    
     return [dateF stringFromDate:date];
 }
 
@@ -91,18 +86,14 @@ NSDate * DateYMD(NSDate *date) {
     NSString *dateFormat = @"yyyy-MM-dd";
     NSString *selfStr = DateToString(date, dateFormat);
     NSDate *tempDate = stringToDate(selfStr, dateFormat);
-    
     return tempDate;
 }
 
 /** 返回指定的日期元素 */
 NSDateComponents * dateComponents(NSCalendarUnit unit, NSDate * startingDate ,NSDate * resultDate) {
     
-    NSDateComponents *dateComponents = [calendar() components:unit
-                                                     fromDate:startingDate
-                                                       toDate:resultDate
-                                                      options:0];
-    
+    NSDateComponents *dateComponents =
+    [calendar() components:unit fromDate:startingDate toDate:resultDate options:0];
     return dateComponents;
 }
 
@@ -112,13 +103,11 @@ NSDateComponents * dateComponents(NSCalendarUnit unit, NSDate * startingDate ,NS
 - (BOOL)isToday {
     
     if (greaterThanOrEqualToiOS8()) {
-        
         return [calendar() isDateInToday:self];
     } else {
         
         NSDate *nowDate = DateYMD([NSDate date]);
         NSDate *selfDate = DateYMD(self);
-        
         return [selfDate isEqualToDate:nowDate];
     }
 }
@@ -127,14 +116,12 @@ NSDateComponents * dateComponents(NSCalendarUnit unit, NSDate * startingDate ,NS
 - (BOOL)isYesterday {
     
     if (greaterThanOrEqualToiOS8()) {
-        
         return [calendar() isDateInYesterday:self];
     } else {
         
         NSDate *nowDate = DateYMD([NSDate date]);
         NSDate *selfDate = DateYMD(self);
         NSDateComponents *dateCmps = dateComponents(NSCalendarUnitDay, selfDate, nowDate);
-        
         return dateCmps.day == 1;
     }
 }
@@ -145,7 +132,6 @@ NSDateComponents * dateComponents(NSCalendarUnit unit, NSDate * startingDate ,NS
     NSDate *nowDate = DateYMD([NSDate date]);
     NSDate *selfDate = DateYMD(self);
     NSDateComponents *dateCmps = dateComponents(NSCalendarUnitDay, selfDate, nowDate);
-    
     return dateCmps.day == 2;
 }
 
@@ -153,14 +139,12 @@ NSDateComponents * dateComponents(NSCalendarUnit unit, NSDate * startingDate ,NS
 - (BOOL)isTomorrow {
     
     if (greaterThanOrEqualToiOS8()) {
-        
         return [calendar() isDateInTomorrow:self];
     } else {
         
         NSDate *nowDate = DateYMD([NSDate date]);
         NSDate *selfDate = DateYMD(self);
         NSDateComponents *dateCmps = dateComponents(NSCalendarUnitDay, selfDate, nowDate);
-        
         return dateCmps.day == -1;
     }
 }
@@ -171,7 +155,6 @@ NSDateComponents * dateComponents(NSCalendarUnit unit, NSDate * startingDate ,NS
     NSDate *nowDate = DateYMD([NSDate date]);
     NSDate *selfDate = DateYMD(self);
     NSDateComponents *dateCmps = dateComponents(NSCalendarUnitDay, selfDate, nowDate);
-    
     return dateCmps.day == -2;
 }
 
@@ -179,49 +162,46 @@ NSDateComponents * dateComponents(NSCalendarUnit unit, NSDate * startingDate ,NS
 - (BOOL)isWeekend {
     
     if (!greaterThanOrEqualToiOS8()) {
-        
         return [calendar() isDateInWeekend:self];
     } else {
         
-        WeekType weekday = [self weekday];
-        if (weekday == WeekTypeSaturday || weekday == WeekTypeSunday) {
-            
+        LZWeekType weekday = [self weekday];
+        if (weekday == LZWeekTypeSaturday || weekday == LZWeekTypeSunday) {
             return YES;
         } else {
-            
             return NO;
         }
     }
 }
 
 /** 星期几 */
-- (WeekType)weekday {
+- (LZWeekType)weekday {
     
     NSDateComponents *dateCmps = [calendar() components:NSCalendarUnitWeekday fromDate:self];
     switch (dateCmps.weekday) {
         case 1:
-            return WeekTypeSunday;
+            return LZWeekTypeSunday;
             break;
         case 2:
-            return WeekTypeMonday;
+            return LZWeekTypeMonday;
             break;
         case 3:
-            return WeekTypeTuesday;
+            return LZWeekTypeTuesday;
             break;
         case 4:
-            return WeekTypeWednesday;
+            return LZWeekTypeWednesday;
             break;
         case 5:
-            return WeekTypeThursday;
+            return LZWeekTypeThursday;
             break;
         case 6:
-            return WeekTypeFriday;
+            return LZWeekTypeFriday;
             break;
         case 7:
-            return WeekTypeSaturday;
+            return LZWeekTypeSaturday;
             break;
         default:
-            return WeekTypeUnknow;
+            return LZWeekTypeUnknow;
             break;
     }
 }
@@ -230,85 +210,58 @@ NSDateComponents * dateComponents(NSCalendarUnit unit, NSDate * startingDate ,NS
 - (BOOL)isThisYear {
     
     if (greaterThanOrEqualToiOS8()) {
-        
-        return [calendar() isDate:self
-                      equalToDate:[NSDate date]
-                toUnitGranularity:NSCalendarUnitYear];
+        return [calendar() isDate:self equalToDate:[NSDate date] toUnitGranularity:NSCalendarUnitYear];
     }
     
-    NSDateComponents *selfCmps = [calendar() components:NSCalendarUnitYear
-                                               fromDate:self];
-    NSDateComponents *curCmps = [calendar() components:NSCalendarUnitYear
-                                              fromDate:[NSDate date]];
-    
+    NSDateComponents *selfCmps = [calendar() components:NSCalendarUnitYear fromDate:self];
+    NSDateComponents *curCmps = [calendar() components:NSCalendarUnitYear fromDate:[NSDate date]];
     return curCmps.year == selfCmps.year;
 }
 
 /** 返回指定的日期组件 */
 - (NSDateComponents *)dateComponentsTillNow:(NSCalendarUnit)unit {
-    
     return dateComponents(unit, self, [NSDate date]);
 }
 
 /** 日期格式化为年月日 e.g 2000-01-01 */
 - (NSString *)dateFormatToYMD {
-    
-    return [self dateFormatToYMDWithSepartorType:DateSepartorTypeDefault];
+    return [self dateFormatToYMDWithSepartorType:LZDateSepartorTypeDefault];
 }
 
 /** 根据分隔线类型格式化年月日日期 */
-- (NSString *)dateFormatToYMDWithSepartorType:(DateSepartorType)separtorType {
+- (NSString *)dateFormatToYMDWithSepartorType:(LZDateSepartorType)separtorType {
     
-    NSString *formatter;
-    switch (separtorType) {
-        case DateSepartorTypeDefault:
-            formatter = @"yyyy-MM-dd";
-            break;
-        case DateSepartorTypeChinese:
-            formatter = @"yyyy年MM月dd日";
-            break;
-        case DateSepartorTypeSlash:
-            formatter = @"yyyy/MM/dd";
-            break;
-        case DateSepartorTypeNone:
-            formatter = @"yyyyMMdd";
-            break;
-        default:
-            formatter = @"yyyy-MM-dd";
-            break;
+    NSDictionary *fmtSupported = @{
+        @(LZDateSepartorTypeDefault) : @"yyyy-MM-dd",
+        @(LZDateSepartorTypeChinese) : @"yyyy年MM月dd日",
+        @(LZDateSepartorTypeSlash) : @"yyyy/MM/dd",
+        @(LZDateSepartorTypeNone) : @"yyyyMMdd",
+    };
+    NSString *formatter = [fmtSupported objectForKey:@(separtorType)];
+    if (nil == formatter) {
+        formatter = [fmtSupported objectForKey:@(LZDateSepartorTypeDefault)];
     }
-    
     return [self dateFormat:formatter];
 }
 
 /** 根据分隔线类型格式化日期 */
-- (NSString *)dateFormatWithSepartorType:(DateSepartorType)separtorType {
+- (NSString *)dateFormatWithSepartorType:(LZDateSepartorType)separtorType {
     
-    NSString *formatter;
-    switch (separtorType) {
-        case DateSepartorTypeDefault:
-            formatter = @"yyyy-MM-dd HH:mm:ss";
-            break;
-        case DateSepartorTypeChinese:
-            formatter = @"yyyy年MM月dd日 HH时MM分ss秒";
-            break;
-        case DateSepartorTypeSlash:
-            formatter = @"yyyy/MM/dd HH/mm/ss";
-            break;
-        case DateSepartorTypeNone:
-            formatter = @"yyyyMMddHHMMss";
-            break;
-        default:
-            formatter = @"yyyy-MM-dd HH:mm:ss";
-            break;
+    NSDictionary *sepatorSupported = @{
+        @(LZDateSepartorTypeDefault) : @"yyyy-MM-dd HH:mm:ss",
+        @(LZDateSepartorTypeChinese) : @"yyyy年MM月dd日 HH时MM分ss秒",
+        @(LZDateSepartorTypeSlash) : @"yyyy/MM/dd HH/mm/ss",
+        @(LZDateSepartorTypeNone) : @"yyyyMMddHHMMss",
+    };
+    NSString *formatter = [sepatorSupported objectForKey:@(separtorType)];
+    if (nil == formatter) {
+        formatter = [sepatorSupported objectForKey:@(LZDateSepartorTypeDefault)];
     }
-    
     return [self dateFormat:formatter];
 }
 
 /** 根据指定格式格式化日期 */
 - (NSString *)dateFormat:(NSString *)format {
-    
     return DateToString(self, format);
 }
 
@@ -321,7 +274,6 @@ NSDateComponents * dateComponents(NSCalendarUnit unit, NSDate * startingDate ,NS
     NSString *timeStampStr = [NSString stringWithFormat:@"%.1f", timeStamp];
     NSRange range = [timeStampStr rangeOfString:@"."];
     if (range.location != NSNotFound) timeStampStr = [timeStampStr substringToIndex:range.location];
-    
     return timeStampStr;
 }
 
@@ -329,7 +281,6 @@ NSDateComponents * dateComponents(NSCalendarUnit unit, NSDate * startingDate ,NS
 //MARK: 日期格式化
 /** 获取当前时间戳 */
 + (NSString *)currentTimeStamp {
-    
     return [[NSDate date] timeStamp];;
 }
 
@@ -339,7 +290,6 @@ NSDateComponents * dateComponents(NSCalendarUnit unit, NSDate * startingDate ,NS
     
     NSDate *date = stringToDate(dateStr, dateFormat);
     NSString *timeStamp = [date timeStamp];
-    
     return timeStamp;
 }
 
@@ -355,7 +305,6 @@ NSDateComponents * dateComponents(NSCalendarUnit unit, NSDate * startingDate ,NS
             *stop = YES;
         }
     }];
-    
     return tmpDate;
 }
 
@@ -366,7 +315,6 @@ NSDateComponents * dateComponents(NSCalendarUnit unit, NSDate * startingDate ,NS
     
     NSDate *date = stringToDate(dateStr, originDateFormat);
     NSString *dateString = [date dateFormat:resultDateFormat];
-    
     return dateString;
 }
 
@@ -377,13 +325,10 @@ NSDateComponents * dateComponents(NSCalendarUnit unit, NSDate * startingDate ,NS
     
     NSString *timeDesc;
     if ([realDate isThisYear]) {
-        
         timeDesc = DateToString(realDate, @"MM月dd日");
     } else {
-        
         timeDesc = DateToString(realDate, @"yyyy年MM月dd日");
     }
-    
     return timeDesc;
 }
 
@@ -394,22 +339,16 @@ NSDateComponents * dateComponents(NSCalendarUnit unit, NSDate * startingDate ,NS
     
     NSString *timeDesc;
     if ([realDate isThisYear]) {
-        
         if ([realDate isToday]) {
-            
             timeDesc = @"今天";
         } else if ([realDate isYesterday]) {
-            
             timeDesc = @"昨天";
         } else {
-            
             timeDesc = DateToString(realDate, @"MM月dd日");
         }
     } else {
-        
         timeDesc = DateToString(realDate, @"yyyy年MM月dd日");
     }
-    
     return timeDesc;
 }
 
@@ -420,22 +359,16 @@ NSDateComponents * dateComponents(NSCalendarUnit unit, NSDate * startingDate ,NS
     
     NSString *timeDesc;
     if ([realDate isThisYear]) {
-        
         if ([realDate isToday]) {
-            
             timeDesc = DateToString(realDate, @"HH:mm");
         } else if ([realDate isYesterday]) {
-            
             timeDesc = DateToString(realDate, @"昨天 HH:mm");
         } else {
-            
             timeDesc = DateToString(realDate, @"MM月dd日 HH:mm");
         }
     } else {
-        
         timeDesc = DateToString(realDate, @"yyyy年MM月dd日 HH:mm");
     }
-    
     return timeDesc;
 }
 
@@ -446,22 +379,16 @@ NSDateComponents * dateComponents(NSCalendarUnit unit, NSDate * startingDate ,NS
     
     NSString *timeDesc;
     if ([realDate isThisYear]) {
-        
         if ([realDate isToday]) {
-            
             timeDesc = DateToString(realDate, @"HH:mm");
         } else if ([realDate isYesterday]) {
-            
             timeDesc = @"昨天";
         } else {
-            
             timeDesc = DateToString(realDate, @"MM月dd日");
         }
     } else {
-        
         timeDesc = DateToString(realDate, @"yyyy年MM月dd日");
     }
-    
     return timeDesc;
 }
 
@@ -472,19 +399,14 @@ NSDateComponents * dateComponents(NSCalendarUnit unit, NSDate * startingDate ,NS
     
     NSString *timeDesc;
     if ([realDate isThisYear]) {
-        
         if ([realDate isToday]) {
-            
             timeDesc = DateToString(realDate, @"HH:mm");
         } else {
-            
             timeDesc = DateToString(realDate, @"MM月dd日 HH:mm");
         }
     } else {
-        
         timeDesc = DateToString(realDate, @"yyyy年MM月dd日 HH:mm");
     }
-    
     return timeDesc;
 }
 
@@ -497,19 +419,14 @@ NSDateComponents * dateComponents(NSCalendarUnit unit, NSDate * startingDate ,NS
     NSDateComponents *dateCmps = dateComponents(unit, realDate, [NSDate date]);
     NSString *timeDesc;
     if (dateCmps.day == 0) {
-        
         timeDesc = DateToString(realDate, @"HH:mm");
     } else if (dateCmps.day == 1) {
-        
         timeDesc = DateToString(realDate, @"昨天 HH:mm");
     } else if (dateCmps.day < 7)  {
-        
         timeDesc = DateToString(realDate, @"EEEE HH:mm");
     } else {
-        
         timeDesc = DateToString(realDate, @"yyyy年MM月dd日 HH:mm");
     }
-    
     return timeDesc;
 }
 
@@ -521,7 +438,6 @@ NSDateComponents * dateComponents(NSCalendarUnit unit, NSDate * startingDate ,NS
     
     NSComparisonResult result = [realDate compare:curDate];
     if (result == NSOrderedDescending) {
-        
         return @"刚刚";
     }
     
@@ -536,30 +452,22 @@ NSDateComponents * dateComponents(NSCalendarUnit unit, NSDate * startingDate ,NS
             
             NSInteger hour = dateCmps.hour, minute = dateCmps.minute;
             if (hour > 0) {
-                
                 timeDesc = [NSString stringWithFormat:@"%li小时前", (long)hour];
             } else if (minute > 0) {
-                
                 timeDesc = [NSString stringWithFormat:@"%li分钟前", (long)minute];
             } else {
-                
                 return @"刚刚";
             }
         } else if (day == 1) {
-            
             timeDesc = @"昨天";
         } else if (day == 2) {
-            
             timeDesc = @"2天前";
         } else {
-            
             timeDesc = DateToString(realDate, @"MM月dd日");
         }
     } else {
-        
         timeDesc = DateToString(realDate, @"yyyy年MM月dd日");
     }
-    
     return timeDesc;
 }
 
@@ -587,7 +495,6 @@ NSDateComponents * dateComponents(NSCalendarUnit unit, NSDate * startingDate ,NS
                 NSString *suffix = minute > 0 ? @"前" : @"后";
                 timeDesc = [NSString stringWithFormat:@"%ld分钟%@", (long)absM, suffix];
             } else {
-                
                 timeDesc = @"刚刚";
             }
         } else if (labs(day) == 1) {
@@ -600,14 +507,11 @@ NSDateComponents * dateComponents(NSCalendarUnit unit, NSDate * startingDate ,NS
             NSString *suffix = day > 0 ? @"前" : @"后";
             timeDesc = [NSString stringWithFormat:@"%@天", suffix];
         } else {
-            
             timeDesc = DateToString(realDate, @"MM月dd日");
         }
     } else {
-        
         timeDesc = DateToString(realDate, @"yyyy年MM月dd日");
     }
-    
     return timeDesc;
 }
 
@@ -619,13 +523,17 @@ NSDateComponents * dateComponents(NSCalendarUnit unit, NSDate * startingDate ,NS
     NSComparisonResult comparisonResult;
     if (!greaterThanOrEqualToiOS8()) {
         
-        NSCalendarUnit unit = NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;
+        NSCalendarUnit unit =
+        NSCalendarUnitYear |
+        NSCalendarUnitMonth |
+        NSCalendarUnitDay |
+        NSCalendarUnitHour |
+        NSCalendarUnitMinute |
+        NSCalendarUnitSecond;
         comparisonResult = [calendar() compareDate:date1 toDate:date2 toUnitGranularity:unit];
     } else {
-        
         comparisonResult = [date1 compare:date2];
     }
-    
     return comparisonResult == NSOrderedDescending;
 }
 
@@ -634,23 +542,36 @@ NSDateComponents * dateComponents(NSCalendarUnit unit, NSDate * startingDate ,NS
               andDate:(NSDate *)date2 {
     
     NSDate *nowDate = [NSDate date];
-    BOOL compareResult = ([nowDate compare:date1] != NSOrderedAscending && [nowDate compare:date2] != NSOrderedDescending) ||
+    BOOL compareResult =
+    ([nowDate compare:date1] != NSOrderedAscending && [nowDate compare:date2] != NSOrderedDescending) ||
     ([nowDate compare:date2] != NSOrderedAscending && [nowDate compare:date1] != NSOrderedDescending);
-    
     return compareResult;
 }
 
 //MARK: 日期间隔
 /** 返回距离现在日期间隔 */
-+ (DateInterval)dateInterval:(NSString *)dateStr
-            originDateFormat:(NSString *)dateFormat {
++ (LZDateInterval)dateInterval:(NSString *)dateStr
+              originDateFormat:(NSString *)dateFormat {
     
     NSDate *fromDate = stringToDate(dateStr, dateFormat);
     NSDate *toDate = [NSDate date];
     fromDate = fromDate ? fromDate : toDate;
-    NSCalendarUnit unit = NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;
+    NSCalendarUnit unit =
+    NSCalendarUnitYear |
+    NSCalendarUnitMonth |
+    NSCalendarUnitDay |
+    NSCalendarUnitHour |
+    NSCalendarUnitMinute |
+    NSCalendarUnitSecond;
     NSDateComponents *dateCmps = dateComponents(unit, fromDate, toDate);
-    DateInterval date = {labs(dateCmps.year), labs(dateCmps.month), labs(dateCmps.day), labs(dateCmps.hour), labs(dateCmps.minute), labs(dateCmps.second)};
+    LZDateInterval date = {
+        labs(dateCmps.year),
+        labs(dateCmps.month),
+        labs(dateCmps.day),
+        labs(dateCmps.hour),
+        labs(dateCmps.minute),
+        labs(dateCmps.second)
+    };
     
     return date;
 }
@@ -664,7 +585,6 @@ NSDateComponents * dateComponents(NSCalendarUnit unit, NSDate * startingDate ,NS
     fromDate = fromDate ? fromDate : toDate;
     NSCalendarUnit unit = NSCalendarUnitDay;
     NSDateComponents *dateCmps = dateComponents(unit, fromDate, toDate);
-    
     return labs(dateCmps.day);
 }
 
@@ -672,9 +592,8 @@ NSDateComponents * dateComponents(NSCalendarUnit unit, NSDate * startingDate ,NS
 + (NSString *)dateIntervalForAgeDescOfYear:(NSString *)dateStr
                           originDateFormat:(NSString *)dateFormat {
     
-    DateInterval dateInterval = [self dateInterval:dateStr originDateFormat:dateFormat];
+    LZDateInterval dateInterval = [self dateInterval:dateStr originDateFormat:dateFormat];
     NSString *ageString = [NSString stringWithFormat:@"%li岁", (long)dateInterval.year];
-    
     return ageString;
 }
 
@@ -682,9 +601,8 @@ NSDateComponents * dateComponents(NSCalendarUnit unit, NSDate * startingDate ,NS
 + (NSString *)dateIntervalForAgeDescOfYearAndMonth:(NSString *)dateStr
                                   originDateFormat:(NSString *)dateFormat {
     
-    DateInterval dateInterval = [self dateInterval:dateStr originDateFormat:dateFormat];
+    LZDateInterval dateInterval = [self dateInterval:dateStr originDateFormat:dateFormat];
     NSString *ageString = [NSString stringWithFormat:@"%li岁%li个月", (long)dateInterval.year, (long)dateInterval.month];
-    
     return ageString;
 }
 

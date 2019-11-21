@@ -10,12 +10,24 @@
 
 @interface NSDictionary (LZDescription)
 
+/**
+ 参数字符串
+ */
+- (NSString *)parameterString;
+
 @end
 
 @interface NSArray (LZDescription)
 
+/**
+参数字符串
+*/
+- (NSString *)parameterString;
+
 @end
 
 @interface NSObject (LZDescription)
+
+- (NSString *)customDescription;
 
 @end

@@ -34,11 +34,15 @@ NSString * toString(id object) {
 		[mutStr replaceOccurrencesOfString:@" " withString:@"" options:NSLiteralSearch range:range];
 		NSRange range2 = {0, mutStr.length};
 		[mutStr replaceOccurrencesOfString:@"\n" withString:@"" options:NSLiteralSearch range:range2];
-		return mutStr;
+		return [mutStr copy];
 	} else if ([object isKindOfClass:[NSArray class]]) {
 		
 		NSArray *array = object;
-		return [array componentsJoinedByString:@","];
+        NSString *string = [array componentsJoinedByString:@","];
+        NSMutableString *stringM = [NSMutableString stringWithString:string];
+        [stringM insertString:@"[" atIndex:0];
+        [stringM appendFormat:@"]"];
+		return [stringM copy];
 	}
 	if ([object isKindOfClass:[NSNumber class]]) {
 		

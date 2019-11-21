@@ -8,19 +8,21 @@
 
 #import <UIKit/UIKit.h>
 
+// 图片灰色
 typedef enum : NSUInteger {
-    UIImageGrayLevelTypeHalfGray    = 0,
-    UIImageGrayLevelTypeGrayLevel   = 1,
-    UIImageGrayLevelTypeDarkBrown   = 2,
-    UIImageGrayLevelTypeInverse     = 3
-} UIImageGrayLevelType;
+    LZImageGrayLevelHalfGray    = 0,    // 半灰
+    LZImageGrayLevelFullGray   = 1,     // 全灰
+    LZImageGrayLevelDarkBrown   = 2,    // 深棕
+    LZImageGrayLevelInverse     = 3,    // 反色
+} LZImageGrayLevel;
 
+// 水印位置
 typedef NS_ENUM(NSUInteger, LZWatermarkPoint) {
-	LZWatermarkPointCenter,
-	LZWatermarkPointLeftTop,
-	LZWatermarkPointLeftBottom,
-	LZWatermarkPointRightTop,
-	LZWatermarkPointRightBottom,
+	LZWatermarkPointCenter,     // 中心
+	LZWatermarkPointLeftTop,    // 左上
+	LZWatermarkPointLeftBottom, // 左下
+	LZWatermarkPointRightTop,   // 右上
+	LZWatermarkPointRightBottom,// 右下
 };
 
 @interface UIImage (LZEffect)
@@ -45,7 +47,7 @@ typedef NS_ENUM(NSUInteger, LZWatermarkPoint) {
  
  @return UIImage
  */
-- (UIImage *)grayToLevelType:(UIImageGrayLevelType)type;
+- (UIImage *)grayToLevelType:(LZImageGrayLevel)type;
 
 /**
  @author Lilei

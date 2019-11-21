@@ -17,7 +17,7 @@ PODS:
   - LZDependencyToolkit/Struct/CryptoUnit (1.3.1)
   - LZDependencyToolkit/Struct/DeviceUnit (1.3.1)
   - LZDependencyToolkit/Struct/QuickUnit (1.3.1)
-  - MJRefresh (3.2.0)
+  - MJRefresh (3.2.2)
 
 DEPENDENCIES:
   - LZDependencyToolkit (from `../`)
@@ -32,7 +32,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   LZDependencyToolkit: cbad171529da59737630eb0d2a8e8e009dcd3080
-  MJRefresh: ed450d6eb9d3346a2cb033ab7eb6de090aeef437
+  MJRefresh: 72a46ecaa2a0feaf48fc5198dff95f25f8bb27c6
 
 PODFILE CHECKSUM: b0c7171b0652b3b2aaf1354b7fc5599d83f886ac
 
