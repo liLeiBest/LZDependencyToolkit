@@ -16,8 +16,8 @@ typedef NS_ENUM(NSUInteger, LZDateSepartorType) {
     LZDateSepartorTypeNone,       // e.g 20000101000000
 };
 
-// 日期间隔
-typedef struct _date_interval_type {
+// 描述日期间隔
+typedef struct lz_date_interval_type {
     NSInteger year;
     NSInteger month;
     NSInteger day;
