@@ -13,11 +13,7 @@
 
 struct LZAppUnit_type {
     
-    /** 
-     *  Forced Exit App
-     */
-    void (* exit)(void);
-    
+    // MARK: - Info
     /**
      *  App Bundle display name
      */
@@ -54,8 +50,44 @@ struct LZAppUnit_type {
      */
     BOOL (* compareVersion)(NSString *lastestVersion);
     
+    // MARK: - Path
+    /**
+     缓存目录
+     */
+    NSString * (* cacheDir)(void);
+    
+    /**
+     文档目录
+     */
+    NSString * (* documentDir)(void);
+    
+    /**
+     特定目录
+     */
+    NSString * (* searchDir)(NSSearchPathDirectory searchPathDir);
+    
+    /**
+     创建目录
+     */
+    BOOL (* createDir)(NSString *dirPath);
+    
+    /**
+     创建缓存子目录
+     */
+    BOOL (* createCacheSubDir)(NSString *subPath, NSString **fullPath);
+    
+    /**
+     创建文档子目录
+     */
+    BOOL (* createDocumentSubDir)(NSString *subPath, NSString **fullPath);
+    
+    // MARK: - Other
+    /**
+     *  Forced Exit App
+     */
+    void (* exit)(void);
 };
 
-FOUNDATION_EXTERN struct LZAppUnit_type LZAppInfo;
+FOUNDATION_EXTERN struct LZAppUnit_type LZAppUnit;
 
 #endif /* LZAppUnit_h */

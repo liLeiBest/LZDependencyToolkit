@@ -13,7 +13,7 @@
 /**
  参数字符串
  */
-- (NSString *)parameterString;
+- (NSString *)lz_parameterString;
 
 @end
 
@@ -22,12 +22,12 @@
 /**
 参数字符串
 */
-- (NSString *)parameterString;
+- (NSString *)lz_parameterString;
 
 @end
 
 @interface NSObject (LZDescription)
 
-- (NSString *)customDescription;
+- (NSString *)lz_customDescription;
 
 @end

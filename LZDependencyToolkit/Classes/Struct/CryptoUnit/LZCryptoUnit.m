@@ -54,7 +54,7 @@ NSData * DESCrypto(NSData *data, NSString *secret, CCOperation operation) {
 	return nil;
 }
 
-// MARK: - MD5
+// MARK: MD5
 NSString * MD5(NSString *plaintext) {
 	
 	const char *string = plaintext.UTF8String;
@@ -64,7 +64,7 @@ NSString * MD5(NSString *plaintext) {
 	return stringFromBytesWithLength(bytes, CC_MD5_DIGEST_LENGTH);
 }
 
-// MARK: - SHA
+// MARK: SHA
 NSString * SHA1(NSString *plaintext) {
 	
 	NSData *data = [plaintext dataUsingEncoding:NSUTF8StringEncoding];
@@ -133,7 +133,7 @@ NSString *SHA512WithSecret(NSString *plaintext, NSString *secret) {
 	return stringFromBytesWithLength((unsigned char *)dataM.bytes, CC_SHA512_DIGEST_LENGTH);
 }
 
-// MARK: - DES
+// MARK: DES
 NSString * DES_Encrypt(NSString *plaintext, NSString *secret) {
 	
 	NSData *data = [plaintext dataUsingEncoding:NSUTF8StringEncoding];
@@ -151,8 +151,9 @@ NSString * DES_Decrypt(NSString *ciphertext, NSString *secret) {
 	return result;
 }
 
-/** 初始化结构体 */
+// MARK: - Initilization
 struct LZCryptoUnit_type LZCryptoUnit = {
+    
 	.MD5 = MD5,
 	.SHA1 = SHA1,
 	.SHA1WithSecret = SHA1WithSecret,

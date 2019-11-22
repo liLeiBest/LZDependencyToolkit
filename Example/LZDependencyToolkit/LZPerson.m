@@ -12,7 +12,7 @@
 @implementation LZPerson
 
 - (NSString *)description {
-    return [self customDescription];
+    return [self lz_customDescription];
 }
 
 @end

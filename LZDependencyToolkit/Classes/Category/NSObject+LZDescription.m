@@ -12,7 +12,7 @@
 @implementation NSDictionary (LZDescription)
 
 // MARK: - Public
-- (NSString *)parameterString {
+- (NSString *)lz_parameterString {
     
     if (0 == self.count) {
         return @"";
@@ -54,7 +54,7 @@
 @implementation NSArray (LZDescription)
 
 // MARK: - Public
-- (NSString *)parameterString {
+- (NSString *)lz_parameterString {
     return [self componentsJoinedByString:@","];
 }
 
@@ -81,7 +81,7 @@
 @implementation NSObject (LZDescription)
 
 // MARK: - Over
-- (NSString *)customDescription {
+- (NSString *)lz_customDescription {
     
     NSMutableString *str = [NSMutableString string];
     [str appendFormat:@"<%@: %p> {\n", NSStringFromClass([self class]), self];

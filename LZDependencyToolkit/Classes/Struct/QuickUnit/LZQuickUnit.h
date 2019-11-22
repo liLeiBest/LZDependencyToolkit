@@ -30,37 +30,6 @@ struct LZQuickUnit_type {
 	 */
 	NSString * (* toString)(id object);
 	
-	// MARK: - Path
-	/**
-	 缓存目录
-	 */
-	NSString * (* cacheDir)(void);
-	
-	/**
-	 文档目录
-	 */
-	NSString * (* documentDir)(void);
-	
-	/**
-	 特定目录
-	 */
-	NSString * (* searchDir)(NSSearchPathDirectory searchPathDir);
-	
-	/**
-	 创建目录
-	 */
-	BOOL (* createDir)(NSString *dirPath);
-	
-	/**
-	 创建缓存子目录
-	 */
-	BOOL (* createCacheSubDir)(NSString *subPath);
-	
-	/**
-	 创建文档子目录
-	 */
-	BOOL (* createDocumentSubDir)(NSString *subPath);
-	
 	// MARK: - Font
 	/**
 	 已安装的字体名称
@@ -93,12 +62,18 @@ struct LZQuickUnit_type {
 	 */
 	UIFont * (* fontName)(NSString *fontName, CGFloat fontSize);
 	
-	// MARK: -
+	// MARK: - Alert
 	/**
-	 强提示
+	 Alert 提示
 	 */
-	void (* alert)(NSString *title, NSString *mssage, NSArray<UIAlertAction *> *actions);
+	void (* alert)(NSString *title, NSString *message, NSArray<UIAlertAction *> *actions);
+    
+    /**
+     Sheet 提示
+     */
+    void (* sheet)(NSString *title, NSString *message, NSArray<UIAlertAction *> *actions);
 	
+    // MARK: Notification
 	/**
 	 通知中心
 	 */

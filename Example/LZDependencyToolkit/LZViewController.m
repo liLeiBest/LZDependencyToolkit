@@ -26,11 +26,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
-	[self setupNavBarItem];
-    [self deviceInfo];
+    [self setupNavBarItem];
+//    [self deviceInfo];
     [self appInfo];
-	[self crypto];
-	[self quick];
+//    [self crypto];
+//    [self quick];
+//    [self customDescription];
 	
 	UIImage *image = [UIImage imageWithColor:LZOrangeColor size:CGSizeMake(100, 100)];
 	self.imgView.image = image;
@@ -54,28 +55,6 @@
     
     NSLog(@"点击了左边按钮");
 	
-	LZPerson *person = [[LZPerson alloc] init];
-    person.name = @"Zhangsan";
-    person.age = 20;
-    person.sex = @"1";
-	NSLog(@"%@", person);
-    
-    LZStudent *student = [[LZStudent alloc] init];
-    student.name = @"Lisi";
-    student.age = 18;
-    student.sex = @"0";
-    student.school = @"xxx";
-    student.grade = @"5";
-    student.graduation = YES;
-    student.graduateCallback = ^{
-    };
-    LZBook *book = [[LZBook alloc] init];
-    book.name = @"正面教育 100 讲";
-    book.author = @"阿三";
-    book.price = 10.00;
-    student.book = book;
-    NSLog(@"%@", student);
-	
 	UIImage *image = [UIImage imageWithColor:LZOrangeColor size:CGSizeMake(100, 100) isRound:YES];
 	self.imgView.image = image;
 }
@@ -83,20 +62,6 @@
 - (void)rightDidClick {
     
     NSLog(@"点击了右边按钮");
-	
-	NSDictionary *dict = @{@"key":@"value",@"key1":@"value1",@"key2":@"value2",@"key3":@"value3",};
-	NSLog(@"%@", dict.description);
-    NSLog(@"%@", dict.parameterString);
-    
-    NSMutableDictionary *dictM = [NSMutableDictionary dictionaryWithDictionary:dict];
-	NSLog(@"%@", dictM.description);
-    
-	NSArray *array = @[@"key", @"key1", @"key2", @"key3"];
-	NSLog(@"%@", array.description);
-    NSLog(@"%@", array.parameterString);
-    
-    NSMutableArray *arrayM = [NSMutableArray arrayWithArray:array];
-    NSLog(@"%@", arrayM.description);
 	
 	UIImage *image = [UIImage imageWithColor:LZOrangeColor size:CGSizeMake(100, 100) isRound:NO];
 	self.imgView.image = image;
@@ -147,7 +112,6 @@
 
 - (void)quick {
 	
-	NSLog(@"CacheDir: %@", LZQuickUnit.cacheDir());
 	NSLog(@"%@", LZQuickUnit.toString(@{@"key1": @"value1", @"key2":@"value2"}));
     NSLog(@"%@", LZQuickUnit.toString(@[@"key1", @"key2"]));
 	
@@ -165,12 +129,22 @@
 
 - (void)appInfo {
 
-    NSLog(@"App Name: %@", LZAppInfo.name());
-    NSLog(@"App Bunle ID: %@", LZAppInfo.bundleID());
-    NSLog(@"App Version: %@", LZAppInfo.version());
-    NSLog(@"App Build: %@", LZAppInfo.build());
-    NSLog(@"Build 比较: %@", LZAppInfo.compareBuild(@"12") ? @"YES" : @"NO");
-    NSLog(@"Version 比较: %@", LZAppInfo.compareVersion(@"10.2.1") ? @"YES" : @"NO");
+    NSLog(@"App Name: %@", LZAppUnit.name());
+    NSLog(@"App Bunle ID: %@", LZAppUnit.bundleID());
+    NSLog(@"App Version: %@", LZAppUnit.version());
+    NSLog(@"App Build: %@", LZAppUnit.build());
+    NSLog(@"Build 比较: %@", LZAppUnit.compareBuild(@"12") ? @"YES" : @"NO");
+    NSLog(@"Version 比较: %@", LZAppUnit.compareVersion(@"10.2.1") ? @"YES" : @"NO");
+    
+    NSLog(@"\nCacheDir: %@", LZAppUnit.cacheDir());
+    
+    NSString *fullPath;
+    BOOL success = LZAppUnit.createCacheSubDir(@"abc/efg", &fullPath);
+    NSLog(@"Crate Cache SubPath: %@ \n%@", success?@"成功":@"失败", fullPath);
+    success = LZAppUnit.createDocumentSubDir(@"abc/哈哈", &fullPath);
+    NSLog(@"Crate Document SubPath: %@ \n%@", success?@"成功":@"失败", fullPath);
+    success = LZAppUnit.createDocumentSubDir(@"abc/哈哈/efg", &fullPath);
+       NSLog(@"Crate Document SubPath: %@ \n%@", success?@"成功":@"失败", fullPath);
 }
 
 - (void)deviceInfo {
@@ -191,6 +165,45 @@
     NSLog(@"CPU 使用率: %@", LZDeviceInfo.CPUUsageRate());
     NSLog(@"最后一次重启时间: %@", [LZDeviceInfo.restartDate() dateFormat:@"yyyy-MM-dd aa HH:mm:ss.S EEEE Z"]);
 	NSLog(@"是否是齐刘海: %@", LZDeviceInfo.is_notch() ? @"YES" : @"NO");
+}
+
+- (void)customDescription {
+    
+    NSDictionary *dict = @{@"key":@"value",@"key1":@"value1",@"key2":@"value2",@"key3":@"value3",};
+    NSLog(@"%@", dict.description);
+    NSLog(@"%@", dict.lz_parameterString);
+    
+    NSMutableDictionary *dictM = [NSMutableDictionary dictionaryWithDictionary:dict];
+    NSLog(@"%@", dictM.description);
+    
+    NSArray *array = @[@"key", @"key1", @"key2", @"key3"];
+    NSLog(@"%@", array.description);
+    NSLog(@"%@", array.lz_parameterString);
+    
+    NSMutableArray *arrayM = [NSMutableArray arrayWithArray:array];
+    NSLog(@"%@", arrayM.description);
+    
+    LZPerson *person = [[LZPerson alloc] init];
+    person.name = @"Zhangsan";
+    person.age = 20;
+    person.sex = @"1";
+    NSLog(@"%@", person);
+    
+    LZStudent *student = [[LZStudent alloc] init];
+    student.name = @"Lisi";
+    student.age = 18;
+    student.sex = @"0";
+    student.school = @"xxx";
+    student.grade = @"5";
+    student.graduation = YES;
+    student.graduateCallback = ^{
+    };
+    LZBook *book = [[LZBook alloc] init];
+    book.name = @"正面教育 100 讲";
+    book.author = @"阿三";
+    book.price = 10.00;
+    student.book = book;
+    NSLog(@"%@", student);
 }
 
 @end
