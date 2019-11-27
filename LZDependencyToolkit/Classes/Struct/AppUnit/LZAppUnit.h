@@ -67,6 +67,21 @@ struct LZAppUnit_type {
     NSString * (* searchDir)(NSSearchPathDirectory searchPathDir);
     
     /**
+     缓存子目录
+     */
+    NSString * (* cacheSubDir)(NSString *subPath);
+    
+    /**
+     文档子目录
+     */
+    NSString * (* documentSubDir)(NSString *subPath);
+    
+    /**
+     特定子目录
+     */
+    NSString * (* searchSubDir)(NSSearchPathDirectory searchPathDir, NSString *subPath);
+    
+    /**
      创建目录
      */
     BOOL (* createDir)(NSString *dirPath);

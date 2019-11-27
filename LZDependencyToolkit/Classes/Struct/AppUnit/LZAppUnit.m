@@ -99,13 +99,44 @@ NSString * _documentDir(void) {
 
 NSString * _searchDir(NSSearchPathDirectory searchPathDir) {
     
-    static NSString *searchPath = nil;
+    static NSMutableDictionary *tmpDictM = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        searchPath = [NSSearchPathForDirectoriesInDomains(searchPathDir, NSUserDomainMask, YES)
-                      lastObject];
+        tmpDictM = [NSMutableDictionary dictionary];
     });
-    return searchPath;
+    
+    NSNumber *key = @(searchPathDir);
+    NSString *destPath = [tmpDictM objectForKey:key];
+    if (nil == destPath) {
+        
+        destPath = [NSSearchPathForDirectoriesInDomains(searchPathDir, NSUserDomainMask, YES)
+                    lastObject];
+        if (nil != destPath) {        
+            [tmpDictM setObject:destPath forKey:key];
+        }
+    }
+    return destPath;
+}
+
+NSString * _cacheSubDir(NSString *subPath) {
+ 
+    NSString *cachePath = _cacheDir();
+    NSString *destPath = [cachePath stringByAppendingPathComponent:subPath];
+    return destPath;
+}
+
+NSString * _documentSubDir(NSString *subPath) {
+ 
+    NSString *documentPath = _documentDir();
+    NSString *destPath = [documentPath stringByAppendingPathComponent:subPath];
+    return destPath;
+}
+
+NSString * _searchSubDir(NSSearchPathDirectory searchPathDir, NSString *subPath) {
+    
+    NSString *searchPath = _searchDir(searchPathDir);
+    NSString *destPath = [searchPath stringByAppendingPathComponent:subPath];
+    return destPath;
 }
 
 BOOL _createDir(NSString *dirPath) {
@@ -124,8 +155,7 @@ BOOL _createDir(NSString *dirPath) {
 
 BOOL _createCacheSubDir(NSString *subPath, NSString **fullPath) {
     
-    NSString *cachePath = _cacheDir();
-    NSString *destPath = [cachePath stringByAppendingPathComponent:subPath];
+    NSString *destPath = _cacheSubDir(subPath);
     if (fullPath) {
         *fullPath = destPath;
     }
@@ -134,8 +164,7 @@ BOOL _createCacheSubDir(NSString *subPath, NSString **fullPath) {
 
 BOOL _createDocumentSubDir(NSString *subPath, NSString **fullPath) {
     
-    NSString *documentPath = _documentDir();
-    NSString *destPath = [documentPath stringByAppendingPathComponent:subPath];
+    NSString *destPath = _documentSubDir(subPath);
     if (fullPath) {
         *fullPath = destPath;
     }
@@ -170,6 +199,9 @@ struct LZAppUnit_type LZAppUnit = {
     .cacheDir = _cacheDir,
     .documentDir = _documentDir,
     .searchDir = _searchDir,
+    .cacheSubDir = _cacheSubDir,
+    .documentSubDir = _documentSubDir,
+    .searchSubDir = _searchSubDir,
     .createDir = _createDir,
     .createCacheSubDir = _createCacheSubDir,
     .createDocumentSubDir = _createDocumentSubDir,

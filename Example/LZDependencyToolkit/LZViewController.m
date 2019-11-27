@@ -138,6 +138,11 @@
     
     NSLog(@"\nCacheDir: %@", LZAppUnit.cacheDir());
     
+    NSLog(@"\nLibraryDirectory: %@", LZAppUnit.searchDir(NSLibraryDirectory));
+    NSLog(@"\nLibraryDirectory: %@", LZAppUnit.searchDir(NSLibraryDirectory));
+    NSLog(@"\nSDocumentationDirectory: %@", LZAppUnit.searchDir(NSDocumentationDirectory));
+    NSLog(@"\nLibrarySubDirectory: %@", LZAppUnit.searchSubDir(NSLibraryDirectory, @"abc"));
+    
     NSString *fullPath;
     BOOL success = LZAppUnit.createCacheSubDir(@"abc/efg", &fullPath);
     NSLog(@"Crate Cache SubPath: %@ \n%@", success?@"成功":@"失败", fullPath);
