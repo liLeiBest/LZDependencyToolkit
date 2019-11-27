@@ -47,9 +47,12 @@ NSString * const LZHexDefaulColorKey = @"white";
                   [NSCharacterSet whitespaceAndNewlineCharacterSet]]
                  lowercaseString];
     
-    // 如果包含"#"或"0#"，则去掉
-    if ([hexString hasPrefix:@"#"]) hexString = [hexString substringFromIndex:1];
-    if ([hexString hasPrefix:@"0x"]) hexString = [hexString substringFromIndex:2];
+    // 如果开关包括"#"或“##”或"0#"，则去掉
+    if ([hexString hasPrefix:@"#"]) {
+        hexString = [hexString substringFromIndex:1];
+    } else if ([hexString hasPrefix:@"##"] || [hexString hasPrefix:@"0x"]) {
+        hexString = [hexString substringFromIndex:2];
+    }
     
     // 设置默认颜色
     UIColor *color = [self colorWithName:LZHexDefaulColorKey];
