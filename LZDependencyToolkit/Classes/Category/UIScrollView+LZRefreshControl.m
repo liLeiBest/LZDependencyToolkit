@@ -57,11 +57,11 @@ static NSString *RefreshNoMoreTitle = @"已经没有更多了";
     LZ_setAssociatedObject(self, kLZRefreshTextAttributes, [[LZWeakRefreshObjectContainer alloc] initWithWeakObject:textAttributes]);
 }
 
-- (void)configTextAttibutes:(NSDictionary *)attributes {
++ (void)configTextAttibutes:(NSDictionary *)attributes {
 	RefreshTextAttributes = attributes;
 }
 
-- (void)configNoMoreDataTitle:(NSString *)noMoreDataTitle {
++ (void)configNoMoreDataTitle:(NSString *)noMoreDataTitle {
     RefreshNoMoreTitle = noMoreDataTitle;
 }
 
