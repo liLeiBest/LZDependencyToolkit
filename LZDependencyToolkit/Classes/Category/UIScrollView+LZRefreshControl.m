@@ -7,13 +7,62 @@
 //
 
 #import "UIScrollView+LZRefreshControl.h"
+#import "NSObject+LZRuntime.h"
 #import "MJRefresh.h"
 
+@interface LZWeakRefreshObjectContainer : NSObject
+
+@property (nonatomic, readonly, strong) id weakObject;
+
+/** 构造方法 */
+- (instancetype)initWithWeakObject:(id)object;
+
+@end
+
+@implementation LZWeakRefreshObjectContainer
+
+- (instancetype)initWithWeakObject:(id)object {
+    
+    if (self = [super init]) {
+        _weakObject = object;
+    }
+    return self;
+}
+
+@end
+
+static char const * const kLZRefreshNoMoreDataTitle = "lz_refreshNoMoreDataTitle";
+static char const * const kLZRefreshTextAttributes = "lz_refreshTextAttributes";
 static NSDictionary *RefreshTextAttributes = nil;
+static NSString *RefreshNoMoreTitle = @"已经没有更多了";
 @implementation UIScrollView (LZRefreshControl)
+
+- (NSString *)noMoreDataTitle {
+    
+    LZWeakRefreshObjectContainer *container = LZ_getAssociatedObject(self, kLZRefreshNoMoreDataTitle);
+    return container.weakObject;
+}
+
+- (void)setNoMoreDataTitle:(NSString *)noMoreDataTitle {
+    LZ_setAssociatedObject(self, kLZRefreshNoMoreDataTitle, [[LZWeakRefreshObjectContainer alloc] initWithWeakObject:noMoreDataTitle]);
+}
+
+- (NSDictionary *)textAttributes {
+    
+    LZWeakRefreshObjectContainer *container = LZ_getAssociatedObject(self, kLZRefreshTextAttributes);
+    return container.weakObject;
+}
+
+- (void)setTextAttributes:(NSDictionary *)textAttributes {
+    LZ_setAssociatedObject(self, kLZRefreshTextAttributes, [[LZWeakRefreshObjectContainer alloc] initWithWeakObject:textAttributes]);
+}
 
 - (void)configTextAttibutes:(NSDictionary *)attributes {
 	RefreshTextAttributes = attributes;
+}
+
+- (void)configNoMoreDataTitle:(NSString *)noMoreDataTitle {
+    RefreshNoMoreTitle = noMoreDataTitle;
 }
 
 - (BOOL)isHeaderRefreshing {
@@ -91,10 +140,11 @@ static NSDictionary *RefreshTextAttributes = nil;
 			refreshingBlock();
 		}
 	}];
-	if (nil != RefreshTextAttributes) {
+    NSDictionary *textArrs = self.textAttributes ?: RefreshTextAttributes;
+	if (nil != textArrs) {
 		
-		header.stateLabel.textColor = RefreshTextAttributes[NSForegroundColorAttributeName];
-		header.lastUpdatedTimeLabel.textColor = RefreshTextAttributes[NSForegroundColorAttributeName];
+		header.stateLabel.textColor = textArrs[NSForegroundColorAttributeName];
+		header.lastUpdatedTimeLabel.textColor = textArrs[NSForegroundColorAttributeName];
 	}
 	self.mj_header = header;
 }
@@ -102,18 +152,18 @@ static NSDictionary *RefreshTextAttributes = nil;
 - (void)headerWithRefreshingTarget:(id)target
 				  refreshingAction:(SEL)action {
 	MJRefreshNormalHeader *header =
-	[MJRefreshNormalHeader headerWithRefreshingTarget:target
-									 refreshingAction:action];
+	[MJRefreshNormalHeader headerWithRefreshingTarget:target refreshingAction:action];
 	header.refreshingBlock = ^{
 		if (self.mj_footer.state == MJRefreshStateNoMoreData) {
 			[self.mj_footer resetNoMoreData];
 		}
 	};
-	if (nil != RefreshTextAttributes) {
-		
-		header.stateLabel.textColor = RefreshTextAttributes[NSForegroundColorAttributeName];
-		header.lastUpdatedTimeLabel.textColor = RefreshTextAttributes[NSForegroundColorAttributeName];
-	}
+	NSDictionary *textArrs = self.textAttributes ?: RefreshTextAttributes;
+    if (nil != textArrs) {
+        
+        header.stateLabel.textColor = textArrs[NSForegroundColorAttributeName];
+        header.lastUpdatedTimeLabel.textColor = textArrs[NSForegroundColorAttributeName];
+    }
 	self.mj_header = header;
 }
 
@@ -122,10 +172,13 @@ static NSDictionary *RefreshTextAttributes = nil;
 	MJRefreshAutoNormalFooter *footer =
 	[MJRefreshAutoNormalFooter footerWithRefreshingBlock:refreshingBlock];
 	[footer setTitle:@"" forState:MJRefreshStateIdle];
-	[footer setTitle:@"已经没有更多了" forState:MJRefreshStateNoMoreData];
-	if (nil != RefreshTextAttributes) {
-		footer.stateLabel.textColor = RefreshTextAttributes[NSForegroundColorAttributeName];
-	}
+    NSString *title = self.noMoreDataTitle ?: RefreshNoMoreTitle;
+	[footer setTitle:title forState:MJRefreshStateNoMoreData];
+    
+    NSDictionary *textArrs = self.textAttributes ?: RefreshTextAttributes;
+    if (nil != textArrs) {
+        footer.stateLabel.textColor = textArrs[NSForegroundColorAttributeName];
+    }
 	self.mj_footer = footer;
 }
 
@@ -133,13 +186,14 @@ static NSDictionary *RefreshTextAttributes = nil;
 				  refreshingAction:(SEL)action {
 	
 	MJRefreshAutoNormalFooter *footer =
-	[MJRefreshAutoNormalFooter footerWithRefreshingTarget:target
-										 refreshingAction:action];
+	[MJRefreshAutoNormalFooter footerWithRefreshingTarget:target refreshingAction:action];
 	[footer setTitle:@"" forState:MJRefreshStateIdle];
-	[footer setTitle:@"已经没有更多了" forState:MJRefreshStateNoMoreData];
-	if (nil != RefreshTextAttributes) {
-		footer.stateLabel.textColor = RefreshTextAttributes[NSForegroundColorAttributeName];
-	}
+    NSString *title = self.noMoreDataTitle ?: RefreshNoMoreTitle;
+	[footer setTitle:title forState:MJRefreshStateNoMoreData];
+	NSDictionary *textArrs = self.textAttributes ?: RefreshTextAttributes;
+    if (nil != textArrs) {
+        footer.stateLabel.textColor = textArrs[NSForegroundColorAttributeName];
+    }
 	self.mj_footer = footer;
 }
 
@@ -168,7 +222,6 @@ static NSDictionary *RefreshTextAttributes = nil;
 			totalCount += [collectionView numberOfItemsInSection:section];
 		}
 	}
-	
 	return totalCount;
 }
 

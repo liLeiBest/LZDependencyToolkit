@@ -13,12 +13,25 @@ typedef void (^LZRefreshingBlock)(void);
 
 @interface UIScrollView (LZRefreshControl)
 
+/** 没有更多数据的提示语，单独配置 */
+@property (nonatomic, weak) NSString *noMoreDataTitle;
+/** 文本属性，目前只支持字体颜色，单独配置 */
+@property (nonatomic, weak) NSDictionary *textAttributes;
+
+
 /**
  @author Lilei
  
- @brief 配置文本属性，目前只支持字体颜色
+ @brief 全局配置文本属性，目前只支持字体颜色
  */
 - (void)configTextAttibutes:(NSDictionary *)attributes;
+
+/**
+ @author Lilei
+ 
+ @brief 全局配置没有更多数据的提示语
+ */
+- (void)configNoMoreDataTitle:(NSString *)noMoreDataTitle;
 
 /**
  @author Lilei
