@@ -57,7 +57,7 @@ void LZ_exchangeMethod(BOOL classMethod, Class destClass, SEL originSelector, SE
 	const char *swizzleType = method_getTypeEncoding(swizzleMethod);
 	
 	BOOL exist = class_addMethod(destClass, swizzleSelector, swizzleIMP, swizzleType);
-	if (!exist) {
+	if (exist) {
 		class_replaceMethod(destClass, originSelector, swizzleIMP, swizzleType);
 	} else {
 		

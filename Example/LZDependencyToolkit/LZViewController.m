@@ -14,6 +14,8 @@
 
 @interface LZViewController ()
 
+@property (nonatomic, weak) IBOutlet UIButton *eventClickTestBtn;
+@property (nonatomic, weak) IBOutlet UIButton *touchExtendTestBtn;
 @property (nonatomic, weak) IBOutlet UIImageView *imgView;
 
 @property (nonatomic, strong) id observer;
@@ -28,35 +30,38 @@
 	
     [self setupNavBarItem];
 //    [self deviceInfo];
-    [self appInfo];
+//    [self appInfo];
 //    [self crypto];
 //    [self quick];
 //    [self customDescription];
 	
 	UIImage *image = [UIImage imageWithColor:LZOrangeColor size:CGSizeMake(100, 100)];
 	self.imgView.image = image;
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-	
-	UIAlertAction *ok = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
-		LZQuickUnit.notificationPost(@"abc", @"2", nil);
-	}];
-	LZQuickUnit.alert(@"title", @"message", @[ok]);
+    
+    self.eventClickTestBtn.eventInterval = 2.0f;
+    self.touchExtendTestBtn.hitEdgeInsets = UIEdgeInsetsMake(-50, -20, -20, -20);
 }
 
 #pragma mark - -> UI Action
+- (IBAction)eventIntervalTest:(UIButton *)sender {
+    LZLog();
+}
+
+- (IBAction)touchExtendTest:(UIButton *)sender {
+    LZLog();
+}
+
 - (void)leftDidClick {
     
     NSLog(@"点击了左边按钮");
 	
 	UIImage *image = [UIImage imageWithColor:LZOrangeColor size:CGSizeMake(100, 100) isRound:YES];
 	self.imgView.image = image;
+    
+    UIAlertAction *ok = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+        LZQuickUnit.notificationPost(@"abc", @"2", nil);
+    }];
+    LZQuickUnit.alert(@"title", @"message", @[ok]);
 }
 
 - (void)rightDidClick {

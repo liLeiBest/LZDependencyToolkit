@@ -25,6 +25,7 @@
 #import "NSString+LZTrim.h"
 #import "NSString+LZURL.h"
 #import "UIBarButtonItem+LZExtension.h"
+#import "UIButton+LZEventInterval.h"
 #import "UIButton+LZExtendTouchRect.h"
 #import "UIColor+LZExtension.h"
 #import "UIImage+LZClipping.h"
