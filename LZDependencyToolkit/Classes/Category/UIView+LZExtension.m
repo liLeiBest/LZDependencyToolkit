@@ -216,3 +216,67 @@
 }
 
 @end
+
+@implementation UIView (LZInputView)
+
+- (void)configLimitLength:(NSUInteger)limitLength
+              textContent:(NSString *)textContent {
+    
+    Protocol *protocol = @protocol(UITextInput);
+    NSAssert([self conformsToProtocol:protocol], @"不是可输入视图");
+    UIView<UITextInput> *inputView = (UIView<UITextInput> *)self;
+    
+    long count = 0;
+    // 获取当前输入模式
+    NSArray *activeInputModes = [UITextInputMode activeInputModes];
+    UITextInputMode *currentInputMode = [activeInputModes firstObject];
+    NSString *currentLanguage = [currentInputMode primaryLanguage];
+    
+    if ([currentLanguage isEqualToString:@"zh-Hans"]) {
+        
+        UITextRange *selectedRange = [inputView markedTextRange];
+        //获取高亮部分
+        UITextPosition *position = [inputView positionFromPosition:selectedRange.start offset:0];
+        if (!position) { // 没有高亮选择的字，则对已输入的文字进行字数统计和限制
+            count = limitLength - textContent.length;
+        } else { // 有高亮选择的字符串，则暂不对文字进行统计和限制
+        }
+    } else { // 中文输入法以外的直接对其统计限制即可，不考虑其他语种情况
+        count = limitLength - [inputView countWord:textContent];
+    }
+    
+    if (count < 0) {
+        
+        SEL selector = @selector(setText:);
+        if ([self respondsToSelector:selector]) {
+            
+            NSString *content = [textContent substringToIndex:limitLength];
+            [inputView performSelector:selector
+                              onThread:[NSThread mainThread]
+                            withObject:content
+                         waitUntilDone:NO];
+        }
+    }
+}
+
+// MARK: - Private
+- (long)countWord:(NSString *)s {
+    
+    long i, n = [s length], l = 0,a = 0,b = 0;
+    unichar c;
+    for (i = 0; i < n; i++) {
+        
+        c = [s characterAtIndex:i];
+        if (isblank(c)) {
+            b++;
+        } else if (isascii(c)) {
+            a++;
+        } else {
+            l++;
+        }
+    }
+    if (a==0 && l==0) return 0;
+    return l+(float)ceilf((float)(a+b));
+}
+
+@end

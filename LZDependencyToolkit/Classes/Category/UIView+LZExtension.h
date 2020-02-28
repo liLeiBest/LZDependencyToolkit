@@ -108,6 +108,21 @@
  @param corners UIRectCorner
  @param radius CGFloat
  */
-- (void)roundedRect:(CGRect)rect roundingCorners:(UIRectCorner)corners radius:(CGFloat)radius;
+- (void)roundedRect:(CGRect)rect
+    roundingCorners:(UIRectCorner)corners
+             radius:(CGFloat)radius;
+
+@end
+
+@interface UIView (LZInputView)
+
+/**
+配置输入框的最大输入长度
+
+@param limitLength NSUInteger
+@param textContent NSString
+*/
+- (void)configLimitLength:(NSUInteger)limitLength
+              textContent:(nullable NSString *)textContent;
 
 @end
