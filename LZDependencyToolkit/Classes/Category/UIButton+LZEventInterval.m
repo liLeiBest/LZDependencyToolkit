@@ -19,7 +19,7 @@ static void resetState() {
 }
 
 
-@implementation UIButton (LZEventInterval)
+@implementation UIControl (LZEventInterval)
 
 // MARK: - Initialization
 + (void)load {
