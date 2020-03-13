@@ -23,7 +23,7 @@ DEPENDENCIES:
   - LZDependencyToolkit (from `../`)
 
 SPEC REPOS:
-  trunk:
+  https://github.com/CocoaPods/Specs.git:
     - MJRefresh
 
 EXTERNAL SOURCES:
@@ -34,6 +34,6 @@ SPEC CHECKSUMS:
   LZDependencyToolkit: 84a63e88ad00347a7815b475f7252c8df8b77b61
   MJRefresh: eeda70fbf0ad277f3178cef1cd0c3532591d6237
 
-PODFILE CHECKSUM: b0c7171b0652b3b2aaf1354b7fc5599d83f886ac
+PODFILE CHECKSUM: 2090fd95ac8212d350ee25bca0bf4b9f93c79da7
 
 COCOAPODS: 1.9.0
