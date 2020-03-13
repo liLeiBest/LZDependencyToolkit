@@ -245,7 +245,7 @@
         count = limitLength - [inputView countWord:textContent];
     }
     
-    if (count < 0) {
+    if (count <= 0) {
         
         SEL selector = @selector(setText:);
         if ([self respondsToSelector:selector]) {
