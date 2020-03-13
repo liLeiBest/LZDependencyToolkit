@@ -176,7 +176,7 @@ typedef NS_ENUM(NSUInteger, LZWeekType) {
  *  @param originDateFormat 原始日期格式
  *  @param resultDateFormat 目标日期格式
  *  @return NSString
- *  @remark 如果是字符串类格式时间，则必填；如果是时间戳，则填 nil 或 @""。
+ *  @attention 如果是字符串类格式时间，则必填；如果是时间戳，则填 nil 或 @""。
  */
 + (NSString *)dateFormatConvert:(NSString *)dateStr
                originDateFormat:(NSString *)originDateFormat
@@ -187,7 +187,7 @@ typedef NS_ENUM(NSUInteger, LZWeekType) {
  *
  *  @param dateStr 字符串格式日期或时间戳
  *  @return NSString
- *  @remark 如果是字符串类格式时间，则必填；如果是时间戳，则填 nil 或 @""。
+ *  @attention 如果是字符串类格式时间，则必填；如果是时间戳，则填 nil 或 @""。
  */
 + (NSString *)dateFormatToMDOrYMD:(NSString *)dateStr;
 
@@ -248,7 +248,7 @@ typedef NS_ENUM(NSUInteger, LZWeekType) {
  *  @return NSString
  *  @discussion 如果是今天，e.g 刚刚 or 几分钟前 or 几小时前；如果是昨天，e.g 昨天；如果是前天，e.g 2天前；
  *  如果是今年，e.g MM月dd日；其它情况，e.g yyyy年MM月dd日。
- *  @remark 只能计算当前时间以前的日期。将来的时间被视为刚刚。
+ *  @attention 只能计算当前时间以前的日期。将来的时间被视为刚刚。
  */
 + (NSString *)dateFormatToTimeIntervalOrYMDFromHistory:(NSString *)dateStr;
 
@@ -259,7 +259,7 @@ typedef NS_ENUM(NSUInteger, LZWeekType) {
  *  @return NSString
  *  @discussion 如果是今天，e.g 刚刚 or 几分钟前 or 几小时前；如果是昨天，e.g 昨天；如果是前天，e.g 前天；
  *  如果是明天，e.g 明天；如果是后天，e.g 后天；如果是今年，e.g MM月dd日；其它情况，e.g yyyy年MM月dd日。
- *  @remark 只能计算当前时间以前的日期。将来的时间被视为刚刚。
+ *  @attention 只能计算当前时间以前的日期。将来的时间被视为刚刚。
  */
 + (NSString *)dateFormatToTimeIntervalOrYMDFromHistoryOrFuture:(NSString *)dateStr;
 
@@ -286,9 +286,9 @@ typedef NS_ENUM(NSUInteger, LZWeekType) {
  *
  *  @param dateStr 字符串时间或时间戳
  *  @param dateFormat 日期格式
- *  @retrun NSString
+ *  @return NSString
  *  @discussion 可以计算将来的日期距离现在的间隔
- *  @remark 如果是字符串类格式时间，则必填；如果是时间戳，则填 nil 或 @""。
+ *  @attention 如果是字符串类格式时间，则必填；如果是时间戳，则填 nil 或 @""。
  */
 + (LZDateInterval)dateInterval:(NSString *)dateStr
               originDateFormat:(NSString *)dateFormat;
@@ -298,9 +298,9 @@ typedef NS_ENUM(NSUInteger, LZWeekType) {
  *
  *  @param dateStr 字符串时间或时间戳
  *  @param dateFormat 日期格式
- *  @retrun NSString
+ *  @return NSString
  *  @discussion 可以计算将来的日期距离现在的总天数
- *  @remark 如果是字符串类格式时间，则必填；如果是时间戳，则填 nil 或 @""。
+ *  @attention 如果是字符串类格式时间，则必填；如果是时间戳，则填 nil 或 @""。
  */
 + (NSInteger)dateIntervalForDays:(NSString *)dateStr
                 originDateFormat:(NSString *)dateFormat;
@@ -310,8 +310,8 @@ typedef NS_ENUM(NSUInteger, LZWeekType) {
  *
  *  @param dateStr 字符串时间或时间戳
  *  @param dateFormat 日期格式
- *  @retrun NSString
- *  @remark 如果是字符串类格式时间，则必填；如果是时间戳，则填 nil 或 @""。
+ *  @return NSString
+ *  @attention 如果是字符串类格式时间，则必填；如果是时间戳，则填 nil 或 @""。
  */
 + (NSString *)dateIntervalForAgeDescOfYear:(NSString *)dateStr
                           originDateFormat:(NSString *)dateFormat;
@@ -321,8 +321,8 @@ typedef NS_ENUM(NSUInteger, LZWeekType) {
  *
  *  @param dateStr 字符串时间或时间戳
  *  @param dateFormat 日期格式
- *  @retrun NSString
- *  @remark 如果是字符串类格式时间，则必填；如果是时间戳，则填 nil 或 @""。
+ *  @return NSString
+ *  @attention 如果是字符串类格式时间，则必填；如果是时间戳，则填 nil 或 @""。
  */
 + (NSString *)dateIntervalForAgeDescOfYearAndMonth:(NSString *)dateStr
                                   originDateFormat:(NSString *)dateFormat;

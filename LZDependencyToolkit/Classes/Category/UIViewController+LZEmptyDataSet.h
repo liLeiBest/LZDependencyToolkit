@@ -31,7 +31,7 @@
  
  @brief 自定空白页视图
 
- @remark 不能为空
+ @attention 不能为空
  @return UIView
  */
 - (UIView *)emptyDataCustomView;

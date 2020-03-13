@@ -134,7 +134,7 @@ typedef void (^LZRefreshingBlock)(void);
  @author Lilei
  
  @brief 当没有数据时，隐藏上拉刷新
- @remark 暂未实现，现等同于 - (void)hideFooter
+ @attention 暂未实现，现等同于 - (void)hideFooter
  */
 - (void)setupHideFooterNoData;
 

@@ -56,7 +56,7 @@
  
  @param imageName 图片名称
  @return UIImage
- @remark 从图片中心拉伸
+ @attention 从图片中心拉伸
  */
 + (UIImage *)middleStretchImage:(NSString *)imageName;
 
@@ -66,7 +66,7 @@
  @brief 从图片中心拉伸图片，对象方法
  
  @return UIImage
- @remark 从图片中心拉伸
+ @attention 从图片中心拉伸
  */
 - (UIImage *)middleStretch;
 
