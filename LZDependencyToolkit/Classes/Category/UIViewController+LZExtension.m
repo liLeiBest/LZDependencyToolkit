@@ -42,20 +42,23 @@
 								}];
 }
 
+/** 关闭当前控制器，指定是否动画 */
+- (void)dismissAnimated:(BOOL)animated {
+    if (self.navigationController) {
+        if ([self.navigationController.topViewController isEqual:self]
+            && 1 < self.navigationController.viewControllers.count) {
+            [self.navigationController popViewControllerAnimated:animated];
+        } else {
+            [self dismissViewControllerAnimated:animated completion:nil];
+        }
+    } else {
+        [self dismissViewControllerAnimated:animated completion:nil];
+    }
+}
+
 /** 关闭当前控制器 */
 - (void)dismiss {
-	
-	if (self.navigationController) {
-		
-		if ([self.navigationController.topViewController isEqual:self]
-            && 1 < self.navigationController.viewControllers.count) {
-			[self.navigationController popViewControllerAnimated:YES];
-		} else {
-			[self dismissViewControllerAnimated:YES completion:nil];
-		}
-	} else {
-		[self dismissViewControllerAnimated:YES completion:nil];
-	}
+    [self dismissAnimated:YES];
 }
 
 /** 隐藏导航栏 */

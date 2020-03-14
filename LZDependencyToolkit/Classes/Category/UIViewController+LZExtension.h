@@ -20,6 +20,15 @@
 /**
  @author Lilei
  
+ @brief 关闭当前控制器，指定是否动画
+ 
+ @param animated 是否动画
+ */
+- (void)dismissAnimated:(BOOL)animated;
+
+/**
+ @author Lilei
+ 
  @brief 关闭当前控制器
  */
 - (void)dismiss;
