@@ -172,6 +172,37 @@ BOOL _createDocumentSubDir(NSString *subPath, NSString **fullPath) {
 }
 
 // MARK: Other
+/** 当前活动控制器 */
+UIViewController * _activityViewController(void) {
+    
+    UIViewController *activityViewController = nil;
+    // 获取当前主窗口
+    UIWindow *currentWindow = [UIApplication sharedApplication].keyWindow;
+    if (currentWindow.windowLevel != UIWindowLevelNormal) {
+        
+        NSArray *allWindows = [UIApplication sharedApplication].windows;
+        for (UIWindow *tempWindow in allWindows) {
+            if (tempWindow.windowLevel == UIWindowLevelNormal) {
+                currentWindow = tempWindow;
+                break;
+            }
+        }
+    }
+    // 获取活动的视图控制器
+    NSArray *currentWinViews = [currentWindow subviews];
+    if (currentWinViews.count > 0) {
+        
+        UIView *frontView = [currentWinViews objectAtIndex:0];
+        id nextResponder = [frontView nextResponder];
+        if ([nextResponder isKindOfClass:[UIViewController class]]) {
+            activityViewController = nextResponder;
+        } else {
+            activityViewController = currentWindow.rootViewController;
+        }
+    }
+    return activityViewController;
+}
+
 /** Forced Exit App */
 void _exitApp(void) {
     
@@ -206,5 +237,6 @@ struct LZAppUnit_type LZAppUnit = {
     .createCacheSubDir = _createCacheSubDir,
     .createDocumentSubDir = _createDocumentSubDir,
     
+    .activityViewController = _activityViewController,
     .exit = _exitApp,
 };

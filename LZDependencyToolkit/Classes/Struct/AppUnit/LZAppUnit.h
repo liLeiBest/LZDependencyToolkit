@@ -98,6 +98,10 @@ struct LZAppUnit_type {
     
     // MARK: - Other
     /**
+    当前活动控制器
+    */
+    UIViewController * (* activityViewController)(void);
+    /**
      *  Forced Exit App
      */
     void (* exit)(void);
