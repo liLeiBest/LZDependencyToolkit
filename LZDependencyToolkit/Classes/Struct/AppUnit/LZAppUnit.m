@@ -200,6 +200,14 @@ UIViewController * _activityViewController(void) {
             activityViewController = currentWindow.rootViewController;
         }
     }
+    if ([activityViewController isKindOfClass:[UINavigationController class]]) {
+        UIViewController *visibleViewController = [(UINavigationController *)activityViewController visibleViewController];
+        if (nil != visibleViewController) {
+            activityViewController = visibleViewController;
+        } else {
+            activityViewController = [(UINavigationController *)activityViewController topViewController];
+        }
+    }
     return activityViewController;
 }
 

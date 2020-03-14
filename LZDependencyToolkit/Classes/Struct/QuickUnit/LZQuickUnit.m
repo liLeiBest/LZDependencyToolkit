@@ -6,6 +6,7 @@
 //
 
 #import "LZQuickUnit.h"
+#import "LZAppUnit.h"
 
 // MARK: Format
 CGFloat toRadian(CGFloat degree) {
@@ -93,44 +94,13 @@ UIFont * fontName(NSString *fontName, CGFloat fontSize) {
 }
 
 // MARK: Alert
-/** 当前活动控制器 */
-UIViewController * _currentActivityViewController(void) {
-    
-    UIViewController *activityViewController = nil;
-    // 获取当前主窗口
-    UIWindow *currentWindow = [UIApplication sharedApplication].keyWindow;
-    if (currentWindow.windowLevel != UIWindowLevelNormal) {
-        
-        NSArray *allWindows = [UIApplication sharedApplication].windows;
-        for (UIWindow *tempWindow in allWindows) {
-            if (tempWindow.windowLevel == UIWindowLevelNormal) {
-                currentWindow = tempWindow;
-                break;
-            }
-        }
-    }
-    // 获取活动的视图控制器
-    NSArray *currentWinViews = [currentWindow subviews];
-    if (currentWinViews.count > 0) {
-        
-        UIView *frontView = [currentWinViews objectAtIndex:0];
-        id nextResponder = [frontView nextResponder];
-        if ([nextResponder isKindOfClass:[UIViewController class]]) {
-            activityViewController = nextResponder;
-        } else {
-            activityViewController = currentWindow.rootViewController;
-        }
-    }
-    return activityViewController;
-}
-
 void alert(NSString *title, NSString *message, NSArray<UIAlertAction *> *actions) {
 	
 	UIAlertController *alertCtr = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
 	for (UIAlertAction *action in actions) {
 		[alertCtr addAction:action];
 	}
-	[_currentActivityViewController() presentViewController:alertCtr animated:YES completion:nil];
+	[LZAppUnit.activityViewController() presentViewController:alertCtr animated:YES completion:nil];
 }
 
 void sheet(NSString *title, NSString *message, NSArray<UIAlertAction *> *actions) {
@@ -139,7 +109,7 @@ void sheet(NSString *title, NSString *message, NSArray<UIAlertAction *> *actions
     for (UIAlertAction *action in actions) {
         [sheetCtr addAction:action];
     }
-    [_currentActivityViewController() presentViewController:sheetCtr animated:YES completion:nil];
+    [LZAppUnit.activityViewController() presentViewController:sheetCtr animated:YES completion:nil];
 }
 
 NSNotificationCenter * notificationCenter(void) {

@@ -46,6 +46,7 @@ Pod::Spec.new do |s|
 			quickUnit.source_files			= 'LZDependencyToolkit/Classes/Struct/QuickUnit/*.{h,m}'
 			quickUnit.public_header_files	= 'LZDependencyToolkit/Classes/Struct/QuickUnit/*.h'
 			quickUnit.frameworks			= 'CoreGraphics'
+            quickUnit.dependency 'LZDependencyToolkit/Struct/AppUnit'
 		end
 		
 		struct.subspec 'CryptoUnit' do |cryptoUnit|
