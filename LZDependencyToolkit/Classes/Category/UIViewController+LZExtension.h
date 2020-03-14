@@ -20,15 +20,6 @@
 /**
  @author Lilei
  
- @brief 获取当前活动的视图控制器
- 
- @return 活动控制器
- */
-- (nullable UIViewController *)currentActivityViewController;
-
-/**
- @author Lilei
- 
  @brief 关闭当前控制器
  */
 - (void)dismiss;

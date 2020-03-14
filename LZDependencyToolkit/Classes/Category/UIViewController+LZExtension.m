@@ -42,41 +42,6 @@
 								}];
 }
 
-/** 获取当前视图所在的控制器 */
-- (UIViewController *)currentActivityViewController {
-	
-	UIViewController *activityViewController = nil;
-	
-	// 获取当前主窗口
-	UIWindow *currentWindow = [UIApplication sharedApplication].keyWindow;
-	if (currentWindow.windowLevel != UIWindowLevelNormal) {
-		
-		NSArray *allWindows = [UIApplication sharedApplication].windows;
-		for (UIWindow *tempWindow in allWindows) {
-			
-			if (tempWindow.windowLevel == UIWindowLevelNormal) {
-				currentWindow = tempWindow;
-				break;
-			}
-		}
-	}
-	
-	// 获取活动的视图控制器
-	NSArray *currentWinViews = [currentWindow subviews];
-	if (currentWinViews.count > 0) {
-		
-		UIView *frontView = [currentWinViews objectAtIndex:0];
-		id nextResponder = [frontView nextResponder];
-		if ([nextResponder isKindOfClass:[UIViewController class]]) {
-			activityViewController = nextResponder;
-		} else {
-			activityViewController = currentWindow.rootViewController;
-		}
-	}
-	
-	return activityViewController;
-}
-
 /** 关闭当前控制器 */
 - (void)dismiss {
 	
