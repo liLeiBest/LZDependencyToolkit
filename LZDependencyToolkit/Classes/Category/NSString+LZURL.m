@@ -26,16 +26,32 @@
 }
 
 - (NSString *)urlByAppendingKeyAndValue:(NSString * _Nonnull)paraString {
-	return [self stringByAppendingFormat:@"%@%@", [self connector], paraString];
-}
-
-// MARK: - Private
-- (NSString *)connector {
-	
-	if ([self hasSuffix:@"?"] || [self hasSuffix:@"&"]) {
-		return @"";
-	}
-	return [self rangeOfString:@"?"].location == NSNotFound ? @"?" : @"&";
+    
+    NSCharacterSet *queryCharacterSet = [NSCharacterSet URLQueryAllowedCharacterSet];
+    paraString =
+    [paraString stringByAddingPercentEncodingWithAllowedCharacters:queryCharacterSet];
+    // 去掉前后空格
+    NSString *urlString = self;
+    urlString = [urlString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    // 特殊处理：兼容 H5 的路由规则
+    NSString *regx = @"/#{1,1}.{0,}/";
+    NSRange range = [urlString rangeOfString:regx options:NSRegularExpressionSearch];
+    if (range.location == NSNotFound) {
+        urlString =
+        [urlString stringByAddingPercentEncodingWithAllowedCharacters:queryCharacterSet];
+    }
+    // 拼接参数
+    if ([urlString hasSuffix:@"?"]
+        || [urlString hasSuffix:@"&"]
+        || [urlString hasSuffix:@"/"]) {
+        urlString = [urlString substringToIndex:urlString.length - 1];
+    }
+    if ([urlString rangeOfString:@"?"].location != NSNotFound) {
+        urlString = [NSString stringWithFormat:@"%@&%@", urlString, paraString];
+    } else {
+        urlString = [NSString stringWithFormat:@"%@?%@", urlString, paraString];
+    }
+    return urlString;
 }
 
 @end
