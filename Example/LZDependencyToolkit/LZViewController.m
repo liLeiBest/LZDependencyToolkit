@@ -61,7 +61,7 @@
     UIAlertAction *ok = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
         LZQuickUnit.notificationPost(@"abc", @"2", nil);
     }];
-    LZQuickUnit.alert(@"title", @"message", @[ok]);
+    LZQuickUnit.alert(self, @"title", @"message", @[ok]);
 }
 
 - (void)rightDidClick {

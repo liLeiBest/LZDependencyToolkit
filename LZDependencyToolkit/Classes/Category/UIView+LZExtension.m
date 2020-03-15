@@ -152,12 +152,10 @@
 	
 	UIResponder *responder = self;
 	while ((responder = [responder nextResponder])) {
-		
 		if ([responder isKindOfClass: [UIViewController class]]) {
 			return (UIViewController *)responder;
 		}
 	}
-	
 	return nil;
 }
 
@@ -199,7 +197,6 @@
 
 - (void)roundingCorners:(UIRectCorner)corners
 				 radius:(CGFloat)radius {
-	
 	[self roundedRect:self.bounds roundingCorners:corners radius:radius];
 }
 

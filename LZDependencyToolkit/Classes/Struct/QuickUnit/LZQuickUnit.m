@@ -6,7 +6,6 @@
 //
 
 #import "LZQuickUnit.h"
-#import "LZAppUnit.h"
 
 // MARK: Format
 CGFloat toRadian(CGFloat degree) {
@@ -94,22 +93,22 @@ UIFont * fontName(NSString *fontName, CGFloat fontSize) {
 }
 
 // MARK: Alert
-void alert(NSString *title, NSString *message, NSArray<UIAlertAction *> *actions) {
+void alert(UIViewController *target, NSString *title, NSString *message, NSArray<UIAlertAction *> *actions) {
 	
 	UIAlertController *alertCtr = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
 	for (UIAlertAction *action in actions) {
 		[alertCtr addAction:action];
 	}
-	[LZAppUnit.activityViewController() presentViewController:alertCtr animated:YES completion:nil];
+	[target presentViewController:alertCtr animated:YES completion:nil];
 }
 
-void sheet(NSString *title, NSString *message, NSArray<UIAlertAction *> *actions) {
+void sheet(UIViewController *target, NSString *title, NSString *message, NSArray<UIAlertAction *> *actions) {
     
     UIAlertController *sheetCtr = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleActionSheet];
     for (UIAlertAction *action in actions) {
         [sheetCtr addAction:action];
     }
-    [LZAppUnit.activityViewController() presentViewController:sheetCtr animated:YES completion:nil];
+    [target presentViewController:sheetCtr animated:YES completion:nil];
 }
 
 NSNotificationCenter * notificationCenter(void) {

@@ -63,15 +63,15 @@ struct LZQuickUnit_type {
 	UIFont * (* fontName)(NSString *fontName, CGFloat fontSize);
 	
 	// MARK: - Alert
-	/**
-	 Alert 提示
-	 */
-	void (* alert)(NSString *title, NSString *message, NSArray<UIAlertAction *> *actions);
+    /**
+     Alert 提示
+     */
+    void (* alert)(UIViewController *target, NSString *title, NSString *message, NSArray<UIAlertAction *> *actions);
     
     /**
      Sheet 提示
      */
-    void (* sheet)(NSString *title, NSString *message, NSArray<UIAlertAction *> *actions);
+    void (* sheet)(UIViewController *target, NSString *title, NSString *message, NSArray<UIAlertAction *> *actions);
 	
     // MARK: Notification
 	/**
