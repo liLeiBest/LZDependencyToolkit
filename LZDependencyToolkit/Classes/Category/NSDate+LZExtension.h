@@ -306,7 +306,7 @@ typedef NS_ENUM(NSUInteger, LZWeekType) {
                 originDateFormat:(NSString *)dateFormat;
 
 /**
- *  返回年的生日描述
+ *  返回年的生日描述，N岁
  *
  *  @param dateStr 字符串时间或时间戳
  *  @param dateFormat 日期格式
@@ -317,7 +317,7 @@ typedef NS_ENUM(NSUInteger, LZWeekType) {
                           originDateFormat:(NSString *)dateFormat;
 
 /**
- *  返回年月的生日描述
+ *  返回年月的生日描述，N岁N个月
  *
  *  @param dateStr 字符串时间或时间戳
  *  @param dateFormat 日期格式
