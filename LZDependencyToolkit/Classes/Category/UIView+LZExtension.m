@@ -229,11 +229,11 @@
     UITextInputMode *currentInputMode = [activeInputModes firstObject];
     NSString *currentLanguage = [currentInputMode primaryLanguage];
     
+    UITextPosition *position = nil;
     if ([currentLanguage isEqualToString:@"zh-Hans"]) {
-        
-        UITextRange *selectedRange = [inputView markedTextRange];
         //获取高亮部分
-        UITextPosition *position = [inputView positionFromPosition:selectedRange.start offset:0];
+        UITextRange *selectedRange = [inputView markedTextRange];
+        position = [inputView positionFromPosition:selectedRange.start offset:0];
         if (!position) { // 没有高亮选择的字，则对已输入的文字进行字数统计和限制
             count = limitLength - textContent.length;
         } else { // 有高亮选择的字符串，则暂不对文字进行统计和限制
@@ -242,7 +242,7 @@
         count = limitLength - [inputView countWord:textContent];
     }
     
-    if (count <= 0) {
+    if (count <= 0 && nil == position) {
         
         SEL selector = @selector(setText:);
         if ([self respondsToSelector:selector]) {
