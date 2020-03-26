@@ -68,6 +68,8 @@
 @property (nonatomic, weak) NSString *emptyDataSetButtonBackgroundColor;
 /** 按钮背景图片 */
 @property (nonatomic, weak) UIImage *emptyDataSetButtonBackgroundImage;
+/** 垂直偏移量 */
+@property (nonatomic, weak) NSNumber *emptyDataSetVerticalOff;
 
 
 /**

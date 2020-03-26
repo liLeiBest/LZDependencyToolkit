@@ -42,6 +42,7 @@ static char const * const kEmptyDataSetButtonTitle = "emptyDataSetButtonTitle";
 static char const * const kEmptyDataSetButtonTitleColor = "emptyDataSetButtonTitleColor";
 static char const * const kEmptyDataSetButtonBackgroundColor = "emptyDataSetButtonBackgroundColor";
 static char const * const kEmptyDataSetButtonBackgroundImage = "emptyDataSetButtonBackgroundImage";
+static char const * const kEmptyDataSetVerticalOff = "emptyDataSetVerticalOff";
 
 @interface UIViewController (LZEmptyDataSet)<DZNEmptyDataSetSource, DZNEmptyDataSetDelegate>
 @end
@@ -138,6 +139,16 @@ static char const * const kEmptyDataSetButtonBackgroundImage = "emptyDataSetButt
 
 - (void)setEmptyDataSetButtonBackgroundImage:(UIImage *)emptyDataSetButtonBackgroundImage {
     LZ_setAssociatedObject(self, kEmptyDataSetButtonBackgroundImage, [[LZWeakEmptyObjectContainer alloc] initWithWeakObject:emptyDataSetButtonBackgroundImage]);
+}
+
+- (NSNumber *)emptyDataSetVerticalOff {
+    
+    LZWeakEmptyObjectContainer *container = LZ_getAssociatedObject(self, kEmptyDataSetVerticalOff);
+    return container.weakObject;
+}
+
+- (void)setEmptyDataSetVerticalOff:(NSNumber *)emptyDataSetVerticalOff {
+    LZ_setAssociatedObject(self, kEmptyDataSetVerticalOff, [[LZWeakEmptyObjectContainer alloc] initWithWeakObject:emptyDataSetVerticalOff]);
 }
 
 //MARK: Method
@@ -251,6 +262,8 @@ static char const * const kEmptyDataSetButtonBackgroundImage = "emptyDataSetButt
 - (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView {
     if ([self respondsToSelector:@selector(verticalOffsetForEmptyDataSet)]) {
         return [self verticalOffsetForEmptyDataSet];
+    } else if (nil != self.emptyDataSetVerticalOff) {
+        return self.emptyDataSetVerticalOff.floatValue;
     }
     return -scrollView.contentOffset.y * 0.5;
 }
