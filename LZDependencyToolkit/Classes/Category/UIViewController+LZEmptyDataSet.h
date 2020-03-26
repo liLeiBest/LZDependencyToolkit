@@ -36,6 +36,16 @@
  */
 - (UIView *)emptyDataCustomView;
 
+/**
+@author Lilei
+
+@brief 指定空白页偏移量，默认 0
+
+@attention 负：向上；正向下
+@return CGFloat
+*/
+- (CGFloat)verticalOffsetForEmptyDataSet;
+
 @end
 
 @interface UIViewController (LZEmptyDataSet)<LZEmptyDataSetDelegate>

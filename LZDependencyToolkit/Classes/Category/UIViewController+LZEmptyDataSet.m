@@ -249,6 +249,9 @@ static char const * const kEmptyDataSetButtonBackgroundImage = "emptyDataSetButt
 }
 
 - (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView {
+    if ([self respondsToSelector:@selector(verticalOffsetForEmptyDataSet)]) {
+        return [self verticalOffsetForEmptyDataSet];
+    }
     return -scrollView.contentOffset.y * 0.5;
 }
 
