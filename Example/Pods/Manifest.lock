@@ -1,22 +1,22 @@
 PODS:
-  - LZDependencyToolkit (1.6.3.1):
-    - LZDependencyToolkit/Category (= 1.6.3.1)
-    - LZDependencyToolkit/Define (= 1.6.3.1)
-    - LZDependencyToolkit/Object (= 1.6.3.1)
-    - LZDependencyToolkit/Struct (= 1.6.3.1)
-  - LZDependencyToolkit/Category (1.6.3.1):
+  - LZDependencyToolkit (1.6.3.2):
+    - LZDependencyToolkit/Category (= 1.6.3.2)
+    - LZDependencyToolkit/Define (= 1.6.3.2)
+    - LZDependencyToolkit/Object (= 1.6.3.2)
+    - LZDependencyToolkit/Struct (= 1.6.3.2)
+  - LZDependencyToolkit/Category (1.6.3.2):
     - MJRefresh
-  - LZDependencyToolkit/Define (1.6.3.1)
-  - LZDependencyToolkit/Object (1.6.3.1)
-  - LZDependencyToolkit/Struct (1.6.3.1):
-    - LZDependencyToolkit/Struct/AppUnit (= 1.6.3.1)
-    - LZDependencyToolkit/Struct/CryptoUnit (= 1.6.3.1)
-    - LZDependencyToolkit/Struct/DeviceUnit (= 1.6.3.1)
-    - LZDependencyToolkit/Struct/QuickUnit (= 1.6.3.1)
-  - LZDependencyToolkit/Struct/AppUnit (1.6.3.1)
-  - LZDependencyToolkit/Struct/CryptoUnit (1.6.3.1)
-  - LZDependencyToolkit/Struct/DeviceUnit (1.6.3.1)
-  - LZDependencyToolkit/Struct/QuickUnit (1.6.3.1)
+  - LZDependencyToolkit/Define (1.6.3.2)
+  - LZDependencyToolkit/Object (1.6.3.2)
+  - LZDependencyToolkit/Struct (1.6.3.2):
+    - LZDependencyToolkit/Struct/AppUnit (= 1.6.3.2)
+    - LZDependencyToolkit/Struct/CryptoUnit (= 1.6.3.2)
+    - LZDependencyToolkit/Struct/DeviceUnit (= 1.6.3.2)
+    - LZDependencyToolkit/Struct/QuickUnit (= 1.6.3.2)
+  - LZDependencyToolkit/Struct/AppUnit (1.6.3.2)
+  - LZDependencyToolkit/Struct/CryptoUnit (1.6.3.2)
+  - LZDependencyToolkit/Struct/DeviceUnit (1.6.3.2)
+  - LZDependencyToolkit/Struct/QuickUnit (1.6.3.2)
   - MJRefresh (3.3.1)
 
 DEPENDENCIES:
@@ -31,9 +31,9 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  LZDependencyToolkit: b83e3a6cad9384d5bb7b2c40c23b3a05b8261fa6
+  LZDependencyToolkit: 5a8751860160741a1786bdb4d9f1eee08b2fddfe
   MJRefresh: eeda70fbf0ad277f3178cef1cd0c3532591d6237
 
 PODFILE CHECKSUM: 1f6bd7c4bb306c5589f56a7d7be95899c07573ca
 
-COCOAPODS: 1.9.0
+COCOAPODS: 1.9.1
