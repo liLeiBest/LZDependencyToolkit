@@ -29,7 +29,7 @@
     [super viewDidLoad];
 	
     [self setupNavBarItem];
-//    [self deviceInfo];
+    [self deviceInfo];
 //    [self appInfo];
 //    [self crypto];
 //    [self quick];

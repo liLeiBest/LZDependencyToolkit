@@ -847,6 +847,9 @@ BOOL _is_notch(void) {
     if (@available(iOS 11.0, *)) {
         
         UIWindow *mainWindow = [[[UIApplication sharedApplication] delegate] window];
+        if (nil == mainWindow) {
+            mainWindow = [UIApplication sharedApplication].keyWindow;
+        }
         if (mainWindow.safeAreaInsets.bottom > 0.0) {
             isNotch = YES;
         }
