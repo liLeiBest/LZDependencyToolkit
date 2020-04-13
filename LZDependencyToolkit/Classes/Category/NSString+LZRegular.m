@@ -238,7 +238,7 @@
 
 // MARK: - Deprecated
 - (BOOL)isValideString {
-    return [self isValideString];
+    return [self isValidString];
 }
 
 @end
