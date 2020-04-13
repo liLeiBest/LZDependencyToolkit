@@ -41,7 +41,7 @@
 /** 判断是有效的国内手机号 */
 - (BOOL)isValidMobilePhone {
     
-    NSString *mobilePhoneRegular = @"^0?(13|14|15|18|17)[0-9]{9}$";
+    NSString *mobilePhoneRegular = @"^0?(13|14|15|16|17|18|19)[0-9]{9}$";
     return [self verifyRegular:mobilePhoneRegular];
 }
 
