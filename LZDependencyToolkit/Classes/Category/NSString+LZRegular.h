@@ -17,7 +17,7 @@
  
  @return BOOL
  */
-- (BOOL)isValideString;
+- (BOOL)isValidString;
 
 /**
  @author Lilei
@@ -256,5 +256,8 @@
  @return BOOL
  */
 - (BOOL)isContainOnlyLettersAndNumbersAndChineseCharacter:(NSString  * _Nullable __autoreleasing * _Nullable)resultString;
+
+// MARK: - Deprecated
+- (BOOL)isValideString DEPRECATED_MSG_ATTRIBUTE("请使用 isValidString 替代");
 
 @end

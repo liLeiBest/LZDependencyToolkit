@@ -11,8 +11,8 @@
 @implementation NSString (LZRegular)
 
 /** 判断是有效的 String */
-- (BOOL)isValideString {
-	return self && [self isKindOfClass:[NSString class]] && 0 < self.length;
+- (BOOL)isValidString {
+    return nil != self && [self isKindOfClass:[NSString class]] && 0 < self.length;
 }
 
 /** 判断是有效的 URL 地址 */
@@ -234,6 +234,11 @@
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regularExpression];;
     BOOL isValid = [predicate evaluateWithObject:self];
     return isValid;
+}
+
+// MARK: - Deprecated
+- (BOOL)isValideString {
+    return [self isValideString];
 }
 
 @end
