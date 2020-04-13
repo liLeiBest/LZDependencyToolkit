@@ -9,4 +9,9 @@
 
 @implementation NSObject (LZExtension)
 
+// MARK: - Public
+- (BOOL)isNullObj {
+    return nil == self || [self isKindOfClass:[NSNull class]];
+}
+
 @end
