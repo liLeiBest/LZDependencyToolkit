@@ -111,6 +111,7 @@ void sheet(UIViewController *target, NSString *title, NSString *message, NSArray
     [target presentViewController:sheetCtr animated:YES completion:nil];
 }
 
+// MARK: Notification
 NSNotificationCenter * notificationCenter(void) {
 	return [NSNotificationCenter defaultCenter];
 }
@@ -146,6 +147,7 @@ struct LZQuickUnit_type LZQuickUnit = {
 	.fontName = fontName,
 	
 	.alert = alert,
+    .sheet = sheet,
 	
 	.notificationCenter = notificationCenter,
 	.notificationObserver = notificationObserver,

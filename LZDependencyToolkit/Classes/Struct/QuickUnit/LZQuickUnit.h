@@ -73,7 +73,7 @@ struct LZQuickUnit_type {
      */
     void (* sheet)(UIViewController *target, NSString *title, NSString *message, NSArray<UIAlertAction *> *actions);
 	
-    // MARK: Notification
+    // MARK: - Notification
 	/**
 	 通知中心
 	 */
