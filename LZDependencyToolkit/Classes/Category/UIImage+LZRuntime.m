@@ -9,6 +9,7 @@
 #import "UIImage+LZRuntime.h"
 #import "UIImage+LZInstance.h"
 #import "NSObject+LZRuntime.h"
+#import "NSString+LZRegular.h"
 
 @implementation UIImage (LZRuntime)
 
@@ -24,7 +25,6 @@
 }
 
 + (UIImage *)LZ_imageNamed:(id)name {
-    
     if ([name isKindOfClass:[UIImage class]]) {
         return (UIImage *)name;
     }
@@ -41,7 +41,7 @@
         return image;
     }
     
-    if (![name isKindOfClass:[NSString class]]) {
+    if (NO == [name isValidString]) {
         return image;
     }
     

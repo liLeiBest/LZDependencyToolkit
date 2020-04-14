@@ -7,6 +7,7 @@
 //
 
 #import "NSBundle+LZExtension.h"
+#import "NSString+LZRegular.h"
 
 @implementation NSBundle (LZExtension)
 
@@ -14,24 +15,21 @@
 + (NSBundle *)bundleForResource:(NSString *)resource
 				 referenceClass:(NSString *)className {
 	
-	NSBundle *resourceBundle = nil;
-	if (nil == className || 0 == className.length) {
-		resourceBundle = [NSBundle mainBundle];
+	NSBundle *bundle = nil;
+	if ([className isValidString]) {
+		bundle = [NSBundle mainBundle];
 	} else {
-		resourceBundle = [NSBundle bundleForClass:NSClassFromString(className)];
+		bundle = [NSBundle bundleForClass:NSClassFromString(className)];
 	}
-	
-	if (nil != resource && 0 < resource.length) {
-		NSString *resoucePath = [resourceBundle pathForResource:resource
-														 ofType:@"bundle"];
-		resourceBundle = [NSBundle bundleWithPath:resoucePath];
+	if ([resource isValidString]) {
+        
+		NSString *resoucePath = [bundle pathForResource:resource ofType:@"bundle"];
+		bundle = [NSBundle bundleWithPath:resoucePath];
 	}
-	
-	if (nil == resourceBundle) {
-		resourceBundle = [NSBundle mainBundle];
+	if (nil == bundle) {
+		bundle = [NSBundle mainBundle];
 	}
-	
-	return resourceBundle;
+	return bundle;
 }
 
 /** 加载资源目录下的图片 */
@@ -39,13 +37,11 @@
 		  inBundle:(NSString *)bundleName
 	referenceClass:(NSString *)className {
 	
-	BOOL imageNameValide = imageName && [imageName isKindOfClass:[NSString class]] && imageName.length;
-	NSAssert(imageNameValide, @"Image 名称非法");
+	NSAssert([imageName isValidString], @"Image 名称非法");
 	
 	UIImage *img = nil;
 	NSBundle *resourceBundle = [self bundleForResource:bundleName referenceClass:className];
 	if (@available(iOS 8.0, *)) {
-		
 		img = [UIImage imageNamed:imageName inBundle:resourceBundle compatibleWithTraitCollection:nil];
 		if (img) {
 			return img;
@@ -65,12 +61,7 @@
 	if (img) {
 		return img;
 	}
-	
-	if (img) {
-		return img;
-	} else {
-		return [UIImage imageNamed:name];
-	}
+    return [UIImage imageNamed:imageName];
 }
 
 /** 加载资源目录下的 View XIB */
@@ -129,7 +120,6 @@
 								 attribute:NSLayoutAttributeBottom
 								multiplier:1.0 constant:0];
 	[owner addConstraint:bottom];
-	
 	return reuseView;
 }
 
@@ -138,12 +128,10 @@
 								   inBundle:(NSString *)bundleName
 							 referenceClass:(NSString *)className {
 	
-	BOOL xibNameValide = xibName && [xibName isKindOfClass:[NSString class]] && xibName.length;
-	NSAssert(xibNameValide, @"XIB 名称非法");
+	NSAssert([xibName isValidString], @"Xib 名称非法");
 	
 	NSBundle *resourceBundle = [self bundleForResource:bundleName referenceClass:className];
 	UIViewController *viewController = [[UIViewController alloc] initWithNibName:xibName bundle:resourceBundle];
-	
 	return viewController;
 }
 
@@ -152,13 +140,11 @@
 					inBundle:(NSString *)bundleName
 			  referenceClass:(NSString *)className {
 	
-	BOOL storyboardNameValide = storyboardName && [storyboardName isKindOfClass:[NSString class]] && storyboardName.length;
-	NSAssert(storyboardNameValide, @"Storyboard 名称非法");
+	NSAssert([storyboardName isValidString], @"Storyboard 名称非法");
 	
 	NSBundle *resourceBundle = [self bundleForResource:bundleName referenceClass:className];
 	UIStoryboard *storyboard = [UIStoryboard storyboardWithName:storyboardName
 														 bundle:resourceBundle];
-	
 	return storyboard;
 }
 
@@ -166,7 +152,6 @@
 + (UIViewController *)viewControllerFromStoryboard:(NSString *)storyboardName
 										  inBundle:(NSString *)bundleName
 									referenceClass:(NSString *)className {
-	
 	return [[self storyboard:storyboardName
 					inBundle:bundleName
 			  referenceClass:className]
@@ -180,7 +165,6 @@ referenceClass:(NSString *)className {
 	
 	NSBundle *bundle = [self bundleForResource:bundleName referenceClass:className];
 	UINib *nib = [UINib nibWithNibName:nibName bundle:bundle];
-	
 	return nib;
 }
 
@@ -201,8 +185,7 @@ referenceClass:(NSString *)className {
 						 bundle:(nullable NSString *)bundleName
 				 referenceClass:(nullable NSString *)className {
 	
-	BOOL xibNameValide = xibName && [xibName isKindOfClass:[NSString class]] && xibName.length;
-	NSAssert(xibNameValide, @"XIB 名称非法");
+	NSAssert([xibName isValidString], @"XIB 名称非法");
 	
 	NSBundle *resourceBundle = [self bundleForResource:bundleName referenceClass:className];
 	NSArray *nibs = [resourceBundle loadNibNamed:xibName owner:owner options:nil];
@@ -214,16 +197,13 @@ referenceClass:(NSString *)className {
 	}
 	
 	if (![xibView isKindOfClass:[UIView class]]) {
-		
 		for (id nibObject in nibs) {
-			
 			if ([nibObject isKindOfClass:[UIView class]]) {
 				xibView = nibObject;
 				break;
 			}
 		}
 	}
-	
 	return xibView;
 }
 

@@ -163,7 +163,6 @@
                       disableImage:(NSString *)disableImage
                             target:(id)target
                             action:(SEL)action {
-    
     return [[self alloc] initWithTitle:title
                              normalImg:normalImage
                           highlightImg:highlightImage
@@ -176,7 +175,6 @@
 + (UIBarButtonItem *)itemWithTitle:(NSString *)title
                             target:(id)target
                             action:(SEL)action {
-    
     return [[self alloc] initWithTitle:title
                              normalImg:nil
                           highlightImg:nil
@@ -211,10 +209,9 @@
         }
     }
     
-    if (image.size.width > 32) {
-        image = [image scaledToSize:CGSizeMake(32, 32)];
+    if (image.size.width > 48) {
+        image = [image scaledToSize:CGSizeMake(48, 48)];
     }
-    
     return image;
 }
 
