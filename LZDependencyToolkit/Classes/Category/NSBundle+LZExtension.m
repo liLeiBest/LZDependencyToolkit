@@ -16,7 +16,7 @@
 				 referenceClass:(NSString *)className {
 	
 	NSBundle *bundle = nil;
-	if ([className isValidString]) {
+	if (NO == [className isValidString]) {
 		bundle = [NSBundle mainBundle];
 	} else {
 		bundle = [NSBundle bundleForClass:NSClassFromString(className)];
@@ -185,7 +185,7 @@ referenceClass:(NSString *)className {
 						 bundle:(nullable NSString *)bundleName
 				 referenceClass:(nullable NSString *)className {
 	
-	NSAssert([xibName isValidString], @"XIB 名称非法");
+	NSAssert([xibName isValidString], @"Xib 名称非法");
 	
 	NSBundle *resourceBundle = [self bundleForResource:bundleName referenceClass:className];
 	NSArray *nibs = [resourceBundle loadNibNamed:xibName owner:owner options:nil];
