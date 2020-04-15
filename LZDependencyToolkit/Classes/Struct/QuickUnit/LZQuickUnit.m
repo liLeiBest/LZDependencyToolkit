@@ -121,7 +121,11 @@ id <NSObject> notificationObserver(NSNotificationName name, void (^callBackHandl
 }
 
 void notificationAdd(id observer, SEL selector, NSNotificationName name) {
-	[notificationCenter() addObserver:observer selector:selector name:name object:nil];
+    @try {
+        [notificationCenter() addObserver:observer selector:selector name:name object:nil];
+    } @catch (NSException *exception) {
+    } @finally {
+    }
 }
 
 void notificationPost(NSNotificationName name, id anyObject, NSDictionary *userInfo) {
@@ -129,7 +133,11 @@ void notificationPost(NSNotificationName name, id anyObject, NSDictionary *userI
 }
 
 void notificationRemove(id observer, NSNotificationName name) {
-	[notificationCenter() removeObserver:observer name:name object:nil];
+    @try {
+        [notificationCenter() removeObserver:observer name:name object:nil];
+    } @catch (NSException *exception) {
+    } @finally {
+    }
 }
 
 /** 初始化结构体 */
