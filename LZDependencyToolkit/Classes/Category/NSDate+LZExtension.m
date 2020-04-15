@@ -7,6 +7,7 @@
 //
 
 #import "NSDate+LZExtension.h"
+#import "NSString+LZRegular.h"
 
 @implementation NSDate (LZExtension)
 
@@ -61,9 +62,9 @@ NSDate * stringToDate(NSString *dateStr, NSString *dateFormat) {
     NSDateFormatter *dateF = dateFormatter();
     dateF.dateFormat = dateFormat;
     NSDate *tempDate = [dateF dateFromString:dateStr];
-    if (nil == dateFormat
-        || NO == [dateFormat isKindOfClass:[NSString class]]
-        || 0 == dateFormat.length) {
+    BOOL validDateFmt = [dateFormat isValidString];
+    if (NO == validDateFmt
+        || (YES == validDateFmt && nil == tempDate)) {
         
         NSTimeInterval timeStamp = dateStr.doubleValue / 1000;
         NSDate *date = [NSDate dateWithTimeIntervalSince1970:timeStamp];
