@@ -37,7 +37,6 @@
 	
 	UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
 	UIGraphicsEndImageContext();
-	
 	return image;
 }
 
@@ -47,15 +46,33 @@
     return [self imageWithColor:color size:size isRound:NO];
 }
 
+/** 根据字符串内容、字体颜色、背景颜色及尺寸，创建图片 */
++ (UIImage *)imageWithString:(NSString *)string
+             foregroundColor:(UIColor *)fgColor
+             backgroundColor:(UIColor *)bgColor
+                        size:(CGSize)size {
+    
+    UIImage *image = [self imageWithColor:bgColor size:size];
+    string = [self watermarkFromString:string];
+    NSDictionary *attributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
+    return [image watermark:string attributes:attributes];
+}
+
+/** 根据字符串内容、前背颜色及尺寸，创建图片 */
++ (UIImage *)imageWithString:(NSString *)string
+             backgroundColor:(UIColor *)bgColor
+                        size:(CGSize)size {
+    return [self imageWithString:string foregroundColor:[UIColor whiteColor] backgroundColor:bgColor size:size];
+}
+
 /** 根据字符串内容，创建指定大小的图片 */
 + (UIImage *)imageWithString:(NSString *)string
-                        size:(CGSize)size
-{
-    NSString *colorFilePath = [[NSBundle mainBundle] pathForResource:@"LZImageRandomColorConfig"
-                                                              ofType:@".plist"];
+                        size:(CGSize)size {
+    
+    NSString *colorFilePath =
+    [[NSBundle mainBundle] pathForResource:@"LZImageRandomColorConfig" ofType:@"plist"];
     NSArray *colorArrI = [NSArray arrayWithContentsOfFile:colorFilePath];
-    if (nil == colorArrI || 0 == colorArrI.count)
-    {
+    if (nil == colorArrI || 0 == colorArrI.count) {
         colorArrI = [NSArray arrayWithObjects:
                      @"f4a739", @"f9886d", @"6fb7e7", @"8ec566", @"f97c94",
                      @"bdce00", @"f794be", @"7ccfde", @"b0a1d3", @"ff9c9c",
@@ -67,13 +84,8 @@
     }
     
     NSUInteger index = [self colorIndexOfString:string fromColorTotal:colorArrI.count];
-    UIColor *color = [UIColor colorWithHexString:[colorArrI objectAtIndex:index]];
-    UIImage *pureColorImage = [self imageWithColor:color size:size];
-    string = [self watermarkFromString:string];
-    
-    NSDictionary *attributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
-    
-    return [pureColorImage watermark:string attributes:attributes];
+    UIColor *bgColor = [UIColor colorWithHexString:[colorArrI objectAtIndex:index]];
+    return [self imageWithString:string foregroundColor:[UIColor whiteColor] backgroundColor:bgColor size:size];
 }
 
 /** 从图片中心拉伸图片，类方法 */

@@ -39,12 +39,42 @@
 /**
  @author Lilei
  
+ @brief 根据字符串内容、字体颜色、背景颜色及尺寸，创建图片
+ 
+ @param string 字符串
+ @param fgColor 字符颜色
+ @param bgColor 背景颜色
+ @param size   CGSize
+ @return UIImage
+ */
++ (UIImage *)imageWithString:(NSString *)string
+             foregroundColor:(UIColor *)fgColor
+             backgroundColor:(UIColor *)bgColor
+                        size:(CGSize)size;
+
+/**
+ @author Lilei
+ 
+ @brief 根据字符串内容、前背颜色及尺寸，创建图片
+ 
+ @param string 字符串
+ @param size   CGSize
+ @return UIImage
+ @discussion 字符颜色为 白色
+ */
++ (UIImage *)imageWithString:(NSString *)string
+             backgroundColor:(UIColor *)bgColor
+                        size:(CGSize)size;
+
+/**
+ @author Lilei
+ 
  @brief 根据字符串内容，创建指定大小的图片
  
  @param string 字符串
  @param size   CGSize
  @return UIImage
- @discusstion 可通过 LZImageRandomColorConfig.plist 文件，指定生成图片的颜色范围
+ @discussion 可通过 LZImageRandomColorConfig.plist 文件，指定生成图片的颜色范围
  */
 + (UIImage *)imageWithString:(NSString *)string
                         size:(CGSize)size;
