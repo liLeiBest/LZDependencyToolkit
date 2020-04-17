@@ -9,8 +9,8 @@
 #import "UIImage+LZInstance.h"
 #import "UIImage+LZEffect.h"
 #import "UIColor+LZExtension.h"
-@import AVFoundation;
 
+@import AVFoundation;
 @implementation UIImage (LZInstance)
 
 #pragma mark - Public
@@ -89,61 +89,55 @@
 }
 
 /** 从图片中心拉伸图片，类方法 */
-+ (UIImage *)middleStretchImage:(NSString *)imageName
-{
++ (UIImage *)middleStretchImage:(NSString *)imageName {
     return [self stretchImage:imageName leftRatio:0.5 topRatio:0.5];
 }
 
 /** 从图片中心拉伸图片，对象方法 */
-- (UIImage *)middleStretch
-{
+- (UIImage *)middleStretch {
     return [self stretchLeftRatio:0.5 topRatio:0.5];
 }
             
 /** 指定位置拉伸图片 */
 + (UIImage *)stretchImage:(NSString *)imageNmae
                 leftRatio:(CGFloat)leftRatio
-                 topRatio:(CGFloat)topRatio
-{
+                 topRatio:(CGFloat)topRatio {
+    
     UIImage *image = [UIImage imageNamed:imageNmae];
     CGSize imageSize = image.size;
     image = [image stretchableImageWithLeftCapWidth:imageSize.width * leftRatio
                                        topCapHeight:imageSize.height * topRatio];
-    
     return image;
 }
 
 - (UIImage *)stretchLeftRatio:(CGFloat)leftRatio
-                     topRatio:(CGFloat)topRatio
-{
-    CGSize imageSize = self.size;
+                     topRatio:(CGFloat)topRatio {
     
+    CGSize imageSize = self.size;
     return [self stretchableImageWithLeftCapWidth:imageSize.width * leftRatio
                                      topCapHeight:imageSize.height * topRatio];;
 }
 
 /** 获取当前视图截图 */
-+ (UIImage *)imageFromView: (UIView *)theView
-{
++ (UIImage *)imageFromView: (UIView *)theView {
+    
     UIGraphicsBeginImageContext(theView.frame.size);
     CGContextRef context = UIGraphicsGetCurrentContext();
     [theView.layer renderInContext:context];
     UIImage *theImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
     return theImage;
 }
 
 /** 获取启动图片 */
-+ (UIImage *)launchImage
-{
++ (UIImage *)launchImage {
+    
     UIApplication *application = [UIApplication sharedApplication];
     CGSize viewSize = application.keyWindow.bounds.size;
     UIInterfaceOrientation currentOrientation = application.statusBarOrientation;
     
     NSString *viewOrientation = @"";
-    switch (currentOrientation)
-    {
+    switch (currentOrientation) {
         case UIInterfaceOrientationUnknown:
         case UIInterfaceOrientationPortrait:
         case UIInterfaceOrientationPortraitUpsideDown:
@@ -160,74 +154,42 @@
     
     NSString *launchImageName = nil;
     NSArray *imagesDict = [[[NSBundle mainBundle] infoDictionary] valueForKey:@"UILaunchImages"];
-    for (NSDictionary *dict in imagesDict)
-    {
+    for (NSDictionary *dict in imagesDict) {
+        
         CGSize imageSize = CGSizeFromString([dict objectForKey:@"UILaunchImageSize"]);
         NSString *orientation = [dict objectForKey:@"UILaunchImageOrientation"];
-        if (CGSizeEqualToSize(imageSize, viewSize) &&
-            [viewOrientation isEqualToString:orientation])
-        {
+        if (CGSizeEqualToSize(imageSize, viewSize)
+            && [viewOrientation isEqualToString:orientation]) {
             launchImageName = [dict objectForKey:@"UILaunchImageName"];
             break;
         }
     }
-    
     return launchImageName ? [UIImage imageNamed:launchImageName] : nil;
 }
 
 /** 获取应用图标 */
-+ (UIImage *)iconImage
-{
++ (UIImage *)iconImage {
+    
     NSDictionary *infoDict = [[NSBundle mainBundle] infoDictionary];
     NSArray *iconsArr = infoDict[@"CFBundleIcons"][@"CFBundlePrimaryIcon"][@"CFBundleIconFiles"];
     NSString *iconLastName = [iconsArr lastObject];
-    
     return [UIImage imageNamed:iconLastName];
 }
 
 /** 获取视频预览图 */
-+ (UIImage *)previewImageWithVideoURL:(NSURL *)videoURL
-{
++ (UIImage *)previewImageWithVideoURL:(NSURL *)videoURL {
+    
     AVAsset *asset = [AVAsset assetWithURL:videoURL];
-
     AVAssetImageGenerator *generator = [AVAssetImageGenerator assetImageGeneratorWithAsset:asset];
     generator.appliesPreferredTrackTransform = YES;
-
-    CGImageRef img = [generator copyCGImageAtTime:CMTimeMake(1, asset.duration.timescale)
-                                       actualTime:NULL
-                                            error:nil];
+    CMTime time = CMTimeMake(1, asset.duration.timescale);
+    CGImageRef img = [generator copyCGImageAtTime:time actualTime:NULL error:nil];
     UIImage *image = [UIImage imageWithCGImage:img];
     CGImageRelease(img);
-
     return image;
 }
 
-#pragma mark - Deprecated
-+ (UIImage *)imageWithColor:(UIColor *)color
-                    andSize:(CGSize)size
-{
-    return [self imageWithColor:color size:size];
-}
-
-+ (UIImage *)imageWithString:(NSString *)string
-                     andSize:(CGSize)size
-{
-    return [self imageWithString:string size:size];
-}
-
-+ (UIImage *)imageNameToMiddleStretch:(NSString *)imageName
-{
-    return [self middleStretchImage:imageName];
-}
-
-+ (UIImage *)imageNameToStretch:(NSString *)imageNmae
-                      leftRatio:(CGFloat)leftRatio
-                       topRatio:(CGFloat)topRatio
-{
-    return [self stretchImage:imageNmae leftRatio:leftRatio topRatio:topRatio];
-}
-
-#pragma mark - Private
+// MARK: - Private
 /**
  @author Lilei
  
@@ -238,20 +200,17 @@
  @return 颜色序号
  */
 + (NSUInteger)colorIndexOfString:(NSString *)string
-                  fromColorTotal:(NSUInteger)total
-{
+                  fromColorTotal:(NSUInteger)total {
+    
     NSInteger length = total;
     if (nil == string || 0 == string.length) return 0;
-    
     NSData *data = [string dataUsingEncoding:NSUTF8StringEncoding];
     const char *bytes = data.bytes;
     int r = 0;
-    for (int i = 0; i < [data length]; i++)
-    {
+    for (int i = 0; i < [data length]; i++) {
         r = r + (int)(bytes[i] & 0xff);
     }
     NSInteger index = r % length;
-    
     return index;
 }
 
@@ -264,21 +223,14 @@
  
  @return 水印字符串
  */
-+ (NSString *)watermarkFromString:(NSString *)string
-{
-    if (string.length > 2)
-    {
-        if ([self includedInAlphabet:string])
-        {
++ (NSString *)watermarkFromString:(NSString *)string {
+    if (string.length > 2) {
+        if ([self includedInAlphabet:string]) {
             return [string substringToIndex:2];
-        }
-        else
-        {
+        } else {
             return [string substringFromIndex:string.length - 2];
         }
-    }
-    else
-    {
+    } else {
         return string;
     }
 }
@@ -292,18 +244,31 @@
  
  @return BOOL
  */
-+ (BOOL)includedInAlphabet:(NSString *)string
-{
-    [string enumerateLinesUsingBlock:^(NSString * _Nonnull line, BOOL * _Nonnull stop) {
++ (BOOL)includedInAlphabet:(NSString *)string {
+    for (int i = 0; i < string.length; i++) {
         
-    }];
-    for (int i = 0; i < string.length; i++)
-    {
         int s = [string characterAtIndex:i];
         if (s > 0x4e00 && s < 0x9fff) return NO;
     }
-    
     return YES;
+}
+
+// MARK: - Deprecated
++ (UIImage *)imageWithColor:(UIColor *)color
+                    andSize:(CGSize)size {
+    return [self imageWithColor:color size:size];
+}
++ (UIImage *)imageWithString:(NSString *)string
+                     andSize:(CGSize)size {
+    return [self imageWithString:string size:size];
+}
++ (UIImage *)imageNameToMiddleStretch:(NSString *)imageName {
+    return [self middleStretchImage:imageName];
+}
++ (UIImage *)imageNameToStretch:(NSString *)imageNmae
+                      leftRatio:(CGFloat)leftRatio
+                       topRatio:(CGFloat)topRatio {
+    return [self stretchImage:imageNmae leftRatio:leftRatio topRatio:topRatio];
 }
 
 @end

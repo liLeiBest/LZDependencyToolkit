@@ -164,7 +164,7 @@
  */
 + (UIImage *)previewImageWithVideoURL:(NSURL *)videoURL;
 
-#pragma mark - Deprecated
+// MARK: - Deprecated
 + (UIImage *)imageWithColor:(UIColor *)color
                     andSize:(CGSize)size __deprecated_msg("请使用 [imageWithColor:size:]");
 + (UIImage *)imageWithString:(NSString *)string

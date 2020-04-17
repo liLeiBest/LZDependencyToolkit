@@ -17,6 +17,7 @@
 @property (nonatomic, weak) IBOutlet UIButton *eventClickTestBtn;
 @property (nonatomic, weak) IBOutlet UIButton *touchExtendTestBtn;
 @property (nonatomic, weak) IBOutlet UIImageView *imgView;
+@property (nonatomic, weak) IBOutlet UILabel *contentLabel;
 
 @property (nonatomic, strong) id observer;
 @property (nonatomic, strong) LZWeakTimer *time;
@@ -29,15 +30,12 @@
     [super viewDidLoad];
 	
     [self setupNavBarItem];
-    [self deviceInfo];
+//    [self deviceInfo];
 //    [self appInfo];
 //    [self crypto];
 //    [self quick];
 //    [self customDescription];
 	
-	UIImage *image = [UIImage imageWithColor:LZOrangeColor size:CGSizeMake(100, 100)];
-	self.imgView.image = image;
-    
     self.eventClickTestBtn.eventInterval = 2.0f;
     self.touchExtendTestBtn.hitEdgeInsets = UIEdgeInsetsMake(-50, -20, -20, -20);
 }
@@ -45,6 +43,7 @@
 #pragma mark - -> UI Action
 - (IBAction)eventIntervalTest:(UIButton *)sender {
     LZLog();
+    self.imgView.image = [UIImage barCodeImageWithString:@"123456"];
 }
 
 - (IBAction)touchExtendTest:(UIButton *)sender {
@@ -52,41 +51,22 @@
 }
 
 - (void)leftDidClick {
-    
-    NSLog(@"点击了左边按钮");
-	
-	UIImage *image = [UIImage imageWithColor:LZOrangeColor size:CGSizeMake(100, 100) isRound:YES];
-	self.imgView.image = image;
-    
-    UIAlertAction *ok = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
-        LZQuickUnit.notificationPost(@"abc", @"2", nil);
-    }];
-    LZQuickUnit.alert(self, @"title", @"message", @[ok]);
+    LZLog(@"点击了左边按钮");
+    UIImage *centerImg = [UIImage imageNamed:@"timg"];
+    self.imgView.image = [centerImg QRCodeImageWithString:@"只是一个羊" size:100 fillColor:[UIColor magentaColor]];
 }
 
 - (void)rightDidClick {
+    LZLog(@"点击了右边按钮");
+    UIImage *centerImg = [UIImage imageNamed:@"qrcode"];
+    self.contentLabel.text = [centerImg QRCodeString];
     
-    NSLog(@"点击了右边按钮");
-	
-	UIImage *image = [UIImage imageWithColor:LZOrangeColor size:CGSizeMake(100, 100) isRound:NO];
-	self.imgView.image = image;
 }
 
 - (void)sysDidClick {
-	
-	self.time =
-	[[LZWeakTimer alloc] initWithTimeInterval:1 repeats:YES dispatchQueue:dispatch_get_main_queue() eventHandler:^{
-		
-		self.time.tolerance = 1.0f;
-		static NSUInteger number = 0;
-		number++;
-		NSLog(@"%@ %@", @"============", LZQuickUnit.toString(@(number)));
-		if (number >= 10) {
-			[self.time invalidate];
-		}
-	}];
-	self.time.tolerance = 1.0f;
-	[self.time schedule];
+	LZLog(@"点击了右边系统按钮");
+    UIImage *centerImg = [UIImage new];
+    self.imgView.image = [centerImg QRCodeImageWithString:@"只是一个羊" size:1000];
 }
 
 // MARK: - Private
@@ -214,6 +194,28 @@
     book.price = 10.00;
     student.book = book;
     NSLog(@"%@", student);
+}
+
+- (void)roundImageView {
+    
+    UIImage *image = [UIImage imageWithColor:LZOrangeColor size:CGSizeMake(100, 100) isRound:YES];
+    self.imgView.image = image;
+}
+
+- (void)weakTimer {
+    self.time =
+    [[LZWeakTimer alloc] initWithTimeInterval:1 repeats:YES dispatchQueue:dispatch_get_main_queue() eventHandler:^{
+        
+        self.time.tolerance = 1.0f;
+        static NSUInteger number = 0;
+        number++;
+        NSLog(@"%@ %@", @"============", LZQuickUnit.toString(@(number)));
+        if (number >= 10) {
+            [self.time invalidate];
+        }
+    }];
+    self.time.tolerance = 1.0f;
+    [self.time schedule];
 }
 
 @end

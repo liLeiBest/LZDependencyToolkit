@@ -33,6 +33,7 @@
 #import "UIImage+LZEffect.h"
 #import "UIImage+LZEntend.h"
 #import "UIImage+LZInstance.h"
+#import "UIImage+LZMachineReadableCode.h"
 #import "UIImage+LZRuntime.h"
 #import "UILabel+LZExtension.h"
 #import "UINavigationBar+LZExtension.h"
