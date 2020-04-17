@@ -48,25 +48,22 @@
 
 - (IBAction)touchExtendTest:(UIButton *)sender {
     LZLog();
+    self.imgView.image = [self.imgView onScreenShort];
 }
 
 - (void)leftDidClick {
     LZLog(@"点击了左边按钮");
     UIImage *centerImg = [UIImage imageNamed:@"timg"];
-    self.imgView.image = [centerImg QRCodeImageWithString:@"只是一个羊" size:100 fillColor:[UIColor magentaColor]];
+    self.imgView.image = [centerImg QRCodeImageWithString:@"只是一个羊" size:500 fillColor:[UIColor magentaColor]];
 }
 
 - (void)rightDidClick {
     LZLog(@"点击了右边按钮");
-    UIImage *centerImg = [UIImage imageNamed:@"qrcode"];
-    self.contentLabel.text = [centerImg QRCodeString];
-    
 }
 
 - (void)sysDidClick {
 	LZLog(@"点击了右边系统按钮");
-    UIImage *centerImg = [UIImage new];
-    self.imgView.image = [centerImg QRCodeImageWithString:@"只是一个羊" size:1000];
+    self.imgView.image = [self.view onScreenShort];
 }
 
 // MARK: - Private

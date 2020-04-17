@@ -21,6 +21,7 @@
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ksg-IK-FrT">
                                 <rect key="frame" x="20" y="166" width="335" height="335"/>
+                                <color key="backgroundColor" systemColor="systemGray5Color" red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="Ksg-IK-FrT" secondAttribute="height" multiplier="1:1" id="LEi-5f-XgO"/>
                                 </constraints>

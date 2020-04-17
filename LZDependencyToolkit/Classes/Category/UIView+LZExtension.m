@@ -147,7 +147,6 @@
 
 @implementation UIView (LZViewController)
 
-/** 获取当前视图所在的控制器 */
 - (UIViewController *)viewController {
 	
 	UIResponder *responder = self;
@@ -274,6 +273,19 @@
     }
     if (a==0 && l==0) return 0;
     return l+(float)ceilf((float)(a+b));
+}
+
+@end
+
+@implementation UIView (LZScreenShort)
+
+- (UIImage *)onScreenShort {
+    
+    UIGraphicsBeginImageContextWithOptions(self.bounds.size, NO, 0);
+    BOOL success = [self drawViewHierarchyInRect:self.bounds afterScreenUpdates:YES];
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return success ? image : nil;
 }
 
 @end
