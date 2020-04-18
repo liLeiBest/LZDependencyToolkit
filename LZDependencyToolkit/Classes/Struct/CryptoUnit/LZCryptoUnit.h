@@ -51,20 +51,33 @@ struct LZCryptoUnit_type {
 	
 	// MARK: - DES
 	/**
-	 DES Encrypt
-
-	 @param DES_Encrypt 明文
-	 @return 密文
+	 DES 加密
+     
+     @attention secret 最长 8 位
 	 */
 	NSString * (* DES_Encrypt)(NSString *plainttext, NSString *secret);
 	
 	/**
-	 DES Decrypt
+	 DES 解密
 
-	 @param DES_Decrypt 密文
-	 @return 明文
+     @attention secret 最长 8 位
 	 */
 	NSString * (* DES_Decrypt)(NSString *ciphertext, NSString *secret);
+    
+    /**
+     3DES 加密
+
+     @param plainttext 明文
+     @attention secret 最长 24 位
+     */
+    NSString * (* TDES_Encrypt)(NSString *plainttext, NSString *secret);
+    
+    /**
+     3DES 解密
+
+     @attention secret 最长 24 位
+     */
+    NSString * (* TDES_Decrypt)(NSString *ciphertext, NSString *secret);
 	
 };
 

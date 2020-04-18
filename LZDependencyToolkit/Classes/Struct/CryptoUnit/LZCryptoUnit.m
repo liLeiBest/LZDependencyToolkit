@@ -22,36 +22,64 @@ NSString * stringFromBytesWithLength(unsigned char *bytes, unsigned long length)
 }
 
 /**
+ 加解密
+ */
+NSData * Crypto(NSData *data, NSString *secret, CCOperation operation, size_t keySize, size_t blockSize, CCAlgorithm alg) {
+    
+    char keyPtr[keySize + 1];
+    bzero(keyPtr, sizeof(keyPtr));
+    [secret getCString:keyPtr maxLength:sizeof(keyPtr) encoding:NSUTF8StringEncoding];
+    
+    size_t bufferSize = 0;
+    size_t dataLength = [data length];
+    bufferSize = (dataLength + blockSize) & ~(blockSize - 1);
+    
+    uint8_t *buffer = NULL;
+    buffer = malloc(bufferSize * sizeof(uint8_t));
+    memset((void *)buffer, 0x0, bufferSize);
+    
+    size_t numBytesEncrypted = 0;
+    CCCryptorStatus cryptStatus = CCCrypt(operation,
+                                          alg,
+                                          kCCOptionPKCS7Padding | kCCOptionECBMode,
+                                          keyPtr,
+                                          keySize,
+                                          NULL,
+                                          [data bytes],
+                                          dataLength,
+                                          buffer,
+                                          bufferSize,
+                                          &numBytesEncrypted);
+    if (cryptStatus == kCCSuccess) {
+        return [NSData dataWithBytesNoCopy:buffer length:numBytesEncrypted];
+    }
+    
+    free(buffer);
+    return nil;
+}
+
+/**
  DES 加解密
  */
 NSData * DESCrypto(NSData *data, NSString *secret, CCOperation operation) {
-	
-	char keyPtr[kCCKeySizeAES256+1];
-	bzero(keyPtr, sizeof(keyPtr));
-	[secret getCString:keyPtr maxLength:sizeof(keyPtr) encoding:NSUTF8StringEncoding];
-	
-	NSUInteger dataLength = [data length];
-	size_t bufferSize = dataLength + kCCBlockSizeAES128;
-	void *buffer = malloc(bufferSize);
-	
-	size_t numBytesEncrypted = 0;
-	CCCryptorStatus cryptStatus = CCCrypt(operation,
-										  kCCAlgorithmDES,
-										  kCCOptionPKCS7Padding | kCCOptionECBMode,
-										  keyPtr,
-										  kCCBlockSizeDES,
-										  NULL,
-										  [data bytes],
-										  dataLength,
-										  buffer,
-										  bufferSize,
-										  &numBytesEncrypted);
-	if (cryptStatus == kCCSuccess) {
-		return [NSData dataWithBytesNoCopy:buffer length:numBytesEncrypted];
-	}
-	
-	free(buffer);
-	return nil;
+    
+    NSUInteger length = [secret lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
+    if (length > kCCKeySizeDES) {
+        secret = [secret substringToIndex:kCCKeySizeDES];
+    }
+	return Crypto(data, secret, operation, kCCKeySizeDES, kCCBlockSizeDES, kCCAlgorithmDES);
+}
+
+/**
+ 3DES 加解密
+ */
+NSData * TripleDESCrypto(NSData *data, NSString *secret, CCOperation operation) {
+    
+    NSUInteger length = [secret lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
+    if (length > kCCKeySize3DES) {
+        secret = [secret substringToIndex:kCCKeySize3DES];
+    }
+    return Crypto(data, secret, operation, kCCKeySize3DES, kCCBlockSize3DES, kCCAlgorithm3DES);
 }
 
 // MARK: MD5
@@ -151,6 +179,23 @@ NSString * DES_Decrypt(NSString *ciphertext, NSString *secret) {
 	return result;
 }
 
+NSString * TDES_Encrypt(NSString *plaintext, NSString *secret) {
+    
+    NSData *data = [plaintext dataUsingEncoding:NSUTF8StringEncoding];
+    data = TripleDESCrypto(data, secret, kCCEncrypt);
+    NSString *result = [data base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+    return result;
+}
+
+NSString * TDES_Decrypt(NSString *ciphertext, NSString *secret) {
+    
+    NSData *data = [[NSData alloc] initWithBase64EncodedString:ciphertext
+                                                       options:NSDataBase64DecodingIgnoreUnknownCharacters];
+    data = TripleDESCrypto(data, secret, kCCDecrypt);
+    NSString *result = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    return result;
+}
+
 // MARK: - Initilization
 struct LZCryptoUnit_type LZCryptoUnit = {
     
@@ -163,4 +208,6 @@ struct LZCryptoUnit_type LZCryptoUnit = {
 	.SHA512WithSecret = SHA512WithSecret,
 	.DES_Encrypt = DES_Encrypt,
 	.DES_Decrypt = DES_Decrypt,
+    .TDES_Encrypt = TDES_Encrypt,
+    .TDES_Decrypt = TDES_Decrypt,
 };

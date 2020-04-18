@@ -35,26 +35,22 @@
 //    [self crypto];
 //    [self quick];
 //    [self customDescription];
-	
-    self.eventClickTestBtn.eventInterval = 2.0f;
-    self.touchExtendTestBtn.hitEdgeInsets = UIEdgeInsetsMake(-50, -20, -20, -20);
 }
 
 #pragma mark - -> UI Action
-- (IBAction)eventIntervalTest:(UIButton *)sender {
-    LZLog();
-    self.imgView.image = [UIImage barCodeImageWithString:@"123456"];
-}
-
 - (IBAction)touchExtendTest:(UIButton *)sender {
     LZLog();
-    self.imgView.image = [self.imgView onScreenShort];
+    [self crypto];
+}
+
+- (IBAction)eventIntervalTest:(UIButton *)sender {
+    LZLog();
+    
 }
 
 - (void)leftDidClick {
     LZLog(@"点击了左边按钮");
-    UIImage *centerImg = [UIImage imageNamed:@"timg"];
-    self.imgView.image = [centerImg QRCodeImageWithString:@"只是一个羊" size:500 fillColor:[UIColor magentaColor]];
+    
 }
 
 - (void)rightDidClick {
@@ -63,7 +59,7 @@
 
 - (void)sysDidClick {
 	LZLog(@"点击了右边系统按钮");
-    self.imgView.image = [self.view onScreenShort];
+    
 }
 
 // MARK: - Private
@@ -107,6 +103,17 @@
 	
 	NSString *plaintext = @"lilei";
 	NSLog(@"MD5: %@", LZCryptoUnit.MD5(plaintext));
+    
+    NSString *key = @"abcdefghijklmn";
+    key = @"123456789";
+//    key = @"12345";
+    NSString *des = LZCryptoUnit.DES_Encrypt(plaintext, key);
+    NSLog(@"\nDES_Encrypt: %@", des);
+    NSLog(@"\nDES_Decrypt: %@", LZCryptoUnit.DES_Decrypt(des, key));
+    
+    NSString *des3 = LZCryptoUnit.TDES_Encrypt(plaintext, key);
+    NSLog(@"\nDES3_Encrypt: %@", des3);
+    NSLog(@"\nDES3_Decrypt: %@", LZCryptoUnit.TDES_Decrypt(des3, key));
 }
 
 - (void)appInfo {
@@ -213,6 +220,25 @@
     }];
     self.time.tolerance = 1.0f;
     [self.time schedule];
+}
+
+- (void)machineCode {
+    
+    self.imgView.image = [UIImage barCodeImageWithString:@"123456"];
+    
+    UIImage *centerImg = [UIImage imageNamed:@"timg"];
+    self.imgView.image = [centerImg QRCodeImageWithString:@"只是一个羊" size:500 fillColor:[UIColor magentaColor]];
+}
+
+- (void)sreenShort {
+    
+    self.imgView.image = [self.imgView onScreenShort];
+}
+
+- (void)extendBtnHit {
+    
+    self.eventClickTestBtn.eventInterval = 2.0f;
+    self.touchExtendTestBtn.hitEdgeInsets = UIEdgeInsetsMake(-50, -20, -20, -20);
 }
 
 @end
