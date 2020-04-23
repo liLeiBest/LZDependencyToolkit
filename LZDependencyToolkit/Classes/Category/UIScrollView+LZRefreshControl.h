@@ -17,6 +17,10 @@ typedef void (^LZRefreshingBlock)(void);
 @property (nonatomic, copy) NSString *noMoreDataTitle;
 /** 文本属性，目前只支持字体颜色，单独配置 */
 @property (nonatomic, strong) NSDictionary *textAttributes;
+/** 下拉刷新中回调 */
+@property (nonatomic, copy) void (^headerRefreshingCallback)(void);
+/** 上拉刷新中回调 */
+@property (nonatomic, copy) void (^footerRefreshingCallback)(void);
 
 
 /**
@@ -177,6 +181,7 @@ typedef void (^LZRefreshingBlock)(void);
  */
 - (void)footerWithRefreshingTarget:(id)target
 				  refreshingAction:(SEL)action;
+
 /**
  @author Lilei
  
