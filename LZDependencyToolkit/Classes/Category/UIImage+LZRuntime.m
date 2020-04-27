@@ -41,19 +41,20 @@
         return image;
     }
     
-    if (NO == [name isValidString]) {
-        return image;
-    }
-    
-    image = [UIImage LZ_imageNamed:name];
-    if (nil == image) {
+    if ([name isValidString]) {
         
-        image = [UIImage imageWithContentsOfFile:name];;
+        image = [UIImage LZ_imageNamed:name];
+        if (nil == image) {
+            image = [UIImage imageWithContentsOfFile:name];;
+        }
         if (nil == image) {
             
             NSURL *imgURL = [NSURL URLWithString:name];
             NSData *imgData = [NSData dataWithContentsOfURL:imgURL];
             image = [UIImage imageWithData:imgData];
+        }
+        if (nil == image) {
+            image = [UIImage imageWithString:name size:CGSizeMake(100, 100)];
         }
     }
     return image;

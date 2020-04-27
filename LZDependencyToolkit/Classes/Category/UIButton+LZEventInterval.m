@@ -43,9 +43,10 @@ static void resetState() {
 }
 
 // MARK: - Private
-- (void)lz_sendAction:(SEL)action to:(nullable id)target forEvent:(nullable UIEvent *)event {
-    
-    if ([self isKindOfClass:[UIButton class]]) {
+- (void)lz_sendAction:(SEL)action
+                   to:(nullable id)target
+             forEvent:(nullable UIEvent *)event {
+    if ([self isMemberOfClass:[UIButton class]]) {
         
         self.eventInterval = 0.0f == self.eventInterval  ? defaultInterval : self.eventInterval;
         if (_isIgnoreEvent) {
