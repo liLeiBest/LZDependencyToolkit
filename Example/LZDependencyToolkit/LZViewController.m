@@ -45,12 +45,15 @@
 
 - (IBAction)eventIntervalTest:(UIButton *)sender {
     LZLog();
-    
 }
 
 - (void)leftDidClick {
     LZLog(@"点击了左边按钮");
     
+    NSDate *date = [NSDate dateFormatToDate:@"2020-5-24 00:01:00" formats:@[@"yyyy-MM-dd HH-mm-ss"]];
+    NSString *timestamp = [date timeStamp];
+    NSString *describe = [NSDate dateFormatToTimeIntervalOrYMDFromHistory:timestamp];
+    NSLog(@"====%@", describe);
 }
 
 - (void)rightDidClick {
