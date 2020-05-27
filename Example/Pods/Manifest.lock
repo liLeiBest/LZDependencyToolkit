@@ -1,23 +1,23 @@
 PODS:
-  - LZDependencyToolkit (1.6.9):
-    - LZDependencyToolkit/Category (= 1.6.9)
-    - LZDependencyToolkit/Define (= 1.6.9)
-    - LZDependencyToolkit/Object (= 1.6.9)
-    - LZDependencyToolkit/Struct (= 1.6.9)
-  - LZDependencyToolkit/Category (1.6.9):
+  - LZDependencyToolkit (1.7.0):
+    - LZDependencyToolkit/Category (= 1.7.0)
+    - LZDependencyToolkit/Define (= 1.7.0)
+    - LZDependencyToolkit/Object (= 1.7.0)
+    - LZDependencyToolkit/Struct (= 1.7.0)
+  - LZDependencyToolkit/Category (1.7.0):
     - MJRefresh
-  - LZDependencyToolkit/Define (1.6.9)
-  - LZDependencyToolkit/Object (1.6.9)
-  - LZDependencyToolkit/Struct (1.6.9):
-    - LZDependencyToolkit/Struct/AppUnit (= 1.6.9)
-    - LZDependencyToolkit/Struct/CryptoUnit (= 1.6.9)
-    - LZDependencyToolkit/Struct/DeviceUnit (= 1.6.9)
-    - LZDependencyToolkit/Struct/QuickUnit (= 1.6.9)
-  - LZDependencyToolkit/Struct/AppUnit (1.6.9)
-  - LZDependencyToolkit/Struct/CryptoUnit (1.6.9)
-  - LZDependencyToolkit/Struct/DeviceUnit (1.6.9)
-  - LZDependencyToolkit/Struct/QuickUnit (1.6.9)
-  - MJRefresh (3.4.1)
+  - LZDependencyToolkit/Define (1.7.0)
+  - LZDependencyToolkit/Object (1.7.0)
+  - LZDependencyToolkit/Struct (1.7.0):
+    - LZDependencyToolkit/Struct/AppUnit (= 1.7.0)
+    - LZDependencyToolkit/Struct/CryptoUnit (= 1.7.0)
+    - LZDependencyToolkit/Struct/DeviceUnit (= 1.7.0)
+    - LZDependencyToolkit/Struct/QuickUnit (= 1.7.0)
+  - LZDependencyToolkit/Struct/AppUnit (1.7.0)
+  - LZDependencyToolkit/Struct/CryptoUnit (1.7.0)
+  - LZDependencyToolkit/Struct/DeviceUnit (1.7.0)
+  - LZDependencyToolkit/Struct/QuickUnit (1.7.0)
+  - MJRefresh (3.4.3)
 
 DEPENDENCIES:
   - LZDependencyToolkit (from `../`)
@@ -31,8 +31,8 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  LZDependencyToolkit: 173f951efa9f3b70b5b5fbeac8f3244405e78491
-  MJRefresh: 3153c59a363159092c08b2177ec3a7d09f90bfaf
+  LZDependencyToolkit: 03cd45e2007801d8f95c71ccf332699ad91692de
+  MJRefresh: 53e3e3219f204425ee6d3e62e8733d3295944cd6
 
 PODFILE CHECKSUM: 1f6bd7c4bb306c5589f56a7d7be95899c07573ca
 
