@@ -58,7 +58,9 @@ NSDateFormatter * dateFormatter(void) {
 /** 字符串转换为日期 */
 static NSString * _date_format = @"yyyy-MM-dd HH:mm:ss.SSS EEEE Z";
 NSDate * stringToDate(NSString *dateStr, NSString *dateFormat) {
-    
+    if (NO == [dateStr isValidString]) {
+        return [NSDate date];
+    }
     NSDateFormatter *dateF = dateFormatter();
     dateF.dateFormat = dateFormat;
     NSDate *tempDate = [dateF dateFromString:dateStr];
