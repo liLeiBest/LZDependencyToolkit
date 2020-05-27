@@ -239,18 +239,29 @@ typedef NS_ENUM(NSUInteger, LZWeekType) {
  *  @discussion 如果是今天，e.g HH:mm；如果是昨天，e.g 昨天 HH:mm；如果是一周内，e.g EEEE HH:mm；
  *  其它情况，e.g yyyy年MM月dd日
  */
-+ (NSString *)dateFormatToTdayTimeOrYdayTimeOrWkTimeOrYMDTime:(NSString  *)dateStr;
++ (NSString *)dateFormatToTdayTimeOrYdayTimeOrWkTimeOrYMDTime:(NSString *)dateStr;
 
 /**
- *  返回包含刚刚 几分钟前 几小时前 昨天 2天前 年月日的时间的日期
+ *  返回包含刚刚 几分钟前 几小时前 昨天 2天前 月日 年月日的时间的日期
  *
  *  @param dateStr 时间戳
  *  @return NSString
- *  @discussion 如果是今天，e.g 刚刚 or 几分钟前 or 几小时前；如果是昨天，e.g 昨天；如果是前天，e.g 2天前；
+ *  @discussion 如果是今天，e.g 刚刚 or 几分钟前 or 几小时前；如果是昨天，e.g 昨天；如果是前天，e.g 2天前；如果是今年，e.g 月日；其它，e.g 年月日
  *  如果是今年，e.g MM月dd日；其它情况，e.g yyyy年MM月dd日。
  *  @attention 只能计算当前时间以前的日期。将来的时间被视为刚刚。
  */
 + (NSString *)dateFormatToTimeIntervalOrYMDFromHistory:(NSString *)dateStr;
+
+/**
+ *  返回包含1分钟前 N分钟前 N小时前 昨天 2天前 N天前的时间的日期
+ *
+ *  @param dateStr 时间戳
+ *  @return NSString
+ *  @discussion 如果是今天，e.g 1分钟前 or 几分钟前 or 几小时前；如果是昨天，e.g 昨天；如果是前天，e.g 2天前；其它，e.g N天前
+ *  如果是今年，e.g MM月dd日；其它情况，e.g yyyy年MM月dd日。
+ *  @attention 只能计算当前时间以前的日期。将来的时间被视为刚刚。
+ */
++ (NSString *)dateFormatToTimeOrDayIntervalFromHistory:(NSString *)dateStr;
 
 /**
  *  返回包含刚刚 几分钟前 几小时前 昨天 明天 前天 后天 年月日的时间的日期

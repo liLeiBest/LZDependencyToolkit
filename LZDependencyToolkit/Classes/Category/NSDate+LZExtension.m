@@ -435,7 +435,7 @@ NSDateComponents * dateComponents(NSCalendarUnit unit, NSDate * startingDate ,NS
     return timeDesc;
 }
 
-/** 返回包含刚刚 几分钟前 几小时前 昨天 2天前 年月日的时间的日期 */
+/** 返回包含刚刚 几分钟前 几小时前 昨天 2天前 月日 年月日的时间的日期 */
 + (NSString *)dateFormatToTimeIntervalOrYMDFromHistory:(NSString *)dateStr {
     
     NSDate *realDate = stringToDate(dateStr, nil);
@@ -472,6 +472,42 @@ NSDateComponents * dateComponents(NSCalendarUnit unit, NSDate * startingDate ,NS
         }
     } else {
         timeDesc = DateToString(realDate, @"yyyy年MM月dd日");
+    }
+    return timeDesc;
+}
+
+/** 返回包含1分钟前 N分钟前 N小时前 昨天 2天前 N天前的时间的日期 */
++ (NSString *)dateFormatToTimeOrDayIntervalFromHistory:(NSString *)dateStr {
+    
+    NSDate *realDate = stringToDate(dateStr, nil);
+    NSDate *curDate = [NSDate date];
+    
+    NSComparisonResult result = [realDate compare:curDate];
+    if (result == NSOrderedDescending) {
+        return @"1分钟前";
+    }
+    
+    NSString *timeDesc;
+    NSCalendarUnit unit = NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;
+    NSDateComponents *dateCmps = dateComponents(unit, realDate, curDate);
+    NSInteger day = dateCmps.day;
+    
+    if (day == 0) {
+        
+        NSInteger hour = dateCmps.hour, minute = dateCmps.minute;
+        if (hour > 0) {
+            timeDesc = [NSString stringWithFormat:@"%li小时前", (long)hour];
+        } else if (minute > 0) {
+            timeDesc = [NSString stringWithFormat:@"%li分钟前", (long)minute];
+        } else {
+            return @"1分钟前";
+        }
+    } else if (day == 1) {
+        timeDesc = @"昨天";
+    } else if (day == 2) {
+        timeDesc = @"2天前";
+    } else {
+        timeDesc = [NSString stringWithFormat:@"%li天前", (long)day];
     }
     return timeDesc;
 }
