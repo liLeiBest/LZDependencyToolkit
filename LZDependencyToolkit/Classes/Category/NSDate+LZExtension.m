@@ -455,8 +455,43 @@ NSDateComponents * dateComponents(NSCalendarUnit unit, NSDate * startingDate ,NS
     return timeDesc;
 }
 
-/** 返回包含 刚刚 几分钟前 几小时前 昨天 2天前 月日 年月日 的日期描述 */
+/** 返回包含 刚刚 几分钟前 几小时前 昨天 2天前 月日 年月日 的日期描述，优先考虑 24小时内的情况 */
 + (NSString *)dateFormatToTimeIntervalOrYMDFromHistory:(NSString *)dateStr {
+    
+    NSDate *realDate = stringToDate(dateStr, nil);
+    NSDate *curDate = [NSDate date];
+    
+    NSString *timeDesc = @"刚刚";
+    // 异常情况：将来时间
+    NSComparisonResult result = [realDate compare:curDate];
+    if (result == NSOrderedDescending) {
+        return timeDesc;
+    }
+    
+    NSInteger minute = dateComponents(NSCalendarUnitMinute, realDate, curDate).minute;
+    NSInteger hour = dateComponents(NSCalendarUnitHour, realDate, curDate).minute;
+    if (minute < 1) {
+        return timeDesc;
+    } else if (hour < 1) {
+        timeDesc = [NSString stringWithFormat:@"%li分钟前", (long)minute];
+    } else if (hour < 24) {
+        timeDesc = [NSString stringWithFormat:@"%li小时前", (long)hour];
+    } else {
+        if ([realDate isYesterday]) {
+            timeDesc = @"昨天";
+        } else if ([realDate isBeforeYesterday]) {
+            timeDesc = @"2天前";
+        } else if ([realDate isThisYear]) {
+            timeDesc = DateToString(realDate, @"MM月dd日");
+        } else {
+            timeDesc = DateToString(realDate, @"yyyy年MM月dd日");
+        }
+    }
+    return timeDesc;
+}
+
+/** 返回包含 刚刚 几分钟前 几小时前 昨天 2天前 月日 年月日 的日期描述，优先考虑跨天的情况 */
++ (NSString *)dateFormatToTimeIntervalOrYMDFromHistoryInEveryDay:(NSString *)dateStr {
     
     NSDate *realDate = stringToDate(dateStr, nil);
     NSDate *curDate = [NSDate date];
