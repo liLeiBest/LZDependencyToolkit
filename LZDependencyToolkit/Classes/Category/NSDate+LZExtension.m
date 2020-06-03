@@ -469,7 +469,7 @@ NSDateComponents * dateComponents(NSCalendarUnit unit, NSDate * startingDate ,NS
     }
     
     NSInteger minute = dateComponents(NSCalendarUnitMinute, realDate, curDate).minute;
-    NSInteger hour = dateComponents(NSCalendarUnitHour, realDate, curDate).minute;
+    NSInteger hour = dateComponents(NSCalendarUnitHour, realDate, curDate).hour;
     if (minute < 1) {
         return timeDesc;
     } else if (hour < 1) {
