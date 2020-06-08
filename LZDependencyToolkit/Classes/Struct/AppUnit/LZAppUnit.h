@@ -101,6 +101,7 @@ struct LZAppUnit_type {
     当前活动控制器
     */
     UIViewController * (* activityViewController)(void);
+    
     /**
      *  Forced Exit App
      */
