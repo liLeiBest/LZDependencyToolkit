@@ -439,18 +439,24 @@ NSDateComponents * dateComponents(NSCalendarUnit unit, NSDate * startingDate ,NS
 + (NSString *)dateFormatToTdayTimeOrYdayTimeOrWkTimeOrYMDTime:(NSString  *)dateStr {
     
     NSDate *realDate = stringToDate(dateStr, nil);
+    NSDate *curDate = [NSDate date];
     
-    NSCalendarUnit unit = NSCalendarUnitDay;
-    NSDateComponents *dateCmps = dateComponents(unit, realDate, [NSDate date]);
     NSString *timeDesc;
-    if (dateCmps.day == 0) {
+    if ([realDate isToday]) {
         timeDesc = DateToString(realDate, @"HH:mm");
-    } else if (dateCmps.day == 1) {
+    } else if ([realDate isYesterday]) {
         timeDesc = DateToString(realDate, @"昨天 HH:mm");
-    } else if (dateCmps.day < 7)  {
-        timeDesc = DateToString(realDate, @"EEEE HH:mm");
     } else {
-        timeDesc = DateToString(realDate, @"yyyy年MM月dd日 HH:mm");
+        
+        NSCalendarUnit unit = NSCalendarUnitDay;
+        NSDateComponents *dateCmps = dateComponents(unit, realDate, curDate);
+        if (dateCmps.day < 7)  {
+            timeDesc = DateToString(realDate, @"EEEE HH:mm");
+        } else if ([realDate isThisYear]) {
+            timeDesc = DateToString(realDate, @"MM月dd日 HH:mm");
+        } else {
+            timeDesc = DateToString(realDate, @"yyyy年MM月dd日 HH:mm");
+        }
     }
     return timeDesc;
 }
