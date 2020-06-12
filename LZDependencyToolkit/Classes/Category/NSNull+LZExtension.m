@@ -12,7 +12,6 @@
 @implementation NSNull (LZExtension)
 
 - (id)forwardingTargetForSelector:(SEL)aSelector {
-    
     // 处理 NSNumber,NSString,NSArray,NSDictionary
     NSArray *supporttedTypes = @[@"NSNumber",
                                  @"NSString",

@@ -21,11 +21,7 @@
 - (NSString *)emoji;
 
 /**
- @author Lilei
- 
- @brief 判断是否包含 Emoji
-
- @return BOOL
+ * 判断是否包含 Emoji
  */
 - (BOOL)isContainsEmoji;
 

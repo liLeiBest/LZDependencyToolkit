@@ -53,9 +53,7 @@
     titleView.alpha = alpha;
     
     [[self subviews] enumerateObjectsUsingBlock:^(UIView *obj, NSUInteger idx, BOOL *stop) {
-        
         if ([obj isKindOfClass:NSClassFromString(@"UINavigationItemView")]) {
-            
             obj.alpha = alpha;
             *stop = YES;
         }

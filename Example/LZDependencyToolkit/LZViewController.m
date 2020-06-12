@@ -40,7 +40,6 @@
 #pragma mark - -> UI Action
 - (IBAction)touchExtendTest:(UIButton *)sender {
     LZLog();
-    [self crypto];
 }
 
 - (IBAction)eventIntervalTest:(UIButton *)sender {
@@ -58,11 +57,13 @@
 
 - (void)rightDidClick {
     LZLog(@"点击了右边按钮");
+    
+    self.imgView.image = [UIImage imageNamed:@"哈哈"];
 }
 
 - (void)sysDidClick {
 	LZLog(@"点击了右边系统按钮");
-    
+    self.imgView.image = [UIImage imageNamed:@"哈哈1"];
 }
 
 // MARK: - Private
