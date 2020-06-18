@@ -9,6 +9,7 @@
 #import "UIImage+LZInstance.h"
 #import "UIImage+LZEffect.h"
 #import "UIColor+LZExtension.h"
+#import "NSString+LZRegular.h"
 
 @import AVFoundation;
 @implementation UIImage (LZInstance)
@@ -86,6 +87,62 @@
     NSUInteger index = [self colorIndexOfString:string fromColorTotal:colorArrI.count];
     UIColor *bgColor = [UIColor colorWithHexString:[colorArrI objectAtIndex:index]];
     return [self imageWithString:string foregroundColor:[UIColor whiteColor] backgroundColor:bgColor size:size];
+}
+
++ (UIImage *)imageNamed:(id)name
+              allowNull:(BOOL)allowNull {
+    if ([name isKindOfClass:[UIImage class]]) {
+        return (UIImage *)name;
+    }
+    
+    UIImage *image = nil;
+    if ([name isKindOfClass:[NSURL class]]) {
+        
+        NSData *imgData = [NSData dataWithContentsOfURL:(NSURL *)name];
+        image = [UIImage imageWithData:imgData];
+        return image;
+    } else if ([name isKindOfClass:[NSData class]]) {
+        
+        image = [UIImage imageWithData:(NSData *)name];
+        return image;
+    } else if ([name isValidString]) {
+        if (@available(iOS 8.0, *)) {
+            image = [UIImage imageNamed:name inBundle:[NSBundle mainBundle] compatibleWithTraitCollection:nil];
+        } else {
+            image = [UIImage imageNamed:name];
+        }
+        if (nil == image) {
+            image = [UIImage imageWithContentsOfFile:name];;
+        }
+        if (nil == image) {
+            
+            NSURL *imgURL = [NSURL URLWithString:name];
+            NSData *imgData = [NSData dataWithContentsOfURL:imgURL];
+            image = [UIImage imageWithData:imgData];
+        }
+        if (nil == image) {
+            
+            NSString *imgName = [NSString stringWithFormat:@"%@.png", name];
+            NSString *path =[[NSBundle mainBundle] pathForResource:imgName ofType:nil];
+            image = [UIImage imageWithContentsOfFile:path];
+            if (nil == image) {
+                
+                imgName = [NSString stringWithFormat:@"%@.jpg", name];
+                path = [[NSBundle mainBundle] pathForResource:imgName ofType:nil];
+                image = [UIImage imageWithContentsOfFile:path];
+            }
+            if (nil == image) {
+                
+                imgName = [NSString stringWithFormat:@"%@@%.0fx.png", name, [[UIScreen mainScreen] scale]];
+                path = [[NSBundle mainBundle] pathForResource:imgName ofType:nil];
+                image = [UIImage imageWithContentsOfFile:path];
+            }
+        }
+    }
+    if (nil == image && NO == allowNull) {
+        image = [UIImage imageWithString:name size:CGSizeMake(100, 100)];
+    }
+    return image;
 }
 
 /** 从图片中心拉伸图片，类方法 */

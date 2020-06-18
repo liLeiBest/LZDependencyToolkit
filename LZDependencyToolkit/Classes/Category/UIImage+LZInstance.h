@@ -80,6 +80,19 @@
                         size:(CGSize)size;
 
 /**
+@author Lilei
+
+@brief 实例图片，类方法
+
+@param name 图片名称/路径/NSData
+@param allowNull 是否允许为空
+@return UIImage
+@attention 图片不存在，则返回随机背景的图片
+*/
++ (UIImage *)imageNamed:(id)name
+              allowNull:(BOOL)allowNull;
+
+/**
  @author Lilei
  
  @brief 从图片中心拉伸图片，类方法

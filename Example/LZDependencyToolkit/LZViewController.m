@@ -40,25 +40,27 @@
 #pragma mark - -> UI Action
 - (IBAction)touchExtendTest:(UIButton *)sender {
     LZLog();
+    
 }
 
 - (IBAction)eventIntervalTest:(UIButton *)sender {
     LZLog();
+    
 }
 
 - (void)leftDidClick {
     LZLog(@"点击了左边按钮");
-    self.imgView.image = [UIImage imageNamed:@"timg"];
+    
 }
 
 - (void)rightDidClick {
     LZLog(@"点击了右边按钮");
-    self.imgView.image = [UIImage imageNamed:@"哈哈"];
+    
 }
 
 - (void)sysDidClick {
 	LZLog(@"点击了右边系统按钮");
-    self.imgView.image = [UIImage imageNamed:@"11"];
+    [self testImageMethod];
 }
 
 // MARK: - Private
@@ -248,6 +250,15 @@
     LZQuickUnit.alert(self, nil, describe, @[[UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
     }]]);
+}
+
+- (void)testImageMethod {
+    
+    self.imgView.image = [UIImage imageNamed:@"哈哈" allowNull:YES];
+    self.imgView.image = [UIImage imageNamed:@"哈哈" allowNull:NO];
+    self.imgView.image = [UIImage imageNamed:@"timg"];
+    self.imgView.image = [UIImage imageNamed:@"哈哈"];
+    self.imgView.image = [UIImage imageNamed:@"11"];
 }
 
 @end
