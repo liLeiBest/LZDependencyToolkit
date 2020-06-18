@@ -39,11 +39,12 @@
         
         image = [UIImage imageWithData:(NSData *)name];
         return image;
-    }
-    
-    if ([name isValidString]) {
-        
-        image = [UIImage LZ_imageNamed:name];
+    } else if ([name isValidString]) {
+        if (@available(iOS 8.0, *)) {
+            image = [UIImage imageNamed:name inBundle:[NSBundle mainBundle] compatibleWithTraitCollection:nil];
+        } else {
+            image = [UIImage LZ_imageNamed:name];
+        }
         if (nil == image) {
             image = [UIImage imageWithContentsOfFile:name];;
         }
@@ -54,8 +55,28 @@
             image = [UIImage imageWithData:imgData];
         }
         if (nil == image) {
+            
+            NSString *imgName = [NSString stringWithFormat:@"%@.png", name];
+            NSString *path =[[NSBundle mainBundle] pathForResource:imgName ofType:nil];
+            image = [UIImage imageWithContentsOfFile:path];
+            if (nil == image) {
+                
+                imgName = [NSString stringWithFormat:@"%@.jpg", name];
+                path = [[NSBundle mainBundle] pathForResource:imgName ofType:nil];
+                image = [UIImage imageWithContentsOfFile:path];
+            }
+            if (nil == image) {
+                
+                imgName = [NSString stringWithFormat:@"%@@%.0fx.png", name, [[UIScreen mainScreen] scale]];
+                path = [[NSBundle mainBundle] pathForResource:imgName ofType:nil];
+                image = [UIImage imageWithContentsOfFile:path];
+            }
+        }
+#if 0
+        if (nil == image) {
             image = [UIImage imageWithString:name size:CGSizeMake(100, 100)];
         }
+#endif
     }
     return image;
 }

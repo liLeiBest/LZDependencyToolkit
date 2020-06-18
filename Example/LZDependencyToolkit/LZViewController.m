@@ -48,22 +48,17 @@
 
 - (void)leftDidClick {
     LZLog(@"点击了左边按钮");
-    
-    NSDate *date = [NSDate dateFormatToDate:@"2020-5-26 23:59:00" formats:@[@"yyyy-MM-dd HH-mm-ss"]];
-    NSString *timestamp = [date timeStamp];
-    NSString *describe = [NSDate dateFormatToTimeIntervalOrYMDFromHistory:timestamp];
-    NSLog(@"====%@", describe);
+    self.imgView.image = [UIImage imageNamed:@"timg"];
 }
 
 - (void)rightDidClick {
     LZLog(@"点击了右边按钮");
-    
     self.imgView.image = [UIImage imageNamed:@"哈哈"];
 }
 
 - (void)sysDidClick {
 	LZLog(@"点击了右边系统按钮");
-    self.imgView.image = [UIImage imageNamed:@"哈哈1"];
+    self.imgView.image = [UIImage imageNamed:@"11"];
 }
 
 // MARK: - Private
@@ -243,6 +238,16 @@
     
     self.eventClickTestBtn.eventInterval = 2.0f;
     self.touchExtendTestBtn.hitEdgeInsets = UIEdgeInsetsMake(-50, -20, -20, -20);
+}
+
+- (void)dateExchange {
+    
+    NSDate *date = [NSDate dateFormatToDate:@"2020-5-26 23:59:00" formats:@[@"yyyy-MM-dd HH-mm-ss"]];
+    NSString *timestamp = [date timeStamp];
+    NSString *describe = [NSDate dateFormatToTimeIntervalOrYMDFromHistory:timestamp];
+    LZQuickUnit.alert(self, nil, describe, @[[UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+    }]]);
 }
 
 @end
