@@ -51,6 +51,7 @@
 - (void)leftDidClick {
     LZLog(@"点击了左边按钮");
     
+    LZLog(@"%@", self.contentLabel.linesOfString);
 }
 
 - (void)rightDidClick {
@@ -60,7 +61,7 @@
 
 - (void)sysDidClick {
 	LZLog(@"点击了右边系统按钮");
-    [self testImageMethod];
+    
 }
 
 // MARK: - Private
@@ -259,6 +260,41 @@
     self.imgView.image = [UIImage imageNamed:@"timg"];
     self.imgView.image = [UIImage imageNamed:@"哈哈"];
     self.imgView.image = [UIImage imageNamed:@"11"];
+}
+
+- (void)testRegular {
+    
+    NSString *string = @"0.01";
+    BOOL valid = [string validateFloatNumberWithIntegerFigure:1 integerMostOrLeast:NO decimalFigure:2 decimalMostOrLeast:NO beginWithZero:YES];
+    LZLog(@"%@ 最小1位整数，最小2位小数，允许0开头：%@", string, valid ? @"通过" : @"失败");
+    
+    string = @"0.01";
+    valid = [string validateFloatNumberWithIntegerFigure:1 integerMostOrLeast:NO decimalFigure:2 decimalMostOrLeast:NO beginWithZero:NO];
+    LZLog(@"%@ 最小1位整数，最小2位小数，不允许0开头：%@", string, valid ? @"通过" : @"失败");
+    
+    string = @"0.1";
+    valid = [string validateFloatNumberWithIntegerFigure:10 integerMostOrLeast:YES decimalFigure:10 decimalMostOrLeast:YES beginWithZero:YES];
+    LZLog(@"%@ 最大10位整数，最大10位小数，允许0开头：%@", string, valid ? @"通过" : @"失败");
+    
+    string = @"0.1";
+    valid = [string validateFloatNumberWithIntegerFigure:10 integerMostOrLeast:YES decimalFigure:10 decimalMostOrLeast:YES beginWithZero:NO];
+    LZLog(@"%@ 最大10位整数，最大10位小数，不允许0开头：%@", string, valid ? @"通过" : @"失败");
+    
+    string = @"110.01";
+    valid = [string validateFloatNumberWithIntegerFigure:10 integerMostOrLeast:YES decimalFigure:10 decimalMostOrLeast:NO beginWithZero:NO];
+    LZLog(@"%@ 最大10位整数，最小10位小数，不允许0开头：%@", string, valid ? @"通过" : @"失败");
+    
+    string = @"0110.01";
+    valid = [string validateFloatNumberWithIntegerFigure:10 integerMostOrLeast:NO decimalFigure:10 decimalMostOrLeast:YES beginWithZero:YES];
+    LZLog(@"%@ 最小10位整数，最大10位小数，不允许0开头：%@", string, valid ? @"通过" : @"失败");
+    
+    string = @"110";
+    valid = [string validateFloatNumberWithIntegerFigure:10 integerMostOrLeast:YES decimalFigure:0 decimalMostOrLeast:YES beginWithZero:NO];
+    LZLog(@"%@ 最大10位整数，最大0位小数，不允许0开头：%@", string, valid ? @"通过" : @"失败");
+    
+    string = @"110.";
+    valid = [string validateFloatNumberWithIntegerFigure:10 integerMostOrLeast:YES decimalFigure:0 decimalMostOrLeast:YES beginWithZero:NO];
+    LZLog(@"%@ 最大10位整数，最大0位小数，不允许0开头：%@", string, valid ? @"通过" : @"失败");
 }
 
 @end

@@ -35,7 +35,8 @@
       "public_header_files": "LZDependencyToolkit/Classes/Category/*.h",
       "frameworks": [
         "CoreGraphics",
-        "QuartzCore"
+        "QuartzCore",
+        "CoreText"
       ],
       "dependencies": {
         "MJRefresh": [

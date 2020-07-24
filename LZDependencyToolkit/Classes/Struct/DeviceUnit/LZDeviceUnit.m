@@ -93,7 +93,8 @@ LZDeviceGeneration _generation(void) {
     if ([deviceIdentifier isEqualToString:@"iPhone7,1"]) return LZDeviceGenerationiPhone6_plus;
     if ([deviceIdentifier isEqualToString:@"iPhone8,1"]) return LZDeviceGenerationiPhone6s;
     if ([deviceIdentifier isEqualToString:@"iPhone8,2"]) return LZDeviceGenerationiPhone6s_plus;
-    if ([deviceIdentifier isEqualToString:@"iPhone8,4"]) return LZDeviceGenerationiPhoneSE;
+    if ([deviceIdentifier isEqualToString:@"iPhone8,4"]) return LZDeviceGenerationiPhoneSE1st;
+    if ([deviceIdentifier isEqualToString:@"iPhone12,8"]) return LZDeviceGenerationiPhoneSE2nd;
     if ([deviceIdentifier isEqualToString:@"iPhone9,1"] ||
         [deviceIdentifier isEqualToString:@"iPhone9,3"]) return LZDeviceGenerationiPhone7;
     if ([deviceIdentifier isEqualToString:@"iPhone9,2"] ||
@@ -134,6 +135,10 @@ LZDeviceGeneration _generation(void) {
 		[deviceIdentifier isEqualToString:@"Watch4,2"] ||
 		[deviceIdentifier isEqualToString:@"Watch4,3"] ||
 		[deviceIdentifier isEqualToString:@"Watch4,4"]) return LZDeviceGenerationiWatch_series4;
+    if ([deviceIdentifier isEqualToString:@"Watch5,1"] ||
+        [deviceIdentifier isEqualToString:@"Watch5,2"] ||
+        [deviceIdentifier isEqualToString:@"Watch5,3"] ||
+        [deviceIdentifier isEqualToString:@"Watch5,4"]) return LZDeviceGenerationiWatch_series5;
     // iPad 型号
     if ([deviceIdentifier isEqualToString:@"iPad1,1"]) return LZDeviceGenerationiPad;
     if ([deviceIdentifier isEqualToString:@"iPad2,1"] ||
@@ -189,12 +194,17 @@ LZDeviceGeneration _generation(void) {
 	if ([deviceIdentifier isEqualToString:@"iPad11,1"] ||
 		[deviceIdentifier isEqualToString:@"iPad11,2"]) return LZDeviceGenerationiPad_mini5;
     // iTV 型号
+    if ([deviceIdentifier isEqualToString:@"AppleTV1,1"]) return LZDeviceGenerationiTV1st;
     if ([deviceIdentifier isEqualToString:@"AppleTV2,1"]) return LZDeviceGenerationiTV2nd;
     if ([deviceIdentifier isEqualToString:@"AppleTV3,1"] ||
         [deviceIdentifier isEqualToString:@"AppleTV3,2"]) return LZDeviceGenerationiTV3rd;
     if ([deviceIdentifier isEqualToString:@"AppleTV5,3"]) return LZDeviceGenerationiTV4th;
     if ([deviceIdentifier isEqualToString:@"AppleTV6,2"]) return LZDeviceGenerationiTV4K;
-    
+    // AirPods 型号
+    if ([deviceIdentifier isEqualToString:@"AirPods1,1"]) return LZDeviceGenerationAirPods1st;
+    if ([deviceIdentifier isEqualToString:@"AirPods2,1"]) return LZDeviceGenerationAirPods2nd;
+    if ([deviceIdentifier isEqualToString:@"iProd8,1"]) return LZDeviceGenerationAirPods_pro;
+    // 未知
     return LZDeviceGenerationUnspecified;
 }
 
@@ -243,8 +253,11 @@ NSString * _generation_desc(void) {
         case LZDeviceGenerationiPhone6s_plus:
             return @"iPhone 6s Plus";
             break;
-        case LZDeviceGenerationiPhoneSE:
-            return @"iPhone SE";
+        case LZDeviceGenerationiPhoneSE1st:
+            return @"iPhone SE (1st generation)";
+            break;
+        case LZDeviceGenerationiPhoneSE2nd:
+            return @"iPhone SE (2nd generation)";
             break;
         case LZDeviceGenerationiPhone7:
             return @"iPhone 7";
@@ -317,6 +330,9 @@ NSString * _generation_desc(void) {
 		case LZDeviceGenerationiWatch_series4:
 			return @"Apple Watch Series 4";
 			break;
+        case LZDeviceGenerationiWatch_series5:
+            return @"Apple Watch Series 5";
+            break;
             // iPad 型号
         case LZDeviceGenerationiPad:
             return @"iPad 1";
@@ -382,6 +398,9 @@ NSString * _generation_desc(void) {
             return @"iPad mini 5";
             break;
             // iTV 型号
+        case LZDeviceGenerationiTV1st:
+            return @"Apple TV (1st generation)";
+            break;
         case LZDeviceGenerationiTV2nd:
             return @"Apple TV (2nd generation)";
             break;
@@ -393,6 +412,15 @@ NSString * _generation_desc(void) {
             break;
         case LZDeviceGenerationiTV4K:
             return @"Apple TV 4K";
+            break;
+        case LZDeviceGenerationAirPods1st:
+            return @"AirPods (1st generation)";
+            break;
+        case LZDeviceGenerationAirPods2nd:
+            return @"AirPods (2nd generation)";
+            break;
+        case LZDeviceGenerationAirPods_pro:
+            return @"AirPods Pro";
             break;
         case LZDeviceGenerationUnspecified:
         default:

@@ -31,7 +31,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  LZDependencyToolkit: 5aa1abc14d022f944c0cf579a7e99eb36f400b6a
+  LZDependencyToolkit: 2c20d5eeb753c92edb1ef9d6dfd8e9d125927f8a
   MJRefresh: 53e3e3219f204425ee6d3e62e8733d3295944cd6
 
 PODFILE CHECKSUM: 1f6bd7c4bb306c5589f56a7d7be95899c07573ca

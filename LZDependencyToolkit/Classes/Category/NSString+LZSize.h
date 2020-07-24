@@ -35,3 +35,17 @@
                maxSize:(CGSize)maxSize;
 
 @end
+
+@interface NSAttributedString (LZSize)
+
+/**
+ @author Lilei
+ 
+ @brief 计算文本所占宽、高
+ 
+ @param maxSize 最大尺寸
+ @return 实际尺寸
+ */
+- (CGSize)sizeWithMaxSize:(CGSize)maxSize;
+
+@end

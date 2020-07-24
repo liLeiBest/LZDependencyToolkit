@@ -137,6 +137,22 @@
     return [self verifyRegular:regular];
 }
 
+/** 验证浮点数只能输入最大或最小 N 位整数和小数，并且是否允许以 0 开头 */
+- (BOOL)validateFloatNumberWithIntegerFigure:(NSInteger)integerFigure
+                          integerMostOrLeast:(BOOL)integerMost
+                               decimalFigure:(NSInteger)decimalFigure
+                          decimalMostOrLeast:(BOOL)decimalMost
+                               beginWithZero:(BOOL)zero {
+    
+    NSInteger maxFirstNumber = YES == zero ? 0 : 1;
+    NSInteger maxInteger = integerFigure - 1;
+    NSInteger minInteger = YES == integerMost ? 0 : maxInteger;
+    NSInteger maxDecimal = decimalFigure;
+    NSInteger minDecimal = YES == decimalMost ? 0 : maxDecimal;
+    NSString *regular = [NSString stringWithFormat:@"^[%ld-9]\\d{%ld,%ld}+(\\.\\d{%ld,%ld})?$", maxFirstNumber, minInteger, maxInteger, minDecimal, maxDecimal];
+    return [self verifyRegular:regular];
+}
+
 /** 验证是否包含有 ^%&',;=?$/"等字符 */
 - (BOOL)validateIsSpecialCharacters {
     

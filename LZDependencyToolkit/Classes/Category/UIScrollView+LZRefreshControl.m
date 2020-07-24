@@ -99,7 +99,6 @@ static NSString *RefreshNoMoreTitle = @"已经没有更多了";
 }
 
 - (void)beginHeaderRefresh {
-	
 	if (self.mj_footer.state == MJRefreshStateNoMoreData) {
 		[self.mj_footer resetNoMoreData];
 	}

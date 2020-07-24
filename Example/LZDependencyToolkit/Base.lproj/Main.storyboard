@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="8k2-oj-S8L">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="8k2-oj-S8L">
+    <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment version="2304" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
@@ -27,7 +27,7 @@
                                 </constraints>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="a8X-oe-YGR">
-                                <rect key="frame" x="20" y="235.5" width="374" height="30"/>
+                                <rect key="frame" x="20" y="235.66666666666666" width="374" height="29.999999999999972"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rIJ-nQ-gnW">
                                         <rect key="frame" x="0.0" y="0.0" width="374" height="30"/>
@@ -40,7 +40,7 @@
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OZ1-JL-2KF">
-                                <rect key="frame" x="20" y="175.5" width="374" height="30"/>
+                                <rect key="frame" x="20" y="175.66666666666666" width="374" height="30"/>
                                 <color key="backgroundColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="ejG-JO-2RS"/>
@@ -50,8 +50,9 @@
                                     <action selector="touchExtendTest:" destination="whP-gf-Uak" eventType="touchDown" id="dqV-it-cAk"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vgi-AU-TNc">
-                                <rect key="frame" x="0.0" y="615" width="414" height="20.5"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vgi-AU-TNc">
+                                <rect key="frame" x="15" y="615" width="384" height="247"/>
+                                <mutableString key="text">并非我们不重视理想，而是因为树雄心壮志易，为理想努力难，人生自古就如此。有谁会想到，十多年前的今天，我曾是一个在街头彷徨，为生存犯愁的人？当时的我，一无所有，前途渺茫，真不知路在何处。然而，我却没有灰心失望，回想起来，支撑着我走过这段坎坷岁月的正是我的意志品格。当许多人以为我已不行、该不行了的时候，我仍做着从地上爬起来的努力，我坚信人生就像马拉多纳踢球，往往是在快要倒下去的时候“进球”获得生机的。事实也正是如此，就在“山重水复疑无路”的时候，香港一家企业倒闭给了我东山再起的机会，使我能够与掌握世界最新技术的英国科技人员合作，开发技术先进的彩色电视机，从此一举走出困境。</mutableString>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -63,9 +64,10 @@
                             <constraint firstItem="Ksg-IK-FrT" firstAttribute="centerY" secondItem="TpU-gO-2f1" secondAttribute="centerY" id="5s0-fw-O12"/>
                             <constraint firstItem="Ksg-IK-FrT" firstAttribute="top" secondItem="a8X-oe-YGR" secondAttribute="bottom" constant="35.5" id="AiV-ax-vrd"/>
                             <constraint firstAttribute="trailing" secondItem="a8X-oe-YGR" secondAttribute="trailing" constant="20" id="IUC-nd-3ch"/>
-                            <constraint firstAttribute="trailing" secondItem="vgi-AU-TNc" secondAttribute="trailing" id="ZPK-wF-H7M"/>
+                            <constraint firstItem="Mvr-aV-6Um" firstAttribute="top" secondItem="vgi-AU-TNc" secondAttribute="bottom" id="KR6-Gs-eQl"/>
+                            <constraint firstAttribute="trailing" secondItem="vgi-AU-TNc" secondAttribute="trailing" constant="15" id="ZPK-wF-H7M"/>
                             <constraint firstItem="a8X-oe-YGR" firstAttribute="leading" secondItem="TpU-gO-2f1" secondAttribute="leading" constant="20" id="aHZ-Eg-eqT"/>
-                            <constraint firstItem="vgi-AU-TNc" firstAttribute="leading" secondItem="TpU-gO-2f1" secondAttribute="leading" id="anf-7F-aw7"/>
+                            <constraint firstItem="vgi-AU-TNc" firstAttribute="leading" secondItem="TpU-gO-2f1" secondAttribute="leading" constant="15" id="anf-7F-aw7"/>
                             <constraint firstItem="a8X-oe-YGR" firstAttribute="top" secondItem="OZ1-JL-2KF" secondAttribute="bottom" constant="30" id="cKK-PO-D9b"/>
                             <constraint firstItem="vgi-AU-TNc" firstAttribute="top" secondItem="Ksg-IK-FrT" secondAttribute="bottom" constant="20" id="laK-WK-Cjj"/>
                             <constraint firstAttribute="trailing" secondItem="Ksg-IK-FrT" secondAttribute="trailing" constant="60" id="m4g-tB-Q01"/>
@@ -83,7 +85,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tc2-Qw-aMS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1244" y="432.23388305847078"/>
+            <point key="canvasLocation" x="1243.4782608695652" y="431.91964285714283"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="JFn-2R-sQs">

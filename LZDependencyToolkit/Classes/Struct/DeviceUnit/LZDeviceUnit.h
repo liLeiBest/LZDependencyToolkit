@@ -54,7 +54,8 @@ typedef NS_ENUM(NSInteger, LZDeviceGeneration) {
     LZDeviceGenerationiPhone6_plus,
     LZDeviceGenerationiPhone6s,
     LZDeviceGenerationiPhone6s_plus,
-    LZDeviceGenerationiPhoneSE,
+    LZDeviceGenerationiPhoneSE1st,
+    LZDeviceGenerationiPhoneSE2nd,
     LZDeviceGenerationiPhone7,
     LZDeviceGenerationiPhone7_plus,
     LZDeviceGenerationiPhone8,
@@ -80,6 +81,7 @@ typedef NS_ENUM(NSInteger, LZDeviceGeneration) {
     LZDeviceGenerationiWatch_series2,
     LZDeviceGenerationiWatch_series3,
 	LZDeviceGenerationiWatch_series4,
+    LZDeviceGenerationiWatch_series5,
     // iPad 型号
     LZDeviceGenerationiPad,
     LZDeviceGenerationiPad2,
@@ -103,10 +105,15 @@ typedef NS_ENUM(NSInteger, LZDeviceGeneration) {
     LZDeviceGenerationiPad_mini4,
 	LZDeviceGenerationiPad_mini5,
     // iTV 型号
+    LZDeviceGenerationiTV1st,
     LZDeviceGenerationiTV2nd,
     LZDeviceGenerationiTV3rd,
     LZDeviceGenerationiTV4th,
     LZDeviceGenerationiTV4K,
+    // AirPods 型号
+    LZDeviceGenerationAirPods1st,
+    LZDeviceGenerationAirPods2nd,
+    LZDeviceGenerationAirPods_pro,
     // 未知
     LZDeviceGenerationUnspecified,
 };

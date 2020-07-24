@@ -18,6 +18,13 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)distributeText;
 
+/**
+@author Lilei
+
+@brief 所有行的字符串
+*/
+- (NSArray *)linesOfString;
+
 @end
 
 @interface UILabel (LZAlertActionFont)

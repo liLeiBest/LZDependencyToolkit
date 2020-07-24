@@ -23,7 +23,7 @@ Pod::Spec.new do |s|
     s.subspec 'Category' do |category|
         category.source_files				= 'LZDependencyToolkit/Classes/Category/*.{h,m}'
         category.public_header_files 		= 'LZDependencyToolkit/Classes/Category/*.h'
-        category.frameworks          		= 'CoreGraphics', 'QuartzCore'
+        category.frameworks          		= 'CoreGraphics', 'QuartzCore', 'CoreText'
         category.dependency 'MJRefresh'
     end
 
