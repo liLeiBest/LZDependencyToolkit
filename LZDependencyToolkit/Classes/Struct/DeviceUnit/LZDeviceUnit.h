@@ -237,6 +237,8 @@ struct LZDeviceUnit_type {
     NSDate * (* restartDate)(void);
     
     // MARK: 设备类型判断
+    /** 模拟器 */
+    BOOL (* is_simulator)(void);
     /** iPhone */
     BOOL (* is_iPhone)(void);
     /** iPad */

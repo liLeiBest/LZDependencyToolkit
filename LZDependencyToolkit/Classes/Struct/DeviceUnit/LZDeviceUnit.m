@@ -725,6 +725,11 @@ NSDate * _restartDate(void) {
     return lastRestartDate;
 }
 
+/** 模拟器 */
+BOOL _is_simulator(void) {
+    return (_generation() == LZDeviceGenerationSimulator ? YES : NO);
+}
+
 /** iPhone */
 BOOL _is_iPhone(void) {
     return (_userInterfaceIdiom() == LZUserInterfaceIdiomPhone ? YES : NO);
@@ -921,6 +926,7 @@ struct LZDeviceUnit_type LZDeviceInfo = {
     .CPUCount = _CPUCount,
     .CPUUsageRate = _CPUUsageRate,
     .restartDate= _restartDate,
+    .is_simulator = _is_simulator,
     .is_iPad = _is_iPad,
     .is_iPhone = _is_iPhone,
     .is_iTV = _is_iTV,
