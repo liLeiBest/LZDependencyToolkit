@@ -99,7 +99,7 @@ NSString * const LZHexDefaulColorKey = @"white";
     return [self colorWithR:arc4random_uniform(256)
                           G:arc4random_uniform(256)
                           B:arc4random_uniform(256)
-                          A:arc4random_uniform(256)];
+                          A:1.0];
 }
 
 /** 获取颜色的十六进制字符串(方法一) */
