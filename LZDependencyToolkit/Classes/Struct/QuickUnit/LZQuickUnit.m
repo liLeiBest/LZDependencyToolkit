@@ -93,22 +93,24 @@ UIFont * fontName(NSString *fontName, CGFloat fontSize) {
 }
 
 // MARK: Alert
-void alert(UIViewController *target, NSString *title, NSString *message, NSArray<UIAlertAction *> *actions) {
+UIAlertController * alert(UIViewController *target, NSString *title, NSString *message, NSArray<UIAlertAction *> *actions) {
 	
 	UIAlertController *alertCtr = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
 	for (UIAlertAction *action in actions) {
 		[alertCtr addAction:action];
 	}
 	[target presentViewController:alertCtr animated:YES completion:nil];
+    return alertCtr;
 }
 
-void sheet(UIViewController *target, NSString *title, NSString *message, NSArray<UIAlertAction *> *actions) {
+UIAlertController * sheet(UIViewController *target, NSString *title, NSString *message, NSArray<UIAlertAction *> *actions) {
     
     UIAlertController *sheetCtr = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleActionSheet];
     for (UIAlertAction *action in actions) {
         [sheetCtr addAction:action];
     }
     [target presentViewController:sheetCtr animated:YES completion:nil];
+    return sheetCtr;
 }
 
 // MARK: Notification

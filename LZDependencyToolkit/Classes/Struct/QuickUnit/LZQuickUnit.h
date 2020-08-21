@@ -66,12 +66,12 @@ struct LZQuickUnit_type {
     /**
      Alert 提示
      */
-    void (* alert)(UIViewController *target, NSString *title, NSString *message, NSArray<UIAlertAction *> *actions);
+    UIAlertController * (* alert)(UIViewController *target, NSString *title, NSString *message, NSArray<UIAlertAction *> *actions);
     
     /**
      Sheet 提示
      */
-    void (* sheet)(UIViewController *target, NSString *title, NSString *message, NSArray<UIAlertAction *> *actions);
+    UIAlertController * (* sheet)(UIViewController *target, NSString *title, NSString *message, NSArray<UIAlertAction *> *actions);
 	
     // MARK: - Notification
 	/**
