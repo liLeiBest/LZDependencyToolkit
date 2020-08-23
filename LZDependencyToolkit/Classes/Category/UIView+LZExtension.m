@@ -8,6 +8,7 @@
 
 #import "UIView+LZExtension.h"
 #import "NSBundle+LZExtension.h"
+#import "NSObject+LZRuntime.h"
 
 @implementation UIView (LZFrame)
 
@@ -192,6 +193,28 @@
 
 @end
 
+static char const * const kBorderLayer = "zl_borderLayer";
+@interface LZWeakLayerObjectContainer : NSObject
+
+@property (nonatomic, readonly, strong) id weakObject;
+
+/** 构造方法 */
+- (instancetype)initWithWeakObject:(id)object;
+
+@end
+
+@implementation LZWeakLayerObjectContainer
+
+- (instancetype)initWithWeakObject:(id)object {
+    
+    if (self = [super init]) {
+        _weakObject = object;
+    }
+    return self;
+}
+
+@end
+
 @implementation UIView (LZRoundCorner)
 
 - (void)roundingCorners:(UIRectCorner)corners
@@ -237,6 +260,16 @@
 }
 
 // MARK: - Private
+- (CAShapeLayer *)borderLayer {
+    
+    LZWeakLayerObjectContainer *container = LZ_getAssociatedObject(self, kBorderLayer);
+    return container.weakObject;
+}
+
+- (void)setBorderLayer:(CAShapeLayer *)emptyDataSetImage {
+    LZ_setAssociatedObject(self, kBorderLayer, [[LZWeakLayerObjectContainer alloc] initWithWeakObject:emptyDataSetImage]);
+}
+
 - (void)roundedRect:(CGRect)rect
     roundingCorners:(UIRectCorner)corners
              radius:(CGFloat)radius
@@ -252,14 +285,17 @@
     self.layer.mask = shapeLayer;
     // 边框
     if (YES == border) {
-        
-        CAShapeLayer *borderLayer = [CAShapeLayer layer];
+        if (nil == self.borderLayer) {
+            
+            self.borderLayer = [CAShapeLayer layer];
+            [self.layer addSublayer:self.borderLayer];
+        }
+        CAShapeLayer *borderLayer = self.borderLayer;
         borderLayer.path = path.CGPath;
         borderLayer.fillColor = [UIColor clearColor].CGColor;
         borderLayer.strokeColor = borderColor.CGColor;
         borderLayer.lineWidth = borderWidth;
         borderLayer.frame = rect;
-        [self.layer addSublayer:borderLayer];
     }
 }
 
