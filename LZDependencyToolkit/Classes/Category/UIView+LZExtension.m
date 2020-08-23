@@ -299,10 +299,9 @@
         if ([self respondsToSelector:selector]) {
             
             NSString *content = [textContent substringToIndex:limitLength];
-            [inputView performSelector:selector
-                              onThread:[NSThread mainThread]
-                            withObject:content
-                         waitUntilDone:NO];
+            IMP imp = [inputView methodForSelector:selector];
+            void (*func)(id, SEL, NSString *) = (void *)imp;
+            func(inputView, selector, content);
         }
     }
 }
