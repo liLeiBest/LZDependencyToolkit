@@ -98,6 +98,11 @@ struct LZAppUnit_type {
     
     // MARK: - Other
     /**
+    安全区域
+    */
+    UIEdgeInsets (* safeAreaInsets)(void);
+    
+    /**
     当前活动控制器
     */
     UIViewController * (* activityViewController)(void);

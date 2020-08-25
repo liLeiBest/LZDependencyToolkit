@@ -172,6 +172,20 @@ BOOL _createDocumentSubDir(NSString *subPath, NSString **fullPath) {
 }
 
 // MARK: Other
+UIEdgeInsets _safeAreaInsets(void) {
+    
+    UIEdgeInsets insets = UIEdgeInsetsZero;
+    if (@available(iOS 11.0, *)) {
+        
+        UIWindow *mainWindow = [[[UIApplication sharedApplication] delegate] window];
+        if (nil == mainWindow) {
+            mainWindow = [UIApplication sharedApplication].keyWindow;
+        }
+        insets = mainWindow.safeAreaInsets;
+    }
+    return insets;
+}
+
 /** 当前活动控制器 */
 UIViewController * _activityViewController(void) {
     
@@ -245,6 +259,7 @@ struct LZAppUnit_type LZAppUnit = {
     .createCacheSubDir = _createCacheSubDir,
     .createDocumentSubDir = _createDocumentSubDir,
     
+    .safeAreaInsets = _safeAreaInsets,
     .activityViewController = _activityViewController,
     .exit = _exitApp,
 };

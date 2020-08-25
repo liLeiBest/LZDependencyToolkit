@@ -883,7 +883,7 @@ BOOL _is_notch(void) {
         if (nil == mainWindow) {
             mainWindow = [UIApplication sharedApplication].keyWindow;
         }
-        if (mainWindow.safeAreaInsets.bottom > 0.0) {
+        if (mainWindow.safeAreaInsets.top > 0.0) {
             isNotch = YES;
         }
     }
