@@ -305,6 +305,12 @@ static char const * const kBorderLayer = "zl_borderLayer";
 
 - (void)configLimitLength:(NSUInteger)limitLength
               textContent:(NSString *)textContent {
+    [self configLimitLength:limitLength textContent:textContent changeHandler:nil];
+}
+
+- (void)configLimitLength:(NSUInteger)limitLength
+              textContent:(NSString *)textContent
+            changeHandler:(nullable void (^)(BOOL))handler {
     
     Protocol *protocol = @protocol(UITextInput);
     NSAssert([self conformsToProtocol:protocol], @"不是可输入视图");
@@ -323,10 +329,19 @@ static char const * const kBorderLayer = "zl_borderLayer";
         position = [inputView positionFromPosition:selectedRange.start offset:0];
         if (!position) { // 没有高亮选择的字，则对已输入的文字进行字数统计和限制
             count = limitLength - textContent.length;
+            if (handler) {
+                handler(NO);
+            }
         } else { // 有高亮选择的字符串，则暂不对文字进行统计和限制
+            if (handler) {
+                handler(YES);
+            }
         }
     } else { // 中文输入法以外的直接对其统计限制即可，不考虑其他语种情况
         count = limitLength - [inputView countWord:textContent];
+        if (handler) {
+            handler(NO);
+        }
     }
     
     if (count <= 0 && nil == position) {
@@ -338,6 +353,9 @@ static char const * const kBorderLayer = "zl_borderLayer";
             IMP imp = [inputView methodForSelector:selector];
             void (*func)(id, SEL, NSString *) = (void *)imp;
             func(inputView, selector, content);
+        }
+        if (handler) {
+            handler(NO);
         }
     }
 }
