@@ -28,17 +28,17 @@
 - (NSString *)urlByAppendingKeyAndValue:(NSString * _Nonnull)paraString {
     
     NSCharacterSet *queryCharacterSet = [NSCharacterSet URLQueryAllowedCharacterSet];
-    paraString =
-    [paraString stringByAddingPercentEncodingWithAllowedCharacters:queryCharacterSet];
+    paraString = [paraString stringByAddingPercentEncodingWithAllowedCharacters:queryCharacterSet];
     // 去掉前后空格
     NSString *urlString = self;
+    // 先去除编码，防止对已经编码的地址二次编码
+    urlString = [urlString stringByRemovingPercentEncoding];
     urlString = [urlString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     // 特殊处理：兼容 H5 的路由规则
     NSString *regx = @"/#{1,1}.{0,}/";
     NSRange range = [urlString rangeOfString:regx options:NSRegularExpressionSearch];
     if (range.location == NSNotFound) {
-        urlString =
-        [urlString stringByAddingPercentEncodingWithAllowedCharacters:queryCharacterSet];
+        urlString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:queryCharacterSet];
     }
     // 拼接参数
     if ([urlString hasSuffix:@"?"]
