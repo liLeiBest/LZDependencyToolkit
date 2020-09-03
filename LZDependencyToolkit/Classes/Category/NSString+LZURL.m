@@ -31,8 +31,6 @@
     paraString = [paraString stringByAddingPercentEncodingWithAllowedCharacters:queryCharacterSet];
     // 去掉前后空格
     NSString *urlString = self;
-    // 先去除编码，防止对已经编码的地址二次编码
-    urlString = [urlString stringByRemovingPercentEncoding];
     urlString = [urlString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     // 特殊处理：兼容 H5 的路由规则
     NSString *regx = @"/#{1,1}.{0,}/";
