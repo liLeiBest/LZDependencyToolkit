@@ -24,7 +24,6 @@
 @implementation LZWeakEmptyObjectContainer
 
 - (instancetype)initWithWeakObject:(id)object {
-    
     if (self = [super init]) {
         _weakObject = object;
     }
@@ -49,8 +48,8 @@ static char const * const kEmptyDataSetVerticalOff = "emptyDataSetVerticalOff";
 
 @implementation UIViewController (LZEmptyDataSet)
 
-//MARK: - Public
-//MARK: Setter/Getter
+// MARK: - Public
+// MARK: Setter/Getter
 - (UIImage *)emptyDataSetImage {
     
     LZWeakEmptyObjectContainer *container = LZ_getAssociatedObject(self, kEmptyDataSetImage);
@@ -151,7 +150,7 @@ static char const * const kEmptyDataSetVerticalOff = "emptyDataSetVerticalOff";
     LZ_setAssociatedObject(self, kEmptyDataSetVerticalOff, [[LZWeakEmptyObjectContainer alloc] initWithWeakObject:emptyDataSetVerticalOff]);
 }
 
-//MARK: Method
+// MARK: Method
 - (void)showEmptyDataSet:(UIScrollView *)scrollView {
     
     scrollView.emptyDataSetSource = self;
@@ -165,7 +164,7 @@ static char const * const kEmptyDataSetVerticalOff = "emptyDataSetVerticalOff";
     scrollView.emptyDataSetDelegate = nil;
 }
 
-//MARK: - Private
+// MARK: - Private
 - (NSAttributedString *)emptyDataTitleAttribute:(NSString *)title {
     
     NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
@@ -201,14 +200,13 @@ static char const * const kEmptyDataSetVerticalOff = "emptyDataSetVerticalOff";
     return [[NSAttributedString alloc] initWithString:title attributes:attributes];
 }
 
-//MARK: - DZNEmptyDataSet
-//MARK: <DZNEmptyDataSetSource>
+// MARK: - DZNEmptyDataSet
+// MARK: <DZNEmptyDataSetSource>
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
     return self.emptyDataSetImage;
 }
 
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView {
-    
     if (nil != self.emptyDataSetTitle && self.emptyDataSetTitle.length) {
         return [self emptyDataTitleAttribute:self.emptyDataSetTitle];
     }
@@ -216,7 +214,6 @@ static char const * const kEmptyDataSetVerticalOff = "emptyDataSetVerticalOff";
 }
 
 - (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView {
-    
     if (nil != self.emptyDataSetDetail && self.emptyDataSetDetail.length) {
         return [self emptyDataDetailAttribute:self.emptyDataSetDetail];
     }
@@ -225,7 +222,6 @@ static char const * const kEmptyDataSetVerticalOff = "emptyDataSetVerticalOff";
 
 - (NSAttributedString *)buttonTitleForEmptyDataSet:(UIScrollView *)scrollView
                                           forState:(UIControlState)state {
-    
     if (nil != self.emptyDataSetButtonTitle && self.emptyDataSetButtonTitle.length) {
         return [self LZEmptyDataSetButtonTitleAttribute:self.emptyDataSetButtonTitle];
     }
@@ -234,7 +230,6 @@ static char const * const kEmptyDataSetVerticalOff = "emptyDataSetVerticalOff";
 
 - (UIImage *)buttonBackgroundImageForEmptyDataSet:(UIScrollView *)scrollView
                                          forState:(UIControlState)state {
-    
     if (nil != self.emptyDataSetButtonBackgroundImage) {
         return self.emptyDataSetButtonBackgroundImage;
     }
@@ -251,17 +246,24 @@ static char const * const kEmptyDataSetVerticalOff = "emptyDataSetVerticalOff";
 
 - (UIView *)customViewForEmptyDataSet:(UIScrollView *)scrollView {
     
-    if ([self respondsToSelector:@selector(emptyDataCustomView)]) {
-        UIView *customView = [self emptyDataCustomView];
-        NSAssert(nil != customView, @"自定义 View 不能为空");
-        return customView;
+    SEL selector = @selector(emptyDataCustomView);
+    if ([self respondsToSelector:selector]) {
+        
+        IMP imp = [self methodForSelector:selector];
+        UIView * (*func)(id, SEL) = (void *)imp;
+        return func(self, selector);;
     }
     return nil;
 }
 
 - (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView {
-    if ([self respondsToSelector:@selector(verticalOffsetForEmptyDataSet)]) {
-        return [self verticalOffsetForEmptyDataSet];
+    
+    SEL selector = @selector(verticalOffsetForEmptyDataSet);
+    if ([self respondsToSelector:selector]) {
+        
+        IMP imp = [self methodForSelector:selector];
+        CGFloat (*func)(id, SEL) = (void *)imp;
+        return func(self, selector);
     } else if (nil != self.emptyDataSetVerticalOff) {
         return self.emptyDataSetVerticalOff.floatValue;
     }
@@ -291,15 +293,25 @@ static char const * const kEmptyDataSetVerticalOff = "emptyDataSetVerticalOff";
 
 - (void)emptyDataSet:(UIScrollView *)scrollView
           didTapView:(UIView *)view {
-    if ([self respondsToSelector:@selector(emptyDidTapView)]) {
-        [self emptyDidTapView];
+    
+    SEL selector = @selector(emptyDidTapView);
+    if ([self respondsToSelector:selector]) {
+        
+        IMP imp = [self methodForSelector:selector];
+        void (*func)(id, SEL) = (void *)imp;
+        func(self, selector);
     }
 }
 
 - (void)emptyDataSet:(UIScrollView *)scrollView
         didTapButton:(UIButton *)button {
-    if ([self respondsToSelector:@selector(emptyDidTapButton)]) {
-        [self emptyDidTapButton];
+    
+    SEL selector = @selector(emptyDidTapButton);
+    if ([self respondsToSelector:selector]) {
+        
+        IMP imp = [self methodForSelector:selector];
+        void (*func)(id, SEL) = (void *)imp;
+        func(self, selector);
     }
 }
 

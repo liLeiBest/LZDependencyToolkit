@@ -347,7 +347,7 @@ static char const * const kBorderLayer = "zl_borderLayer";
     if (count <= 0 && nil == position) {
         
         SEL selector = @selector(setText:);
-        if ([self respondsToSelector:selector]) {
+        if ([inputView respondsToSelector:selector]) {
             
             NSString *content = [textContent substringToIndex:limitLength];
             IMP imp = [inputView methodForSelector:selector];
