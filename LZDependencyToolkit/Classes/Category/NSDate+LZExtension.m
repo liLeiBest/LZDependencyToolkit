@@ -82,7 +82,11 @@ NSDate * stringToDate(NSString *dateStr, NSString *dateFormat) {
         
         NSTimeInterval timeStamp = dateStr.doubleValue / 1000;
         NSDate *date = [NSDate dateWithTimeIntervalSince1970:timeStamp];
-        dateF.dateFormat = _date_format;
+        if (validDateFmt) {
+            dateF.dateFormat = dateFormat;
+        } else {
+            dateF.dateFormat = _date_format;
+        }
         NSString *dateString = [dateF stringFromDate:date];
         tempDate = [dateF dateFromString:dateString];
     }
