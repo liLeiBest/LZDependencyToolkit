@@ -67,6 +67,10 @@ typedef NS_ENUM(NSInteger, LZDeviceGeneration) {
     LZDeviceGenerationiPhone11,
     LZDeviceGenerationiPhone11_pro,
     LZDeviceGenerationiPhone11_pro_max,
+    LZDeviceGenerationiPhone12_mini,
+    LZDeviceGenerationiPhone12,
+    LZDeviceGenerationiPhone12_pro,
+    LZDeviceGenerationiPhone12_pro_max,
     // iPod 型号
     LZDeviceGenerationiPodtouch1st,
     LZDeviceGenerationiPodtouch2nd,
