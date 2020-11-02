@@ -13,10 +13,12 @@
 #import <sys/utsname.h>
 #import <sys/mount.h>
 #import <sys/sysctl.h>
+#import <sys/stat.h>
+#import <dlfcn.h>
+#import <mach-o/dyld.h>
 #import <mach/mach.h>
 
-// MARK: - Private
-/** 当前设备 */
+// MARK: - Private -
 UIDevice * _device(void) {
     
     static UIDevice *device;
@@ -24,23 +26,18 @@ UIDevice * _device(void) {
     dispatch_once(&onceToken, ^{
         device = [UIDevice currentDevice];
     });
-    
     return device;
 }
 
-/** 获取设备标识 */
 NSString * _deviceIdentifier(void) {
     
     struct utsname systemInfo;
     uname(&systemInfo);
     NSString *deviceIdentifier = [NSString stringWithCString:systemInfo.machine
                                                     encoding:NSUTF8StringEncoding];
-    
     return deviceIdentifier;
 }
 
-// MARK: - 设备信息
-/** 用户界面类型 */
 LZUserInterfaceIdiom _userInterfaceIdiom(void) {
 
     UIUserInterfaceIdiom interfaceIdiom = UI_USER_INTERFACE_IDIOM();
@@ -65,15 +62,12 @@ LZUserInterfaceIdiom _userInterfaceIdiom(void) {
     }
 }
 
-/** 型号 */
 LZDeviceGeneration _generation(void) {
 
     NSString *deviceIdentifier = _deviceIdentifier();
-    
     // 模拟器
     if ([deviceIdentifier isEqualToString:@"i386"] ||
         [deviceIdentifier isEqualToString:@"x86_64"]) return LZDeviceGenerationSimulator;
-    
     // 真机
     // iPhone 型号
     if ([deviceIdentifier isEqualToString:@"iPhone1,1"]) return LZDeviceGenerationiPhone1G;
@@ -228,9 +222,7 @@ LZDeviceGeneration _generation(void) {
     return LZDeviceGenerationUnspecified;
 }
 
-/** 型号描述 */
 NSString * _generation_desc(void) {
-    
     switch (_generation()) {
             // 模拟器
         case LZDeviceGenerationSimulator:
@@ -479,32 +471,26 @@ NSString * _generation_desc(void) {
     }
 }
 
-/** UUID */
 NSString * _DeviceUUID(void) {
 	return [UIDevice currentDevice].identifierForVendor.UUIDString;
 }
 
-/** 别名，用户定义的名称 */
 NSString * _name(void) {
     return _device().name;
 }
 
-/** 类型名称 */
 NSString * _model(void) {
     return _device().model;
 }
 
-/** 国际化区域名称 */
 NSString * _localizedModel(void) {
     return _device().localizedModel;
 }
 
-/** 系统名称，e.g iOS */
 NSString * _systemName(void) {
     return _device().systemName;
 }
 
-/** 系统版本 */
 static NSString * _systemVersion(void) {
     
     static NSString *systemVersion;
@@ -512,13 +498,10 @@ static NSString * _systemVersion(void) {
     dispatch_once(&onceToken, ^{
         systemVersion = _device().systemVersion;
     });
-    
     return systemVersion;
 }
 
-/** 方向 */
 LZDeviceOrientation _orientation(void) {
-    
     switch (_device().orientation) {
         case UIDeviceOrientationPortrait:
             return LZDeviceOrientationPortrait;
@@ -544,9 +527,7 @@ LZDeviceOrientation _orientation(void) {
     }
 }
 
-/** 电池状态 */
 LZDeviceBatteryState _batteryState(void) {
-
     if (NO == _device().isBatteryMonitoringEnabled) [_device() setBatteryMonitoringEnabled:YES];
     switch (_device().batteryState) {
         case UIDeviceBatteryStateUnplugged:
@@ -564,9 +545,7 @@ LZDeviceBatteryState _batteryState(void) {
     }
 }
 
-/** 电池状态描述 */
 NSString * _batteryState_desc(void) {
-    
     switch (_batteryState()) {
         case UIDeviceBatteryStateUnplugged:
             return @"电池使用中";
@@ -583,16 +562,13 @@ NSString * _batteryState_desc(void) {
     }
 }
 
-/** 电池电量 */
 float _batteryLevel(void) {
-
     if (NO == _device().isBatteryMonitoringEnabled) [_device() setBatteryMonitoringEnabled:YES];
     float batteryLevel = _device().batteryLevel;
     
     return batteryLevel;
 }
 
-/** 电池电量描述，百分比 */
 NSString * _batteryLevel_desc(void) {
 
     float batteryLevel = _batteryLevel();
@@ -602,8 +578,8 @@ NSString * _batteryLevel_desc(void) {
     return percentPower;
 }
 
-/** 总磁盘空间 */
 int64_t _diskTotalSpace(void) {
+    
     NSError *error = nil;
     NSDictionary *attrs = [[NSFileManager defaultManager] attributesOfFileSystemForPath:NSHomeDirectory()
                                                                        error:&error];
@@ -612,11 +588,9 @@ int64_t _diskTotalSpace(void) {
     }
     int64_t space =  [[attrs objectForKey:NSFileSystemSize] longLongValue];
     if (space < 0) space = -1;
-    
     return space;
 }
 
-/** 总磁盘空间描述 */
 NSString * _diskTotalSpace_desc(void) {
 
     int64_t totalSpace = _diskTotalSpace();
@@ -624,11 +598,9 @@ NSString * _diskTotalSpace_desc(void) {
         return @"未知";
     }
     NSString *totalSpaceDesc = [NSString stringWithFormat:@"%.2lfG", totalSpace * 0.001 * 0.001 * 0.001];
-    
     return totalSpaceDesc;
 }
 
-/** 剩余磁盘空间 */
 int64_t _diskFreeSpace(void) {
     
     NSError *error = nil;
@@ -641,11 +613,9 @@ int64_t _diskFreeSpace(void) {
     if (space < 0) {
         space = -1;
     }
-    
     return space;
 }
 
-/** 剩余磁盘空间描述 */
 NSString * _diskFreeSpace_desc(void) {
 
     int64_t freeSpace = _diskFreeSpace();
@@ -657,7 +627,6 @@ NSString * _diskFreeSpace_desc(void) {
     return freeSpaceDesc;
 }
 
-/** 已使用磁盘空间 */
 int64_t _diskusedSpace(void) {
     
     int64_t totalSpace = _diskTotalSpace();
@@ -669,11 +638,9 @@ int64_t _diskusedSpace(void) {
     if (usedSpace < 0) {
         usedSpace = -1;
     }
-
     return usedSpace;
 }
 
-/** 已使用磁盘空间描述 */
 NSString * _diskUsedSpace_desc(void) {
 
     int64_t usedSpace = _diskusedSpace();
@@ -681,20 +648,16 @@ NSString * _diskUsedSpace_desc(void) {
         return @"未知";
     }
     NSString *usedSpaceDesc = [NSString stringWithFormat:@"%.2lfG", usedSpace * 0.001 * 0.001 * 0.001];
-    
     return usedSpaceDesc;
 }
 
-/** CPU 核数 */
 NSString * _CPUCount(void) {
 
     NSUInteger CPUCount = [NSProcessInfo processInfo].activeProcessorCount;
 	NSString *CPUCountDesc = [NSString stringWithFormat:@"%lu", (unsigned long)CPUCount];
-    
     return CPUCountDesc;
 }
 
-/** 获取每个 CPU 的使用比例 */
 NSArray * _PerCPUUsage(void) {
     
     processor_info_array_t _cpuInfo, _prevCPUInfo = nil;
@@ -743,14 +706,12 @@ NSArray * _PerCPUUsage(void) {
             size_t prevCpuInfoSize = sizeof(integer_t) * _numPrevCPUInfo;
             vm_deallocate(mach_task_self(), (vm_address_t)_prevCPUInfo, prevCpuInfoSize);
         }
-        
         return cpus;
     } else {
         return nil;
     }
 }
 
-/** CPU 使用率 */
 NSString * _CPUUsageRate(void) {
 
     float cpu = 0;
@@ -762,37 +723,109 @@ NSString * _CPUUsageRate(void) {
         cpu += n.floatValue;
     }
     NSString *CPUUsageRateDesc = [NSString stringWithFormat:@"%.2f%%", cpu * 100];
-    
     return CPUUsageRateDesc;
 }
 
-/** 最后一次重启时间 */
 NSDate * _restartDate(void) {
 
     NSTimeInterval time = [[NSProcessInfo processInfo] systemUptime];
     NSDate *lastRestartDate = [[NSDate alloc] initWithTimeIntervalSinceNow:(0 - time)];
-    
     return lastRestartDate;
 }
 
-/** 模拟器 */
+BOOL _is_jailbreak_existPath(void) {
+    
+    NSArray * jailbreak_pathes = @[
+        @"/Applications/Cydia.app",
+        @"/Applications/limera1n.app",
+        @"/Applications/greenpois0n.app",
+        @"/Applications/blackra1n.app",
+        @"/Applications/blacksn0w.app",
+        @"/Applications/redsn0w.app",
+        @"/Applications/Absinthe.app",
+        @"/Library/MobileSubstrate/MobileSubstrate.dylib",
+        @"/bin/bash",
+        @"/usr/sbin/sshd",
+        @"/etc/apt",
+        @"/private/var/lib/apt/",
+    ];
+    for (NSString *path in jailbreak_pathes) {
+        if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
+            return YES;
+        }
+    }
+    return NO;
+}
+
+BOOL _is_jailbreak_checkCydia(void) {
+    
+    struct stat stat_info;
+    BOOL exist = 0 == stat("/Applications/Cydia.app", &stat_info);
+    BOOL canOpen = [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"cydia://"]];
+    return exist || canOpen;
+}
+
+BOOL _is_jailbreak_checkInject(void) {
+    
+    int ret ;
+    Dl_info dylib_info;
+    char *dylib_name = "/usr/lib/system/libsystem_kernel.dylib";
+    int (*func_stat)(const char *, struct stat *) = stat;
+    if ((ret = dladdr(func_stat, &dylib_info))) {
+        return 0 != strcmp(dylib_info.dli_fname, dylib_name);
+    }
+    return NO;
+}
+
+BOOL _is_jailbreak_checkDylibs() {
+    
+    uint32_t count = _dyld_image_count();
+    for (uint32_t i = 0 ; i < count; ++i) {
+        if (strcmp(_dyld_get_image_name(i), "Library/MobileSubstrate/MobileSubstrate.dylib") == 0) {
+            return YES;
+        }
+    }
+    return NO;
+}
+
+BOOL _is_jailbreak_checkEnv() {
+    char *env = getenv("DYLD_INSERT_LIBRARIES");
+    return nil != env;
+}
+
+BOOL _is_jailbreak_canGetApplicationList(void) {
+    
+    NSString *applicationPath = @"/User/Applications/";
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    if (NO == [fileManager fileExistsAtPath:applicationPath]) {
+        return NO;
+    }
+    NSArray *appList = [fileManager contentsOfDirectoryAtPath:applicationPath error:NULL];
+    return nil != appList && appList.count;
+}
+
+BOOL _is_jailbreak(void) {
+    return _is_jailbreak_existPath()
+    || _is_jailbreak_checkCydia()
+    || _is_jailbreak_checkInject()
+    || _is_jailbreak_checkDylibs()
+    || _is_jailbreak_checkEnv()
+    || _is_jailbreak_canGetApplicationList();
+}
+
 BOOL _is_simulator(void) {
     return (_generation() == LZDeviceGenerationSimulator ? YES : NO);
 }
 
-/** iPhone */
 BOOL _is_iPhone(void) {
     return (_userInterfaceIdiom() == LZUserInterfaceIdiomPhone ? YES : NO);
 }
 
-/** iPad */
 BOOL _is_iPad(void) {
     return (_userInterfaceIdiom() == LZUserInterfaceIdiomPad ? YES : NO);
 }
 
-/** iTV */
 BOOL _is_iTV(void) {
-    
     if (@available(iOS 9, *)) {
         return (_userInterfaceIdiom() == LZUserInterfaceIdiomTV ? YES : NO);
     } else {
@@ -800,9 +833,7 @@ BOOL _is_iTV(void) {
     }
 }
 
-/** carPlay */
 BOOL _is_carPlay(void) {
-    
     if (@available(iOS 9, *)) {
         return (_userInterfaceIdiom() == LZUserInterfaceIdiomCarPlay ? YES : NO);
     } else {
@@ -810,33 +841,26 @@ BOOL _is_carPlay(void) {
     }
 }
 
-/** == */
 BOOL _version_equal_to(NSString *version) {
     return ([_systemVersion() compare:version options:NSNumericSearch] == NSOrderedSame);
 }
 
-/** > */
 BOOL _version_greater_than(NSString *version) {
     return ([_systemVersion() compare:version options:NSNumericSearch] == NSOrderedDescending);
 }
 
-/** >= */
 BOOL _version_greater_than_or_equal_to(NSString *version) {
     return ([_systemVersion() compare:version options:NSNumericSearch] != NSOrderedAscending);
 }
 
-/** < */
 BOOL _version_less_than(NSString *version) {
     return ([_systemVersion() compare:version options:NSNumericSearch] == NSOrderedAscending);
 }
 
-/** <= */
 BOOL _version_less_than_or_equal_to(NSString *version) {
     return ([_systemVersion() compare:version options:NSNumericSearch] != NSOrderedDescending);
 }
 
-// MARK: - 系统语言
-/** 支持的语言列表 */
 NSArray * _languages_support(void) {
     
     static NSArray *languageArrI;
@@ -844,16 +868,13 @@ NSArray * _languages_support(void) {
     dispatch_once(&onceToken, ^{
         languageArrI = [NSLocale preferredLanguages];
     });
-    
     return languageArrI;
 }
 
-/** 当前语言全名,e.g zh-Hans-CN */
 NSString * _language_full_name(void) {
     return ([_languages_support() objectAtIndex:0]);
 }
 
-/** 当前语言简写,e.g  zh */
 NSString * _language_short_name(void) {
     
     static NSString *languageShortName;
@@ -861,12 +882,9 @@ NSString * _language_short_name(void) {
     dispatch_once(&onceToken, ^{
         languageShortName = [[NSLocale currentLocale] objectForKey:NSLocaleLanguageCode];
     });
-    
     return languageShortName;
 }
 
-// MARK: - 设备屏幕
-/** 屏幕尺寸 */
 CGSize _screen_size(void) {
     
     static CGSize size;
@@ -879,31 +897,25 @@ CGSize _screen_size(void) {
             size.width = tmp;
         }
     });
-    
     return size;
 }
 
-/** 屏幕的宽 */
 CGFloat _screen_width(void) {
     return (_screen_size().width);
 }
 
-/** 屏幕的高 */
 CGFloat _screen_height(void) {
     return (_screen_size().height);
 }
 
-/** 屏幕的最大长度 */
 CGFloat _screen_max_lenght(void) {
     return (MAX(_screen_width(), _screen_height()));
 }
 
-/** 屏幕的最小长度 */
 CGFloat _screen_min_lenght(void) {
     return (MIN(_screen_width(), _screen_height()));
 }
 
-/** 屏幕的 Scale */
 CGFloat _screen_scale(void) {
 
     static CGFloat scale;
@@ -911,16 +923,13 @@ CGFloat _screen_scale(void) {
     dispatch_once(&onceToken, ^{
         scale = [[UIScreen mainScreen] scale];
     });
-    
     return scale;
 }
 
-/** 屏幕是否是 Retina */
 BOOL _screen_retina(void) {
     return (_screen_scale() > 1 ? YES : NO);
 }
 
-/** 屏幕是否是齐刘海 */
 BOOL _is_notch(void) {
     
     BOOL isNotch = NO;
@@ -940,7 +949,6 @@ BOOL _is_notch(void) {
 	return isNotch;
 }
 
-// MARK: - 运营商
 NSString * _carrierName(void) {
     
     CTTelephonyNetworkInfo *info = [[CTTelephonyNetworkInfo alloc] init];
@@ -950,7 +958,7 @@ NSString * _carrierName(void) {
 	return carrierName ? carrierName : @"未知";
 }
 
-/** 初始化结构体 */
+// MARK: - 初始化结构体 -
 struct LZDeviceUnit_type LZDeviceInfo = {
     
     .userInterfaceIdiom = _userInterfaceIdiom,
@@ -976,6 +984,7 @@ struct LZDeviceUnit_type LZDeviceInfo = {
     .CPUCount = _CPUCount,
     .CPUUsageRate = _CPUUsageRate,
     .restartDate= _restartDate,
+    .is_jailbreak = _is_jailbreak,
     .is_simulator = _is_simulator,
     .is_iPad = _is_iPad,
     .is_iPhone = _is_iPhone,
