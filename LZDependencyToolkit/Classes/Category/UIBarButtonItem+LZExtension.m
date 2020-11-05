@@ -30,7 +30,6 @@
     
     UIView *customView = self.customView;
     if (customView) {
-        
         if ([customView isKindOfClass:[UIButton class]]) {
             UIButton *tempBtn = (UIButton *)customView;
             if (nil == tempBtn.currentTitle && 0 == tempBtn.currentTitle.length) {
