@@ -30,6 +30,7 @@
     [super viewDidLoad];
 	
     [self setupNavBarItem];
+    [self extendBtnHit];
 //    [self deviceInfo];
 //    [self appInfo];
 //    [self crypto];
@@ -46,11 +47,11 @@
 - (IBAction)eventIntervalTest:(UIButton *)sender {
     LZLog();
     
+    [self machineCode];
 }
 
 - (void)leftDidClick {
     LZLog(@"点击了左边按钮");
-    
     LZLog(@"%@", self.contentLabel.linesOfString);
 }
 
@@ -67,11 +68,12 @@
 // MARK: - Private
 - (void)setupNavBarItem {
     
+    self.title = @"测试标题";
     self.navigationItem.leftBarButtonItem =
     [UIBarButtonItem itemWithTitle:@"左边按钮"
-                       normalImage:@"fda"
-                    highlightImage:@"abc"
-                      disableImage:@"egf"
+                       normalImage:@"11"
+                    highlightImage:@"timg"
+                      disableImage:@"timg"
                             target:self
                             action:@selector(leftDidClick)];
     [self.navigationItem.leftBarButtonItem setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor orangeColor]}
@@ -83,7 +85,6 @@
     [UIBarButtonItem itemWithTitle:@"右边自定"
                             target:self
                             action:@selector(rightDidClick)];
-    self.navigationItem.rightBarButtonItems = @[right1];
     [self.navigationItem.rightBarButtonItem setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor blackColor]}
                                                           forState:UIControlStateDisabled];
     UIBarButtonItem *sys = [[UIBarButtonItem alloc] initWithTitle:@"右边系统" style:UIBarButtonItemStyleDone target:self action:@selector(sysDidClick)];

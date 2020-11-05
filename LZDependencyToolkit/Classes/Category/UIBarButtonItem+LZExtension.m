@@ -67,7 +67,7 @@
         
     UIButton *barButton = [UIButton buttonWithType:UIButtonTypeCustom];
     barButton.opaque = YES;
-    barButton.backgroundColor = [UIColor clearColor];
+    barButton.backgroundColor = [UIColor redColor];
     barButton.adjustsImageWhenDisabled = nil == disableImg ? YES : NO;
     barButton.adjustsImageWhenHighlighted = NO;
     barButton.imageView.contentMode = UIViewContentModeLeft;
@@ -137,6 +137,11 @@
         if (nil != barButton.currentTitle) {
             
             CGSize titleSize = [title sizeWithAttributes:@{NSFontAttributeName:barButton.titleLabel.font}];
+            if (UIAccessibilityIsBoldTextEnabled()) {
+                
+                CGFloat adjust = barButton.titleLabel.font.pointSize * barButton.titleLabel.text.length * 0.16f;
+                titleSize = CGSizeMake(titleSize.width + adjust, titleSize.height);
+            }
             CGRect oldFrame = barButton.frame;
             oldFrame.size.width = titleSize.width + barButton.currentImage.size.width;
             if (0 == oldFrame.size.height) oldFrame.size.height = titleSize.height;
