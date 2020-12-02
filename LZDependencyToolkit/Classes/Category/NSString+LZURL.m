@@ -6,6 +6,7 @@
 //
 
 #import "NSString+LZURL.h"
+#import "NSString+LZRegular.h"
 
 @implementation NSString (LZURL)
 
@@ -14,7 +15,9 @@
 	
 	NSMutableString *paraString = [NSMutableString string];
 	[paraDict enumerateKeysAndObjectsUsingBlock:^(NSString *key, NSString *value, BOOL * _Nonnull stop) {
-		[paraString appendFormat:@"%@=%@&", key, value];
+        if ([value isValidString]) {
+            [paraString appendFormat:@"%@=%@&", key, value];
+        }
 	}];
 	if (0 < paraString.length) {
 		
