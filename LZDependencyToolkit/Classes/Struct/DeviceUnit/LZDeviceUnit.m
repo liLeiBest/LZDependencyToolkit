@@ -748,8 +748,8 @@ BOOL _is_jailbreak_existPath(void) {
         @"/Applications/redsn0w.app",
         @"/Applications/Absinthe.app",
         @"/Library/MobileSubstrate/MobileSubstrate.dylib",
-        @"/bin/bash",
-        @"/usr/sbin/sshd",
+//        @"/bin/bash",
+//        @"/usr/sbin/sshd",
         @"/etc/apt",
         @"/private/var/lib/apt/",
     ];
@@ -809,16 +809,11 @@ BOOL _is_jailbreak_canGetApplicationList(void) {
 }
 
 BOOL _is_jailbreak(void) {
-    if (@available(iOS 14.0, *)) {
-        if (_generation() == LZUserInterfaceIdiomMac) {
-            return NO;
-        }
-    }
     return _is_jailbreak_existPath()
     || _is_jailbreak_checkCydia()
     || _is_jailbreak_checkInject()
     || _is_jailbreak_checkDylibs()
-    || _is_jailbreak_checkEnv()
+//    || _is_jailbreak_checkEnv()
     || _is_jailbreak_canGetApplicationList();
 }
 
