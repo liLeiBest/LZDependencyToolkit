@@ -43,7 +43,7 @@ static char const * const kEmptyDataSetButtonBackgroundColor = "emptyDataSetButt
 static char const * const kEmptyDataSetButtonBackgroundImage = "emptyDataSetButtonBackgroundImage";
 static char const * const kEmptyDataSetVerticalOff = "emptyDataSetVerticalOff";
 
-@interface UIViewController (LZEmptyDataSet)<DZNEmptyDataSetSource, DZNEmptyDataSetDelegate>
+@interface UIViewController (LZEmptyDataSet)<DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, LZEmptyDataSetDelegate>
 @end
 
 @implementation UIViewController (LZEmptyDataSet)
