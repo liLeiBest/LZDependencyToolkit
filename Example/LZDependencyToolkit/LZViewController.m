@@ -31,7 +31,7 @@
 	
     [self setupNavBarItem];
     [self extendBtnHit];
-//    [self deviceInfo];
+    [self deviceInfo];
 //    [self appInfo];
 //    [self crypto];
 //    [self quick];
@@ -146,8 +146,9 @@
 
 - (void)deviceInfo {
     
-    NSLog(@"设备型号: %@",LZDeviceInfo.generation_desc());
-    NSLog(@"手机别名: %@", LZDeviceInfo.name());
+    NSLog(@"越狱设备：%@", LZDeviceInfo.is_jailbreak() ? @"是" : @"否");
+    NSLog(@"设备型号: %@", LZDeviceInfo.generation_desc());
+    NSLog(@"设备别名: %@", LZDeviceInfo.name());
     NSLog(@"系统名称: %@", LZDeviceInfo.systemName());
     NSLog(@"手机系统版本: %@", LZDeviceInfo.systemVersion());
     NSLog(@"国际化区域名称: %@",LZDeviceInfo.localizedModel());

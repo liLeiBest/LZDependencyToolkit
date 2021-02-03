@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
     s.social_media_url = 'https://github.com/liLeiBest'
     s.frameworks       = 'UIKit', 'Foundation', 'CoreGraphics', 'CoreImage'
     s.requires_arc     = true
-    s.ios.deployment_target = '8.0'
+    s.ios.deployment_target = '9.0'
 
     s.source_files        = 'LZDependencyToolkit/Classes/LZDependencyToolkit.h'
     s.public_header_files = 'LZDependencyToolkit/Classes/LZDependencyToolkit.h'

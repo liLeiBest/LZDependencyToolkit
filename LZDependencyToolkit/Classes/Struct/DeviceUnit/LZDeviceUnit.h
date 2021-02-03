@@ -36,13 +36,15 @@ typedef NS_ENUM(NSInteger, LZUserInterfaceIdiom) {
     // 未知
     LZUserInterfaceIdiomUnspecified = -1,
     /// iPhone 和 iPod touch 风格的界面
-    LZUserInterfaceIdiomPhone NS_ENUM_AVAILABLE_IOS(3_2),
+    LZUserInterfaceIdiomPhone API_AVAILABLE(ios(3.2)),
     /// iPad 风格的界面
-    LZUserInterfaceIdiomPad NS_ENUM_AVAILABLE_IOS(3_2),
+    LZUserInterfaceIdiomPad API_AVAILABLE(ios(3.2)),
     /// Apple 风格的界面
-    LZUserInterfaceIdiomTV NS_ENUM_AVAILABLE_IOS(9_0),
+    LZUserInterfaceIdiomTV API_AVAILABLE(ios(9.0)),
     /// CarPlay 风格的界面
-    LZUserInterfaceIdiomCarPlay NS_ENUM_AVAILABLE_IOS(9_0),
+    LZUserInterfaceIdiomCarPlay API_AVAILABLE(ios(9.0)),
+    /// Mac
+    LZUserInterfaceIdiomMac API_AVAILABLE(ios(14.0))
 };
 
 /// 设备电量状态
@@ -219,10 +221,12 @@ struct LZDeviceUnit_type {
     BOOL (* is_iPhone)(void);
     /// 是否是 iPad
     BOOL (* is_iPad)(void);
-    /// 是否是iTV,仅支持 iOS9 以上
+    /// 是否是iTV,
     BOOL (* is_iTV)(void);
-    /// 是否是 CarPlay,仅支持 iOS9 以上
+    /// 是否是 CarPlay
     BOOL (* is_carPlay)(void);
+    /// 是否是 Mac,仅支持 iOS14 以上
+    BOOL (* is_mac)(void);
     
     /// ==，等于指定版本号
     BOOL (* version_equal_to)(NSString *version);

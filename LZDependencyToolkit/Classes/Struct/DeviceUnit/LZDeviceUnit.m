@@ -48,12 +48,16 @@ LZUserInterfaceIdiom _userInterfaceIdiom(void) {
         case UIUserInterfaceIdiomPad:
             return LZUserInterfaceIdiomPad;
             break;
+        case UIUserInterfaceIdiomTV:
+            return LZUserInterfaceIdiomTV;
+            break;
+        case UIUserInterfaceIdiomCarPlay:
+            return LZUserInterfaceIdiomCarPlay;
+            break;
         default: {
-            if (@available(iOS 9.0, *)) {
-                if (interfaceIdiom == UIUserInterfaceIdiomTV) {
-                    return LZUserInterfaceIdiomTV;
-                } else if (interfaceIdiom == UIUserInterfaceIdiomCarPlay) {
-                    return LZUserInterfaceIdiomCarPlay;
+            if (@available(iOS 14.0, *)) {
+                if (interfaceIdiom == UIUserInterfaceIdiomMac) {
+                    return LZUserInterfaceIdiomMac;
                 }
             }
             return LZUserInterfaceIdiomUnspecified;
@@ -805,6 +809,11 @@ BOOL _is_jailbreak_canGetApplicationList(void) {
 }
 
 BOOL _is_jailbreak(void) {
+    if (@available(iOS 14.0, *)) {
+        if (_generation() == LZUserInterfaceIdiomMac) {
+            return NO;
+        }
+    }
     return _is_jailbreak_existPath()
     || _is_jailbreak_checkCydia()
     || _is_jailbreak_checkInject()
@@ -826,16 +835,16 @@ BOOL _is_iPad(void) {
 }
 
 BOOL _is_iTV(void) {
-    if (@available(iOS 9, *)) {
-        return (_userInterfaceIdiom() == LZUserInterfaceIdiomTV ? YES : NO);
-    } else {
-        return NO;
-    }
+    return (_userInterfaceIdiom() == LZUserInterfaceIdiomTV ? YES : NO);
 }
 
 BOOL _is_carPlay(void) {
-    if (@available(iOS 9, *)) {
-        return (_userInterfaceIdiom() == LZUserInterfaceIdiomCarPlay ? YES : NO);
+    return (_userInterfaceIdiom() == LZUserInterfaceIdiomCarPlay ? YES : NO);
+}
+
+BOOL _is_mac(void) {
+    if (@available(iOS 14.0, *)) {
+        return (_userInterfaceIdiom() == LZUserInterfaceIdiomMac ? YES : NO);
     } else {
         return NO;
     }
@@ -949,10 +958,21 @@ BOOL _is_notch(void) {
 NSString * _carrierName(void) {
     
     CTTelephonyNetworkInfo *info = [[CTTelephonyNetworkInfo alloc] init];
-    CTCarrier *carrier = info.subscriberCellularProvider;
+    CTCarrier *carrier = nil;
+    if (@available(iOS 12.0, *)) {
+        
+        NSDictionary<NSString *, CTCarrier *> *dict = info.serviceSubscriberCellularProviders;
+        for (CTCarrier *obj in dict.allValues) {
+            if ([obj isKindOfClass:[CTCarrier class]]) {
+                carrier = obj;
+                break;
+            }
+        }
+    } else {
+        carrier = info.subscriberCellularProvider;
+    }
     NSString *carrierName = carrier.carrierName;
-
-	return carrierName ? carrierName : @"未知";
+    return carrierName ? carrierName : @"未知";
 }
 
 // MARK: - 初始化结构体 -
@@ -987,6 +1007,7 @@ struct LZDeviceUnit_type LZDeviceInfo = {
     .is_iPhone = _is_iPhone,
     .is_iTV = _is_iTV,
     .is_carPlay = _is_carPlay,
+    .is_mac = _is_mac,
     .version_equal_to = _version_equal_to,
     .version_greater_than = _version_greater_than,
     .version_greater_than_or_equal_to = _version_greater_than_or_equal_to,
