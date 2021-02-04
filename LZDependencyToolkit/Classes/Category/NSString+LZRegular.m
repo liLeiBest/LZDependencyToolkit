@@ -232,8 +232,10 @@
     }
 
     NSString *withoutEmojiString = [string stringByReplacingOccurrencesOfString:@" " withString:@""];
-    *resultString = withoutEmojiString;
-    return isContainsSpecialCharacter;
+    if (nil != *resultString) {
+        *resultString = withoutEmojiString;
+    }
+    return NO == isContainsSpecialCharacter;
 }
 
 #pragma mark - -> Private
