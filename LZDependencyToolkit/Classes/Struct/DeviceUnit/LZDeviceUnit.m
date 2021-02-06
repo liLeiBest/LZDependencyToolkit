@@ -71,7 +71,8 @@ LZDeviceGeneration _generation(void) {
     NSString *deviceIdentifier = _deviceIdentifier();
     // 模拟器
     if ([deviceIdentifier isEqualToString:@"i386"] ||
-        [deviceIdentifier isEqualToString:@"x86_64"]) return LZDeviceGenerationSimulator;
+        [deviceIdentifier isEqualToString:@"x86_64"] ||
+        [deviceIdentifier isEqualToString:@"arm64"]) return LZDeviceGenerationSimulator;
     // 真机
     // iPhone 型号
     if ([deviceIdentifier isEqualToString:@"iPhone1,1"]) return LZDeviceGenerationiPhone1G;
@@ -809,6 +810,9 @@ BOOL _is_jailbreak_canGetApplicationList(void) {
 }
 
 BOOL _is_jailbreak(void) {
+    if (LZDeviceGenerationSimulator == _generation()) {
+        return NO;
+    }
     return _is_jailbreak_existPath()
     || _is_jailbreak_checkCydia()
     || _is_jailbreak_checkInject()
