@@ -1,12 +1,13 @@
 Pod::Spec.new do |s|
     s.name             = 'LZDependencyToolkit'
-    s.version          = '2.1.4'
+    s.version          = '2.2.0'
     s.summary          = 'Toolkit.'
     s.description      = <<-DESC
-    Toolkit 常用工具箱，包括两部分内容
+    Toolkit 常用工具箱，包括以下内容
     1.分类，常用系统类方法扩展。
     2.自定义结构体，封装App 及 设备的常用属性。
 	3.宏定义。
+    4.对象，Timer 及 Transitioning
                         DESC
     s.homepage         = 'https://github.com/liLeiBest/LZDependencyToolkit'
     s.license          = { :type => 'MIT', :file => 'LICENSE' }
