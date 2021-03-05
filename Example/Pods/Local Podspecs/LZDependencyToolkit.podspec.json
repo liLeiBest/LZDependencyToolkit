@@ -83,8 +83,20 @@
     },
     {
       "name": "Object",
-      "source_files": "LZDependencyToolkit/Classes/Object/*.{h,m}",
-      "public_header_files": "LZDependencyToolkit/Classes/Object/*.h"
+      "source_files": "LZDependencyToolkit/Classes/Object/LZObject.h",
+      "public_header_files": "LZDependencyToolkit/Classes/Object/LZObject.h",
+      "subspecs": [
+        {
+          "name": "Timer",
+          "source_files": "LZDependencyToolkit/Classes/Object/Timer/*.{h,m}",
+          "public_header_files": "LZDependencyToolkit/Classes/Object/Timer/*.h"
+        },
+        {
+          "name": "Transitioning",
+          "source_files": "LZDependencyToolkit/Classes/Object/Transitioning/*.{h,m}",
+          "public_header_files": "LZDependencyToolkit/Classes/Object/Transitioning/*.h"
+        }
+      ]
     }
   ]
 }

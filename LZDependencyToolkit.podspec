@@ -60,7 +60,17 @@ Pod::Spec.new do |s|
 	end
 	
 	s.subspec 'Object' do |object|
-		object.source_files        = 'LZDependencyToolkit/Classes/Object/*.{h,m}'
-		object.public_header_files = 'LZDependencyToolkit/Classes/Object/*.h'
+		object.source_files        = 'LZDependencyToolkit/Classes/Object/LZObject.h'
+		object.public_header_files = 'LZDependencyToolkit/Classes/Object/LZObject.h'
+        
+        object.subspec 'Timer' do |timer|
+            timer.source_files            = 'LZDependencyToolkit/Classes/Object/Timer/*.{h,m}'
+            timer.public_header_files     = 'LZDependencyToolkit/Classes/Object/Timer/*.h'
+        end
+        
+        object.subspec 'Transitioning' do |transitioning|
+            transitioning.source_files            = 'LZDependencyToolkit/Classes/Object/Transitioning/*.{h,m}'
+            transitioning.public_header_files     = 'LZDependencyToolkit/Classes/Object/Transitioning/*.h'
+        end
 	end
 end

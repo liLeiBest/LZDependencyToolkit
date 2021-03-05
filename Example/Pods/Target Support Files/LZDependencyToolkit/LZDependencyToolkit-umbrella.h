@@ -50,6 +50,8 @@
 #import "LZWeakDefine.h"
 #import "LZObject.h"
 #import "LZWeakTimer.h"
+#import "LZModalPresentationTranslucentTransitioning.h"
+#import "LZTransitioning.h"
 #import "LZDependencyStruct.h"
 #import "LZAppUnit.h"
 #import "LZCryptoUnit.h"

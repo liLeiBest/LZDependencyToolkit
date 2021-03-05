@@ -9,5 +9,6 @@
 #define LZObject_h
 
 #import "LZWeakTimer.h"
+#import "LZTransitioning.h"
 
 #endif /* LZObject_h */
