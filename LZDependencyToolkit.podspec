@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
     s.homepage         = 'https://github.com/liLeiBest/LZDependencyToolkit'
     s.license          = { :type => 'MIT', :file => 'LICENSE' }
     s.author           = { 'lilei' => 'lilei0502@139.com' }
-    s.source           = { :git => 'https://github.com/liLeiBest/LZDependencyToolkit.git', :tag => s.version.to_s }
+    s.source           = { :git => 'git@github.com:liLeiBest/LZDependencyToolkit.git', :tag => s.version.to_s }
     s.social_media_url = 'https://github.com/liLeiBest'
     s.frameworks       = 'UIKit', 'Foundation', 'CoreGraphics', 'CoreImage'
     s.requires_arc     = true

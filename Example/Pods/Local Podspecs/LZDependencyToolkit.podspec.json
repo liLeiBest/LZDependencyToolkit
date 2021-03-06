@@ -12,7 +12,7 @@
     "lilei": "lilei0502@139.com"
   },
   "source": {
-    "git": "https://github.com/liLeiBest/LZDependencyToolkit.git",
+    "git": "git@github.com:liLeiBest/LZDependencyToolkit.git",
     "tag": "2.2.0"
   },
   "social_media_url": "https://github.com/liLeiBest",
