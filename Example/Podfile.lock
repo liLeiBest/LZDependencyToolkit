@@ -1,26 +1,26 @@
 PODS:
-  - LZDependencyToolkit (2.2.0):
-    - LZDependencyToolkit/Category (= 2.2.0)
-    - LZDependencyToolkit/Define (= 2.2.0)
-    - LZDependencyToolkit/Object (= 2.2.0)
-    - LZDependencyToolkit/Struct (= 2.2.0)
-  - LZDependencyToolkit/Category (2.2.0):
+  - LZDependencyToolkit (2.2.1):
+    - LZDependencyToolkit/Category (= 2.2.1)
+    - LZDependencyToolkit/Define (= 2.2.1)
+    - LZDependencyToolkit/Object (= 2.2.1)
+    - LZDependencyToolkit/Struct (= 2.2.1)
+  - LZDependencyToolkit/Category (2.2.1):
     - MJRefresh
-  - LZDependencyToolkit/Define (2.2.0)
-  - LZDependencyToolkit/Object (2.2.0):
-    - LZDependencyToolkit/Object/Timer (= 2.2.0)
-    - LZDependencyToolkit/Object/Transitioning (= 2.2.0)
-  - LZDependencyToolkit/Object/Timer (2.2.0)
-  - LZDependencyToolkit/Object/Transitioning (2.2.0)
-  - LZDependencyToolkit/Struct (2.2.0):
-    - LZDependencyToolkit/Struct/AppUnit (= 2.2.0)
-    - LZDependencyToolkit/Struct/CryptoUnit (= 2.2.0)
-    - LZDependencyToolkit/Struct/DeviceUnit (= 2.2.0)
-    - LZDependencyToolkit/Struct/QuickUnit (= 2.2.0)
-  - LZDependencyToolkit/Struct/AppUnit (2.2.0)
-  - LZDependencyToolkit/Struct/CryptoUnit (2.2.0)
-  - LZDependencyToolkit/Struct/DeviceUnit (2.2.0)
-  - LZDependencyToolkit/Struct/QuickUnit (2.2.0)
+  - LZDependencyToolkit/Define (2.2.1)
+  - LZDependencyToolkit/Object (2.2.1):
+    - LZDependencyToolkit/Object/Timer (= 2.2.1)
+    - LZDependencyToolkit/Object/Transitioning (= 2.2.1)
+  - LZDependencyToolkit/Object/Timer (2.2.1)
+  - LZDependencyToolkit/Object/Transitioning (2.2.1)
+  - LZDependencyToolkit/Struct (2.2.1):
+    - LZDependencyToolkit/Struct/AppUnit (= 2.2.1)
+    - LZDependencyToolkit/Struct/CryptoUnit (= 2.2.1)
+    - LZDependencyToolkit/Struct/DeviceUnit (= 2.2.1)
+    - LZDependencyToolkit/Struct/QuickUnit (= 2.2.1)
+  - LZDependencyToolkit/Struct/AppUnit (2.2.1)
+  - LZDependencyToolkit/Struct/CryptoUnit (2.2.1)
+  - LZDependencyToolkit/Struct/DeviceUnit (2.2.1)
+  - LZDependencyToolkit/Struct/QuickUnit (2.2.1)
   - MJRefresh (3.5.0)
 
 DEPENDENCIES:
@@ -35,7 +35,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  LZDependencyToolkit: bfb55bd84a994ca75af5d6de4f0f9f62015b67e9
+  LZDependencyToolkit: f6553a14cfdde8a9b49329e3bd551513c84dec02
   MJRefresh: 6afc955813966afb08305477dd7a0d9ad5e79a16
 
 PODFILE CHECKSUM: 7256173d1c33febe1d369943bd7256cf696d3399
