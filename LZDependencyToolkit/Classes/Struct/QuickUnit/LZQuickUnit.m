@@ -55,6 +55,118 @@ NSString * toString(id object) {
 	}
 }
 
+BOOL isLocationOutOfChina(double latitude, double longitude) {
+    if (longitude < 72.004 || longitude > 137.8347 || latitude < 0.8293 || latitude > 55.8271)
+        return YES;
+    return NO;
+}
+
+double transformLatitude(double x, double y) {
+    
+    double latitude = -100.0 + 2.0 * x + 3.0 * y + 0.2 * y * y + 0.1 * x * y + 0.2 * sqrt(fabs(x));
+    latitude += (20.0 * sin(6.0 * x * M_PI) + 20.0 *sin(2.0 * x * M_PI)) * 2.0 / 3.0;
+    latitude += (20.0 * sin(y * M_PI) + 40.0 * sin(y / 3.0 * M_PI)) * 2.0 / 3.0;
+    latitude += (160.0 * sin(y / 12.0 * M_PI) + 320 * sin(y * M_PI / 30.0)) * 2.0 / 3.0;
+    return latitude;
+}
+  
+double transformLongitude(double x, double y) {
+    
+    double longitude = 300.0 + x + 2.0 * y + 0.1 * x * x + 0.1 * x * y + 0.1 * sqrt(fabs(x));
+    longitude += (20.0 * sin(6.0 * x * M_PI) + 20.0 * sin(2.0 * x * M_PI)) * 2.0 / 3.0;
+    longitude += (20.0 * sin(x * M_PI) + 40.0 * sin(x / 3.0 * M_PI)) * 2.0 / 3.0;
+    longitude += (150.0 * sin(x / 12.0 * M_PI) + 300.0 * sin(x / 30.0 * M_PI)) * 2.0 / 3.0;
+    return longitude;
+}
+
+// a = 6378245.0, 1/f = 298.3
+// b = a * (1 - f)
+// ee = (a^2 - b^2) / a^2;
+const double LZa = 6378245.0;
+const double LZee = 0.00669342162296594323;
+CLLocationCoordinate2D gcj02Encrypt(double latitude, double longitude) {
+    if (NO == isLocationOutOfChina(latitude, longitude)) {
+        
+        double dLat = transformLatitude(longitude - 105.0, latitude - 35.0);
+        double dLon = transformLongitude(longitude - 105.0, latitude - 35.0);
+        double radLat = latitude / 180.0 * M_PI;
+        double magic = sin(radLat);
+        magic = 1 - LZee * magic * magic;
+        double sqrtMagic = sqrt(magic);
+        dLat = (dLat * 180.0) / ((LZa * (1 - LZee)) / (magic * sqrtMagic) * M_PI);
+        dLon = (dLon * 180.0) / (LZa / sqrtMagic * cos(radLat) * M_PI);
+        latitude = latitude + dLat;
+        longitude = longitude + dLon;
+    }
+    CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(latitude, longitude);
+    return coordinate;
+}
+
+CLLocationCoordinate2D gcj02Decrypt(double latitude, double longitude) {
+    if (NO == isLocationOutOfChina(latitude, longitude)) {
+        
+        CLLocationCoordinate2D coordinate2D = gcj02Encrypt(latitude, longitude);
+        double dLon = coordinate2D.longitude - longitude;
+        double dLat = coordinate2D.latitude - latitude;
+        latitude = latitude - dLat;
+        longitude = longitude - dLon;
+    }
+    CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(latitude, longitude);
+    return coordinate;
+}
+
+CLLocationCoordinate2D bd09Encrypt(double latitude, double longitude) {
+
+    double x = longitude, y = latitude;
+    double z = sqrt(x * x + y * y) + 0.00002 * sin(y * M_PI);
+    double theta = atan2(y, x) + 0.000003 * cos(x * M_PI);
+    double bd_lon = z * cos(theta) + 0.0065;
+    double bd_lat = z * sin(theta) + 0.006;
+    CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(bd_lat, bd_lon);
+    return coordinate;
+}
+
+CLLocationCoordinate2D bd09Decrypt(double latitude, double longitude) {
+    
+    double x = longitude - 0.0065, y = latitude - 0.006;
+    double z = sqrt(x * x + y * y) - 0.00002 * sin(y * M_PI);
+    double theta = atan2(y, x) - 0.000003 * cos(x * M_PI);
+    double gg_lon = z * cos(theta);
+    double gg_lat = z * sin(theta);
+    CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(gg_lat, gg_lon);
+    return coordinate;
+}
+
+CLLocationCoordinate2D wgs84_to_gcj02(double latitude, double longitude) {
+    return gcj02Encrypt(latitude, longitude);
+}
+
+CLLocationCoordinate2D gcj02_to_wgs84(double latitude, double longitude) {
+    return gcj02Decrypt(latitude, longitude);
+}
+
+CLLocationCoordinate2D wgs84_to_bd09(double latitude, double longitude) {
+
+    CLLocationCoordinate2D gcj02 = gcj02Encrypt(latitude, longitude);
+    CLLocationCoordinate2D bd09 = bd09Encrypt(gcj02.latitude, gcj02.longitude);
+    return bd09;
+}
+
+CLLocationCoordinate2D bd09_to_wgs84(double latitude, double longitude) {
+
+    CLLocationCoordinate2D gcj02 = bd09Decrypt(latitude, longitude);
+    CLLocationCoordinate2D wgs84 = gcj02Decrypt(gcj02.latitude, gcj02.longitude);
+    return wgs84;
+}
+
+CLLocationCoordinate2D gcj02_to_bd09(double latitude, double longitude) {
+    return bd09Encrypt(latitude, longitude);
+}
+
+CLLocationCoordinate2D bd09_to_gcj02(double latitude, double longitude) {
+    return bd09Decrypt(latitude, longitude);
+}
+
 // MARK: Font
 NSArray * installedFontNames(void) {
 	
@@ -99,6 +211,9 @@ UIAlertController * alert(UIViewController *target, NSString *title, NSString *m
 	for (UIAlertAction *action in actions) {
 		[alertCtr addAction:action];
 	}
+    if (nil == target) {
+        target = [UIApplication sharedApplication].keyWindow.rootViewController;
+    }
 	[target presentViewController:alertCtr animated:YES completion:nil];
     return alertCtr;
 }
@@ -108,6 +223,9 @@ UIAlertController * sheet(UIViewController *target, NSString *title, NSString *m
     UIAlertController *sheetCtr = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleActionSheet];
     for (UIAlertAction *action in actions) {
         [sheetCtr addAction:action];
+    }
+    if (nil == target) {
+        target = [UIApplication sharedApplication].keyWindow.rootViewController;
     }
     [target presentViewController:sheetCtr animated:YES completion:nil];
     return sheetCtr;
@@ -148,6 +266,12 @@ struct LZQuickUnit_type LZQuickUnit = {
 	.toRadian = toRadian,
 	.toDegree = toDegree,
 	.toString = toString,
+    .wgs84_to_gcj02 = wgs84_to_gcj02,
+    .gcj02_to_wgs84 = gcj02_to_wgs84,
+    .wgs84_to_bd09 = wgs84_to_bd09,
+    .bd09_to_wgs84 = bd09_to_wgs84,
+    .gcj02_to_bd09 = gcj02_to_bd09,
+    .bd09_to_gcj02 = bd09_to_gcj02,
 	
 	.installedFontNames = installedFontNames,
 	.font = font,

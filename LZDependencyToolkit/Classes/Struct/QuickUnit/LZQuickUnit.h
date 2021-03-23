@@ -11,6 +11,7 @@
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 #import <CoreGraphics/CoreGraphics.h>
+#import <CoreLocation/CoreLocation.h>
 
 struct LZQuickUnit_type {
 	
@@ -29,7 +30,37 @@ struct LZQuickUnit_type {
 	 数字转字符串， NSNumber/NSDiction/NSArray
 	 */
 	NSString * (* toString)(id object);
-	
+    
+    /**
+     坐标转换 WGS84-->GCJ-02
+     */
+    CLLocationCoordinate2D (* wgs84_to_gcj02)(double latitude, double longitude);
+    
+    /**
+     坐标转换 GCJ-02-->WGS84
+     */
+    CLLocationCoordinate2D (* gcj02_to_wgs84)(double latitude, double longitude);
+    
+    /**
+     坐标转换 WGS84-->BD-09
+     */
+    CLLocationCoordinate2D (* wgs84_to_bd09)(double latitude, double longitude);
+    
+    /**
+     坐标转换 BD-09-->WGS84
+     */
+    CLLocationCoordinate2D (* bd09_to_wgs84)(double latitude, double longitude);
+    
+    /**
+     坐标转换 GCJ-02-->BD-09
+     */
+    CLLocationCoordinate2D (* gcj02_to_bd09)(double latitude, double longitude);
+    
+    /**
+     坐标转换 BD-09-->GCJ-02
+     */
+    CLLocationCoordinate2D (* bd09_to_gcj02)(double latitude, double longitude);
+    
 	// MARK: - Font
 	/**
 	 已安装的字体名称
@@ -82,7 +113,7 @@ struct LZQuickUnit_type {
 	/**
 	 添加通知监听，返回值被系统持有，为了能够通过 removeObserver: 移除监听，调用者也并且持有。
 	 */
-	id <NSObject>  (* notificationObserver)(NSNotificationName name, void (^callBackHandler)(NSNotification *note));
+	id <NSObject> (* notificationObserver)(NSNotificationName name, void (^callBackHandler)(NSNotification *note));
 	
 	/**
 	 添加通知监听
