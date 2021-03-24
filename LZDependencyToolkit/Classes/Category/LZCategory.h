@@ -12,6 +12,7 @@
 #import "NSObject+LZExtension.h"
 #import "NSObject+LZRuntime.h"
 #import "NSString+LZEmoji.h"
+#import "NSString+LZFormat.h"
 #import "NSString+LZPinYin.h"
 #import "NSString+LZRegular.h"
 #import "NSString+LZSize.h"
