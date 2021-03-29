@@ -52,33 +52,74 @@ struct LZCryptoUnit_type {
 	// MARK: - DES
 	/**
 	 DES 加密
-     
-     @attention secret 最长 8 位
+            
+     @attention secret 密钥最长 8 位
 	 */
 	NSString * (* DES_Encrypt)(NSString *plainttext, NSString *secret);
 	
 	/**
 	 DES 解密
-
-     @attention secret 最长 8 位
+            
+     @attention secret 密钥最长 8 位
 	 */
 	NSString * (* DES_Decrypt)(NSString *ciphertext, NSString *secret);
     
     /**
      3DES 加密
-
-     @param plainttext 明文
-     @attention secret 最长 24 位
+            
+     @attention secret 密钥最长 24 位
      */
     NSString * (* TDES_Encrypt)(NSString *plainttext, NSString *secret);
     
     /**
      3DES 解密
 
-     @attention secret 最长 24 位
+     @attention secret 密钥最长 24 位
      */
     NSString * (* TDES_Decrypt)(NSString *ciphertext, NSString *secret);
 	
+    // MARK: - AES
+    /**
+     AES-128 加密
+     
+     @attention 128 bit AES key size，secret 密钥最长 16 位
+     */
+    NSString * (* AES_Encrypt)(NSString *plainttext, NSString *secret);
+    
+    /**
+     AES-128 解密
+
+     @attention 128 bit AES key size，secret 密钥最长 16 位
+     */
+    NSString * (* AES_Decrypt)(NSString *ciphertext, NSString *secret);
+    
+    /**
+     AES-192 加密
+     
+     @attention 192 bit AES key size，secret 密钥最长 16 位
+     */
+    NSString * (* AES192_Encrypt)(NSString *plainttext, NSString *secret);
+    
+    /**
+     AES-192 解密
+
+     @attention 192 bit AES key size，secret 密钥最长 16 位
+     */
+    NSString * (* AES192_Decrypt)(NSString *ciphertext, NSString *secret);
+    
+    /**
+     AES-256 加密
+     
+     @attention 256 bit AES key size，secret 密钥最长 16 位
+     */
+    NSString * (* AES256_Encrypt)(NSString *plainttext, NSString *secret);
+    
+    /**
+     AES-256 解密
+
+     @attention 256 bit AES key size，secret 密钥最长 16 位
+     */
+    NSString * (* AES256_Decrypt)(NSString *ciphertext, NSString *secret);
 };
 
 FOUNDATION_EXTERN struct LZCryptoUnit_type LZCryptoUnit;

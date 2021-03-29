@@ -82,6 +82,18 @@ NSData * TripleDESCrypto(NSData *data, NSString *secret, CCOperation operation) 
     return Crypto(data, secret, operation, kCCKeySize3DES, kCCBlockSize3DES, kCCAlgorithm3DES);
 }
 
+/**
+ AES 加解密
+ */
+NSData * AESCrypto(NSData *data, NSString *secret, CCOperation operation, size_t keySize) {
+    
+    NSUInteger length = [secret lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
+    if (length > kCCKeySizeDES) {
+        secret = [secret substringToIndex:kCCKeySizeDES];
+    }
+    return Crypto(data, secret, operation, kCCKeySizeDES, kCCBlockSizeAES128, kCCAlgorithmAES);
+}
+
 // MARK: MD5
 NSString * MD5(NSString *plaintext) {
 	
@@ -196,6 +208,58 @@ NSString * TDES_Decrypt(NSString *ciphertext, NSString *secret) {
     return result;
 }
 
+// MARK: AES
+NSString * AES_Encrypt(NSString *plaintext, NSString *secret) {
+    
+    NSData *data = [plaintext dataUsingEncoding:NSUTF8StringEncoding];
+    data = AESCrypto(data, secret, kCCEncrypt, kCCKeySizeAES128);
+    NSString *result = [data base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+    return result;
+}
+
+NSString * AES_Decrypt(NSString *ciphertext, NSString *secret) {
+    
+    NSData *data = [[NSData alloc] initWithBase64EncodedString:ciphertext
+                                                       options:NSDataBase64DecodingIgnoreUnknownCharacters];
+    data = AESCrypto(data, secret, kCCDecrypt, kCCKeySizeAES128);
+    NSString *result = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    return result;
+}
+
+NSString * AES192_Encrypt(NSString *plaintext, NSString *secret) {
+    
+    NSData *data = [plaintext dataUsingEncoding:NSUTF8StringEncoding];
+    data = AESCrypto(data, secret, kCCEncrypt, kCCKeySizeAES192);
+    NSString *result = [data base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+    return result;
+}
+
+NSString * AES192_Decrypt(NSString *ciphertext, NSString *secret) {
+    
+    NSData *data = [[NSData alloc] initWithBase64EncodedString:ciphertext
+                                                       options:NSDataBase64DecodingIgnoreUnknownCharacters];
+    data = AESCrypto(data, secret, kCCDecrypt, kCCKeySizeAES192);
+    NSString *result = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    return result;
+}
+
+NSString * AES256_Encrypt(NSString *plaintext, NSString *secret) {
+    
+    NSData *data = [plaintext dataUsingEncoding:NSUTF8StringEncoding];
+    data = AESCrypto(data, secret, kCCEncrypt, kCCKeySizeAES256);
+    NSString *result = [data base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+    return result;
+}
+
+NSString * AES256_Decrypt(NSString *ciphertext, NSString *secret) {
+    
+    NSData *data = [[NSData alloc] initWithBase64EncodedString:ciphertext
+                                                       options:NSDataBase64DecodingIgnoreUnknownCharacters];
+    data = AESCrypto(data, secret, kCCDecrypt, kCCKeySizeAES256);
+    NSString *result = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    return result;
+}
+
 // MARK: - Initilization
 struct LZCryptoUnit_type LZCryptoUnit = {
     
@@ -210,4 +274,10 @@ struct LZCryptoUnit_type LZCryptoUnit = {
 	.DES_Decrypt = DES_Decrypt,
     .TDES_Encrypt = TDES_Encrypt,
     .TDES_Decrypt = TDES_Decrypt,
+    .AES_Encrypt = AES_Encrypt,
+    .AES_Decrypt = AES_Decrypt,
+    .AES192_Encrypt = AES192_Encrypt,
+    .AES192_Decrypt = AES192_Decrypt,
+    .AES256_Encrypt = AES256_Encrypt,
+    .AES256_Decrypt = AES256_Decrypt,
 };
