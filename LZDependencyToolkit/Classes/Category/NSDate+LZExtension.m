@@ -97,7 +97,9 @@ NSDate * stringToDate(NSString *dateStr, NSString *dateFormat) {
 NSString * DateToString(NSDate *date, NSString *dateFormat) {
     
     NSDateFormatter *dateF = dateFormatter();
-    dateF.dateFormat = dateFormat;
+    @synchronized (dateF) {    
+        dateF.dateFormat = dateFormat;
+    }
     return [dateF stringFromDate:date];
 }
 
@@ -122,7 +124,6 @@ NSDateComponents * dateComponents(NSCalendarUnit unit, NSDate * startingDate ,NS
 //MARK: - 对象方法
 /** 是否为今天 */
 - (BOOL)isToday {
-    
     if (greaterThanOrEqualToiOS8()) {
         return [calendar() isDateInToday:self];
     } else {
@@ -135,7 +136,6 @@ NSDateComponents * dateComponents(NSCalendarUnit unit, NSDate * startingDate ,NS
 
 /** 是否为昨天 */
 - (BOOL)isYesterday {
-    
     if (greaterThanOrEqualToiOS8()) {
         return [calendar() isDateInYesterday:self];
     } else {
@@ -158,7 +158,6 @@ NSDateComponents * dateComponents(NSCalendarUnit unit, NSDate * startingDate ,NS
 
 /** 是否为明天 */
 - (BOOL)isTomorrow {
-    
     if (greaterThanOrEqualToiOS8()) {
         return [calendar() isDateInTomorrow:self];
     } else {
@@ -181,7 +180,6 @@ NSDateComponents * dateComponents(NSCalendarUnit unit, NSDate * startingDate ,NS
 
 /** 是否为周未 */
 - (BOOL)isWeekend {
-    
     if (!greaterThanOrEqualToiOS8()) {
         return [calendar() isDateInWeekend:self];
     } else {
@@ -229,7 +227,6 @@ NSDateComponents * dateComponents(NSCalendarUnit unit, NSDate * startingDate ,NS
 
 /** 是否为今年 */
 - (BOOL)isThisYear {
-    
     if (greaterThanOrEqualToiOS8()) {
         return [calendar() isDate:self equalToDate:[NSDate date] toUnitGranularity:NSCalendarUnitYear];
     }
@@ -288,9 +285,14 @@ NSDateComponents * dateComponents(NSCalendarUnit unit, NSDate * startingDate ,NS
 
 /** 根据时间转换成时间戳 */
 - (NSString *)timeStamp {
+    return [self timeStamp:_date_format];
+}
+
+/** 根据指定格式转化为时间戳 */
+- (NSString *)timeStamp:(NSString *)format {
     
-    NSString *dateStr = DateToString(self, _date_format);
-    NSDate *date = stringToDate(dateStr, _date_format);
+    NSString *dateStr = DateToString(self, format);
+    NSDate *date = stringToDate(dateStr, format);
     NSTimeInterval timeStamp = [date timeIntervalSince1970] * 1000;
     NSString *timeStampStr = [NSString stringWithFormat:@"%.1f", timeStamp];
     NSRange range = [timeStampStr rangeOfString:@"."];
@@ -310,7 +312,11 @@ NSDateComponents * dateComponents(NSCalendarUnit unit, NSDate * startingDate ,NS
 //MARK: 日期格式化
 /** 获取当前时间戳 */
 + (NSString *)currentTimeStamp {
-    return [[NSDate date] timeStamp];;
+    return [[NSDate date] timeStamp];
+}
+
++ (NSString *)currentTimeStamp:(NSString *)format {
+    return [[NSDate date] timeStamp:format];;
 }
 
 /** 根据指定格式的时间转换为时间戳 */
@@ -325,7 +331,6 @@ NSDateComponents * dateComponents(NSCalendarUnit unit, NSDate * startingDate ,NS
 /** 根据指定的日期格式将字符串转换为日期 */
 + (NSDate *)dateFormatToDate:(NSString *)dateStr
                      formats:(NSArray<NSString *> *)formats {
-    
     __block NSDate *tmpDate = nil;
     [formats enumerateObjectsUsingBlock:^(NSString * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         
@@ -351,7 +356,6 @@ NSDateComponents * dateComponents(NSCalendarUnit unit, NSDate * startingDate ,NS
 + (NSString *)dateFormatToMDOrYMD:(NSString *)dateStr {
     
     NSDate *realDate = stringToDate(dateStr, nil);
-    
     NSString *timeDesc;
     if ([realDate isThisYear]) {
         timeDesc = DateToString(realDate, @"MM月dd日");
@@ -365,7 +369,6 @@ NSDateComponents * dateComponents(NSCalendarUnit unit, NSDate * startingDate ,NS
 + (NSString *)dateFormatToTdayOrYdayOrYMD:(NSString *)dateStr {
     
     NSDate *realDate = stringToDate(dateStr, nil);
-    
     NSString *timeDesc;
     if ([realDate isThisYear]) {
         if ([realDate isToday]) {
@@ -385,7 +388,6 @@ NSDateComponents * dateComponents(NSCalendarUnit unit, NSDate * startingDate ,NS
 + (NSString *)dateFormatToTdayTimeOrYdayOrYMD:(NSString *)dateStr {
     
     NSDate *realDate = stringToDate(dateStr, nil);
-    
     NSString *timeDesc;
     if ([realDate isThisYear]) {
         if ([realDate isToday]) {
@@ -405,7 +407,6 @@ NSDateComponents * dateComponents(NSCalendarUnit unit, NSDate * startingDate ,NS
 + (NSString *)dateFormatToTdayTimeOrYMDTime:(NSString *)dateStr {
     
     NSDate *realDate = stringToDate(dateStr, nil);
-    
     NSString *timeDesc;
     if ([realDate isThisYear]) {
         if ([realDate isToday]) {
@@ -423,7 +424,6 @@ NSDateComponents * dateComponents(NSCalendarUnit unit, NSDate * startingDate ,NS
 + (NSString *)dateFormatToTdayTimeOrYdayTimeOrYMDTime:(NSString *)dateStr {
     
     NSDate *realDate = stringToDate(dateStr, nil);
-    
     NSString *timeDesc;
     if ([realDate isThisYear]) {
         if ([realDate isToday]) {
@@ -444,7 +444,6 @@ NSDateComponents * dateComponents(NSCalendarUnit unit, NSDate * startingDate ,NS
     
     NSDate *realDate = stringToDate(dateStr, nil);
     NSDate *curDate = [NSDate date];
-    
     NSString *timeDesc;
     if ([realDate isToday]) {
         timeDesc = DateToString(realDate, @"HH:mm");
@@ -470,7 +469,6 @@ NSDateComponents * dateComponents(NSCalendarUnit unit, NSDate * startingDate ,NS
     
     NSDate *realDate = stringToDate(dateStr, nil);
     NSDate *curDate = [NSDate date];
-    
     NSString *timeDesc = @"刚刚";
     // 异常情况：将来时间
     NSComparisonResult result = [realDate compare:curDate];
@@ -505,14 +503,12 @@ NSDateComponents * dateComponents(NSCalendarUnit unit, NSDate * startingDate ,NS
     
     NSDate *realDate = stringToDate(dateStr, nil);
     NSDate *curDate = [NSDate date];
-    
     NSString *timeDesc = @"刚刚";
     // 异常情况：将来时间
     NSComparisonResult result = [realDate compare:curDate];
     if (result == NSOrderedDescending) {
         return timeDesc;
     }
-    
     if ([realDate isThisYear]) {
         if ([realDate isToday]) {
             
@@ -544,14 +540,12 @@ NSDateComponents * dateComponents(NSCalendarUnit unit, NSDate * startingDate ,NS
     
     NSDate *realDate = stringToDate(dateStr, nil);
     NSDate *curDate = [NSDate date];
-    
     NSString *timeDesc = @"1分钟前";
     // 异常情况：将来时间
     NSComparisonResult result = [realDate compare:curDate];
     if (result == NSOrderedDescending) {
         return timeDesc;
     }
-    
     if ([realDate isToday]) {
         
         NSCalendarUnit unit = NSCalendarUnitHour | NSCalendarUnitMinute;
@@ -582,7 +576,6 @@ NSDateComponents * dateComponents(NSCalendarUnit unit, NSDate * startingDate ,NS
 + (NSString *)dateFormatToTimeIntervalOrYMDFromHistoryOrFuture:(NSString *)dateStr {
     
     NSDate *realDate = stringToDate(dateStr, nil);
-    
     NSString *timeDesc;
     if ([realDate isThisYear]) {
         if ([realDate isToday]) {

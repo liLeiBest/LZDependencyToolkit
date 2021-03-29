@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @brief 生成二维码
 
-@param string 视频 URL
+@param string NSString
 @return UIImage
 */
 + (UIImage *)QRCodeImageWithString:(NSString *)string;
@@ -28,7 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @brief 生成二维码，指定大小
 
-@param string 视频 URL
+@param string NSString
 @param size   CGFloat
 @return UIImage
 */
@@ -40,7 +40,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @brief 生成二维码，指定大小，并将图片插到二维码中心
 
-@param string 视频 URL
+@param string NSString
 @param size   CGFloat
 @return UIImage
 */
@@ -52,7 +52,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @brief 生成二维码，指定大小，并将图片插到二维码中心
 
-@param string 视频 URL
+@param string NSString
 @param size   CGFloat
 @param color  UIColor
 @return UIImage
@@ -71,7 +71,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @brief 生成条形码
 
-@param string 视频 URL
+@param string NSString
 @return UIImage
 */
 + (UIImage *)barCodeImageWithString:(NSString *)string;

@@ -42,6 +42,8 @@
 - (IBAction)touchExtendTest:(UIButton *)sender {
     LZLog();
     
+    NSDate *date = [NSDate currentDate];
+    LZLog(@"%@", [date timeStamp]);
 }
 
 - (IBAction)eventIntervalTest:(UIButton *)sender {
