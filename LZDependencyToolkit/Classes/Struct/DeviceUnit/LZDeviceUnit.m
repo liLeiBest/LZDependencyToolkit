@@ -480,6 +480,16 @@ NSString * _DeviceUUID(void) {
 	return [UIDevice currentDevice].identifierForVendor.UUIDString;
 }
 
+NSString * _uuid_create(void) {
+    
+    CFUUIDRef uuid_ref = CFUUIDCreate(NULL);
+    CFStringRef uuid_string_ref= CFUUIDCreateString(NULL, uuid_ref);
+    NSString *uuid = [NSString stringWithString:(__bridge NSString *)uuid_string_ref];
+    CFRelease(uuid_ref);
+    CFRelease(uuid_string_ref);
+    return [uuid lowercaseString];
+}
+
 NSString * _name(void) {
     return _device().name;
 }
@@ -981,6 +991,7 @@ struct LZDeviceUnit_type LZDeviceInfo = {
     .generation = _generation,
     .generation_desc = _generation_desc,
     .UUID = _DeviceUUID,
+    .uuid_create = _uuid_create,
     .name = _name,
     .model = _model,
     .localizedModel = _localizedModel,

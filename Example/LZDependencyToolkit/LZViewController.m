@@ -59,7 +59,7 @@
 
 - (void)rightDidClick {
     LZLog(@"点击了右边按钮");
-    
+    [self crypto];
 }
 
 - (void)sysDidClick {
@@ -107,7 +107,7 @@
 - (void)crypto {
 	
 	NSString *plaintext = @"lilei";
-	NSLog(@"MD5: %@", LZCryptoUnit.MD5(plaintext));
+//	NSLog(@"MD5: %@", LZCryptoUnit.MD5(plaintext));
     
     NSString *key = @"abcdefghijklmn";
     key = @"123456789";
@@ -119,6 +119,12 @@
     NSString *des3 = LZCryptoUnit.TDES_Encrypt(plaintext, key);
     NSLog(@"\nDES3_Encrypt: %@", des3);
     NSLog(@"\nDES3_Decrypt: %@", LZCryptoUnit.TDES_Decrypt(des3, key));
+    
+    NSLog(@"\nSHA: %@", LZCryptoUnit.SHA1(@"lilei"));
+    NSLog(@"\nSHA: %@", LZCryptoUnit.SHA1(@"lilei", @"abc"));
+    
+    NSData *data = [NSData new];
+    LZCryptoUnit.MD5_1(@"lilei", &data);
 }
 
 - (void)appInfo {

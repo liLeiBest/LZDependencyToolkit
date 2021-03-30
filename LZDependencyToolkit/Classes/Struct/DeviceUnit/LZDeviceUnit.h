@@ -163,6 +163,9 @@ struct LZDeviceUnit_type {
     /// 设备 UUID
     NSString * (* UUID)(void);
     
+    /// 创建 UUID
+    NSString * (* uuid_create)(void);
+    
     /// 设备别名，或者用户定义的名称
     NSString * (* name)(void);
     
