@@ -28,6 +28,7 @@
 		71719F9F1E33DC2100824A3D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 71719F9D1E33DC2100824A3D /* LaunchScreen.storyboard */; };
 		873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 873B8AEA1B1F5CCA007FD442 /* Main.storyboard */; };
 		9935F0D960284F7C0550BB1A /* Pods_LZDependencyToolkit_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06710B857517C8C03BFA0AF8 /* Pods_LZDependencyToolkit_Tests.framework */; };
+		A43F0B80261D926D003BB8E1 /* LZStudent+LZTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A43F0B7F261D926D003BB8E1 /* LZStudent+LZTest.m */; };
 		EDCD032374FA4440916A8CDF /* Pods_LZDependencyToolkit_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 274379F85638D7D98175A438 /* Pods_LZDependencyToolkit_Example.framework */; };
 /* End PBXBuildFile section */
 
@@ -77,6 +78,8 @@
 		71719F9E1E33DC2100824A3D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7D8119821D18C79EAD739030 /* LZDependencyToolkit.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LZDependencyToolkit.podspec; path = ../LZDependencyToolkit.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		873B8AEA1B1F5CCA007FD442 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		A43F0B7E261D926D003BB8E1 /* LZStudent+LZTest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LZStudent+LZTest.h"; sourceTree = "<group>"; };
+		A43F0B7F261D926D003BB8E1 /* LZStudent+LZTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "LZStudent+LZTest.m"; sourceTree = "<group>"; };
 		A4C4D10C25CAB8B5004D5748 /* LZDependencyToolkit_Example.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LZDependencyToolkit_Example.entitlements; sourceTree = "<group>"; };
 		A819A32706BA092B035B27F1 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		B2459D6D48C51997FDDBED64 /* Pods-LZDependencyToolkit_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LZDependencyToolkit_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LZDependencyToolkit_Example/Pods-LZDependencyToolkit_Example.debug.xcconfig"; sourceTree = "<group>"; };
@@ -159,11 +162,13 @@
 				28A3A7B9238CE4C900752341 /* LZRightManagement.m */,
 				280B98F62386797000E3DA00 /* LZStudent.h */,
 				280B98F72386797000E3DA00 /* LZStudent.m */,
+				A43F0B7E261D926D003BB8E1 /* LZStudent+LZTest.h */,
+				A43F0B7F261D926D003BB8E1 /* LZStudent+LZTest.m */,
 				289EDC6322BB46FD006D94AD /* LZPerson.h */,
+				289EDC6422BB46FD006D94AD /* LZPerson.m */,
 				71719F9D1E33DC2100824A3D /* LaunchScreen.storyboard */,
 				28FA1E2C249A41BB00FA592B /* 11.jpg */,
 				6003F5A8195388D20070C39A /* Images.xcassets */,
-				289EDC6422BB46FD006D94AD /* LZPerson.m */,
 				6003F594195388D20070C39A /* Supporting Files */,
 			);
 			name = "Example for LZDependencyToolkit";
@@ -390,6 +395,7 @@
 				280B98FB23868D9C00E3DA00 /* LZBook.m in Sources */,
 				6003F59E195388D20070C39A /* LZAppDelegate.m in Sources */,
 				6003F5A7195388D20070C39A /* LZViewController.m in Sources */,
+				A43F0B80261D926D003BB8E1 /* LZStudent+LZTest.m in Sources */,
 				289EDC6522BB46FD006D94AD /* LZPerson.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,
 				28A3A7BA238CE4C900752341 /* LZRightManagement.m in Sources */,

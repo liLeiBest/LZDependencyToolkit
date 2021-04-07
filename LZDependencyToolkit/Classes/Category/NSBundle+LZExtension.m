@@ -36,9 +36,7 @@
 + (UIImage *)image:(NSString *)imageName
 		  inBundle:(NSString *)bundleName
 	referenceClass:(NSString *)className {
-	
 	NSAssert([imageName isValidString], @"Image 名称非法");
-	
 	UIImage *img = nil;
 	NSBundle *resourceBundle = [self bundleForResource:bundleName referenceClass:className];
 	if (@available(iOS 8.0, *)) {
@@ -127,9 +125,7 @@
 + (UIViewController *)viewControllerFromXib:(NSString *)xibName
 								   inBundle:(NSString *)bundleName
 							 referenceClass:(NSString *)className {
-	
 	NSAssert([xibName isValidString], @"Xib 名称非法");
-	
 	NSBundle *resourceBundle = [self bundleForResource:bundleName referenceClass:className];
 	UIViewController *viewController = [[UIViewController alloc] initWithNibName:xibName bundle:resourceBundle];
 	return viewController;
@@ -139,9 +135,7 @@
 + (UIStoryboard *)storyboard:(NSString *)storyboardName
 					inBundle:(NSString *)bundleName
 			  referenceClass:(NSString *)className {
-	
 	NSAssert([storyboardName isValidString], @"Storyboard 名称非法");
-	
 	NSBundle *resourceBundle = [self bundleForResource:bundleName referenceClass:className];
 	UIStoryboard *storyboard = [UIStoryboard storyboardWithName:storyboardName
 														 bundle:resourceBundle];
@@ -184,9 +178,7 @@ referenceClass:(NSString *)className {
 						  owner:(nullable id)owner
 						 bundle:(nullable NSString *)bundleName
 				 referenceClass:(nullable NSString *)className {
-	
 	NSAssert([xibName isValidString], @"Xib 名称非法");
-	
 	NSBundle *resourceBundle = [self bundleForResource:bundleName referenceClass:className];
 	NSArray *nibs = [resourceBundle loadNibNamed:xibName owner:owner options:nil];
 	UIView *xibView = nil;

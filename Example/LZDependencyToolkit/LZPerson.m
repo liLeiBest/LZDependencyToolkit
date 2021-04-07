@@ -15,4 +15,8 @@
     return [self lz_customDescription];
 }
 
+- (void)personInstanceMethod {
+    LZLog(@"%s", __PRETTY_FUNCTION__);
+}
+
 @end

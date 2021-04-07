@@ -11,6 +11,7 @@
 #import <sys/sysctl.h>
 #import <mach/mach.h>
 #import "LZStudent.h"
+#import "LZStudent+LZTest.h"
 
 @interface LZViewController ()
 
@@ -49,7 +50,7 @@
 - (IBAction)eventIntervalTest:(UIButton *)sender {
     LZLog();
     
-    [self machineCode];
+    
 }
 
 - (void)leftDidClick {
@@ -59,7 +60,8 @@
 
 - (void)rightDidClick {
     LZLog(@"点击了右边按钮");
-    [self crypto];
+    [self runtime];
+    [self testImageMethod];
 }
 
 - (void)sysDidClick {
@@ -91,6 +93,17 @@
                                                           forState:UIControlStateDisabled];
     UIBarButtonItem *sys = [[UIBarButtonItem alloc] initWithTitle:@"右边系统" style:UIBarButtonItemStyleDone target:self action:@selector(sysDidClick)];
     self.navigationItem.rightBarButtonItems = @[right1, sys];
+}
+
+- (void)runtime {
+    
+    LZStudent *s = [LZStudent new];
+//    [s personInstanceMethod];
+    [s helloWrold];
+    
+//    LZPerson *p= [LZPerson new];
+//    [p personInstanceMethod];
+    
 }
 
 - (void)quick {
@@ -267,9 +280,9 @@
     
     self.imgView.image = [UIImage imageNamed:@"哈哈" allowNull:YES];
     self.imgView.image = [UIImage imageNamed:@"哈哈" allowNull:NO];
-    self.imgView.image = [UIImage imageNamed:@"timg"];
-    self.imgView.image = [UIImage imageNamed:@"哈哈"];
-    self.imgView.image = [UIImage imageNamed:@"11"];
+//    self.imgView.image = [UIImage imageNamed:@"timg"];
+//    self.imgView.image = [UIImage imageNamed:@"哈哈"];
+//    self.imgView.image = [UIImage imageNamed:@"11"];
 }
 
 - (void)testRegular {
