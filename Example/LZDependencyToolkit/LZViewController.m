@@ -7,9 +7,6 @@
 //
 
 #import "LZViewController.h"
-#import <sys/mount.h>
-#import <sys/sysctl.h>
-#import <mach/mach.h>
 #import "LZStudent.h"
 #import "LZStudent+LZTest.h"
 
@@ -32,7 +29,7 @@
 	
     [self setupNavBarItem];
     [self extendBtnHit];
-    [self deviceInfo];
+//    [self deviceInfo];
 //    [self appInfo];
 //    [self crypto];
 //    [self quick];
@@ -60,8 +57,8 @@
 
 - (void)rightDidClick {
     LZLog(@"点击了右边按钮");
-    [self runtime];
-    [self testImageMethod];
+    
+    [self deviceInfo];
 }
 
 - (void)sysDidClick {
@@ -174,7 +171,6 @@
     NSLog(@"手机系统版本: %@", LZDeviceInfo.systemVersion());
     NSLog(@"国际化区域名称: %@",LZDeviceInfo.localizedModel());
     NSLog(@"设备方向: %ld", (long)LZDeviceInfo.orientation());
-    NSLog(@"运营商: %@", LZDeviceInfo.carrierName());
     NSLog(@"电池状态: %@", LZDeviceInfo.batteryState_desc());
     NSLog(@"电池电量: %@", LZDeviceInfo.batteryLevel_desc());
     NSLog(@"磁盘总空间: %@", LZDeviceInfo.diskTotalSpace_desc());
@@ -184,6 +180,7 @@
     NSLog(@"CPU 使用率: %@", LZDeviceInfo.CPUUsageRate());
     NSLog(@"最后一次重启时间: %@", [LZDeviceInfo.restartDate() dateFormat:@"yyyy-MM-dd aa HH:mm:ss.S EEEE Z"]);
 	NSLog(@"是否是齐刘海: %@", LZDeviceInfo.is_notch() ? @"YES" : @"NO");
+    NSLog(@"运营商: %@", LZDeviceInfo.carrierName());
 }
 
 - (void)customDescription {

@@ -970,8 +970,8 @@ NSString * _carrierName(void) {
     CTCarrier *carrier = nil;
     if (@available(iOS 12.0, *)) {
         
-        NSDictionary<NSString *, CTCarrier *> *dict = info.serviceSubscriberCellularProviders;
-        for (CTCarrier *obj in dict.allValues) {
+        NSDictionary<NSString *, CTCarrier *> *providers = info.serviceSubscriberCellularProviders;
+        for (CTCarrier *obj in providers.allValues) {
             if ([obj isKindOfClass:[CTCarrier class]]) {
                 carrier = obj;
                 break;
