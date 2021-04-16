@@ -26,6 +26,11 @@ void LZ_exchangeInstanceMethod(Class destClass, SEL originSelector, SEL swizzleS
 void LZ_setAssociatedObject(id object, const void *key, id value);
 
 /**
+ *  添加属性 copy
+ */
+void LZ_setAssociatedCopyObject(id object, const void *key, id value);
+
+/**
  *  获取属性
  */
 id LZ_getAssociatedObject(id object, const void *key);

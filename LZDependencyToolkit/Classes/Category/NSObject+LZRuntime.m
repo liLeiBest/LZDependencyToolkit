@@ -27,6 +27,11 @@ void LZ_setAssociatedObject(id object, const void *key, id value) {
     objc_setAssociatedObject(object, key, value, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
+/** 添加属性 copy */
+void LZ_setAssociatedCopyObject(id object, const void *key, NSString *value) {
+    objc_setAssociatedObject(object, key, value, OBJC_ASSOCIATION_COPY_NONATOMIC);
+}
+
 /** 获取属性 */
 id LZ_getAssociatedObject(id object, const void *key) {
     return objc_getAssociatedObject(object, key);

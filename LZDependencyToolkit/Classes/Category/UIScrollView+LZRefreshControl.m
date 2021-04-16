@@ -30,52 +30,48 @@
 
 @end
 
-static char const * const kLZRefreshNoMoreDataTitle = "lz_refreshNoMoreDataTitle";
-static char const * const kLZRefreshTextAttributes = "lz_refreshTextAttributes";
-static char const * const kLZRefreshHeaderRefreshingCallback = "lz_refreshHeaderRefreshingCallback";
-static char const * const kLZRefreshFooterRefreshingCallback = "lz_refreshFooterRefreshingCallback";
 static NSDictionary *RefreshTextAttributes = nil;
 static NSString *RefreshNoMoreTitle = @"已经没有更多了";
 @implementation UIScrollView (LZRefreshControl)
 
 - (NSString *)noMoreDataTitle {
     
-    LZWeakRefreshObjectContainer *container = LZ_getAssociatedObject(self, kLZRefreshNoMoreDataTitle);
+    LZWeakRefreshObjectContainer *container = LZ_getAssociatedObject(self, _cmd);
     return container.weakObject;
 }
 
 - (void)setNoMoreDataTitle:(NSString *)noMoreDataTitle {
-    LZ_setAssociatedObject(self, kLZRefreshNoMoreDataTitle, [[LZWeakRefreshObjectContainer alloc] initWithWeakObject:noMoreDataTitle]);
+    LZ_setAssociatedCopyObject(self, @selector(noMoreDataTitle), [[LZWeakRefreshObjectContainer alloc] initWithWeakObject:noMoreDataTitle]);
 }
 
 - (NSDictionary *)textAttributes {
     
-    LZWeakRefreshObjectContainer *container = LZ_getAssociatedObject(self, kLZRefreshTextAttributes);
+    LZWeakRefreshObjectContainer *container = LZ_getAssociatedObject(self, _cmd);
     return container.weakObject;
 }
 
 - (void)setTextAttributes:(NSDictionary *)textAttributes {
-    LZ_setAssociatedObject(self, kLZRefreshTextAttributes, [[LZWeakRefreshObjectContainer alloc] initWithWeakObject:textAttributes]);
+    LZ_setAssociatedObject(self, @selector(textAttributes), [[LZWeakRefreshObjectContainer alloc] initWithWeakObject:textAttributes]);
 }
 
 - (void (^)(void))headerRefreshingCallback {
     
-    LZWeakRefreshObjectContainer *container = LZ_getAssociatedObject(self, kLZRefreshHeaderRefreshingCallback);
+    LZWeakRefreshObjectContainer *container = LZ_getAssociatedObject(self, _cmd);
     return container.weakObject;
 }
 
 - (void)setHeaderRefreshingCallback:(void (^)(void))headerRefreshingCallback {
-    LZ_setAssociatedObject(self, kLZRefreshHeaderRefreshingCallback, [[LZWeakRefreshObjectContainer alloc] initWithWeakObject:headerRefreshingCallback]);
+    LZ_setAssociatedCopyObject(self, @selector(headerRefreshingCallback), [[LZWeakRefreshObjectContainer alloc] initWithWeakObject:headerRefreshingCallback]);
 }
 
 - (void (^)(void))footerRefreshingCallback {
     
-    LZWeakRefreshObjectContainer *container = LZ_getAssociatedObject(self, kLZRefreshFooterRefreshingCallback);
+    LZWeakRefreshObjectContainer *container = LZ_getAssociatedObject(self, _cmd);
     return container.weakObject;
 }
 
 - (void)setFooterRefreshingCallback:(void (^)(void))footerRefreshingCallback {
-    LZ_setAssociatedObject(self, kLZRefreshFooterRefreshingCallback, [[LZWeakRefreshObjectContainer alloc] initWithWeakObject:footerRefreshingCallback]);
+    LZ_setAssociatedCopyObject(self, @selector(footerRefreshingCallback), [[LZWeakRefreshObjectContainer alloc] initWithWeakObject:footerRefreshingCallback]);
 }
 
 + (void)configTextAttibutes:(NSDictionary *)attributes {

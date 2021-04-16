@@ -193,7 +193,6 @@
 
 @end
 
-static char const * const kBorderLayer = "zl_borderLayer";
 @interface LZWeakLayerObjectContainer : NSObject
 
 @property (nonatomic, readonly, strong) id weakObject;
@@ -262,12 +261,12 @@ static char const * const kBorderLayer = "zl_borderLayer";
 // MARK: - Private
 - (CAShapeLayer *)borderLayer {
     
-    LZWeakLayerObjectContainer *container = LZ_getAssociatedObject(self, kBorderLayer);
+    LZWeakLayerObjectContainer *container = LZ_getAssociatedObject(self, _cmd);
     return container.weakObject;
 }
 
 - (void)setBorderLayer:(CAShapeLayer *)emptyDataSetImage {
-    LZ_setAssociatedObject(self, kBorderLayer, [[LZWeakLayerObjectContainer alloc] initWithWeakObject:emptyDataSetImage]);
+    LZ_setAssociatedObject(self, @selector(borderLayer), [[LZWeakLayerObjectContainer alloc] initWithWeakObject:emptyDataSetImage]);
 }
 
 - (void)roundedRect:(CGRect)rect
