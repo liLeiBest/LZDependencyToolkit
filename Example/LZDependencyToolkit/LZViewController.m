@@ -9,6 +9,7 @@
 #import "LZViewController.h"
 #import "LZStudent.h"
 #import "LZStudent+LZTest.h"
+#import <objc/runtime.h>
 
 @interface LZViewController ()
 
@@ -58,7 +59,6 @@
 - (void)rightDidClick {
     LZLog(@"点击了右边按钮");
     
-    [self deviceInfo];
 }
 
 - (void)sysDidClick {
@@ -101,6 +101,12 @@
 //    LZPerson *p= [LZPerson new];
 //    [p personInstanceMethod];
     
+    LZPerson *person = [[LZPerson alloc] init];
+    {
+        LZPerson *temp = [[LZPerson alloc] init];
+        objc_setAssociatedObject(person, @"temp", temp, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    }
+    NSLog(@"%@", objc_getAssociatedObject(person, @"temp"));
 }
 
 - (void)quick {
