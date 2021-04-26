@@ -22,6 +22,7 @@
 	} _timerFlags;
 }
 
+@property (nonatomic, assign) NSTimeInterval timeStart;
 @property (nonatomic, assign) NSTimeInterval timeInterval;
 @property (nonatomic, assign) BOOL repeats;
 @property (nonatomic, copy) LZTimeEventHandler eventHandler;
@@ -66,37 +67,55 @@
 }
 
 // MARK: - Public
-- (id)initWithTimeInterval:(NSTimeInterval)timeInterval
-				   repeats:(BOOL)repeats
-			 dispatchQueue:(dispatch_queue_t)dispatchQueue
-			  eventHandler:(LZTimeEventHandler)eventHandler {
-	NSParameterAssert(dispatchQueue);
-	NSParameterAssert(eventHandler);
-	if ((self = [super init])) {
-		
-		self.timeInterval = timeInterval;
-		self.repeats = repeats;
-		self.eventHandler = eventHandler;
-		
-		NSString *privateQueueName = [NSString stringWithFormat:@"com.lz.weaktimer.%p", self];
-		self.privateSerialQueue = dispatch_queue_create([privateQueueName cStringUsingEncoding:NSASCIIStringEncoding], DISPATCH_QUEUE_SERIAL);
-		dispatch_set_target_queue(self.privateSerialQueue, dispatchQueue);
-		self.timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, self.privateSerialQueue);
-	}
-	return self;
+- (instancetype)initWithStart:(NSTimeInterval)start
+                     interval:(NSTimeInterval)interval
+                      repeats:(BOOL)repeats
+                        queue:(dispatch_queue_t)queue
+                 eventHandler:(LZTimeEventHandler)handler {
+    NSParameterAssert(queue);
+    NSParameterAssert(handler);
+    if ((self = [super init])) {
+        
+        self.timeStart = start;
+        self.timeInterval = interval;
+        self.repeats = repeats;
+        self.eventHandler = handler;
+        
+        NSString *privateQueueName = [NSString stringWithFormat:@"com.lz.weaktimer.%p", self];
+        self.privateSerialQueue = dispatch_queue_create([privateQueueName cStringUsingEncoding:NSASCIIStringEncoding], DISPATCH_QUEUE_SERIAL);
+        dispatch_set_target_queue(self.privateSerialQueue, queue);
+        self.timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, self.privateSerialQueue);
+    }
+    return self;
 }
 
-+ (instancetype)scheduledTimerWithTimeInterval:(NSTimeInterval)timeInterval
-									   repeats:(BOOL)repeats
-								 dispatchQueue:(dispatch_queue_t)dispatchQueue
-								  eventHandler:(LZTimeEventHandler)eventHandler {
-	
-	LZWeakTimer *timer = [[self alloc] initWithTimeInterval:timeInterval
-													repeats:repeats
-											  dispatchQueue:dispatchQueue
-											   eventHandler:eventHandler];
-	[timer schedule];
-	return timer;
++ (instancetype)scheduledTimerWithStart:(NSTimeInterval)start
+                               interval:(NSTimeInterval)interval
+                                repeats:(BOOL)repeats
+                                  queue:(dispatch_queue_t)queue
+                           eventHandler:(LZTimeEventHandler)handler {
+    
+    LZWeakTimer *timer = [[self alloc] initWithStart:start
+                                            interval:interval
+                                             repeats:repeats
+                                               queue:queue
+                                        eventHandler:handler];
+    [timer schedule];
+    return timer;
+}
+
+- (instancetype)initWithInterval:(NSTimeInterval)interval
+                         repeats:(BOOL)repeats
+                           queue:(dispatch_queue_t)queue
+                    eventHandler:(LZTimeEventHandler)handler {
+    return [self initWithStart:interval interval:interval repeats:repeats queue:queue eventHandler:handler];
+}
+
++ (instancetype)scheduledTimerWithInterval:(NSTimeInterval)interval
+                                   repeats:(BOOL)repeats
+                                     queue:(dispatch_queue_t)queue
+                              eventHandler:(LZTimeEventHandler)handler {
+    return [self scheduledTimerWithStart:interval interval:interval repeats:repeats queue:queue eventHandler:handler];
 }
 
 - (void)schedule {
@@ -129,13 +148,13 @@
 // MARK: - Private
 - (void)resetTimerProperties {
 	
+    int64_t startInNanoseconds = (int64_t)(self.timeStart * NSEC_PER_SEC);
 	int64_t intervalInNanoseconds = (int64_t)(self.timeInterval * NSEC_PER_SEC);
 	int64_t toleranceInNanoseconds = (int64_t)(self.tolerance * NSEC_PER_SEC);
 	dispatch_source_set_timer(self.timer,
-							  dispatch_time(DISPATCH_TIME_NOW, intervalInNanoseconds),
+							  dispatch_time(DISPATCH_TIME_NOW, startInNanoseconds),
 							  (uint64_t)intervalInNanoseconds,
-							  toleranceInNanoseconds
-							  );
+							  toleranceInNanoseconds);
 }
 
 - (void)timerFired {
@@ -148,6 +167,21 @@
 	if (!self.repeats) {
 		[self invalidate];
 	}
+}
+
+// MARK: - Deprecated
+- (id)initWithTimeInterval:(NSTimeInterval)timeInterval
+                   repeats:(BOOL)repeats
+             dispatchQueue:(dispatch_queue_t)dispatchQueue
+              eventHandler:(LZTimeEventHandler)eventHandler {
+    return [self initWithInterval:timeInterval repeats:repeats queue:dispatchQueue eventHandler:eventHandler];
+}
+
++ (instancetype)scheduledTimerWithTimeInterval:(NSTimeInterval)timeInterval
+                                       repeats:(BOOL)repeats
+                                 dispatchQueue:(dispatch_queue_t)dispatchQueue
+                                  eventHandler:(LZTimeEventHandler)eventHandler {
+    return [self scheduledTimerWithInterval:timeInterval repeats:repeats queue:dispatchQueue eventHandler:eventHandler];
 }
 
 @end
