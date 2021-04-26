@@ -8,8 +8,12 @@ PODS:
     - MJRefresh
   - LZDependencyToolkit/Define (2.2.6)
   - LZDependencyToolkit/Object (2.2.6):
+    - LZDependencyToolkit/Object/Proxy (= 2.2.6)
+    - LZDependencyToolkit/Object/Thread (= 2.2.6)
     - LZDependencyToolkit/Object/Timer (= 2.2.6)
     - LZDependencyToolkit/Object/Transitioning (= 2.2.6)
+  - LZDependencyToolkit/Object/Proxy (2.2.6)
+  - LZDependencyToolkit/Object/Thread (2.2.6)
   - LZDependencyToolkit/Object/Timer (2.2.6)
   - LZDependencyToolkit/Object/Transitioning (2.2.6)
   - LZDependencyToolkit/Struct (2.2.6):
@@ -35,7 +39,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  LZDependencyToolkit: 09604d476bc07787ef73dc36b253ee30155000ec
+  LZDependencyToolkit: bee02cb34e39d2f7c7968454699a02dc7a1332c1
   MJRefresh: 6afc955813966afb08305477dd7a0d9ad5e79a16
 
 PODFILE CHECKSUM: 7256173d1c33febe1d369943bd7256cf696d3399

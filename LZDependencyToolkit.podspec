@@ -64,6 +64,16 @@ Pod::Spec.new do |s|
 		object.source_files        = 'LZDependencyToolkit/Classes/Object/LZObject.h'
 		object.public_header_files = 'LZDependencyToolkit/Classes/Object/LZObject.h'
         
+        object.subspec 'Proxy' do |proxy|
+            proxy.source_files            = 'LZDependencyToolkit/Classes/Object/Proxy/*.{h,m}'
+            proxy.public_header_files     = 'LZDependencyToolkit/Classes/Object/Proxy/*.h'
+        end
+        
+        object.subspec 'Thread' do |thread|
+            thread.source_files            = 'LZDependencyToolkit/Classes/Object/Thread/*.{h,m}'
+            thread.public_header_files     = 'LZDependencyToolkit/Classes/Object/Thread/*.h'
+        end
+        
         object.subspec 'Timer' do |timer|
             timer.source_files            = 'LZDependencyToolkit/Classes/Object/Timer/*.{h,m}'
             timer.public_header_files     = 'LZDependencyToolkit/Classes/Object/Timer/*.h'
@@ -73,5 +83,6 @@ Pod::Spec.new do |s|
             transitioning.source_files            = 'LZDependencyToolkit/Classes/Object/Transitioning/*.{h,m}'
             transitioning.public_header_files     = 'LZDependencyToolkit/Classes/Object/Transitioning/*.h'
         end
+        
 	end
 end

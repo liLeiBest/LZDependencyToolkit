@@ -87,6 +87,16 @@
       "public_header_files": "LZDependencyToolkit/Classes/Object/LZObject.h",
       "subspecs": [
         {
+          "name": "Proxy",
+          "source_files": "LZDependencyToolkit/Classes/Object/Proxy/*.{h,m}",
+          "public_header_files": "LZDependencyToolkit/Classes/Object/Proxy/*.h"
+        },
+        {
+          "name": "Thread",
+          "source_files": "LZDependencyToolkit/Classes/Object/Thread/*.{h,m}",
+          "public_header_files": "LZDependencyToolkit/Classes/Object/Thread/*.h"
+        },
+        {
           "name": "Timer",
           "source_files": "LZDependencyToolkit/Classes/Object/Timer/*.{h,m}",
           "public_header_files": "LZDependencyToolkit/Classes/Object/Timer/*.h"

@@ -50,7 +50,6 @@
 }
 
 - (void)setTolerance:(NSTimeInterval)tolerance {
-	
 	@synchronized(self) {
 		if (tolerance != _tolerance) {
 			
@@ -61,7 +60,6 @@
 }
 
 - (NSTimeInterval)tolerance {
-	
 	@synchronized(self) {
 		return _tolerance;
 	}
@@ -72,10 +70,8 @@
 				   repeats:(BOOL)repeats
 			 dispatchQueue:(dispatch_queue_t)dispatchQueue
 			  eventHandler:(LZTimeEventHandler)eventHandler {
-	
 	NSParameterAssert(dispatchQueue);
 	NSParameterAssert(eventHandler);
-	
 	if ((self = [super init])) {
 		
 		self.timeInterval = timeInterval;
@@ -119,7 +115,6 @@
 }
 
 - (void)invalidate {
-	
 	if (!OSAtomicTestAndSetBarrier(7, &_timerFlags.timerIsInvalidated)) {
 		
 		dispatch_source_t timer = self.timer;
@@ -144,15 +139,12 @@
 }
 
 - (void)timerFired {
-	
 	if (OSAtomicAnd32OrigBarrier(1, &_timerFlags.timerIsInvalidated)) {
 		return;
 	}
-	
 	if (self.eventHandler) {
 		self.eventHandler();
 	}
-	
 	if (!self.repeats) {
 		[self invalidate];
 	}

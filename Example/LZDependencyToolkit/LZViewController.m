@@ -48,7 +48,10 @@
 - (IBAction)eventIntervalTest:(UIButton *)sender {
     LZLog();
     
-    
+    LZPermanentThread *thread = [[LZPermanentThread alloc] init];
+    [thread executeTask:^{
+            
+    }];
 }
 
 - (void)leftDidClick {
