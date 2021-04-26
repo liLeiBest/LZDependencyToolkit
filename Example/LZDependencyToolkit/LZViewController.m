@@ -41,17 +41,11 @@
 - (IBAction)touchExtendTest:(UIButton *)sender {
     LZLog();
     
-    NSDate *date = [NSDate currentDate];
-    LZLog(@"%@", [date timeStamp]);
 }
 
 - (IBAction)eventIntervalTest:(UIButton *)sender {
     LZLog();
     
-    LZPermanentThread *thread = [[LZPermanentThread alloc] init];
-    [thread executeTask:^{
-            
-    }];
 }
 
 - (void)leftDidClick {
@@ -61,7 +55,7 @@
 
 - (void)rightDidClick {
     LZLog(@"点击了右边按钮");
-    
+    [self weakTimer];
 }
 
 - (void)sysDidClick {
@@ -238,15 +232,17 @@
 }
 
 - (void)weakTimer {
+    NSLog(@"%@", @"============");
     self.time =
-    [[LZWeakTimer alloc] initWithTimeInterval:1 repeats:YES dispatchQueue:dispatch_get_main_queue() eventHandler:^{
+    [[LZWeakTimer alloc] initWithStart:0 interval:2 repeats:YES queue:dispatch_get_main_queue() eventHandler:^{
         
-        self.time.tolerance = 1.0f;
         static NSUInteger number = 0;
         number++;
         NSLog(@"%@ %@", @"============", LZQuickUnit.toString(@(number)));
         if (number >= 10) {
+            
             [self.time invalidate];
+            number = 0;
         }
     }];
     self.time.tolerance = 1.0f;
