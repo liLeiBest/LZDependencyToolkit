@@ -8,7 +8,6 @@
 #import "LZPermanentThread.h"
 
 @interface LZCustomThread : NSThread
-
 @end
 @implementation LZCustomThread
 
@@ -30,18 +29,10 @@
 // MARK: - Initialization
 - (instancetype)init {
     if (self = [super init]) {
-        __weak typeof(self) weakSelf = self;
         if (@available(iOS 10.0, *)) {
-            self.thread = [[LZCustomThread alloc] initWithBlock:^{
-                
-                CFRunLoopSourceContext context = {0}; // 必须初始化，否则可能会崩溃
-                CFRunLoopSourceRef source = CFRunLoopSourceCreate(kCFAllocatorDefault, 0, &context);
-                CFRunLoopAddSource(CFRunLoopGetCurrent(), source, kCFRunLoopDefaultMode);
-                CFRelease(source);
-                CFRunLoopRunInMode(kCFRunLoopDefaultMode, 1.0e10, false);
-            }];
+            self.thread = [[LZCustomThread alloc] initWithBlock:[self __startRunLoop]];
         } else {
-            self.thread = [[LZCustomThread alloc] initWithTarget:weakSelf selector:@selector(__startRunLoop) object:nil];
+            self.thread = [[LZCustomThread alloc] initWithTarget:self selector:@selector(__startRunLoop1) object:nil];
         }
         [self.thread start];
     }
@@ -71,13 +62,24 @@
 }
 
 // MARK: - Private
-- (void)__startRunLoop {
-    
-    CFRunLoopSourceContext context = {0}; // 必须初始化，否则可能会崩溃
-    CFRunLoopSourceRef source = CFRunLoopSourceCreate(kCFAllocatorDefault, 0, &context);
-    CFRunLoopAddSource(CFRunLoopGetCurrent(), source, kCFRunLoopDefaultMode);
-    CFRelease(source);
-    CFRunLoopRunInMode(kCFRunLoopDefaultMode, 1.0e10, false);
+- (void (^)(void))__startRunLoop {
+    return ^{
+#if DEBUG
+        NSLog(@"Runloop Begin");
+#endif
+        CFRunLoopSourceContext context = {0}; // 必须初始化，否则可能会崩溃
+        CFRunLoopSourceRef source = CFRunLoopSourceCreate(kCFAllocatorDefault, 0, &context);
+        CFRunLoopAddSource(CFRunLoopGetCurrent(), source, kCFRunLoopDefaultMode);
+        CFRelease(source);
+        CFRunLoopRunInMode(kCFRunLoopDefaultMode, 1.0e10, false);
+#if DEBUG
+        NSLog(@"Runloop End");
+#endif
+    };
+}
+
+- (void)__startRunLoop1 {
+     [self __startRunLoop]();
 }
 
 - (void)__stopRunLoop {

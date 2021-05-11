@@ -13,7 +13,7 @@ __API_AVAILABLE(ios(10.0))
 @interface LZPermanentThread : NSObject
 
 // 执行任务
-- (void)executeTask:(void (^)(void))task ;
+- (void)executeTask:(void (^)(void))task;
 
 /// 停止线程
 - (void)stop;
