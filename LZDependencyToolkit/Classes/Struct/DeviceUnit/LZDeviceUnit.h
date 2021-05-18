@@ -188,25 +188,37 @@ struct LZDeviceUnit_type {
     LZDeviceBatteryState (* batteryState)(void);
     /// 电池状态描述
     NSString * (* batteryState_desc)(void);
-    
     /// 电池电量,0 .. 1.0. -1.0 if LZDeviceBatteryStateUnknown
     float (* batteryLevel)(void);
     /// 电池电量描述,百分比
     NSString * (* batteryLevel_desc)(void);
     
     /// 总磁盘空间,单位:Byte
-    long long (* diskTotalSpace)(void);
+    int64_t (* diskTotalSpace)(void);
     /// 总磁盘空间描述,单位:G
     NSString * (* diskTotalSpace_desc)(void);
     /// 剩余磁盘空间,单位:Byte
-    long long (* diskFreeSpace)(void);
+    int64_t (* diskFreeSpace)(void);
     /// 剩余磁盘空间描述,单位:G
     NSString * (* diskFreeSpace_desc)(void);
-    
     /// 已使用磁盘空间,单位:Byte
-    long long (* diskUsedSpace)(void);
+    int64_t (* diskUsedSpace)(void);
     /// 已使用磁盘空间描述,单位:G
     NSString * (* diskUsedSpace_desc)(void);
+    
+    /// 总内存
+    UInt64 (* memoryTotalSpace)(void);
+    /// 总内存描述,单位:G
+    NSString * (* memoryTotalSpace_desc)(void);
+    /// 可用内存
+    UInt64 (* memoryAvaiableSpace)(void);
+    /// 可用内存描述,单位:M
+    NSString * (* memoryAvaiableSpace_desc)(void);
+    /// 内存使用
+    NSString * (* memoryUsedSpace)(void);
+    /// 内存使用描述,单位:M
+    NSString * (* memoryUsedSpace_desc)(void);
+    
     /// CPU 核数
     NSString * (* CPUCount)(void);
     /// CPU 使用率

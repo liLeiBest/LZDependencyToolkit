@@ -60,7 +60,7 @@
 
 - (void)sysDidClick {
 	LZLog(@"点击了右边系统按钮");
-    
+    [self deviceInfo];
 }
 
 // MARK: - Private
@@ -179,6 +179,9 @@
     NSLog(@"磁盘总空间: %@", LZDeviceInfo.diskTotalSpace_desc());
     NSLog(@"磁盘剩余空间: %@", LZDeviceInfo.diskFreeSpace_desc());
     NSLog(@"磁盘已用空间: %@", LZDeviceInfo.diskUsedSpace_desc());
+    NSLog(@"内存总空间: %@", LZDeviceInfo.memoryTotalSpace_desc());
+    NSLog(@"内存可用空间: %@", LZDeviceInfo.memoryAvaiableSpace_desc());
+    NSLog(@"内存使用空间: %@", LZDeviceInfo.memoryUsedSpace_desc());
     NSLog(@"CPU 核数: %@", LZDeviceInfo.CPUCount());
     NSLog(@"CPU 使用率: %@", LZDeviceInfo.CPUUsageRate());
     NSLog(@"最后一次重启时间: %@", [LZDeviceInfo.restartDate() dateFormat:@"yyyy-MM-dd aa HH:mm:ss.S EEEE Z"]);

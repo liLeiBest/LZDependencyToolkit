@@ -580,7 +580,6 @@ NSString * _batteryState_desc(void) {
 float _batteryLevel(void) {
     if (NO == _device().isBatteryMonitoringEnabled) [_device() setBatteryMonitoringEnabled:YES];
     float batteryLevel = _device().batteryLevel;
-    
     return batteryLevel;
 }
 
@@ -589,7 +588,6 @@ NSString * _batteryLevel_desc(void) {
     float batteryLevel = _batteryLevel();
     if (-1 == batteryLevel) return @"未知";
     NSString *percentPower = [NSString stringWithFormat:@"%.0f%%", batteryLevel * 100];
-    
     return percentPower;
 }
 
@@ -597,7 +595,7 @@ int64_t _diskTotalSpace(void) {
     
     NSError *error = nil;
     NSDictionary *attrs = [[NSFileManager defaultManager] attributesOfFileSystemForPath:NSHomeDirectory()
-                                                                       error:&error];
+                                                                                  error:&error];
     if (error) {
         return -1;
     }
@@ -638,7 +636,6 @@ NSString * _diskFreeSpace_desc(void) {
         return @"未知";
     }
     NSString *freeSpaceDesc = [NSString stringWithFormat:@"%.2lfG", freeSpace * 0.001 * 0.001 * 0.001];
-    
     return freeSpaceDesc;
 }
 
@@ -664,6 +661,46 @@ NSString * _diskUsedSpace_desc(void) {
     }
     NSString *usedSpaceDesc = [NSString stringWithFormat:@"%.2lfG", usedSpace * 0.001 * 0.001 * 0.001];
     return usedSpaceDesc;
+}
+
+UInt64 _memoryTotalSpace(void) {
+    return [[NSProcessInfo processInfo] physicalMemory];
+}
+
+NSString * _memoryTotalSpace_desc(void) {
+    return [NSString stringWithFormat:@"%.1fG", _memoryTotalSpace() / 1024.0 / 1024.0 / 1024.0];
+}
+
+UInt64 _memoryAvaiableSpace(void) {
+    
+    mach_port_t host_port = mach_host_self();
+    mach_msg_type_number_t host_size = HOST_VM_INFO_COUNT;
+    vm_size_t page_size;
+    vm_statistics_data_t vm_stat;
+    kern_return_t kern;
+    kern = host_page_size(host_port, &page_size);
+    if (kern != KERN_SUCCESS) return 0;
+    kern = host_statistics(host_port, HOST_VM_INFO, (host_info_t)&vm_stat, &host_size);
+    if (kern != KERN_SUCCESS) return 0;
+    return vm_stat.free_count * page_size;
+}
+
+NSString * _memoryAvaiableSpace_desc(void) {
+    return [NSString stringWithFormat:@"%.1fM", _memoryAvaiableSpace() / 1024.0 / 1024.0];
+}
+
+NSUInteger _memoryUsedSpace(void) {
+    
+    mach_port_t host_port = mach_task_self();
+    task_basic_info_data_t taskInfo;
+    mach_msg_type_number_t host_size = TASK_BASIC_INFO_COUNT;
+    kern_return_t kernReturn = task_info(host_port, TASK_BASIC_INFO, (task_info_t)&taskInfo, &host_size);
+    if (kernReturn != KERN_SUCCESS) return 0;
+    return taskInfo.resident_size;
+}
+
+NSString * _memoryUsedSpace_desc(void) {
+    return [NSString stringWithFormat:@"%.1fM", _memoryUsedSpace() / 1024.0 / 1024.0];
 }
 
 NSString * _CPUCount(void) {
@@ -702,9 +739,9 @@ NSArray * _PerCPUUsage(void) {
             if (_prevCPUInfo) {
                 
                 _inUse = (
-                          (_cpuInfo[(CPU_STATE_MAX * i) + CPU_STATE_USER]   - _prevCPUInfo[(CPU_STATE_MAX * i) + CPU_STATE_USER])
+                          (_cpuInfo[(CPU_STATE_MAX * i) + CPU_STATE_USER] - _prevCPUInfo[(CPU_STATE_MAX * i) + CPU_STATE_USER])
                           + (_cpuInfo[(CPU_STATE_MAX * i) + CPU_STATE_SYSTEM] - _prevCPUInfo[(CPU_STATE_MAX * i) + CPU_STATE_SYSTEM])
-                          + (_cpuInfo[(CPU_STATE_MAX * i) + CPU_STATE_NICE]   - _prevCPUInfo[(CPU_STATE_MAX * i) + CPU_STATE_NICE])
+                          + (_cpuInfo[(CPU_STATE_MAX * i) + CPU_STATE_NICE] - _prevCPUInfo[(CPU_STATE_MAX * i) + CPU_STATE_NICE])
                           );
                 _total = _inUse + (_cpuInfo[(CPU_STATE_MAX * i) + CPU_STATE_IDLE] - _prevCPUInfo[(CPU_STATE_MAX * i) + CPU_STATE_IDLE]);
             } else {
@@ -792,7 +829,7 @@ BOOL _is_jailbreak_checkInject(void) {
     return NO;
 }
 
-BOOL _is_jailbreak_checkDylibs() {
+BOOL _is_jailbreak_checkDylibs(void) {
     
     uint32_t count = _dyld_image_count();
     for (uint32_t i = 0 ; i < count; ++i) {
@@ -803,7 +840,7 @@ BOOL _is_jailbreak_checkDylibs() {
     return NO;
 }
 
-BOOL _is_jailbreak_checkEnv() {
+BOOL _is_jailbreak_checkEnv(void) {
     char *env = getenv("DYLD_INSERT_LIBRARIES");
     return nil != env;
 }
@@ -1008,6 +1045,12 @@ struct LZDeviceUnit_type LZDeviceInfo = {
     .diskFreeSpace_desc = _diskFreeSpace_desc,
     .diskUsedSpace = _diskusedSpace,
     .diskUsedSpace_desc = _diskUsedSpace_desc,
+    .memoryTotalSpace = _memoryTotalSpace,
+    .memoryTotalSpace_desc = _memoryTotalSpace_desc,
+    .memoryAvaiableSpace = _memoryAvaiableSpace,
+    .memoryAvaiableSpace_desc = _memoryAvaiableSpace_desc,
+    .memoryUsedSpace = _memoryUsedSpace,
+    .memoryUsedSpace_desc = _memoryUsedSpace_desc,
     .CPUCount = _CPUCount,
     .CPUUsageRate = _CPUUsageRate,
     .restartDate= _restartDate,
