@@ -10,72 +10,44 @@
 #import "NSObject+LZRuntime.h"
 #import "MJRefresh.h"
 
-@interface LZWeakRefreshObjectContainer : NSObject
-
-@property (nonatomic, readonly, strong) id weakObject;
-
-/** 构造方法 */
-- (instancetype)initWithWeakObject:(id)object;
-
-@end
-
-@implementation LZWeakRefreshObjectContainer
-
-- (instancetype)initWithWeakObject:(id)object {
-    if (self = [super init]) {
-        _weakObject = object;
-    }
-    return self;
-}
-
-@end
-
 static NSDictionary *RefreshTextAttributes = nil;
 static NSString *RefreshNoMoreTitle = @"已经没有更多了";
 @implementation UIScrollView (LZRefreshControl)
 
 - (NSString *)noMoreDataTitle {
-    
-    LZWeakRefreshObjectContainer *container = LZ_getAssociatedObject(self, _cmd);
-    return container.weakObject;
+    return LZ_getAssociatedObject(self, _cmd);
 }
 
 - (void)setNoMoreDataTitle:(NSString *)noMoreDataTitle {
-    LZ_setAssociatedCopyObject(self, @selector(noMoreDataTitle), [[LZWeakRefreshObjectContainer alloc] initWithWeakObject:noMoreDataTitle]);
+    LZ_setAssociatedCopyObject(self, @selector(noMoreDataTitle), noMoreDataTitle);
 }
 
 - (NSDictionary *)textAttributes {
-    
-    LZWeakRefreshObjectContainer *container = LZ_getAssociatedObject(self, _cmd);
-    return container.weakObject;
+    return LZ_getAssociatedObject(self, _cmd);
 }
 
 - (void)setTextAttributes:(NSDictionary *)textAttributes {
-    LZ_setAssociatedObject(self, @selector(textAttributes), [[LZWeakRefreshObjectContainer alloc] initWithWeakObject:textAttributes]);
+    LZ_setAssociatedObject(self, @selector(textAttributes), textAttributes);
 }
 
 - (void (^)(void))headerRefreshingCallback {
-    
-    LZWeakRefreshObjectContainer *container = LZ_getAssociatedObject(self, _cmd);
-    return container.weakObject;
+    return LZ_getAssociatedObject(self, _cmd);
 }
 
 - (void)setHeaderRefreshingCallback:(void (^)(void))headerRefreshingCallback {
-    LZ_setAssociatedCopyObject(self, @selector(headerRefreshingCallback), [[LZWeakRefreshObjectContainer alloc] initWithWeakObject:headerRefreshingCallback]);
+    LZ_setAssociatedCopyObject(self, @selector(headerRefreshingCallback), headerRefreshingCallback);
 }
 
 - (void (^)(void))footerRefreshingCallback {
-    
-    LZWeakRefreshObjectContainer *container = LZ_getAssociatedObject(self, _cmd);
-    return container.weakObject;
+    return LZ_getAssociatedObject(self, _cmd);
 }
 
 - (void)setFooterRefreshingCallback:(void (^)(void))footerRefreshingCallback {
-    LZ_setAssociatedCopyObject(self, @selector(footerRefreshingCallback), [[LZWeakRefreshObjectContainer alloc] initWithWeakObject:footerRefreshingCallback]);
+    LZ_setAssociatedCopyObject(self, @selector(footerRefreshingCallback), footerRefreshingCallback);
 }
 
 + (void)configTextAttibutes:(NSDictionary *)attributes {
-	RefreshTextAttributes = attributes;
+    RefreshTextAttributes = attributes;
 }
 
 + (void)configNoMoreDataTitle:(NSString *)noMoreDataTitle {
@@ -83,113 +55,113 @@ static NSString *RefreshNoMoreTitle = @"已经没有更多了";
 }
 
 - (BOOL)isHeaderRefreshing {
-	return [self.mj_header isRefreshing];
+    return [self.mj_header isRefreshing];
 }
 
 - (BOOL)isFooterRefreshing {
-	return [self.mj_footer isRefreshing];
+    return [self.mj_footer isRefreshing];
 }
 
 - (BOOL)isRefreshing {
-	return [self isHeaderRefreshing] || [self isFooterRefreshing];
+    return [self isHeaderRefreshing] || [self isFooterRefreshing];
 }
 
 - (void)beginHeaderRefresh {
-	if (self.mj_footer.state == MJRefreshStateNoMoreData) {
-		[self.mj_footer resetNoMoreData];
-	}
-	[self.mj_header beginRefreshing];
+    if (self.mj_footer.state == MJRefreshStateNoMoreData) {
+        [self.mj_footer resetNoMoreData];
+    }
+    [self.mj_header beginRefreshing];
 }
 
 - (void)endHeaderRefresh {
-	[self.mj_header endRefreshing];
+    [self.mj_header endRefreshing];
 }
 
 - (void)beginFooterRefresh {
-	[self.mj_footer beginRefreshing];
+    [self.mj_footer beginRefreshing];
 }
 
 - (void)endFooterRefresh {
-	[self.mj_footer endRefreshing];
+    [self.mj_footer endRefreshing];
 }
 
 - (void)hideHeader {
-	[self.mj_header setHidden:YES];
+    [self.mj_header setHidden:YES];
 }
 
 - (void)showHeader {
-	[self.mj_header setHidden:NO];
+    [self.mj_header setHidden:NO];
 }
 
 - (void)hideFooter {
-	[self.mj_footer setHidden:YES];
+    [self.mj_footer setHidden:YES];
 }
 
 - (void)showFooter {
-	[self.mj_footer setHidden:NO];
+    [self.mj_footer setHidden:NO];
 }
 
 - (void)endFooterRefreshingWithNoMoreData {
-	[self.mj_footer endRefreshingWithNoMoreData];
+    [self.mj_footer endRefreshingWithNoMoreData];
 }
 
 - (void)resetFooterNoMoreData {
-	[self.mj_footer resetNoMoreData];
+    [self.mj_footer resetNoMoreData];
 }
 
 - (void)setupHideFooterNoData {
-	if ([self totalDataCount]) {
-		self.mj_footer.hidden = NO;
-	} else {
-		self.mj_footer.hidden = YES;
-	}
+    if ([self totalDataCount]) {
+        self.mj_footer.hidden = NO;
+    } else {
+        self.mj_footer.hidden = YES;
+    }
 }
 
 - (void)headerWithRefreshingBlock:(LZRefreshingBlock)refreshingBlock {
-	MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-		if (self.mj_footer.state == MJRefreshStateNoMoreData) {
-			[self.mj_footer resetNoMoreData];
-		}
+    MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        if (self.mj_footer.state == MJRefreshStateNoMoreData) {
+            [self.mj_footer resetNoMoreData];
+        }
         if (self.headerRefreshingCallback) {
             self.headerRefreshingCallback();
         }
-		if (refreshingBlock) {
-			refreshingBlock();
-		}
-	}];
+        if (refreshingBlock) {
+            refreshingBlock();
+        }
+    }];
     NSDictionary *textArrs = self.textAttributes ?: RefreshTextAttributes;
-	if (nil != textArrs) {
-		
-		header.stateLabel.textColor = textArrs[NSForegroundColorAttributeName];
-		header.lastUpdatedTimeLabel.textColor = textArrs[NSForegroundColorAttributeName];
-	}
-	self.mj_header = header;
-}
-
-- (void)headerWithRefreshingTarget:(id)target
-				  refreshingAction:(SEL)action {
-	MJRefreshNormalHeader *header =
-	[MJRefreshNormalHeader headerWithRefreshingTarget:target refreshingAction:action];
-	header.refreshingBlock = ^{
-		if (self.mj_footer.state == MJRefreshStateNoMoreData) {
-			[self.mj_footer resetNoMoreData];
-		}
-        if (self.headerRefreshingCallback) {
-            self.headerRefreshingCallback();
-        }
-	};
-	NSDictionary *textArrs = self.textAttributes ?: RefreshTextAttributes;
     if (nil != textArrs) {
         
         header.stateLabel.textColor = textArrs[NSForegroundColorAttributeName];
         header.lastUpdatedTimeLabel.textColor = textArrs[NSForegroundColorAttributeName];
     }
-	self.mj_header = header;
+    self.mj_header = header;
+}
+
+- (void)headerWithRefreshingTarget:(id)target
+                  refreshingAction:(SEL)action {
+    MJRefreshNormalHeader *header =
+    [MJRefreshNormalHeader headerWithRefreshingTarget:target refreshingAction:action];
+    header.refreshingBlock = ^{
+        if (self.mj_footer.state == MJRefreshStateNoMoreData) {
+            [self.mj_footer resetNoMoreData];
+        }
+        if (self.headerRefreshingCallback) {
+            self.headerRefreshingCallback();
+        }
+    };
+    NSDictionary *textArrs = self.textAttributes ?: RefreshTextAttributes;
+    if (nil != textArrs) {
+        
+        header.stateLabel.textColor = textArrs[NSForegroundColorAttributeName];
+        header.lastUpdatedTimeLabel.textColor = textArrs[NSForegroundColorAttributeName];
+    }
+    self.mj_header = header;
 }
 
 - (void)footerWithRefreshingBlock:(LZRefreshingBlock)refreshingBlock {
     
-	MJRefreshAutoNormalFooter *footer =
+    MJRefreshAutoNormalFooter *footer =
     [MJRefreshAutoNormalFooter footerWithRefreshingBlock:refreshingBlock];
     [footer setTitle:@"" forState:MJRefreshStateIdle];
     NSDictionary *textArrs = self.textAttributes ?: RefreshTextAttributes;
@@ -214,9 +186,9 @@ static NSString *RefreshNoMoreTitle = @"已经没有更多了";
 }
 
 - (void)footerWithRefreshingTarget:(id)target
-				  refreshingAction:(SEL)action {
-	
-	MJRefreshAutoNormalFooter *footer =
+                  refreshingAction:(SEL)action {
+    
+    MJRefreshAutoNormalFooter *footer =
     [MJRefreshAutoNormalFooter footerWithRefreshingTarget:target refreshingAction:action];
     [footer setTitle:@"" forState:MJRefreshStateIdle];
     NSDictionary *textArrs = self.textAttributes ?: RefreshTextAttributes;
@@ -240,30 +212,30 @@ static NSString *RefreshNoMoreTitle = @"已经没有更多了";
 }
 
 - (void)removeHeader {
-	[self.mj_header removeFromSuperview];
+    [self.mj_header removeFromSuperview];
 }
 
 - (void)removeFooter {
-	[self.mj_footer removeFromSuperview];
+    [self.mj_footer removeFromSuperview];
 }
 
 - (NSInteger)totalDataCount {
-	
-	NSInteger totalCount = 0;
-	if ([self isKindOfClass:[UITableView class]]) {
-		
-		UITableView *tableView = (UITableView *)self;
-		for (NSInteger section = 0; section<tableView.numberOfSections; section++) {
-			totalCount += [tableView numberOfRowsInSection:section];
-		}
-	} else if ([self isKindOfClass:[UICollectionView class]]) {
-		
-		UICollectionView *collectionView = (UICollectionView *)self;
-		for (NSInteger section = 0; section<collectionView.numberOfSections; section++) {
-			totalCount += [collectionView numberOfItemsInSection:section];
-		}
-	}
-	return totalCount;
+    
+    NSInteger totalCount = 0;
+    if ([self isKindOfClass:[UITableView class]]) {
+        
+        UITableView *tableView = (UITableView *)self;
+        for (NSInteger section = 0; section<tableView.numberOfSections; section++) {
+            totalCount += [tableView numberOfRowsInSection:section];
+        }
+    } else if ([self isKindOfClass:[UICollectionView class]]) {
+        
+        UICollectionView *collectionView = (UICollectionView *)self;
+        for (NSInteger section = 0; section<collectionView.numberOfSections; section++) {
+            totalCount += [collectionView numberOfItemsInSection:section];
+        }
+    }
+    return totalCount;
 }
 
 @end
