@@ -1,30 +1,30 @@
 PODS:
-  - LZDependencyToolkit (2.4.0):
-    - LZDependencyToolkit/Category (= 2.4.0)
-    - LZDependencyToolkit/Define (= 2.4.0)
-    - LZDependencyToolkit/Object (= 2.4.0)
-    - LZDependencyToolkit/Struct (= 2.4.0)
-  - LZDependencyToolkit/Category (2.4.0):
+  - LZDependencyToolkit (2.4.1):
+    - LZDependencyToolkit/Category (= 2.4.1)
+    - LZDependencyToolkit/Define (= 2.4.1)
+    - LZDependencyToolkit/Object (= 2.4.1)
+    - LZDependencyToolkit/Struct (= 2.4.1)
+  - LZDependencyToolkit/Category (2.4.1):
     - MJRefresh
-  - LZDependencyToolkit/Define (2.4.0)
-  - LZDependencyToolkit/Object (2.4.0):
-    - LZDependencyToolkit/Object/Proxy (= 2.4.0)
-    - LZDependencyToolkit/Object/Thread (= 2.4.0)
-    - LZDependencyToolkit/Object/Timer (= 2.4.0)
-    - LZDependencyToolkit/Object/Transitioning (= 2.4.0)
-  - LZDependencyToolkit/Object/Proxy (2.4.0)
-  - LZDependencyToolkit/Object/Thread (2.4.0)
-  - LZDependencyToolkit/Object/Timer (2.4.0)
-  - LZDependencyToolkit/Object/Transitioning (2.4.0)
-  - LZDependencyToolkit/Struct (2.4.0):
-    - LZDependencyToolkit/Struct/AppUnit (= 2.4.0)
-    - LZDependencyToolkit/Struct/CryptoUnit (= 2.4.0)
-    - LZDependencyToolkit/Struct/DeviceUnit (= 2.4.0)
-    - LZDependencyToolkit/Struct/QuickUnit (= 2.4.0)
-  - LZDependencyToolkit/Struct/AppUnit (2.4.0)
-  - LZDependencyToolkit/Struct/CryptoUnit (2.4.0)
-  - LZDependencyToolkit/Struct/DeviceUnit (2.4.0)
-  - LZDependencyToolkit/Struct/QuickUnit (2.4.0)
+  - LZDependencyToolkit/Define (2.4.1)
+  - LZDependencyToolkit/Object (2.4.1):
+    - LZDependencyToolkit/Object/Proxy (= 2.4.1)
+    - LZDependencyToolkit/Object/Thread (= 2.4.1)
+    - LZDependencyToolkit/Object/Timer (= 2.4.1)
+    - LZDependencyToolkit/Object/Transitioning (= 2.4.1)
+  - LZDependencyToolkit/Object/Proxy (2.4.1)
+  - LZDependencyToolkit/Object/Thread (2.4.1)
+  - LZDependencyToolkit/Object/Timer (2.4.1)
+  - LZDependencyToolkit/Object/Transitioning (2.4.1)
+  - LZDependencyToolkit/Struct (2.4.1):
+    - LZDependencyToolkit/Struct/AppUnit (= 2.4.1)
+    - LZDependencyToolkit/Struct/CryptoUnit (= 2.4.1)
+    - LZDependencyToolkit/Struct/DeviceUnit (= 2.4.1)
+    - LZDependencyToolkit/Struct/QuickUnit (= 2.4.1)
+  - LZDependencyToolkit/Struct/AppUnit (2.4.1)
+  - LZDependencyToolkit/Struct/CryptoUnit (2.4.1)
+  - LZDependencyToolkit/Struct/DeviceUnit (2.4.1)
+  - LZDependencyToolkit/Struct/QuickUnit (2.4.1)
   - MJRefresh (3.6.1)
 
 DEPENDENCIES:
@@ -39,7 +39,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  LZDependencyToolkit: 880b89616c6a1060c2fffdb3cce8b0dfeb9dd331
+  LZDependencyToolkit: 54b0848bdc65b63ea0ec838b0712839583dd964d
   MJRefresh: d2c1970d1cf6e77fcfcdfe76c943dfab8dbfa5c1
 
 PODFILE CHECKSUM: 7256173d1c33febe1d369943bd7256cf696d3399
