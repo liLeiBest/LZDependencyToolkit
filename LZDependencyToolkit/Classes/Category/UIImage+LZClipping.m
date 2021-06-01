@@ -86,7 +86,7 @@
     CGRect rect = CGRectMake(0, 0, w, h);
     
     CGContextBeginPath(context);
-    addRoundedRectToPath(context, rect, 5, 5);
+    addRoundedRectToPath(context, rect, w * 0.5f, h * 0.5f);
     CGContextClosePath(context);
     CGContextClip(context);
     CGContextDrawImage(context, CGRectMake(0, 0, w, h), img.CGImage);
