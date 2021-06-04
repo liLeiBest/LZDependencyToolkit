@@ -184,7 +184,6 @@
 
 - (instancetype)reuseViewFromXib:(NSString *)xibName
 						inBundle:(NSString *)bundleName {
-	
 	return [NSBundle reuseViewFromXib:xibName
 								owner:self
 							 inBundle:bundleName

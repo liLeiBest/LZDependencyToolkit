@@ -82,8 +82,8 @@
 											owner:owner
 										   bundle:bundleName
 								   referenceClass:className];
-	reuseView.translatesAutoresizingMaskIntoConstraints = NO;
-	owner.translatesAutoresizingMaskIntoConstraints = NO;
+	reuseView.translatesAutoresizingMaskIntoConstraints = YES;
+	owner.translatesAutoresizingMaskIntoConstraints = YES;
 	[owner addSubview:reuseView];
 	
 	NSLayoutConstraint *left =
