@@ -689,7 +689,7 @@ NSString * _memoryAvaiableSpace_desc(void) {
     return [NSString stringWithFormat:@"%.1fM", _memoryAvaiableSpace() / 1024.0 / 1024.0];
 }
 
-NSUInteger _memoryUsedSpace(void) {
+UInt64 _memoryUsedSpace(void) {
     
     mach_port_t host_port = mach_task_self();
     task_basic_info_data_t taskInfo;

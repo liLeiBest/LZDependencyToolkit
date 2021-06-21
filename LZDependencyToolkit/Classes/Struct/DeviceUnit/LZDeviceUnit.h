@@ -215,7 +215,7 @@ struct LZDeviceUnit_type {
     /// 可用内存描述,单位:M
     NSString * (* memoryAvaiableSpace_desc)(void);
     /// 内存使用
-    NSString * (* memoryUsedSpace)(void);
+    UInt64 (* memoryUsedSpace)(void);
     /// 内存使用描述,单位:M
     NSString * (* memoryUsedSpace_desc)(void);
     
