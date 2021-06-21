@@ -32,7 +32,7 @@
     const char *_lz_log_time = [[lz_log_dateFormatter stringFromDate:[NSDate date]] UTF8String]; \
     const char *_lz_log_app = [lz_log_displayName UTF8String]; \
     const char *_lz_log_file = [[[NSString stringWithUTF8String:__FILE__] lastPathComponent] UTF8String]; \
-    const char *_lz_log_content = [[NSString stringWithFormat:@"%@"fmt, @"", ##__VA_ARGS__] UTF8String]; \
+    const char *_lz_log_content = [[NSString stringWithFormat:@"%@" fmt, @"", ##__VA_ARGS__] UTF8String]; \
     const char *_lz_log_line_start = [@"--------------------------Start--------------------------" UTF8String]; \
     const char *_lz_log_line_end =   [@"---------------------------End---------------------------" UTF8String]; \
     fprintf(stderr, "%s %s %s %s [Line %d]\n%s\n%s\n%s\n", _lz_log_time, _lz_log_app, _lz_log_file, __PRETTY_FUNCTION__, __LINE__, _lz_log_line_start, _lz_log_content, _lz_log_line_end);\
