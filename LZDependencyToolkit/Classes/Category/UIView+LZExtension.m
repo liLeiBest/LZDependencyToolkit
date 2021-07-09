@@ -321,7 +321,8 @@
     NSString *currentLanguage = [currentInputMode primaryLanguage];
     
     UITextPosition *position = nil;
-    if ([currentLanguage isEqualToString:@"zh-Hans"]) {
+    if ([currentLanguage isEqualToString:@"zh-Hans"]
+        || [currentLanguage isEqualToString:@"intl"]) {
         //获取高亮部分
         UITextRange *selectedRange = [inputView markedTextRange];
         position = [inputView positionFromPosition:selectedRange.start offset:0];
