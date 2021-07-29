@@ -167,6 +167,17 @@ NS_ASSUME_NONNULL_BEGIN
               textContent:(nullable NSString *)textContent
             changeHandler:(nullable void (^)(BOOL marked))handler;
 
+/**
+配置输入框的最大输入长度
+
+@param limitLength NSUInteger
+@param textContent NSString
+@param handler 监听回调
+*/
+- (void)limitLength:(NSUInteger)limitLength
+               text:(nullable NSString *)textContent
+            handler:(nullable void (^)(BOOL marked, BOOL overflow))handler;
+
 @end
 
 @interface UIView (LZScreenShort)

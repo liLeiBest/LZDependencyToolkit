@@ -303,12 +303,22 @@
 
 - (void)configLimitLength:(NSUInteger)limitLength
               textContent:(NSString *)textContent {
-    [self configLimitLength:limitLength textContent:textContent changeHandler:nil];
+    [self limitLength:limitLength text:textContent handler:nil];
 }
 
 - (void)configLimitLength:(NSUInteger)limitLength
               textContent:(NSString *)textContent
             changeHandler:(nullable void (^)(BOOL))handler {
+    [self limitLength:limitLength text:textContent handler:^(BOOL marked, BOOL overflow) {
+        if (handler) {
+            handler(marked);
+        }
+    }];
+}
+
+- (void)limitLength:(NSUInteger)limitLength
+               text:(NSString *)textContent
+            handler:(void (^)(BOOL, BOOL))handler {
     
     Protocol *protocol = @protocol(UITextInput);
     NSAssert([self conformsToProtocol:protocol], @"不是可输入视图");
@@ -321,6 +331,7 @@
     NSString *currentLanguage = [currentInputMode primaryLanguage];
     
     UITextPosition *position = nil;
+    BOOL selected = NO;
     if ([currentLanguage isEqualToString:@"zh-Hans"]
         || [currentLanguage isEqualToString:@"intl"]) {
         //获取高亮部分
@@ -328,19 +339,11 @@
         position = [inputView positionFromPosition:selectedRange.start offset:0];
         if (!position) { // 没有高亮选择的字，则对已输入的文字进行字数统计和限制
             count = limitLength - textContent.length;
-            if (handler) {
-                handler(NO);
-            }
         } else { // 有高亮选择的字符串，则暂不对文字进行统计和限制
-            if (handler) {
-                handler(YES);
-            }
+            selected = YES;
         }
     } else { // 中文输入法以外的直接对其统计限制即可，不考虑其他语种情况
         count = limitLength - [inputView countWord:textContent];
-        if (handler) {
-            handler(NO);
-        }
     }
     
     if (count <= 0 && nil == position) {
@@ -353,9 +356,9 @@
             void (*func)(id, SEL, NSString *) = (void *)imp;
             func(inputView, selector, content);
         }
-        if (handler) {
-            handler(NO);
-        }
+    }
+    if (handler) {
+        handler(selected, count < 0);
     }
 }
 
