@@ -47,6 +47,25 @@
     return [self imageWithColor:color size:size isRound:NO];
 }
 
+/** 根据字符串内容、字体颜色、背景颜色、字体、尺寸及是否需要省略，创建图片 */
++ (UIImage *)imageWithString:(NSString *)string
+             foregroundColor:(UIColor *)fgColor
+             backgroundColor:(UIColor *)bgColor
+                        font:(UIFont *)font
+                        size:(CGSize)size
+                       brief:(BOOL)brief {
+    
+    UIImage *image = [self imageWithColor:bgColor size:size];
+    if (YES == brief) {
+        string = [self watermarkFromString:string];
+    }
+    NSDictionary *attributes = @{
+        NSFontAttributeName : font,
+        NSForegroundColorAttributeName : fgColor,
+    };
+    return [image watermark:string attributes:attributes];
+}
+
 /** 根据字符串内容、字体颜色、背景颜色及尺寸，创建图片 */
 + (UIImage *)imageWithString:(NSString *)string
              foregroundColor:(UIColor *)fgColor
@@ -55,7 +74,7 @@
     
     UIImage *image = [self imageWithColor:bgColor size:size];
     string = [self watermarkFromString:string];
-    NSDictionary *attributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
+    NSDictionary *attributes = @{NSForegroundColorAttributeName : fgColor};
     return [image watermark:string attributes:attributes];
 }
 
@@ -176,7 +195,7 @@
 }
 
 /** 获取当前视图截图 */
-+ (UIImage *)imageFromView: (UIView *)theView {
++ (UIImage *)imageFromView:(UIView *)theView {
     
     UIGraphicsBeginImageContext(theView.frame.size);
     CGContextRef context = UIGraphicsGetCurrentContext();

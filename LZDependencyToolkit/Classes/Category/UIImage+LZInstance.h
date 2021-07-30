@@ -39,6 +39,26 @@
 /**
  @author Lilei
  
+ @brief 根据字符串内容、字体颜色、背景颜色、字体、尺寸及是否需要省略
+ 
+ @param string 字符串
+ @param fgColor 字符颜色
+ @param bgColor 背景颜色
+ @param font 字体
+ @param size   CGSize
+ @param brief 是否简写
+ @return UIImage
+ */
++ (UIImage *)imageWithString:(NSString *)string
+             foregroundColor:(UIColor *)fgColor
+             backgroundColor:(UIColor *)bgColor
+                        font:(UIFont *)font
+                        size:(CGSize)size
+                       brief:(BOOL)brief;
+
+/**
+ @author Lilei
+ 
  @brief 根据字符串内容、字体颜色、背景颜色及尺寸，创建图片
  
  @param string 字符串
