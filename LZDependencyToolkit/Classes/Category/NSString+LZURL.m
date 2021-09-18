@@ -16,6 +16,22 @@
 	NSMutableString *paraString = [NSMutableString string];
     [paraDict enumerateKeysAndObjectsUsingBlock:^(NSString *key, NSObject *value, BOOL * _Nonnull stop) {
         if ([value isKindOfClass:[NSString class]] && [(NSString *)value isValidString]) {
+            
+            NSArray *components = [(NSString *)value componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+            if (components && components.count) {
+                
+                NSMutableString *componentsStrM = [NSMutableString string];
+                for (NSString *component in components) {
+                    if (component && component.length) {
+                        
+                        NSString *string = [component stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+                        if (string && string.length) {
+                            [componentsStrM appendString:string];
+                        }
+                    }
+                }
+                value = [componentsStrM copy];
+            }
             [paraString appendFormat:@"%@=%@&", key, value];
         } else {
             [paraString appendFormat:@"%@=%@&", key, value.description];
