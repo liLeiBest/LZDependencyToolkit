@@ -58,19 +58,33 @@ NSString * _build(void) {
     return build;
 }
 
-/** compare build version */
-BOOL _compareBuild(NSString *lastestBuild) {
+/** Digital comparison */
+NSComparisonResult _compareNumResult(NSString *num1, NSString *num2) {
+    return [num1 compare:num2 options:NSNumericSearch];
+}
 
-    NSComparisonResult comparisonResult = [_build() compare:lastestBuild options:NSNumericSearch];
-    if (comparisonResult == NSOrderedDescending) return NO;
+/** compare build version */
+BOOL _compareBuild(NSString *build) {
+    if (_compareNumResult(_build(), build) == NSOrderedDescending) return NO;
     return YES;
 }
 
-/** compare version */
-BOOL _compareVersion(NSString *lastestVersion) {
+/** compare build version */
+BOOL _compareBuild_gt(NSString *build) {
+    if (_compareNumResult(_build(), build) == NSOrderedAscending) return YES;
+    return NO;
+}
 
-    NSComparisonResult comparisonResult = [_version() compare:lastestVersion options:NSNumericSearch];
-    if (comparisonResult == NSOrderedDescending) return NO;
+
+/** compare version */
+BOOL _compareVersion(NSString *version) {
+    if (_compareNumResult(_version(), version) == NSOrderedDescending) return NO;
+    return YES;;
+}
+
+/** compare version */
+BOOL _compareVersion_gt(NSString *version) {
+    if (_compareNumResult(_version(), version) == NSOrderedAscending) return NO;
     return YES;;
 }
 
@@ -247,7 +261,9 @@ struct LZAppUnit_type LZAppUnit = {
     .build = _build,
     
     .compareBuild = _compareBuild,
+    .compareBuild_gt = _compareBuild_gt,
     .compareVersion = _compareVersion,
+    .compareVersion_gt = _compareVersion_gt,
     
     .cacheDir = _cacheDir,
     .documentDir = _documentDir,

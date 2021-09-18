@@ -38,9 +38,17 @@ struct LZAppUnit_type {
      *  compare build with lastest build
      *
      *  @param lastestBuild 最新 build 号
-     *  @return 指定版本是否是最新版本(YES : 是最新版本 ; NO : 不是最新版本)
+     *  @return 指定版本是否是最新版本（大于或等于当前版本）(YES : 是最新版本 ; NO : 不是最新版本)
      */
-    BOOL (* compareBuild)(NSString *lastestBuild);
+    BOOL (* compareBuild)(NSString *build);
+    
+    /**
+     *  compare build with lastest build
+     *
+     *  @param lastestBuild 最新 build 号
+     *  @return 指定版本是否大于当前版本
+     */
+    BOOL (* compareBuild_gt)(NSString *build);
     
     /**
      *  compare version with lastest version
@@ -48,7 +56,15 @@ struct LZAppUnit_type {
      *  @param lastestVersion 最新 version
      *  @return 指定版本是否是最新版本(YES : 是最新版本 ; NO : 不是最新版本)
      */
-    BOOL (* compareVersion)(NSString *lastestVersion);
+    BOOL (* compareVersion)(NSString *version);
+    
+    /**
+     *  compare version with lastest version
+     *
+     *  @param lastestVersion 最新 version
+     *  @return 指定版本是否大于当前版本
+     */
+    BOOL (* compareVersion_gt)(NSString *version);
     
     // MARK: - Path
     /**
