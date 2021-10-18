@@ -11,7 +11,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface NSString (LZFormat)
 
+/// 密文手机号
 - (NSString *)ciphertextPhone;
+
+/// 密文姓名
+- (NSString *)ciphertextFullName;
 
 @end
 
