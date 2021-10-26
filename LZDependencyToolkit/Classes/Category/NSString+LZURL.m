@@ -49,14 +49,18 @@
 - (NSString *)urlByAppendingKeyAndValue:(NSString * _Nonnull)paraString {
     
     NSCharacterSet *queryCharacterSet = [NSCharacterSet URLQueryAllowedCharacterSet];
+    // 编码前，先去掉百分号转义，防止二次编码
+    paraString = [paraString stringByRemovingPercentEncoding];
     paraString = [paraString stringByAddingPercentEncodingWithAllowedCharacters:queryCharacterSet];
-    // 去掉前后空格
     NSString *urlString = self;
+    // 去掉前后空格
     urlString = [urlString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     // 特殊处理：兼容 H5 的路由规则
     NSString *regx = @"/#{1,1}.{0,}/";
     NSRange range = [urlString rangeOfString:regx options:NSRegularExpressionSearch];
     if (range.location == NSNotFound) {
+        // 编码前，先去掉百分号转义，防止二次编码
+        urlString = [urlString stringByRemovingPercentEncoding];
         urlString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:queryCharacterSet];
     }
     // 拼接参数
