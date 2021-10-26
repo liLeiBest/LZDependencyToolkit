@@ -49,8 +49,6 @@
 - (NSString *)urlByAppendingKeyAndValue:(NSString * _Nonnull)paraString {
     
     NSCharacterSet *queryCharacterSet = [NSCharacterSet URLQueryAllowedCharacterSet];
-    // 编码前，先去掉百分号转义，防止二次编码
-    paraString = [paraString stringByRemovingPercentEncoding];
     paraString = [paraString stringByAddingPercentEncodingWithAllowedCharacters:queryCharacterSet];
     NSString *urlString = self;
     // 去掉前后空格
@@ -59,7 +57,7 @@
     NSString *regx = @"/#{1,1}.{0,}/";
     NSRange range = [urlString rangeOfString:regx options:NSRegularExpressionSearch];
     if (range.location == NSNotFound) {
-        // 编码前，先去掉百分号转义，防止二次编码
+        // 编码前，先解码，防止二次编码
         urlString = [urlString stringByRemovingPercentEncoding];
         urlString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:queryCharacterSet];
     }
