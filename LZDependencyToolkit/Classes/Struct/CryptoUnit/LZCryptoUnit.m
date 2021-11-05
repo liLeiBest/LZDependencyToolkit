@@ -95,7 +95,7 @@ NSString * _Encrypt(NSString *plaintext, id secret, size_t keySize, size_t block
     
     NSData *data = [plaintext dataUsingEncoding:NSUTF8StringEncoding];
     data = _Crypto(data, secret, kCCEncrypt, keySize, blockSize, alg);
-    NSString *result = [data base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+    NSString *result = [data base64EncodedStringWithOptions:NSDataBase64EncodingEndLineWithLineFeed];
     result = _StringbyRemoveSpecialCharacters(result);
     return result;
 }
