@@ -156,6 +156,9 @@ NSString * _searchSubDir(NSSearchPathDirectory searchPathDir, NSString *subPath)
 BOOL _createDir(NSString *dirPath) {
     
     NSFileManager *fileManager = [NSFileManager defaultManager];
+    if ([fileManager fileExistsAtPath:dirPath]) {
+        return YES;
+    }
     NSError *error;
     BOOL successful = [fileManager createDirectoryAtPath:dirPath
                              withIntermediateDirectories:YES
