@@ -943,11 +943,6 @@ NSString * _language_short_name(void) {
 CGSize _screen_size(void) {
     
     CGSize size = [UIScreen mainScreen].bounds.size;
-    if (size.height < size.width) {
-        CGFloat tmp = size.height;
-        size.height = size.width;
-        size.width = tmp;
-    }
     return size;
 }
 
