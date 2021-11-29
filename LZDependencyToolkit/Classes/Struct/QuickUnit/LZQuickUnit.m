@@ -214,7 +214,11 @@ UIAlertController * alert(UIViewController *target, NSString *title, NSString *m
     if (nil == target) {
         target = [UIApplication sharedApplication].keyWindow.rootViewController;
     }
-	[target presentViewController:alertCtr animated:YES completion:nil];
+    if (nil != target.presentedViewController) {
+        [target.presentedViewController presentViewController:alertCtr animated:YES completion:nil];
+    } else {
+        [target presentViewController:alertCtr animated:YES completion:nil];
+    }
     return alertCtr;
 }
 
@@ -227,7 +231,11 @@ UIAlertController * sheet(UIViewController *target, NSString *title, NSString *m
     if (nil == target) {
         target = [UIApplication sharedApplication].keyWindow.rootViewController;
     }
-    [target presentViewController:sheetCtr animated:YES completion:nil];
+    if (nil != target.presentedViewController) {
+        [target.presentedViewController presentViewController:sheetCtr animated:YES completion:nil];
+    } else {
+        [target presentViewController:sheetCtr animated:YES completion:nil];
+    }
     return sheetCtr;
 }
 
