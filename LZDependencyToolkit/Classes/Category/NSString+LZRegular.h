@@ -22,6 +22,15 @@
 /**
  @author Lilei
  
+ @brief 判断全是空格 String
+ 
+ @return BOOL
+ */
+- (BOOL)isWhitespaceString;
+
+/**
+ @author Lilei
+ 
  @brief 判断是有效的 URL 地址
 
  @return BOOL

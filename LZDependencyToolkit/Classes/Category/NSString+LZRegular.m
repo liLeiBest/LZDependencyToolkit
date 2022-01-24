@@ -15,6 +15,15 @@
     return nil != self && [self isKindOfClass:[NSString class]] && 0 < self.length;
 }
 
+- (BOOL)isWhitespaceString {
+    
+    NSString *tmpStr = [self stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    if (tmpStr && [tmpStr isValidString]) {
+        return NO;
+    }
+    return YES;
+}
+
 /** 判断是有效的 URL 地址 */
 - (BOOL)isValidURL {
     
