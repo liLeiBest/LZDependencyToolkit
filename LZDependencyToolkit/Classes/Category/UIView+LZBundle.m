@@ -1,11 +1,11 @@
 //
-//  UIView+LZBunble.m
+//  UIView+LZBundle.m
 //  LZDependencyToolkit
 //
 //  Created by Dear.Q on 2022/8/9.
 //
 
-#import "UIView+LZBunble.h"
+#import "UIView+LZBundle.h"
 #import "NSBundle+LZExtension.h"
 
 @implementation UIView (LZBunble)
@@ -35,6 +35,13 @@
                                 owner:self
                              inBundle:bundleName
                        referenceClass:NSStringFromClass([self class])];
+}
+
+- (UINib *)nibFromXib:(NSString *)xibName
+             inBundle:(NSString *)bundleName {
+    return [NSBundle nib:xibName
+                inBundle:bundleName
+          referenceClass:NSStringFromClass([self class])];
 }
 
 @end

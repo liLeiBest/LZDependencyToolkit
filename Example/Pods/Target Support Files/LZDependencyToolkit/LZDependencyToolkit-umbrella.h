@@ -41,7 +41,7 @@
 #import "UIScrollView+EmptyDataSet.h"
 #import "UIScrollView+LZRefreshControl.h"
 #import "UIScrollView+LZRegisterReuseView.h"
-#import "UIView+LZBunble.h"
+#import "UIView+LZBundle.h"
 #import "UIView+LZExtension.h"
 #import "UIView+LZFrame.h"
 #import "UIView+LZInputView.h"

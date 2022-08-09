@@ -1,5 +1,5 @@
 //
-//  UIView+LZBunble.h
+//  UIView+LZBundle.h
 //  LZDependencyToolkit
 //
 //  Created by Dear.Q on 2022/8/9.
@@ -56,6 +56,18 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (nullable instancetype)reuseViewFromXib:(nonnull NSString *)xibName
                                  inBundle:(nullable NSString *)bundleName;
+
+/**
+ @author Lilei
+ 
+ @brief 加载资源目录下的 View Nib
+ 
+ @param xibName xib 名称
+ @param bundleName 资源名称
+ @return instancetype
+ */
+- (nullable UINib *)nibFromXib:(nullable NSString *)xibName
+                      inBundle:(nullable NSString *)bundleName;
 
 @end
 
