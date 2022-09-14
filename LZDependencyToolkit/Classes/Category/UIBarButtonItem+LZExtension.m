@@ -80,6 +80,15 @@
         NSDictionary *normalAttributes = [theme titleTextAttributesForState:UIControlStateNormal];
         NSDictionary *highlightAttributes = [theme titleTextAttributesForState:UIControlStateHighlighted];
         NSDictionary *disableAttributes = [theme titleTextAttributesForState:UIControlStateDisabled];
+        if (nil == normalAttributes &&
+            nil == highlightAttributes &&
+            nil == disableAttributes) {
+            
+            theme = [UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UINavigationBar class]]];
+            normalAttributes = [theme titleTextAttributesForState:UIControlStateNormal];
+            highlightAttributes = [theme titleTextAttributesForState:UIControlStateHighlighted];
+            disableAttributes = [theme titleTextAttributesForState:UIControlStateDisabled];
+        }
         if (nil != normalAttributes || normalAttributes.allKeys.count ? YES : NO) {
             
             NSAttributedString *normalAttributedString =
