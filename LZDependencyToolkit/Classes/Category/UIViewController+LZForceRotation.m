@@ -7,6 +7,7 @@
 
 #import "UIViewController+LZForceRotation.h"
 #import "NSObject+LZRuntime.h"
+#import "LZWeakDefine.h"
 #import <objc/runtime.h>
 
 @interface LZForceRotationWeakContainer : NSObject
@@ -41,11 +42,28 @@
     id appDelegate = [UIApplication sharedApplication].delegate;
     Class destClass = [appDelegate class];
     SEL originalSEL = @selector(application:supportedInterfaceOrientationsForWindow:);
+    const char *originalMethodType = method_getTypeEncoding(class_getInstanceMethod(destClass, originalSEL));
     if (YES == needRotation && nil == self.originalIMP) {
         self.originalIMP = method_getImplementation(class_getInstanceMethod(destClass, originalSEL));
     }
-    const char *originalMethodType = method_getTypeEncoding(class_getInstanceMethod(destClass, originalSEL));
+    @lzweakify(self);
     IMP newIMP = imp_implementationWithBlock(^(id obj, UIApplication *application, UIWindow *window) {
+        @lzstrongify(self);
+        if (@available(iOS 14, *)) {
+        } else {
+            @try {
+                if ([NSStringFromClass([[[window subviews] lastObject] class]) isEqualToString:@"UITransitionView"]) {
+                    if (needRotation) {
+                        if (@available(iOS 11, *)) {
+                            [self forceChangeOrientation:UIInterfaceOrientationLandscapeRight];
+                        }
+                    }
+                }
+            } @catch (NSException *exception) {
+                NSLog(@"Orientation Error:%@", exception);
+            } @finally {
+            }
+        }
         return needRotation ? UIInterfaceOrientationMaskAll : UIInterfaceOrientationPortrait;
     });
     if (YES == needRotation) {
@@ -56,15 +74,36 @@
 }
 
 - (void)forceChangeOrientation:(UIInterfaceOrientation)orientation {
+    
     int val = (int)orientation;
-    if ([[UIDevice currentDevice] respondsToSelector:@selector(setOrientation:)]) {
+    if (@available(iOS 16, *)) {
         
-        SEL selector = NSSelectorFromString(@"setOrientation:");
-        NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:[UIDevice instanceMethodSignatureForSelector:selector]];
-        [invocation setSelector:selector];
-        [invocation setTarget:[UIDevice currentDevice]];
-        [invocation setArgument:&val atIndex:2];
-        [invocation invoke];
+        [self setNeedsUpdateOfSupportedInterfaceOrientations];
+        [self.navigationController setNeedsUpdateOfSupportedInterfaceOrientations];
+        NSArray *array = [[[UIApplication sharedApplication] connectedScenes] allObjects];
+        if (array.count) {
+            
+            UIWindowScene *scene = (UIWindowScene *)array[0];
+            UIWindowSceneGeometryPreferencesIOS *geometryperences = [[UIWindowSceneGeometryPreferencesIOS alloc] initWithInterfaceOrientations:(1 << val)];
+            [scene requestGeometryUpdateWithPreferences:geometryperences errorHandler:^(NSError * _Nonnull error) {
+                NSLog(@"Orientation Error:%@", error);
+            }];
+        }
+    } else {
+        @try {
+            SEL selector = @selector(setOrientation:);
+            if ([[UIDevice currentDevice] respondsToSelector:selector]) {
+                
+                NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:[UIDevice instanceMethodSignatureForSelector:selector]];
+                [invocation setSelector:selector];
+                [invocation setTarget:[UIDevice currentDevice]];
+                [invocation setArgument:&val atIndex:2];
+                [invocation invoke];
+            }
+        } @catch (NSException *exception) {
+            NSLog(@"Orientation Error:%@", exception);
+        } @finally {
+        }
     }
 }
 
