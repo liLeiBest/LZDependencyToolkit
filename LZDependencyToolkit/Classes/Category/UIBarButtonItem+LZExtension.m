@@ -45,12 +45,20 @@
 }
 
 //MARK: - Getter/Setter
-- (BOOL)isHidden {
-    return self.customView.isHidden;
+- (BOOL)isHiddenItem {
+    if (@available(iOS 16.0, *)) {
+        return self.isHidden;
+    } else {
+        return self.customView.isHidden;
+    }
 }
 
-- (void)setHidden:(BOOL)hidden {
-    self.customView.hidden = hidden;
+- (void)setHiddenItem:(BOOL)hiddenItem {
+    if (@available(iOS 16.0, *)) {
+        self.hidden = hiddenItem;
+    } else {
+        self.customView.hidden = hiddenItem;
+    }
 }
 
 //MARK: - Public
