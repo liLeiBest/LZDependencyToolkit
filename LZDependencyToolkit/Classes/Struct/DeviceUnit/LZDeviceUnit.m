@@ -1052,7 +1052,20 @@ NSString * _language_short_name(void) {
 
 CGSize _screen_size(void) {
     
-    CGSize size = [UIScreen mainScreen].bounds.size;
+    static CGSize size = {0, 0};
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        
+        UIScreen *screen = nil;
+        if (@available(iOS 13.0, *)) {
+            
+            UIWindowScene *scene = (UIWindowScene *)[UIApplication sharedApplication].connectedScenes.allObjects.firstObject;
+            screen = scene.screen;
+        } else {
+            screen = [UIScreen mainScreen];
+        }
+        size = screen.bounds.size;
+    });
     return size;
 }
 
