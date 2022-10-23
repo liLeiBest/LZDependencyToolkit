@@ -94,6 +94,7 @@ LZDeviceGeneration _generation(void) {
     if ([deviceIdentifier isEqualToString:@"iPhone8,2"]) return LZDeviceGenerationiPhone6s_plus;
     if ([deviceIdentifier isEqualToString:@"iPhone8,4"]) return LZDeviceGenerationiPhoneSE1st;
     if ([deviceIdentifier isEqualToString:@"iPhone12,8"]) return LZDeviceGenerationiPhoneSE2nd;
+    if ([deviceIdentifier isEqualToString:@"iPhone14,6"]) return LZDeviceGenerationiPhoneSE3rd;
     if ([deviceIdentifier isEqualToString:@"iPhone9,1"] ||
         [deviceIdentifier isEqualToString:@"iPhone9,3"]) return LZDeviceGenerationiPhone7;
     if ([deviceIdentifier isEqualToString:@"iPhone9,2"] ||
@@ -119,6 +120,10 @@ LZDeviceGeneration _generation(void) {
     if ([deviceIdentifier isEqualToString:@"iPhone14,5"]) return LZDeviceGenerationiPhone13;
     if ([deviceIdentifier isEqualToString:@"iPhone14,2"]) return LZDeviceGenerationiPhone13_pro;
     if ([deviceIdentifier isEqualToString:@"iPhone14,3"]) return LZDeviceGenerationiPhone13_pro_max;
+    if ([deviceIdentifier isEqualToString:@"iPhone14,7"]) return LZDeviceGenerationiPhone14;
+    if ([deviceIdentifier isEqualToString:@"iPhone14,8"]) return LZDeviceGenerationiPhone14_plus;
+    if ([deviceIdentifier isEqualToString:@"iPhone15,2"]) return LZDeviceGenerationiPhone14_pro;
+    if ([deviceIdentifier isEqualToString:@"iPhone15,3"]) return LZDeviceGenerationiPhone14_pro_max;
     // iPod 型号
     if ([deviceIdentifier isEqualToString:@"iPod1,1"]) return LZDeviceGenerationiPodtouch1st;
     if ([deviceIdentifier isEqualToString:@"iPod2,1"]) return LZDeviceGenerationiPodtouch2nd;
@@ -149,7 +154,11 @@ LZDeviceGeneration _generation(void) {
     if ([deviceIdentifier isEqualToString:@"Watch5,9"] ||
         [deviceIdentifier isEqualToString:@"Watch5,10"] ||
         [deviceIdentifier isEqualToString:@"Watch5,11"] ||
-        [deviceIdentifier isEqualToString:@"Watch5,12"]) return LZDeviceGenerationiWatch_SE;
+        [deviceIdentifier isEqualToString:@"Watch5,12"]) return LZDeviceGenerationiWatch_SE_1st;
+    if ([deviceIdentifier isEqualToString:@"Watch6,10"] ||
+        [deviceIdentifier isEqualToString:@"Watch6,11"] ||
+        [deviceIdentifier isEqualToString:@"Watch6,12"] ||
+        [deviceIdentifier isEqualToString:@"Watch6,13"]) return LZDeviceGenerationiWatch_SE_2nd;
     if ([deviceIdentifier isEqualToString:@"Watch6,1"] ||
         [deviceIdentifier isEqualToString:@"Watch6,2"] ||
         [deviceIdentifier isEqualToString:@"Watch6,3"] ||
@@ -158,6 +167,11 @@ LZDeviceGeneration _generation(void) {
         [deviceIdentifier isEqualToString:@"Watch6,7"] ||
         [deviceIdentifier isEqualToString:@"Watch6,8"] ||
         [deviceIdentifier isEqualToString:@"Watch6,9"]) return LZDeviceGenerationiWatch_series7;
+    if ([deviceIdentifier isEqualToString:@"Watch6,14"] ||
+        [deviceIdentifier isEqualToString:@"Watch6,15"] ||
+        [deviceIdentifier isEqualToString:@"Watch6,16"] ||
+        [deviceIdentifier isEqualToString:@"Watch6,17"]) return LZDeviceGenerationiWatch_series8;
+    if ([deviceIdentifier isEqualToString:@"Watch6,18"]) return LZDeviceGenerationiWatch_ultra_1st;
     // iPad 型号
     if ([deviceIdentifier isEqualToString:@"iPad1,1"]) return LZDeviceGenerationiPad1st;
     if ([deviceIdentifier isEqualToString:@"iPad2,1"] ||
@@ -189,6 +203,8 @@ LZDeviceGeneration _generation(void) {
 		[deviceIdentifier isEqualToString:@"iPad11,4"]) return LZDeviceGenerationiPad_air3rd;
     if ([deviceIdentifier isEqualToString:@"iPad13,1"] ||
         [deviceIdentifier isEqualToString:@"iPad13,2"]) return LZDeviceGenerationiPad_air4th;
+    if ([deviceIdentifier isEqualToString:@"iPad13,16"] ||
+        [deviceIdentifier isEqualToString:@"iPad13,17"]) return LZDeviceGenerationiPad_air5th;
     if ([deviceIdentifier isEqualToString:@"iPad6,7"] ||
         [deviceIdentifier isEqualToString:@"iPad6,8"]) return LZDeviceGenerationiPad_pro_inch_12__9_1st;
     if ([deviceIdentifier isEqualToString:@"iPad7,1"] ||
@@ -252,7 +268,8 @@ LZDeviceGeneration _generation(void) {
         [deviceIdentifier isEqualToString:@"Audio2,1"]) return LZDeviceGenerationAirPods_3rd;
     if ([deviceIdentifier isEqualToString:@"AirPods2,2"] ||
         [deviceIdentifier isEqualToString:@"AirPodsPro1,1"] ||
-        [deviceIdentifier isEqualToString:@"iProd8,1"]) return LZDeviceGenerationAirPods_pro;
+        [deviceIdentifier isEqualToString:@"iProd8,1"]) return LZDeviceGenerationAirPods_pro_1st;
+    if ([deviceIdentifier isEqualToString:@"AirPodsPro1,2"]) return LZDeviceGenerationAirPods_pro_2nd;
     if ([deviceIdentifier isEqualToString:@"AirPodsMax1,1"] ||
         [deviceIdentifier isEqualToString:@"iProd8,6"]) return LZDeviceGenerationAirPods_max;
     // AirTag 型号
@@ -320,6 +337,9 @@ NSString * _generation_desc(void) {
         case LZDeviceGenerationiPhoneSE2nd:
             return @"iPhone SE (2nd generation)";
             break;
+        case LZDeviceGenerationiPhoneSE3rd:
+            return @"iPhone SE (3rd generation)";
+            break;
         case LZDeviceGenerationiPhone7:
             return @"iPhone 7";
             break;
@@ -377,6 +397,18 @@ NSString * _generation_desc(void) {
         case LZDeviceGenerationiPhone13_pro_max:
             return @"iPhone 13 Pro Max";
             break;
+        case LZDeviceGenerationiPhone14:
+            return @"iPhone 14";
+            break;
+        case LZDeviceGenerationiPhone14_plus:
+            return @"iPhone 14 Plus";
+            break;
+        case LZDeviceGenerationiPhone14_pro:
+            return @"iPhone 14 Pro";
+            break;
+        case LZDeviceGenerationiPhone14_pro_max:
+            return @"iPhone 14 Pro Max";
+            break;
             // iPod 型号
         case LZDeviceGenerationiPodtouch1st:
             return @"iPod touch (1st generation)";
@@ -418,14 +450,23 @@ NSString * _generation_desc(void) {
         case LZDeviceGenerationiWatch_series5:
             return @"Apple Watch Series 5";
             break;
-        case LZDeviceGenerationiWatch_SE:
-            return @"Apple Watch SE";
+        case LZDeviceGenerationiWatch_SE_1st:
+            return @"Apple Watch SE (1st generation)";
+            break;
+        case LZDeviceGenerationiWatch_SE_2nd:
+            return @"Apple Watch SE (2nd generation)";
             break;
         case LZDeviceGenerationiWatch_series6:
             return @"Apple Watch Series 6";
             break;
         case LZDeviceGenerationiWatch_series7:
             return @"Apple Watch Series 7";
+            break;
+        case LZDeviceGenerationiWatch_series8:
+            return @"Apple Watch Series 8";
+            break;
+        case LZDeviceGenerationiWatch_ultra_1st:
+            return @"Apple Watch Ultra (1st generation)";
             break;
             // iPad 型号
         case LZDeviceGenerationiPad1st:
@@ -550,8 +591,11 @@ NSString * _generation_desc(void) {
         case LZDeviceGenerationAirPods_3rd:
             return @"AirPods (3rd generation)";
             break;
-        case LZDeviceGenerationAirPods_pro:
-            return @"AirPods Pro";
+        case LZDeviceGenerationAirPods_pro_1st:
+            return @"AirPods Pro (1st generation)";
+            break;
+        case LZDeviceGenerationAirPods_pro_2nd:
+            return @"AirPods Pro (2nd generation)";
             break;
         case LZDeviceGenerationAirPods_max:
             return @"AirPods Max";
@@ -906,8 +950,8 @@ BOOL _is_jailbreak_existPath(void) {
         @"/Applications/redsn0w.app",
         @"/Applications/Absinthe.app",
         @"/Library/MobileSubstrate/MobileSubstrate.dylib",
-//        @"/bin/bash",
-//        @"/usr/sbin/sshd",
+        @"/bin/bash",
+        @"/usr/sbin/sshd",
         @"/etc/apt",
         @"/private/var/lib/apt/",
     ];
