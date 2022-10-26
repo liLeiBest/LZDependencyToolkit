@@ -314,6 +314,8 @@ struct LZDeviceUnit_type {
     
     /// 运营商名称 e.g 中国联通
     NSString * (* carrierName)(void);
+    /// 获取当前网速，上行：upSpeed；下行：downSpeed
+    NSDictionary * (* currentNetSpeed)(void);
 };
 
 FOUNDATION_EXTERN struct LZDeviceUnit_type LZDeviceInfo;

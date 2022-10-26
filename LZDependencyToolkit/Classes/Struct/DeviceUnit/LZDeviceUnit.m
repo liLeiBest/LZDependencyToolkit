@@ -18,6 +18,11 @@
 #import <mach-o/dyld.h>
 #import <mach/mach.h>
 
+#include <arpa/inet.h>
+#include <ifaddrs.h>
+#include <net/if.h>
+#include <net/if_dl.h>
+
 // MARK: - Private -
 UIDevice * _device(void) {
     
@@ -1179,6 +1184,71 @@ NSString * _carrierName(void) {
     return carrierName ? carrierName : @"未知";
 }
 
+NSString * _stringWithbytes(u_int32_t bytes) {
+    if (bytes < 1024) { // B
+        return [NSString stringWithFormat:@"%dB", bytes];
+    } else if (bytes >= 1024 && bytes < 1024 * 1024) { // KB
+        return [NSString stringWithFormat:@"%.0fKB", (double)bytes / 1024];
+    } else if (bytes >= 1024 * 1024 && bytes < 1024 * 1024 * 1024) { // MB
+        return [NSString stringWithFormat:@"%.1fMB", (double)bytes / (1024 * 1024)];
+    } else { // GB
+        return [NSString stringWithFormat:@"%.1fGB", (double)bytes / (1024 * 1024 * 1024)];
+    }
+}
+
+NSDictionary * _currentNetSpeed(void) {
+    
+    u_int32_t iBytes = 0;
+    u_int32_t oBytes = 0;
+    struct ifaddrs *ifa_list = 0, *ifa;
+    if (getifaddrs(&ifa_list) != -1) {
+        
+        u_int32_t allFlow = 0;
+        for (ifa = ifa_list; ifa; ifa = ifa->ifa_next) {
+            if (AF_LINK != ifa->ifa_addr->sa_family) {
+                continue;
+            }
+            if (!(ifa->ifa_flags & IFF_UP) && !(ifa->ifa_flags & IFF_RUNNING)) {
+                continue;
+            }
+            if (ifa->ifa_data == 0) {
+                continue;
+            }
+            // network
+            if (strncmp(ifa->ifa_name, "lo0", 2)) {
+                
+                struct if_data* if_data = (struct if_data*)ifa->ifa_data;
+                oBytes += if_data->ifi_obytes;
+                iBytes += if_data->ifi_ibytes;
+                allFlow = iBytes + oBytes;
+            }
+        }
+    }
+    freeifaddrs(ifa_list);
+    static u_int32_t _iBytes = 0;
+    static u_int32_t _oBytes = 0;
+    NSString *downloadNetSpeed = [_stringWithbytes(0) stringByAppendingString:@"/s"];
+    NSString *uploadNetSpeed = [_stringWithbytes(0) stringByAppendingString:@"/s"];
+    if (_iBytes != 0) {
+        downloadNetSpeed = [_stringWithbytes(iBytes - _iBytes) stringByAppendingString:@"/s"];
+    }
+    _iBytes = iBytes;
+    if (_oBytes != 0) {
+        uploadNetSpeed = [_stringWithbytes(oBytes - _oBytes) stringByAppendingString:@"/s"];
+    }
+    _oBytes = oBytes;
+    static BOOL once = YES;
+    if (YES == once) {
+        
+        once = NO;
+        return _currentNetSpeed();
+    }
+    return @{
+        @"upSpeed" : uploadNetSpeed,
+        @"downSpeed" : downloadNetSpeed,
+    };
+}
+
 // MARK: - 初始化结构体 -
 struct LZDeviceUnit_type LZDeviceInfo = {
     
@@ -1239,4 +1309,5 @@ struct LZDeviceUnit_type LZDeviceInfo = {
 	.is_notch = _is_notch,
     
     .carrierName = _carrierName,
+    .currentNetSpeed = _currentNetSpeed,
 };

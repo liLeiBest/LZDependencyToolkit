@@ -60,7 +60,7 @@
 
 - (void)sysDidClick {
 	LZLog(@"点击了右边系统按钮");
-    [self deviceInfo];
+    NSLog(@"当前网速：%@", LZDeviceInfo.currentNetSpeed());
 }
 
 // MARK: - Private
@@ -187,6 +187,7 @@
     NSLog(@"最后一次重启时间: %@", [LZDeviceInfo.restartDate() dateFormat:@"yyyy-MM-dd aa HH:mm:ss.S EEEE Z"]);
 	NSLog(@"是否是齐刘海: %@", LZDeviceInfo.is_notch() ? @"YES" : @"NO");
     NSLog(@"运营商: %@", LZDeviceInfo.carrierName());
+    NSLog(@"当前网速：%@", LZDeviceInfo.currentNetSpeed());
 }
 
 - (void)customDescription {
@@ -239,14 +240,16 @@
     self.time =
     [[LZWeakTimer alloc] initWithStart:0 interval:2 repeats:YES queue:dispatch_get_main_queue() eventHandler:^{
         
+        NSLog(@"当前网速：%@", LZDeviceInfo.currentNetSpeed());
+        
         static NSUInteger number = 0;
         number++;
         NSLog(@"%@ %@", @"============", LZQuickUnit.toString(@(number)));
-        if (number >= 10) {
-            
-            [self.time invalidate];
-            number = 0;
-        }
+//        if (number >= 10) {
+//
+//            [self.time invalidate];
+//            number = 0;
+//        }
     }];
     self.time.tolerance = 1.0f;
     [self.time schedule];
