@@ -955,8 +955,8 @@ BOOL _is_jailbreak_existPath(void) {
         @"/Applications/redsn0w.app",
         @"/Applications/Absinthe.app",
         @"/Library/MobileSubstrate/MobileSubstrate.dylib",
-        @"/bin/bash",
-        @"/usr/sbin/sshd",
+//        @"/bin/bash",
+//        @"/usr/sbin/sshd",
         @"/etc/apt",
         @"/private/var/lib/apt/",
     ];
