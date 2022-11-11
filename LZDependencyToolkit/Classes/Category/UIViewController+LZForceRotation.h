@@ -11,6 +11,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface UIViewController (LZForceRotation)
 
+- (BOOL)isPortraitOrientation;
+
 /// 设置是否允许旋转
 /// @param needRotation BOOL
 - (void)setupNeedRotation:(BOOL)needRotation;

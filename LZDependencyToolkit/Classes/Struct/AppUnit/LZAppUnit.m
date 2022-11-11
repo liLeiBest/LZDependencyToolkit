@@ -189,16 +189,38 @@ BOOL _createDocumentSubDir(NSString *subPath, NSString **fullPath) {
 }
 
 // MARK: Other
+UIWindow * _keyWindow(void) {
+    if ([[[UIApplication sharedApplication] delegate] window]) {
+        return [[[UIApplication sharedApplication] delegate] window];
+    } else {
+        if (@available(iOS 13.0, *)) {
+            
+            NSArray *array = [[[UIApplication sharedApplication] connectedScenes] allObjects];
+            UIWindowScene* windowScene = (UIWindowScene *)array[0];
+            /**
+             如果是普通App开发，可以使用
+             SceneDelegate * delegate = (SceneDelegate *)windowScene.delegate;
+             UIWindow * mainWindow = delegate.window;
+             */
+            // 由于在sdk开发中，引入不了SceneDelegate的头文件，所以需要用kvc获取宿主app的window.
+            UIWindow* mainWindow = [windowScene valueForKeyPath:@"delegate.window"];
+            if (mainWindow) {
+                return mainWindow;
+            } else {
+                return [UIApplication sharedApplication].windows.lastObject;
+            }
+        } else {
+            // Fallback on earlier versions
+            return [UIApplication sharedApplication].keyWindow;
+        }
+    }
+}
+
 UIEdgeInsets _safeAreaInsets(void) {
     
     UIEdgeInsets insets = UIEdgeInsetsZero;
     if (@available(iOS 11.0, *)) {
-        
-        UIWindow *mainWindow = [[[UIApplication sharedApplication] delegate] window];
-        if (nil == mainWindow) {
-            mainWindow = [UIApplication sharedApplication].keyWindow;
-        }
-        insets = mainWindow.safeAreaInsets;
+        insets = _keyWindow().safeAreaInsets;
     }
     return insets;
 }
@@ -208,17 +230,17 @@ UIViewController * _activityViewController(void) {
     
     UIViewController *activityViewController = nil;
     // 获取当前主窗口
-    UIWindow *currentWindow = [UIApplication sharedApplication].keyWindow;
-    if (currentWindow.windowLevel != UIWindowLevelNormal) {
-        
-        NSArray *allWindows = [UIApplication sharedApplication].windows;
-        for (UIWindow *tempWindow in allWindows) {
-            if (tempWindow.windowLevel == UIWindowLevelNormal) {
-                currentWindow = tempWindow;
-                break;
-            }
-        }
-    }
+    UIWindow *currentWindow = _keyWindow();
+//    if (currentWindow.windowLevel != UIWindowLevelNormal) {
+//
+//        NSArray *allWindows = [UIApplication sharedApplication].windows;
+//        for (UIWindow *tempWindow in allWindows) {
+//            if (tempWindow.windowLevel == UIWindowLevelNormal) {
+//                currentWindow = tempWindow;
+//                break;
+//            }
+//        }
+//    }
     // 获取活动的视图控制器
     NSArray *currentWinViews = [currentWindow subviews];
     if (currentWinViews.count > 0) {
@@ -245,8 +267,7 @@ UIViewController * _activityViewController(void) {
 /** Forced Exit App */
 void _exitApp(void) {
     
-    UIApplication *app = [UIApplication sharedApplication];
-    UIWindow *window = app.keyWindow;
+    UIWindow *window = _keyWindow();
     [UIView animateWithDuration:1.0f animations:^{
         window.alpha = 0;
         window.frame = CGRectMake(window.bounds.size.width * 0.5, window.bounds.size.height * 0.5, 0, 0);
@@ -278,6 +299,7 @@ struct LZAppUnit_type LZAppUnit = {
     .createCacheSubDir = _createCacheSubDir,
     .createDocumentSubDir = _createDocumentSubDir,
     
+    .keyWindow = _keyWindow,
     .safeAreaInsets = _safeAreaInsets,
     .activityViewController = _activityViewController,
     .exit = _exitApp,

@@ -113,6 +113,7 @@ struct LZAppUnit_type {
     BOOL (* createDocumentSubDir)(NSString *subPath, NSString **fullPath);
     
     // MARK: - Other
+    UIWindow * (*keyWindow)(void);
     /**
     安全区域
     */

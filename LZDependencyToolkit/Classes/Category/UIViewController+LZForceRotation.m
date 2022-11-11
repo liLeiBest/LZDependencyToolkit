@@ -37,6 +37,26 @@
 @end
 @implementation UIViewController (LZForceRotation)
 
+- (BOOL)isPortraitOrientation {
+    if (@available(iOS 13.0, *)) {
+        NSArray *array = [[[UIApplication sharedApplication] connectedScenes] allObjects];
+        if (array.count) {
+            
+            UIWindowScene *scene = (UIWindowScene *)array[0];
+            UIInterfaceOrientation orientation = scene.interfaceOrientation;
+            if (UIInterfaceOrientationPortrait == orientation) {
+                return YES;
+            }
+        }
+    } else {
+        UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
+        if (UIDeviceOrientationPortrait == orientation) {
+            return YES;
+        }
+    }
+    return NO;
+}
+
 - (void)setupNeedRotation:(BOOL)needRotation {
     
     id appDelegate = [UIApplication sharedApplication].delegate;
@@ -115,7 +135,6 @@
 }
 
 - (void)setOriginalIMP:(IMP)originalIMP {
-    
     LZ_setAssociatedObject(self, _cmd, [[LZForceRotationWeakContainer alloc] initWithWeakObject:originalIMP]);
 }
 
