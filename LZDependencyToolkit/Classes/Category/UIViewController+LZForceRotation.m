@@ -66,24 +66,7 @@
     if (YES == needRotation && nil == self.originalIMP) {
         self.originalIMP = method_getImplementation(class_getInstanceMethod(destClass, originalSEL));
     }
-    @lzweakify(self);
     IMP newIMP = imp_implementationWithBlock(^(id obj, UIApplication *application, UIWindow *window) {
-        @lzstrongify(self);
-        if (@available(iOS 14, *)) {
-        } else {
-            @try {
-                if ([NSStringFromClass([[[window subviews] lastObject] class]) isEqualToString:@"UITransitionView"]) {
-                    if (needRotation) {
-                        if (@available(iOS 11, *)) {
-                            [self forceChangeOrientation:UIInterfaceOrientationLandscapeRight];
-                        }
-                    }
-                }
-            } @catch (NSException *exception) {
-                NSLog(@"Orientation Error:%@", exception);
-            } @finally {
-            }
-        }
         return needRotation ? UIInterfaceOrientationMaskAll : UIInterfaceOrientationPortrait;
     });
     if (YES == needRotation) {
