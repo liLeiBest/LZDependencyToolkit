@@ -81,15 +81,21 @@
     int val = (int)orientation;
     if (@available(iOS 16, *)) {
         
-        [self setNeedsUpdateOfSupportedInterfaceOrientations];
-        [self.navigationController setNeedsUpdateOfSupportedInterfaceOrientations];
         NSArray *array = [[[UIApplication sharedApplication] connectedScenes] allObjects];
         if (array.count) {
             
             UIWindowScene *scene = (UIWindowScene *)array[0];
+            if (nil == scene) {
+                return;
+            }
+            [self setNeedsUpdateOfSupportedInterfaceOrientations];
+            [self.navigationController setNeedsUpdateOfSupportedInterfaceOrientations];
             UIWindowSceneGeometryPreferencesIOS *geometryperences = [[UIWindowSceneGeometryPreferencesIOS alloc] initWithInterfaceOrientations:(1 << val)];
             [scene requestGeometryUpdateWithPreferences:geometryperences errorHandler:^(NSError * _Nonnull error) {
                 NSLog(@"Orientation Error:%@", error);
+                if ([error.domain isEqualToString:UISceneErrorDomain] &&
+                    error.code == UISceneErrorCodeGeometryRequestDenied) {
+                }
             }];
         }
     } else {

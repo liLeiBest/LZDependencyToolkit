@@ -11,6 +11,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface UIViewController (LZForceRotation)
 
+/// 判断是否是竖屏
 - (BOOL)isPortraitOrientation;
 
 /// 设置是否允许旋转
