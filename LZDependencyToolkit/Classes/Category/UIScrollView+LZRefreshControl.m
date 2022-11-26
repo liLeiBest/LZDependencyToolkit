@@ -77,12 +77,20 @@ static NSString *RefreshNoMoreTitle = @"已经没有更多了";
     [self.mj_header endRefreshing];
 }
 
+- (void)endHeaderRefreshComplete:(void (^)(void))completeHandler {
+    [self.mj_header endRefreshingWithCompletionBlock:completeHandler];
+}
+
 - (void)beginFooterRefresh {
     [self.mj_footer beginRefreshing];
 }
 
 - (void)endFooterRefresh {
     [self.mj_footer endRefreshing];
+}
+
+- (void)endFooterRefreshComplete:(void (^)(void))completeHandler {
+    [self.mj_footer endRefreshingWithCompletionBlock:completeHandler];
 }
 
 - (void)hideHeader {

@@ -77,6 +77,7 @@ typedef void (^LZRefreshingBlock)(void);
  @brief 结束下拉刷新
  */
 - (void)endHeaderRefresh;
+- (void)endHeaderRefreshComplete:(void (^)(void))completeHandler;
 
 /**
  @author Lilei
@@ -91,6 +92,7 @@ typedef void (^LZRefreshingBlock)(void);
  @brief 结束上拉加载
  */
 - (void)endFooterRefresh;
+- (void)endFooterRefreshComplete:(void (^)(void))completeHandler;
 
 /**
  @author Lilei
