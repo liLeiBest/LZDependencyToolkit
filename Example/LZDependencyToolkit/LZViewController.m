@@ -32,7 +32,7 @@
     [self extendBtnHit];
 //    [self deviceInfo];
 //    [self appInfo];
-//    [self crypto];
+    [self crypto];
 //    [self quick];
 //    [self customDescription];
 }
@@ -122,22 +122,27 @@
 	NSString *plaintext = @"lilei";
 //	NSLog(@"MD5: %@", LZCryptoUnit.MD5(plaintext));
     
-    NSString *key = @"abcdefghijklmn";
-    key = @"123456789";
-//    key = @"12345";
+    NSString *key = @"abcdefghijklmno";
+//    key = @"12345678";
+//    key = @"123456";
     NSString *des = LZCryptoUnit.DES_Encrypt(plaintext, key);
-    NSLog(@"\nDES_Encrypt: %@", des);
-    NSLog(@"\nDES_Decrypt: %@", LZCryptoUnit.DES_Decrypt(des, key));
+    NSLog(@"\nDES_ECB\nEncrypt: %@\nDecrypt: %@", des, LZCryptoUnit.DES_Decrypt(des, key));
     
+    NSString *vector = @"abcdefgh";
+    NSString *des_cbc = LZCryptoUnit.DES_CBC_Encrypt(plaintext, key, vector);
+    NSLog(@"\nDES_CBC\nEncrypt: %@\nDecrypt: %@", des_cbc, LZCryptoUnit.DES_CBC_Decrypt(des_cbc, key, vector));
+    
+    key = @"abcdefghijklmnopqrstuvwx";
     NSString *des3 = LZCryptoUnit.TDES_Encrypt(plaintext, key);
-    NSLog(@"\nDES3_Encrypt: %@", des3);
-    NSLog(@"\nDES3_Decrypt: %@", LZCryptoUnit.TDES_Decrypt(des3, key));
+    NSLog(@"\nDES3nEncrypt: %@\nDecrypt: %@", des3, LZCryptoUnit.TDES_Decrypt(des3, key));
     
+#if 0
     NSLog(@"\nSHA: %@", LZCryptoUnit.SHA1(@"lilei"));
     NSLog(@"\nSHA: %@", LZCryptoUnit.SHA1(@"lilei", @"abc"));
     
     NSData *data = [NSData new];
     LZCryptoUnit.MD5_1(@"lilei", &data);
+#endif
 }
 
 - (void)appInfo {
