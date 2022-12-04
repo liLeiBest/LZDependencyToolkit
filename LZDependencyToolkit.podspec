@@ -36,6 +36,7 @@ Pod::Spec.new do |s|
             deviceUnit.source_files        	= 'LZDependencyToolkit/Classes/Struct/DeviceUnit/*.{h,m}'
             deviceUnit.public_header_files 	= 'LZDependencyToolkit/Classes/Struct/DeviceUnit/*.h'
             deviceUnit.frameworks      		= 'CoreGraphics', 'CoreTelephony'
+            deviceUnit.dependency 'LZDependencyToolkit/Struct/AppUnit'
         end
 
         struct.subspec 'AppUnit' do |appUnit|
@@ -47,6 +48,7 @@ Pod::Spec.new do |s|
 			quickUnit.source_files			= 'LZDependencyToolkit/Classes/Struct/QuickUnit/*.{h,m}'
 			quickUnit.public_header_files	= 'LZDependencyToolkit/Classes/Struct/QuickUnit/*.h'
 			quickUnit.frameworks			= 'CoreGraphics'
+      quickUnit.dependency 'LZDependencyToolkit/Struct/AppUnit'
 		end
 		
 		struct.subspec 'CryptoUnit' do |cryptoUnit|

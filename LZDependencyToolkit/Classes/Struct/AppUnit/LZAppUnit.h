@@ -13,7 +13,7 @@
 
 struct LZAppUnit_type {
     
-    // MARK: - Info
+    // MARK: - Version
     /**
      *  App Bundle display name
      */
@@ -112,7 +112,10 @@ struct LZAppUnit_type {
      */
     BOOL (* createDocumentSubDir)(NSString *subPath, NSString **fullPath);
     
-    // MARK: - Other
+    // MARK: - Window
+    /**
+    Window
+    */
     UIWindow * (*keyWindow)(void);
     /**
     安全区域
@@ -125,7 +128,12 @@ struct LZAppUnit_type {
     UIViewController * (* activityViewController)(void);
     
     /**
-     *  Forced Exit App
+    打开URL
+     */
+    void (* openURL)(NSURL *URL);
+    
+    /**
+     Forced Exit App
      */
     void (* exit)(void);
 };

@@ -23,8 +23,10 @@ PODS:
     - LZDependencyToolkit/Struct/QuickUnit (= 2.9.0)
   - LZDependencyToolkit/Struct/AppUnit (2.9.0)
   - LZDependencyToolkit/Struct/CryptoUnit (2.9.0)
-  - LZDependencyToolkit/Struct/DeviceUnit (2.9.0)
-  - LZDependencyToolkit/Struct/QuickUnit (2.9.0)
+  - LZDependencyToolkit/Struct/DeviceUnit (2.9.0):
+    - LZDependencyToolkit/Struct/AppUnit
+  - LZDependencyToolkit/Struct/QuickUnit (2.9.0):
+    - LZDependencyToolkit/Struct/AppUnit
   - MJRefresh (3.7.5)
 
 DEPENDENCIES:
@@ -39,7 +41,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  LZDependencyToolkit: b4e68bfb3edcfdf0a3ded3a82c414b4f2a63e103
+  LZDependencyToolkit: 2528cc2f6fb356e35aa50dfb66cd127108f63cf7
   MJRefresh: fdf5e979eb406a0341468932d1dfc8b7f9fce961
 
 PODFILE CHECKSUM: 7256173d1c33febe1d369943bd7256cf696d3399

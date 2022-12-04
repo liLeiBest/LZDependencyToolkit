@@ -7,6 +7,7 @@
 //
 
 #import "LZDeviceUnit.h"
+#import "LZAppUnit.h"
 #import <UIKit/UIKit.h>
 #import <CoreTelephony/CTTelephonyNetworkInfo.h>
 #import <CoreTelephony/CTCarrier.h>
@@ -1153,10 +1154,7 @@ BOOL _is_notch(void) {
     BOOL isNotch = NO;
     if (@available(iOS 11.0, *)) {
         
-        UIWindow *mainWindow = [[[UIApplication sharedApplication] delegate] window];
-        if (nil == mainWindow) {
-            mainWindow = [UIApplication sharedApplication].keyWindow;
-        }
+        UIWindow *mainWindow = LZAppUnit.keyWindow();
         if (mainWindow.safeAreaInsets.bottom > 0.0) {
             isNotch = YES;
         }

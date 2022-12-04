@@ -6,6 +6,7 @@
 //
 
 #import "LZQuickUnit.h"
+#import "LZAppUnit.h"
 
 // MARK: Format
 CGFloat toRadian(CGFloat degree) {
@@ -212,7 +213,7 @@ UIAlertController * alert(UIViewController *target, NSString *title, NSString *m
 		[alertCtr addAction:action];
 	}
     if (nil == target) {
-        target = [UIApplication sharedApplication].keyWindow.rootViewController;
+        target = LZAppUnit.activityViewController();
     }
     if (nil != target.presentedViewController) {
         [target.presentedViewController presentViewController:alertCtr animated:YES completion:nil];
@@ -229,7 +230,7 @@ UIAlertController * sheet(UIViewController *target, NSString *title, NSString *m
         [sheetCtr addAction:action];
     }
     if (nil == target) {
-        target = [UIApplication sharedApplication].keyWindow.rootViewController;
+        target = LZAppUnit.activityViewController();
     }
     if (nil != target.presentedViewController) {
         [target.presentedViewController presentViewController:sheetCtr animated:YES completion:nil];

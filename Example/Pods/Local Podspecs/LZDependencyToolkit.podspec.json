@@ -56,7 +56,12 @@
           "frameworks": [
             "CoreGraphics",
             "CoreTelephony"
-          ]
+          ],
+          "dependencies": {
+            "LZDependencyToolkit/Struct/AppUnit": [
+
+            ]
+          }
         },
         {
           "name": "AppUnit",
@@ -67,7 +72,12 @@
           "name": "QuickUnit",
           "source_files": "LZDependencyToolkit/Classes/Struct/QuickUnit/*.{h,m}",
           "public_header_files": "LZDependencyToolkit/Classes/Struct/QuickUnit/*.h",
-          "frameworks": "CoreGraphics"
+          "frameworks": "CoreGraphics",
+          "dependencies": {
+            "LZDependencyToolkit/Struct/AppUnit": [
+
+            ]
+          }
         },
         {
           "name": "CryptoUnit",

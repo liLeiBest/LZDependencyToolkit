@@ -264,6 +264,21 @@ UIViewController * _activityViewController(void) {
     return activityViewController;
 }
 
+/** 打开URL */
+void _openURL(NSURL *URL) {
+    if (nil == URL || NO == [URL isKindOfClass:[NSURL class]]) {
+        return;
+    }
+    if ([[UIApplication sharedApplication] canOpenURL:URL]) {
+        if (@available(iOS 10, *)) {
+            [[UIApplication sharedApplication] openURL:URL options:@{UIApplicationOpenURLOptionUniversalLinksOnly : @(NO)} completionHandler:^(BOOL success) {
+            }];
+        } else {
+            [[UIApplication sharedApplication] openURL:URL];
+        }
+    }
+}
+
 /** Forced Exit App */
 void _exitApp(void) {
     
@@ -302,5 +317,6 @@ struct LZAppUnit_type LZAppUnit = {
     .keyWindow = _keyWindow,
     .safeAreaInsets = _safeAreaInsets,
     .activityViewController = _activityViewController,
+    .openURL = _openURL,
     .exit = _exitApp,
 };
