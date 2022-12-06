@@ -100,6 +100,11 @@ struct LZQuickUnit_type {
     UIAlertController * (* alert)(UIViewController *target, NSString *title, NSString *message, NSArray<UIAlertAction *> *actions);
     
     /**
+     Alert 提示，带输入框
+     */
+    UIAlertController * (* alertInput)(UIViewController *target, NSString *title, NSString *message, NSArray<UIAlertAction *> *actions, void (^inputHandler)(UITextField *textField));
+    
+    /**
      Sheet 提示
      */
     UIAlertController * (* sheet)(UIViewController *target, NSString *title, NSString *message, NSArray<UIAlertAction *> *actions);

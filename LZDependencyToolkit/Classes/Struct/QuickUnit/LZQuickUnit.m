@@ -223,6 +223,24 @@ UIAlertController * alert(UIViewController *target, NSString *title, NSString *m
     return alertCtr;
 }
 
+UIAlertController * alertInput(UIViewController *target, NSString *title, NSString *message, NSArray<UIAlertAction *> *actions, void (^_Nonnull inputHandler)(UITextField *textField)) {
+    
+    UIAlertController *alertCtr = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
+    for (UIAlertAction *action in actions) {
+        [alertCtr addAction:action];
+    }
+    [alertCtr addTextFieldWithConfigurationHandler:inputHandler];
+    if (nil == target) {
+        target = LZAppUnit.activityViewController();
+    }
+    if (nil != target.presentedViewController) {
+        [target.presentedViewController presentViewController:alertCtr animated:YES completion:nil];
+    } else {
+        [target presentViewController:alertCtr animated:YES completion:nil];
+    }
+    return alertCtr;
+}
+
 UIAlertController * sheet(UIViewController *target, NSString *title, NSString *message, NSArray<UIAlertAction *> *actions) {
     
     UIAlertController *sheetCtr = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleActionSheet];
@@ -290,6 +308,7 @@ struct LZQuickUnit_type LZQuickUnit = {
 	.fontName = fontName,
 	
 	.alert = alert,
+    .alertInput = alertInput,
     .sheet = sheet,
 	
 	.notificationCenter = notificationCenter,
