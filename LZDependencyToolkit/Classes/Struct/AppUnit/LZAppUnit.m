@@ -265,9 +265,9 @@ UIViewController * _activityViewController(void) {
 }
 
 /** 打开URL */
-void _openURL(NSURL *URL) {
+BOOL _openURL(NSURL *URL) {
     if (nil == URL || NO == [URL isKindOfClass:[NSURL class]]) {
-        return;
+        return NO;
     }
     if ([[UIApplication sharedApplication] canOpenURL:URL]) {
         if (@available(iOS 10, *)) {
@@ -276,7 +276,9 @@ void _openURL(NSURL *URL) {
         } else {
             [[UIApplication sharedApplication] openURL:URL];
         }
+        return YES;
     }
+    return NO;
 }
 
 /** Forced Exit App */

@@ -130,7 +130,7 @@ struct LZAppUnit_type {
     /**
     打开URL
      */
-    void (* openURL)(NSURL *URL);
+    BOOL (* openURL)(NSURL *URL);
     
     /**
      Forced Exit App
