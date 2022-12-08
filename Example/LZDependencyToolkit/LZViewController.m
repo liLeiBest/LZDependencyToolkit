@@ -15,6 +15,7 @@
 
 @property (nonatomic, weak) IBOutlet UIButton *eventClickTestBtn;
 @property (nonatomic, weak) IBOutlet UIButton *touchExtendTestBtn;
+@property (nonatomic, weak) IBOutlet UITextField *txtField;
 @property (nonatomic, weak) IBOutlet UIImageView *imgView;
 @property (nonatomic, weak) IBOutlet UILabel *contentLabel;
 
@@ -120,7 +121,7 @@
 - (void)crypto {
 	
 	NSString *plaintext = @"lilei";
-//	NSLog(@"MD5: %@", LZCryptoUnit.MD5(plaintext));
+	NSLog(@"MD5: %@", LZCryptoUnit.MD5(plaintext));
     
     NSString *key = @"abcdefghijklmno";
 //    key = @"12345678";
@@ -128,14 +129,13 @@
     NSString *des = LZCryptoUnit.DES_Encrypt(plaintext, key);
     NSLog(@"\nDES_ECB\nEncrypt: %@\nDecrypt: %@", des, LZCryptoUnit.DES_Decrypt(des, key));
     
-    NSString *vector = @"abcdefgh";
+    NSString *vector = @"12345678";
     NSString *des_cbc = LZCryptoUnit.DES_CBC_Encrypt(plaintext, key, vector);
     NSLog(@"\nDES_CBC\nEncrypt: %@\nDecrypt: %@", des_cbc, LZCryptoUnit.DES_CBC_Decrypt(des_cbc, key, vector));
     
     key = @"abcdefghijklmnopqrstuvwx";
     NSString *des3 = LZCryptoUnit.TDES_Encrypt(plaintext, key);
     NSLog(@"\nDES3nEncrypt: %@\nDecrypt: %@", des3, LZCryptoUnit.TDES_Decrypt(des3, key));
-    
 #if 0
     NSLog(@"\nSHA: %@", LZCryptoUnit.SHA1(@"lilei"));
     NSLog(@"\nSHA: %@", LZCryptoUnit.SHA1(@"lilei", @"abc"));

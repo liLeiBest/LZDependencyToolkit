@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="8k2-oj-S8L">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="8k2-oj-S8L">
     <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment version="2304" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -20,18 +20,24 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ksg-IK-FrT">
-                                <rect key="frame" x="60" y="301" width="294" height="294"/>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="Ksg-IK-FrT" secondAttribute="height" multiplier="1:1" id="LEi-5f-XgO"/>
-                                </constraints>
-                            </imageView>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="a8X-oe-YGR">
-                                <rect key="frame" x="20" y="235.66666666666666" width="374" height="29.999999999999972"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="a8X-oe-YGR">
+                                <rect key="frame" x="20" y="98" width="374" height="110"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rIJ-nQ-gnW">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OZ1-JL-2KF">
                                         <rect key="frame" x="0.0" y="0.0" width="374" height="30"/>
+                                        <color key="backgroundColor" systemColor="systemOrangeColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="ejG-JO-2RS"/>
+                                        </constraints>
+                                        <state key="normal" title="按钮扩大点击区域">
+                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="touchExtendTest:" destination="whP-gf-Uak" eventType="touchDown" id="dqV-it-cAk"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rIJ-nQ-gnW">
+                                        <rect key="frame" x="0.0" y="40" width="374" height="30"/>
                                         <color key="backgroundColor" systemColor="systemOrangeColor"/>
                                         <state key="normal" title="按钮点击间隔">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -40,23 +46,24 @@
                                             <action selector="eventIntervalTest:" destination="whP-gf-Uak" eventType="touchDown" id="NSa-qH-K9D"/>
                                         </connections>
                                     </button>
+                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="请输入内容" textAlignment="center" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="EXW-Bi-Fa2">
+                                        <rect key="frame" x="0.0" y="80" width="374" height="30"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
                                 </subviews>
                             </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OZ1-JL-2KF">
-                                <rect key="frame" x="20" y="175.66666666666666" width="374" height="30"/>
-                                <color key="backgroundColor" systemColor="systemOrangeColor"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ksg-IK-FrT">
+                                <rect key="frame" x="80" y="218" width="254" height="254"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="ejG-JO-2RS"/>
+                                    <constraint firstAttribute="width" secondItem="Ksg-IK-FrT" secondAttribute="height" multiplier="1:1" id="LEi-5f-XgO"/>
                                 </constraints>
-                                <state key="normal" title="按钮扩大点击区域">
-                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
-                                <connections>
-                                    <action selector="touchExtendTest:" destination="whP-gf-Uak" eventType="touchDown" id="dqV-it-cAk"/>
-                                </connections>
-                            </button>
+                            </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vgi-AU-TNc">
-                                <rect key="frame" x="15" y="615" width="384" height="247"/>
+                                <rect key="frame" x="15" y="482" width="384" height="370"/>
                                 <string key="text">并非我们不重视理想，而是因为树雄心壮志易，为理想努力难，人生自古就如此。有谁会想到，十多年前的今天，我曾是一个在街头彷徨，为生存犯愁的人？当时的我，一无所有，前途渺茫，真不知路在何处。然而，我却没有灰心失望，回想起来，支撑着我走过这段坎坷岁月的正是我的意志品格。当许多人以为我已不行、该不行了的时候，我仍做着从地上爬起来的努力，我坚信人生就像马拉多纳踢球，往往是在快要倒下去的时候“进球”获得生机的。事实也正是如此，就在“山重水复疑无路”的时候，香港一家企业倒闭给了我东山再起的机会，使我能够与掌握世界最新技术的英国科技人员合作，开发技术先进的彩色电视机，从此一举走出困境。</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -65,27 +72,25 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="OZ1-JL-2KF" secondAttribute="trailing" constant="20" id="3AB-ol-y7y"/>
-                            <constraint firstItem="Ksg-IK-FrT" firstAttribute="centerY" secondItem="TpU-gO-2f1" secondAttribute="centerY" id="5s0-fw-O12"/>
-                            <constraint firstItem="Ksg-IK-FrT" firstAttribute="top" secondItem="a8X-oe-YGR" secondAttribute="bottom" constant="35.5" id="AiV-ax-vrd"/>
+                            <constraint firstItem="Ksg-IK-FrT" firstAttribute="top" secondItem="a8X-oe-YGR" secondAttribute="bottom" constant="10" id="AiV-ax-vrd"/>
                             <constraint firstAttribute="trailing" secondItem="a8X-oe-YGR" secondAttribute="trailing" constant="20" id="IUC-nd-3ch"/>
-                            <constraint firstItem="Mvr-aV-6Um" firstAttribute="top" secondItem="vgi-AU-TNc" secondAttribute="bottom" id="KR6-Gs-eQl"/>
+                            <constraint firstItem="Mvr-aV-6Um" firstAttribute="top" secondItem="vgi-AU-TNc" secondAttribute="bottom" constant="10" id="KR6-Gs-eQl"/>
                             <constraint firstAttribute="trailing" secondItem="vgi-AU-TNc" secondAttribute="trailing" constant="15" id="ZPK-wF-H7M"/>
                             <constraint firstItem="a8X-oe-YGR" firstAttribute="leading" secondItem="TpU-gO-2f1" secondAttribute="leading" constant="20" id="aHZ-Eg-eqT"/>
                             <constraint firstItem="vgi-AU-TNc" firstAttribute="leading" secondItem="TpU-gO-2f1" secondAttribute="leading" constant="15" id="anf-7F-aw7"/>
-                            <constraint firstItem="a8X-oe-YGR" firstAttribute="top" secondItem="OZ1-JL-2KF" secondAttribute="bottom" constant="30" id="cKK-PO-D9b"/>
-                            <constraint firstItem="vgi-AU-TNc" firstAttribute="top" secondItem="Ksg-IK-FrT" secondAttribute="bottom" constant="20" id="laK-WK-Cjj"/>
-                            <constraint firstAttribute="trailing" secondItem="Ksg-IK-FrT" secondAttribute="trailing" constant="60" id="m4g-tB-Q01"/>
-                            <constraint firstItem="OZ1-JL-2KF" firstAttribute="leading" secondItem="TpU-gO-2f1" secondAttribute="leading" constant="20" id="nTq-68-CVW"/>
-                            <constraint firstItem="Ksg-IK-FrT" firstAttribute="leading" secondItem="TpU-gO-2f1" secondAttribute="leading" constant="60" id="pW4-OC-yCp"/>
+                            <constraint firstItem="a8X-oe-YGR" firstAttribute="top" secondItem="uEw-UM-LJ8" secondAttribute="bottom" constant="10" id="bn5-eK-dgC"/>
+                            <constraint firstItem="vgi-AU-TNc" firstAttribute="top" secondItem="Ksg-IK-FrT" secondAttribute="bottom" constant="10" id="laK-WK-Cjj"/>
+                            <constraint firstAttribute="trailing" secondItem="Ksg-IK-FrT" secondAttribute="trailing" constant="80" id="m4g-tB-Q01"/>
+                            <constraint firstItem="Ksg-IK-FrT" firstAttribute="leading" secondItem="TpU-gO-2f1" secondAttribute="leading" constant="80" id="pW4-OC-yCp"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="0Ta-rQ-ffD"/>
+                    <navigationItem key="navigationItem" id="kXa-qp-IV0"/>
                     <connections>
                         <outlet property="contentLabel" destination="vgi-AU-TNc" id="aQh-rq-EXs"/>
                         <outlet property="eventClickTestBtn" destination="rIJ-nQ-gnW" id="S6Y-ZR-UuL"/>
                         <outlet property="imgView" destination="Ksg-IK-FrT" id="mW5-dw-Rlc"/>
                         <outlet property="touchExtendTestBtn" destination="OZ1-JL-2KF" id="Hns-io-nL1"/>
+                        <outlet property="txtField" destination="EXW-Bi-Fa2" id="lqt-Ms-9Io"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tc2-Qw-aMS" userLabel="First Responder" sceneMemberID="firstResponder"/>
