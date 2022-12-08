@@ -121,7 +121,7 @@
 - (void)crypto {
 	
 	NSString *plaintext = @"lilei";
-	NSLog(@"MD5: %@", LZCryptoUnit.MD5(plaintext));
+	NSLog(@"\nMD5: %@", LZCryptoUnit.MD5(plaintext));
     
     NSString *key = @"abcdefghijklmno";
 //    key = @"12345678";

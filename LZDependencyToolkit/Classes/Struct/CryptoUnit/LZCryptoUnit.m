@@ -137,18 +137,37 @@ NSData * lz_crypto(NSData *data,
 
 /// 统一加密
 NSString * lz_encrypt(NSString *plaintext,
-                      NSString *secret,
-                      NSString *vector,
+                      id secret,
+                      id vector,
                       size_t keySize,
                       size_t blockSize,
                       CCMode mode,
                       CCAlgorithm alg,
                       CCPadding padding,
                       id (* lz_crypto)(NSData *, NSData *, NSData *, CCOperation, CCMode, CCAlgorithm, CCPadding, size_t, size_t)) {
-    
+    if (nil == plaintext) return plaintext;
     NSData *plainData = [plaintext dataUsingEncoding:NSUTF8StringEncoding];
-    NSData *keyData = [secret dataUsingEncoding:NSUTF8StringEncoding];
-    NSData *ivData = [vector dataUsingEncoding:NSUTF8StringEncoding];
+    NSData *keyData = nil;
+    if (nil != secret) {
+        if ([secret isKindOfClass:[NSString class]]) {
+            keyData = [secret dataUsingEncoding:NSUTF8StringEncoding];
+        } else if ([secret isKindOfClass:[NSData class]]) {
+            keyData = (NSData *)secret;
+        } else {
+            return @"";
+        }
+    }
+    NSData *ivData = nil;
+    if (nil != vector) {
+        if ([vector isKindOfClass:[NSString class]]) {
+            ivData = [vector dataUsingEncoding:NSUTF8StringEncoding];
+        } else if ([vector isKindOfClass:[NSData class]]) {
+            ivData = (NSData *)vector;
+        } else {
+            return @"";
+        }
+    }
+    
     NSData *cipherData = lz_crypto(plainData, keyData, ivData, kCCEncrypt, mode, alg, padding, keySize, blockSize);
     if (nil == cipherData) return @"";
     NSString *result = [cipherData base64EncodedStringWithOptions:NSDataBase64EncodingEndLineWithLineFeed];
@@ -158,19 +177,38 @@ NSString * lz_encrypt(NSString *plaintext,
 
 /// 统一解密
 NSString * lz_decrypt(NSString *ciphertext,
-                      NSString *secret,
-                      NSString *vector,
+                      id secret,
+                      id vector,
                       size_t keySize,
                       size_t blockSize,
                       CCMode mode,
                       CCAlgorithm alg,
                       CCPadding padding,
                       id (* lz_crypto)(NSData *, NSData *, NSData *, CCOperation, CCMode, CCAlgorithm, CCPadding, size_t, size_t)) {
-    
+    if (nil == ciphertext) return ciphertext;
     NSData *cipherData = [[NSData alloc] initWithBase64EncodedString:ciphertext
                                                        options:NSDataBase64DecodingIgnoreUnknownCharacters];
-    NSData *keyData = [secret dataUsingEncoding:NSUTF8StringEncoding];
-    NSData *ivData = [vector dataUsingEncoding:NSUTF8StringEncoding];
+    NSData *keyData = nil;
+    if (nil != secret) {
+        if ([secret isKindOfClass:[NSString class]]) {
+            keyData = [secret dataUsingEncoding:NSUTF8StringEncoding];
+        } else if ([secret isKindOfClass:[NSData class]]) {
+            keyData = (NSData *)secret;
+        } else {
+            return @"";
+        }
+    }
+    NSData *ivData = nil;
+    if (nil != vector) {
+        if ([vector isKindOfClass:[NSString class]]) {
+            ivData = [vector dataUsingEncoding:NSUTF8StringEncoding];
+        } else if ([vector isKindOfClass:[NSData class]]) {
+            ivData = (NSData *)vector;
+        } else {
+            return @"";
+        }
+    }
+    
     NSData *plainData = lz_crypto(cipherData, keyData, ivData, kCCDecrypt, mode, alg, padding, keySize, blockSize);
     if (nil == plainData) return @"";
     NSString *result = [[NSString alloc] initWithData:plainData encoding:NSUTF8StringEncoding];
@@ -183,7 +221,7 @@ NSString * lz_decrypt(NSString *ciphertext,
 
 // MARK: MD5
 NSString * MD5_1(NSString *plaintext, NSData **data) {
-    
+    if (nil == plaintext) return plaintext;
     const char *string = plaintext.UTF8String;
     CC_LONG length = (CC_LONG)strlen(string);
     unsigned char bytes[CC_MD5_DIGEST_LENGTH];
@@ -203,10 +241,10 @@ NSString * MD5(NSString *plaintext) {
 
 // MARK: SHA
 NSString * SHA1(NSString *plaintext, ...) {
-	
+    if (nil == plaintext) return plaintext;
     va_list list;
     va_start(list, plaintext);
-    NSString *secret = va_arg(list, NSString *);
+    id secret = va_arg(list, NSString *);
     va_end(list);
     
 	NSData *plaintextData = [plaintext dataUsingEncoding:NSUTF8StringEncoding];
@@ -230,10 +268,10 @@ NSString * SHA1(NSString *plaintext, ...) {
 }
 
 NSString * SHA256(NSString *plaintext, ...) {
-    
+    if (nil == plaintext) return plaintext;
     va_list list;
     va_start(list, plaintext);
-    NSString *secret = va_arg(list, NSString *);
+    id secret = va_arg(list, NSString *);
     va_end(list);
     
     if (secret && [secret isKindOfClass:[NSString class]]) {
@@ -259,10 +297,10 @@ NSString * SHA256(NSString *plaintext, ...) {
 }
 
 NSString *SHA512(NSString *plaintext, ...) {
-	
+    if (nil == plaintext) return plaintext;
     va_list list;
     va_start(list, plaintext);
-    NSString *secret = va_arg(list, NSString *);
+    id secret = va_arg(list, NSString *);
     va_end(list);
     
     if (secret && [secret isKindOfClass:[NSString class]]) {
@@ -288,7 +326,7 @@ NSString *SHA512(NSString *plaintext, ...) {
 }
 
 // MARK: DES
-NSString * DES_Encrypt(NSString *plaintext, NSString *secret) {
+NSString * DES_Encrypt(NSString *plaintext, id secret) {
     return lz_encrypt(plaintext,
                       secret,
                       nil,
@@ -300,7 +338,7 @@ NSString * DES_Encrypt(NSString *plaintext, NSString *secret) {
                       lz_crypto);
 }
 
-NSString * DES_Decrypt(NSString *ciphertext, NSString *secret) {
+NSString * DES_Decrypt(NSString *ciphertext, id secret) {
     return lz_decrypt(ciphertext,
                       secret,
                       nil,
@@ -312,7 +350,7 @@ NSString * DES_Decrypt(NSString *ciphertext, NSString *secret) {
                       lz_crypto);
 }
 
-NSString * DES_CBC_Encrypt(NSString *plaintext, NSString *secret, NSString *vector) {
+NSString * DES_CBC_Encrypt(NSString *plaintext, id secret, id vector) {
     return lz_encrypt(plaintext,
                       secret,
                       vector,
@@ -324,7 +362,7 @@ NSString * DES_CBC_Encrypt(NSString *plaintext, NSString *secret, NSString *vect
                       lz_crypto);
 }
 
-NSString * DES_CBC_Decrypt(NSString *ciphertext, NSString *secret, NSString *vector) {
+NSString * DES_CBC_Decrypt(NSString *ciphertext, id secret, id vector) {
     return lz_decrypt(ciphertext,
                       secret,
                       vector,
@@ -336,7 +374,7 @@ NSString * DES_CBC_Decrypt(NSString *ciphertext, NSString *secret, NSString *vec
                       lz_crypto);
 }
 
-NSString * TDES_Encrypt(NSString *plaintext, NSString *secret) {
+NSString * TDES_Encrypt(NSString *plaintext, id secret) {
     return lz_encrypt(plaintext,
                       secret,
                       nil,
@@ -348,7 +386,7 @@ NSString * TDES_Encrypt(NSString *plaintext, NSString *secret) {
                       lz_crypto);
 }
 
-NSString * TDES_Decrypt(NSString *ciphertext, NSString *secret) {
+NSString * TDES_Decrypt(NSString *ciphertext, id secret) {
     return lz_decrypt(ciphertext,
                       secret,
                       nil,
@@ -361,7 +399,7 @@ NSString * TDES_Decrypt(NSString *ciphertext, NSString *secret) {
 }
 
 // MARK: AES
-NSString * AES_Encrypt(NSString *plaintext, NSString *secret) {
+NSString * AES_Encrypt(NSString *plaintext, id secret) {
     return lz_encrypt(plaintext,
                       secret,
                       nil,
@@ -373,7 +411,7 @@ NSString * AES_Encrypt(NSString *plaintext, NSString *secret) {
                       lz_crypto);
 }
 
-NSString * AES_Decrypt(NSString *ciphertext, NSString *secret) {
+NSString * AES_Decrypt(NSString *ciphertext, id secret) {
     return lz_decrypt(ciphertext,
                       secret,
                       nil,
@@ -385,7 +423,7 @@ NSString * AES_Decrypt(NSString *ciphertext, NSString *secret) {
                       lz_crypto);
 }
 
-NSString * AES192_Encrypt(NSString *plaintext, NSString *secret) {
+NSString * AES192_Encrypt(NSString *plaintext, id secret) {
     return lz_encrypt(plaintext,
                       secret,
                       nil,
@@ -397,7 +435,7 @@ NSString * AES192_Encrypt(NSString *plaintext, NSString *secret) {
                       lz_crypto);
 }
 
-NSString * AES192_Decrypt(NSString *ciphertext, NSString *secret) {
+NSString * AES192_Decrypt(NSString *ciphertext, id secret) {
     return lz_decrypt(ciphertext,
                       secret,
                       nil,
@@ -409,7 +447,7 @@ NSString * AES192_Decrypt(NSString *ciphertext, NSString *secret) {
                       lz_crypto);
 }
 
-NSString * AES256_Encrypt(NSString *plaintext, NSString *secret) {
+NSString * AES256_Encrypt(NSString *plaintext, id secret) {
     return lz_encrypt(plaintext,
                       secret,
                       nil,
@@ -421,7 +459,7 @@ NSString * AES256_Encrypt(NSString *plaintext, NSString *secret) {
                       lz_crypto);
 }
 
-NSString * AES256_Decrypt(NSString *ciphertext, NSString *secret) {
+NSString * AES256_Decrypt(NSString *ciphertext, id secret) {
     return lz_decrypt(ciphertext,
                       secret,
                       nil,
