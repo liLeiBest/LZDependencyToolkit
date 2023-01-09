@@ -10,6 +10,7 @@
 
 @implementation NSString (LZRegular)
 
+// MARK: - Public
 /** 判断是有效的 String */
 - (BOOL)isValidString {
     return nil != self && [self isKindOfClass:[NSString class]] && 0 < self.length;
@@ -26,9 +27,19 @@
 
 /** 判断是有效的 URL 地址 */
 - (BOOL)isValidURL {
-    
+    // 长度判断
+    if (self.length < 1) return NO;
+    // 正则判断
+//    NSString *URLRegular = @"(https|http|ftp|rtsp|igmp|file|rtspt|rtspu)://((((25[0-5]|2[0-4]\\d|1?\\d?\\d)\\.){3}(25[0-5]|2[0-4]\\d|1?\\d?\\d))|([0-9a-z_!~*'()-]*\\.?))([0-9a-z][0-9a-z-]{0,61})?[0-9a-z]\\.([a-z]{2,6})(:[0-9]{1,4})?([a-zA-Z/?_=]*)\\.\\w{1,5}";
     NSString *URLRegular = @"https?:[^\\s]*";
     return [self verifyRegular:URLRegular];
+}
+
+/** 提取 URL 地址 */
+- (NSArray *)extractURLs {
+    
+    NSString *URLRegular = @"((http[s]{0,1}|ftp)://[a-zA-Z0-9\\.\\-]+\\.([a-zA-Z]{2,4})(:\\d+)?(/[a-zA-Z0-9\\.\\-~!@#$%^&*+?:_/=<>]*)?)|(www.[a-zA-Z0-9\\.\\-]+\\.([a-zA-Z]{2,4})(:\\d+)?(/[a-zA-Z0-9\\.\\-~!@#$%^&*+?:_/=<>]*)?)";
+    return [self extractRegular:URLRegular];
 }
 
 /** 判断是有效的 IP 地址 */
@@ -247,7 +258,7 @@
     return NO == isContainsSpecialCharacter;
 }
 
-#pragma mark - -> Private
+// MARK: - Private
 /**
  验证正则表达式
  
@@ -255,12 +266,29 @@
  @return BOOL
  */
 - (BOOL)verifyRegular:(NSString *)regularExpression {
-    
     if (self.length <= 0) return NO;
-    
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regularExpression];;
     BOOL isValid = [predicate evaluateWithObject:self];
     return isValid;
+}
+
+/// 提取符合规则的内容
+/// @param regularExpression 正则表达式
+- (NSArray *)extractRegular:(NSString *)regularExpression {
+    if (self.length <= 0) return @[];
+    NSError *error;
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:regularExpression
+    options:NSRegularExpressionCaseInsensitive
+    error:&error];
+    NSArray *arrayOfAllMatches = [regex matchesInString:self options:0 range:NSMakeRange(0, [self length])];
+    
+    NSMutableArray *resultArrM = [NSMutableArray arrayWithCapacity:arrayOfAllMatches.count];
+    for (NSTextCheckingResult *match in arrayOfAllMatches) {
+        
+        NSString* substringForMatch = [self substringWithRange:match.range];
+        [resultArrM addObject:substringForMatch];
+    }
+    return resultArrM.copy;
 }
 
 // MARK: - Deprecated

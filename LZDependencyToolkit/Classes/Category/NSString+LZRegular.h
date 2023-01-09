@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface NSString (LZRegular)
 
 /**
@@ -36,6 +38,16 @@
  @return BOOL
  */
 - (BOOL)isValidURL;
+
+/**  */
+/**
+ @author Lilei
+ 
+ @brief 提取 URL 地址
+
+ @return NSArray
+ */
+- (NSArray * _Nullable)extractURLs;
 
 /**
  @author Lilei
@@ -285,3 +297,5 @@
 - (BOOL)isValideString DEPRECATED_MSG_ATTRIBUTE("请使用 isValidString 替代");
 
 @end
+
+NS_ASSUME_NONNULL_END
