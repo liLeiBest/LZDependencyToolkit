@@ -11,7 +11,7 @@
 @implementation LZStudent (LZTest)
 
 + (void)load {
-    LZ_exchangeInstanceMethod(self, @selector(helloWrold), @selector(studentInstanceMethod));
+//    LZ_exchangeInstanceMethod(self, @selector(helloWrold), @selector(studentInstanceMethod));
 }
 
 - (void)studentInstanceMethod {

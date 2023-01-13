@@ -22,8 +22,8 @@ Pod::Spec.new do |s|
     s.public_header_files = 'LZDependencyToolkit/Classes/LZDependencyToolkit.h'
 
     s.subspec 'Category' do |category|
-        category.source_files				= 'LZDependencyToolkit/Classes/Category/*.{h,m}'
-        category.public_header_files 		= 'LZDependencyToolkit/Classes/Category/*.h'
+        category.source_files				= 'LZDependencyToolkit/Classes/Category/**/*.{h,m}'
+        category.public_header_files 		= 'LZDependencyToolkit/Classes/Category/**/*.h'
         category.frameworks          		= 'CoreGraphics', 'QuartzCore', 'CoreText'
         category.pod_target_xcconfig        = {
           'OTHER_LDFLAGS' => '-lObjC'

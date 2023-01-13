@@ -31,8 +31,8 @@
   "subspecs": [
     {
       "name": "Category",
-      "source_files": "LZDependencyToolkit/Classes/Category/*.{h,m}",
-      "public_header_files": "LZDependencyToolkit/Classes/Category/*.h",
+      "source_files": "LZDependencyToolkit/Classes/Category/**/*.{h,m}",
+      "public_header_files": "LZDependencyToolkit/Classes/Category/**/*.h",
       "frameworks": [
         "CoreGraphics",
         "QuartzCore",

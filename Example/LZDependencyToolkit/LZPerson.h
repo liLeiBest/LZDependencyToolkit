@@ -19,7 +19,8 @@ NS_ASSUME_NONNULL_BEGIN
 /** sex */
 @property (copy, nonatomic) NSString *sex;
 
-- (void)helloWrold;
++ (void)helloWorld;
+- (void)helloWorld;
 - (void)personInstanceMethod;
 
 @end

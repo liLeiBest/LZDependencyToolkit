@@ -22,6 +22,7 @@
     });
 }
 
+// MARK: - Private
 + (UIImage *)lz_imageNamed:(NSString *)name {
     
     UIImage *image = nil;

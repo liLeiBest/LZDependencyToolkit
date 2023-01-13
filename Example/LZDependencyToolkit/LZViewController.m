@@ -42,14 +42,13 @@
 #pragma mark - -> UI Action
 - (IBAction)touchExtendTest:(UIButton *)sender {
     LZLog();
-    
     self.imgView.image = [UIImage imageNamed:@"abc"];
     [self testCrash];
 }
 
 - (IBAction)eventIntervalTest:(UIButton *)sender {
     LZLog();
-    [self runtime];
+    
 }
 
 - (void)leftDidClick {
@@ -95,19 +94,15 @@
 
 - (void)runtime {
     
-    LZStudent *s = [LZStudent new];
-//    [s personInstanceMethod];
-    [s helloWrold];
-    
 //    LZPerson *p= [LZPerson new];
 //    [p personInstanceMethod];
     
-    LZPerson *person = [[LZPerson alloc] init];
-    {
-        LZPerson *temp = [[LZPerson alloc] init];
-        objc_setAssociatedObject(person, @"temp", temp, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    }
-    NSLog(@"%@", objc_getAssociatedObject(person, @"temp"));
+//    LZPerson *person = [[LZPerson alloc] init];
+//    {
+//        LZPerson *temp = [[LZPerson alloc] init];
+//        objc_setAssociatedObject(person, @"temp", temp, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+//    }
+//    NSLog(@"%@", objc_getAssociatedObject(person, @"temp"));
 }
 
 - (void)quick {
@@ -337,7 +332,12 @@
 }
 
 - (void)testCrash {
-    
+    // unrecognizedSelector
+    LZStudent *s = [LZStudent new];
+    [s personInstanceMethod];
+    [s helloWorld];
+    [LZStudent helloWorld];
+    // rangeOfString
     NSString *string = @"";
     NSString *searchStr = nil;
     [string rangeOfString:searchStr];

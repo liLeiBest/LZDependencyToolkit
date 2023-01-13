@@ -24,7 +24,8 @@ NS_ASSUME_NONNULL_BEGIN
 /** 书 */
 @property (strong, nonatomic) LZBook *book;
 
-- (void)helloWrold;
++ (void)helloWorld;
+- (void)helloWorld;
 
 @end
 

@@ -1,15 +1,15 @@
 //
-//  NSNull+LZExtension.m
+//  NSNull+LZCrash.m
 //  Pods
 //
 //  Created by Dear.Q on 16/8/9.
 //
 //
 
-#import "NSNull+LZExtension.h"
+#import "NSNull+LZCrash.h"
 #import <objc/runtime.h>
 
-@implementation NSNull (LZExtension)
+@implementation NSNull (LZCrash)
 
 - (id)forwardingTargetForSelector:(SEL)aSelector {
     // 处理 NSNumber,NSString,NSArray,NSDictionary
@@ -20,7 +20,7 @@
     
     for (NSUInteger i = 0; i < 4; ++i) {
         
-        Method m = class_getInstanceMethod(NSClassFromString(supporttedTypes[i]) , aSelector);
+        Method m = class_getInstanceMethod(NSClassFromString(supporttedTypes[i]), aSelector);
         const char *returnType = method_copyReturnType(m);
         if (returnType) {
             
@@ -39,7 +39,6 @@
             }
         }
     }
-    
     return [super forwardingTargetForSelector:aSelector];
 }
 
