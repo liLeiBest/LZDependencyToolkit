@@ -113,7 +113,6 @@
     if ([name isKindOfClass:[UIImage class]]) {
         return (UIImage *)name;
     }
-    
     UIImage *image = nil;
     if ([name isKindOfClass:[NSURL class]]) {
         
@@ -125,11 +124,6 @@
         image = [UIImage imageWithData:(NSData *)name];
         return image;
     } else if ([name isValidString]) {
-        if (@available(iOS 8.0, *)) {
-            image = [UIImage imageNamed:name inBundle:[NSBundle mainBundle] compatibleWithTraitCollection:nil];
-        } else {
-            image = [UIImage imageNamed:name];
-        }
         if (nil == image) {
             image = [UIImage imageWithContentsOfFile:name];;
         }
@@ -142,7 +136,7 @@
         if (nil == image) {
             
             NSString *imgName = [NSString stringWithFormat:@"%@.png", name];
-            NSString *path =[[NSBundle mainBundle] pathForResource:imgName ofType:nil];
+            NSString *path = [[NSBundle mainBundle] pathForResource:imgName ofType:nil];
             image = [UIImage imageWithContentsOfFile:path];
             if (nil == image) {
                 

@@ -33,20 +33,23 @@
     [self extendBtnHit];
 //    [self deviceInfo];
 //    [self appInfo];
-    [self crypto];
+//    [self crypto];
 //    [self quick];
 //    [self customDescription];
+//    [self weakTimer];
 }
 
 #pragma mark - -> UI Action
 - (IBAction)touchExtendTest:(UIButton *)sender {
     LZLog();
     
+    self.imgView.image = [UIImage imageNamed:@"abc"];
+    [self testCrash];
 }
 
 - (IBAction)eventIntervalTest:(UIButton *)sender {
     LZLog();
-    
+    [self runtime];
 }
 
 - (void)leftDidClick {
@@ -56,12 +59,12 @@
 
 - (void)rightDidClick {
     LZLog(@"点击了右边按钮");
-    [self weakTimer];
+    
 }
 
 - (void)sysDidClick {
 	LZLog(@"点击了右边系统按钮");
-    NSLog(@"当前网速：%@", LZDeviceInfo.currentNetSpeed());
+    
 }
 
 // MARK: - Private
@@ -250,11 +253,11 @@
         static NSUInteger number = 0;
         number++;
         NSLog(@"%@ %@", @"============", LZQuickUnit.toString(@(number)));
-//        if (number >= 10) {
-//
-//            [self.time invalidate];
-//            number = 0;
-//        }
+        if (number >= 10) {
+
+            [self.time invalidate];
+            number = 0;
+        }
     }];
     self.time.tolerance = 1.0f;
     [self.time schedule];
@@ -331,6 +334,13 @@
     string = @"110.";
     valid = [string validateFloatNumberWithIntegerFigure:10 integerMostOrLeast:YES decimalFigure:0 decimalMostOrLeast:YES beginWithZero:NO];
     LZLog(@"%@ 最大10位整数，最大0位小数，不允许0开头：%@", string, valid ? @"通过" : @"失败");
+}
+
+- (void)testCrash {
+    
+    NSString *string = @"";
+    NSString *searchStr = nil;
+    [string rangeOfString:searchStr];
 }
 
 @end

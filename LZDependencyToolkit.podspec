@@ -25,6 +25,9 @@ Pod::Spec.new do |s|
         category.source_files				= 'LZDependencyToolkit/Classes/Category/*.{h,m}'
         category.public_header_files 		= 'LZDependencyToolkit/Classes/Category/*.h'
         category.frameworks          		= 'CoreGraphics', 'QuartzCore', 'CoreText'
+        category.pod_target_xcconfig        = {
+          'OTHER_LDFLAGS' => '-lObjC'
+        }
         category.dependency 'MJRefresh'
     end
     

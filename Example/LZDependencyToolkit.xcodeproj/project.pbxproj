@@ -80,7 +80,7 @@
 		873B8AEA1B1F5CCA007FD442 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A43F0B7E261D926D003BB8E1 /* LZStudent+LZTest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LZStudent+LZTest.h"; sourceTree = "<group>"; };
 		A43F0B7F261D926D003BB8E1 /* LZStudent+LZTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "LZStudent+LZTest.m"; sourceTree = "<group>"; };
-		A4C4D10C25CAB8B5004D5748 /* LZDependencyToolkit_Example.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LZDependencyToolkit_Example.entitlements; sourceTree = "<group>"; };
+		A4C4D10C25CAB8B5004D5748 /* LZDependencyToolkit_Example.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LZDependencyToolkit_Example.entitlements; sourceTree = SOURCE_ROOT; };
 		A819A32706BA092B035B27F1 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		B2459D6D48C51997FDDBED64 /* Pods-LZDependencyToolkit_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LZDependencyToolkit_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LZDependencyToolkit_Example/Pods-LZDependencyToolkit_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		C872749D506B2971451FDE07 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
@@ -116,7 +116,6 @@
 		6003F581195388D10070C39A = {
 			isa = PBXGroup;
 			children = (
-				A4C4D10C25CAB8B5004D5748 /* LZDependencyToolkit_Example.entitlements */,
 				60FF7A9C1954A5C5007DD14C /* Podspec Metadata */,
 				6003F593195388D20070C39A /* Example for LZDependencyToolkit */,
 				6003F5B5195388D20070C39A /* Tests */,
@@ -179,6 +178,7 @@
 			isa = PBXGroup;
 			children = (
 				6003F595195388D20070C39A /* LZDependencyToolkit-Info.plist */,
+				A4C4D10C25CAB8B5004D5748 /* LZDependencyToolkit_Example.entitlements */,
 				6003F596195388D20070C39A /* InfoPlist.strings */,
 				6003F599195388D20070C39A /* main.m */,
 				6003F59B195388D20070C39A /* LZDependencyToolkit-Prefix.pch */,

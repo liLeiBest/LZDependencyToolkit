@@ -23,7 +23,6 @@ static void resetState() {
 
 // MARK: - Initialization
 + (void)load {
-    
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         

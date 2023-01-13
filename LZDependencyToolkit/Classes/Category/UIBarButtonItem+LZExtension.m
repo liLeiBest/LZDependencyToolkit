@@ -16,17 +16,16 @@
 
 //MARK: - runtime
 + (void)load {
-    
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         
         SEL originSelector = @selector(setTitleTextAttributes:forState:);
-        SEL swizzleSelector = @selector(LZ_setTitleTextAttributes:forState:);
+        SEL swizzleSelector = @selector(lz_setTitleTextAttributes:forState:);
         LZ_exchangeInstanceMethod(self, originSelector, swizzleSelector);
     });
 }
 
-- (void)LZ_setTitleTextAttributes:(NSDictionary<NSString *,id> *)attributes forState:(UIControlState)state {
+- (void)lz_setTitleTextAttributes:(NSDictionary<NSString *,id> *)attributes forState:(UIControlState)state {
     
     UIView *customView = self.customView;
     if (customView) {

@@ -56,23 +56,25 @@ id LZ_getAssociatedObject(id object, const void *key) {
 //MARK: - Private
 /** 方法交换 */
 void LZ_exchangeMethod(BOOL classMethod, Class destClass, SEL originSelector, SEL swizzleSelector) {
-    
-    Method originMethod = classMethod ? class_getInstanceMethod(destClass, originSelector) : class_getInstanceMethod(destClass, originSelector);
+    if (nil == originSelector || nil == swizzleSelector) {
+        return;
+    }
+    destClass = YES == classMethod ? object_getClass([destClass class]) : [destClass class];
+    Method originMethod = YES == classMethod ? class_getClassMethod(destClass, originSelector) : class_getInstanceMethod(destClass, originSelector);
     IMP originIMP = method_getImplementation(originMethod);
     const char *originType = method_getTypeEncoding(originMethod);
     
-	Method swizzleMethod = classMethod ? class_getClassMethod(destClass, swizzleSelector) : class_getInstanceMethod(destClass, swizzleSelector);
+	Method swizzleMethod = YES == classMethod ? class_getClassMethod(destClass, swizzleSelector) : class_getInstanceMethod(destClass, swizzleSelector);
 	IMP swizzleIMP = method_getImplementation(swizzleMethod);
 	const char *swizzleType = method_getTypeEncoding(swizzleMethod);
-	
     if (nil == originMethod) {
-        
+
         class_addMethod(destClass, originSelector, swizzleIMP, swizzleType);
         method_setImplementation(swizzleMethod, imp_implementationWithBlock(^(id self, SEL _cmd) {}));
     }
 	BOOL didAddMethod = class_addMethod(destClass, originSelector, swizzleIMP, swizzleType);
-	if (didAddMethod) {
-		class_replaceMethod(destClass, swizzleSelector, originIMP, originType);
+	if (YES == didAddMethod) {
+        class_replaceMethod(destClass, swizzleSelector, originIMP, originType);
 	} else {
 		method_exchangeImplementations(originMethod, swizzleMethod);
 	}
