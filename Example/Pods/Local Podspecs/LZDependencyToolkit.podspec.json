@@ -1,6 +1,6 @@
 {
   "name": "LZDependencyToolkit",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "summary": "Toolkit.",
   "description": "Toolkit 常用工具箱，包括以下内容\n    1.分类，常用系统类方法扩展。\n    2.自定义结构体，封装App 及 设备的常用属性。\n3.宏定义。\n    4.对象，Timer 及 Transitioning",
   "homepage": "https://github.com/liLeiBest/LZDependencyToolkit",
@@ -13,7 +13,7 @@
   },
   "source": {
     "git": "https://github.com/liLeiBest/LZDependencyToolkit.git",
-    "tag": "3.1.0"
+    "tag": "3.1.1"
   },
   "social_media_url": "https://github.com/liLeiBest",
   "frameworks": [
