@@ -341,6 +341,20 @@
     NSString *string = @"";
     NSString *searchStr = nil;
     [string rangeOfString:searchStr];
+    // beyond bounds for empty array
+    {
+        NSArray *array = @[];
+        id value = array[1];
+    }
+    {
+        NSArray *array = [NSArray array];
+        id value = array[1];
+    }
+    {
+        NSArray *array = @[@"a"];
+        id value = array[1];
+    }
+    [[NSMutableArray array] objectAtIndex:1];
 }
 
 @end

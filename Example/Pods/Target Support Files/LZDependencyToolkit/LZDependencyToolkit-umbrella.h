@@ -12,6 +12,7 @@
 
 #import "LZDependencyToolkit.h"
 #import "CALayer+LZFrame.h"
+#import "NSArray+LZCrash.h"
 #import "NSNull+LZCrash.h"
 #import "NSObject+LZUnrecognizedSelector.h"
 #import "NSString+LZCrash.h"

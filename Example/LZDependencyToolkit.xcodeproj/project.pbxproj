@@ -560,7 +560,7 @@
 				CODE_SIGN_ENTITLEMENTS = LZDependencyToolkit_Example.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = N36S4U77XV;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "LZDependencyToolkit/LZDependencyToolkit-Prefix.pch";
 				INFOPLIST_FILE = "LZDependencyToolkit/LZDependencyToolkit-Info.plist";
@@ -583,7 +583,7 @@
 				CODE_SIGN_ENTITLEMENTS = LZDependencyToolkit_Example.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = N36S4U77XV;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "LZDependencyToolkit/LZDependencyToolkit-Prefix.pch";
 				INFOPLIST_FILE = "LZDependencyToolkit/LZDependencyToolkit-Info.plist";
