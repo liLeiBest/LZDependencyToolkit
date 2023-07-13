@@ -207,7 +207,16 @@ UIWindow * _keyWindow(void) {
             if (mainWindow) {
                 return mainWindow;
             } else {
-                return [UIApplication sharedApplication].windows.lastObject;
+                if (@available(iOS 15.0, *)) {
+                    mainWindow = windowScene.keyWindow;
+                } else {
+                    mainWindow = [windowScene.windows lastObject];
+                }
+                if (mainWindow) {
+                    return mainWindow;
+                } else {
+                    return [UIApplication sharedApplication].windows.lastObject;
+                }
             }
         } else {
             // Fallback on earlier versions
