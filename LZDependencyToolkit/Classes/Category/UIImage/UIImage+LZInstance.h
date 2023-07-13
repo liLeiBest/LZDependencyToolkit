@@ -198,8 +198,9 @@
 + (UIImage *)previewImageWithVideoURL:(NSURL *)videoURL;
 
 /// 压缩到指定大小，单位KB
+/// @param image 图片
 /// @param maxSize 图片大小
-- (NSData *)compressInMaxSize:(NSUInteger)maxSize;
++ (NSData *)compress:(id)image toMaxSize:(NSUInteger)maxSize;
 
 // MARK: - Deprecated
 + (UIImage *)imageWithColor:(UIColor *)color

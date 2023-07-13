@@ -259,9 +259,7 @@
     return image;
 }
 
-- (NSData *)compressInMaxSize:(NSUInteger)maxSize {
-    
-    UIImage *image = self;
++ (NSData *)compress:(id)image toMaxSize:(NSUInteger)maxSize {
     // 获取图片大小
     NSUInteger size = 0;
     if ([image isKindOfClass:[NSData class]]) {
@@ -297,7 +295,7 @@
     if (YES == needCompress) {
         data = [self compressImage:image toByte:maxSize * unit];
     } else {
-        // 压缩系数不能为1，否则有些小图片会上传失败
+        // 压缩系数不能为1，否则有些小图片会上传图片可以会失败
         data = UIImageJPEGRepresentation(image, 0.9);
     }
     return data;
@@ -370,7 +368,7 @@
 /// 压缩图片
 /// @param image 图片
 /// @param maxLength 允许大小
-- (NSData *)compressImage:(UIImage *)image
++ (NSData *)compressImage:(UIImage *)image
                    toByte:(NSUInteger)maxLength {
 #if 1
     // Compress by quality
