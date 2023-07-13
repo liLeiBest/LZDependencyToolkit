@@ -259,6 +259,50 @@
     return image;
 }
 
+- (NSData *)compressInMaxSize:(NSUInteger)maxSize {
+    
+    UIImage *image = self;
+    // 获取图片大小
+    NSUInteger size = 0;
+    if ([image isKindOfClass:[NSData class]]) {
+        // 获取NSData字节数
+        NSData *data = (NSData *)image;
+        size = [data length];
+        image = [[UIImage alloc] initWithData:(NSData *)image];
+    } else if ([image isKindOfClass:[NSString class]]) {
+        // 数据文件字节数
+        NSString *path = (NSString *)image;
+        NSFileManager *fileM = [NSFileManager defaultManager];
+        NSDictionary<NSFileAttributeKey, id> *attributes = [fileM attributesOfItemAtPath:path error:NULL];
+        size = [attributes fileSize];
+        image = [UIImage imageWithContentsOfFile:(NSString *)image];
+    } else if ([image isKindOfClass:[NSURL class]]) {
+        // 数据文件字节数
+        NSURL *URL = (NSURL *)image;
+        NSFileManager *fileM = [NSFileManager defaultManager];
+        NSDictionary<NSFileAttributeKey, id> *attributes = [fileM attributesOfItemAtPath:URL.relativePath error:NULL];
+        size = [attributes fileSize];
+        image = [UIImage imageWithContentsOfFile:URL.relativePath];
+    } else if ([image isKindOfClass:[UIImage class]]) {
+        // 图片字节数
+        NSData *data = UIImageJPEGRepresentation(image, 1.0);
+        size = data.length;
+    }
+    // 单位转换，1KB=1000Byte，向下四取整
+    NSUInteger unit = 1000;
+    NSUInteger kb = size / unit;
+    // 判断是否需要压缩
+    BOOL needCompress = kb > maxSize;
+    NSData *data = nil;
+    if (YES == needCompress) {
+        data = [self compressImage:image toByte:maxSize * unit];
+    } else {
+        // 压缩系数不能为1，否则有些小图片会上传失败
+        data = UIImageJPEGRepresentation(image, 0.9);
+    }
+    return data;
+}
+
 // MARK: - Private
 /**
  @author Lilei
@@ -321,6 +365,47 @@
         if (s > 0x4e00 && s < 0x9fff) return NO;
     }
     return YES;
+}
+
+/// 压缩图片
+/// @param image 图片
+/// @param maxLength 允许大小
+- (NSData *)compressImage:(UIImage *)image
+                   toByte:(NSUInteger)maxLength {
+#if 1
+    // Compress by quality
+    CGFloat compression = 1;
+    NSData *data = nil;
+    CGFloat max = 1;
+    CGFloat min = 0;
+    for (int i = 0; i < 6; ++i) {
+        
+        compression = (max + min) / 2.0;
+        data = UIImageJPEGRepresentation(image, compression);
+        if (data.length > maxLength) {
+            max = compression;
+        } else {
+            break;
+        }
+    }
+    return data;
+#else
+     // Compress by size
+     NSUInteger lastDataLength = 0;
+     while (data.length > maxLength && data.length != lastDataLength) {
+         
+         lastDataLength = data.length;
+         CGFloat ratio = (CGFloat)maxLength / data.length;
+         CGSize size = CGSizeMake((NSUInteger)(image.size.width * sqrtf(ratio)),
+                                  (NSUInteger)(image.size.height * sqrtf(ratio)));
+         UIGraphicsBeginImageContext(size);
+         [image drawInRect:CGRectMake(0, 0, size.width, size.height)];
+         image = UIGraphicsGetImageFromCurrentImageContext();
+         UIGraphicsEndImageContext();
+         data = UIImageJPEGRepresentation(image, compression);
+     }
+     return data;
+#endif
 }
 
 // MARK: - Deprecated
