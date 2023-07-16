@@ -28,6 +28,7 @@
 id addMethod(LZUnrecognizedSelectorSolveObject *self, SEL _cmd) {
     NSString *string = [NSString stringWithFormat:@"LZCrashProtector_UnrecognizedSelector: <%@> unrecognized selector: [%@] to %@", NSStringFromClass([self.objc class]), NSStringFromSelector(_cmd), (YES == self.toInstance ? @"Instace" : @"Class")];
 #if DEBUG
+    NSLog(@"%@", string);
     UIAlertController *alertCtr = [UIAlertController alertControllerWithTitle:@"提示" message:string preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *ok = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
     }];
@@ -35,7 +36,7 @@ id addMethod(LZUnrecognizedSelectorSolveObject *self, SEL _cmd) {
     UIViewController *target = [[[UIApplication sharedApplication] delegate] window].rootViewController;
     [target presentViewController:alertCtr animated:YES completion:nil];
 #else
-    NSLog(string);
+    NSLog(@"%@", string);
 #endif
     return 0;
 }
