@@ -27,16 +27,28 @@
 // MARK: - Private
 id addMethod(LZUnrecognizedSelectorSolveObject *self, SEL _cmd) {
     NSString *string = [NSString stringWithFormat:@"LZCrashProtector_UnrecognizedSelector: <%@> unrecognized selector: [%@] to %@", NSStringFromClass([self.objc class]), NSStringFromSelector(_cmd), (YES == self.toInstance ? @"Instace" : @"Class")];
-#if DEBUG
     NSLog(@"%@", string);
+#if DEBUG
     UIAlertController *alertCtr = [UIAlertController alertControllerWithTitle:@"提示" message:string preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *ok = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
     }];
     [alertCtr addAction:ok];
-    UIViewController *target = [[[UIApplication sharedApplication] delegate] window].rootViewController;
+    
+    UIWindow *keyWindow = nil;
+    if (@available(iOS 13.0, *)) {
+        
+        NSArray *array = [[[UIApplication sharedApplication] connectedScenes] allObjects];
+        UIWindowScene *windowScene = (UIWindowScene *)array[0];
+        if (@available(iOS 15.0, *)) {
+            keyWindow = windowScene.keyWindow;
+        } else {
+            keyWindow = [windowScene.windows lastObject];
+        }
+    } else {
+        keyWindow = [UIApplication sharedApplication].keyWindow;
+    }
+    UIViewController *target = keyWindow.rootViewController;
     [target presentViewController:alertCtr animated:YES completion:nil];
-#else
-    NSLog(@"%@", string);
 #endif
     return 0;
 }
@@ -79,6 +91,10 @@ id lz_forwardingTargetForSelector(Class _Nullable cls, id target, bool toInstanc
 }
 
 - (id)lz_instanceForwardingTargetForSelector:(SEL)aSelector {
+    // AVPlayerController进度条快进不知道为什么会崩溃
+    if ([self isKindOfClass:NSClassFromString(@"AVPlayerController")]) {
+        return [self lz_instanceForwardingTargetForSelector:aSelector];
+    }
     return lz_forwardingTargetForSelector([self class], self, YES);
 }
 

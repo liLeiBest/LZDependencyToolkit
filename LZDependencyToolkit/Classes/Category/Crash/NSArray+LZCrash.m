@@ -23,9 +23,13 @@
         SEL swizzleSelector2 = @selector(lz_objectAtIndex2:);
         LZ_exchangeInstanceMethod(NSClassFromString(@"__NSArrayI"), originSelector2, swizzleSelector2);
         
-        SEL originSelector3 = @selector(objectAtIndex:);
-        SEL swizzleSelector3 = @selector(lz_objectAtIndex3:);
-        LZ_exchangeInstanceMethod(NSClassFromString(@"__NSSingleObjectArrayI"), originSelector3, swizzleSelector3);
+        SEL originSelector3 = @selector(initWithObjects:count:);
+        SEL swizzleSelector3 = @selector(lz_initWithObjects:count:);
+        LZ_exchangeInstanceMethod(NSClassFromString(@"__NSPlaceholderArray"), originSelector3, swizzleSelector3);
+        
+        SEL originSelector4 = @selector(objectAtIndex:);
+        SEL swizzleSelector4 = @selector(lz_objectAtIndex4:);
+        LZ_exchangeInstanceMethod(NSClassFromString(@"__NSSingleObjectArrayI"), originSelector4, swizzleSelector4);
     });
 }
 
@@ -47,13 +51,23 @@
     return [self lz_objectAtIndex2:index];
 }
 
-- (id)lz_objectAtIndex3:(NSUInteger)index {
+- (instancetype)lz_initWithObjects:(id  _Nonnull const[])objects
+                          count:(NSUInteger)cnt {
+    if (0 < cnt) {
+        
+        id object = objects[0];
+        if (nil == object) return nil;
+    }
+    return [self lz_initWithObjects:objects count:cnt];
+}
+
+- (id)lz_objectAtIndex4:(NSUInteger)index {
     if (0 > index) {
         return nil;
     } else if (index >= self.count) {
         return nil;
     }
-    return [self lz_objectAtIndex3:index];
+    return [self lz_objectAtIndex4:index];
 }
 
 @end
