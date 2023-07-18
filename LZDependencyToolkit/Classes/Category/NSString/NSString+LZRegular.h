@@ -293,6 +293,10 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (BOOL)isContainOnlyLettersAndNumbersAndChineseCharacter:(NSString  * _Nullable __autoreleasing * _Nullable)resultString;
 
+/// 提取符合规则的内容
+/// @param regularExpression 正则表达式
+- (NSArray *)extractRegular:(NSString *)regularExpression;
+
 // MARK: - Deprecated
 - (BOOL)isValideString DEPRECATED_MSG_ATTRIBUTE("请使用 isValidString 替代");
 

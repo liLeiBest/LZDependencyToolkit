@@ -258,22 +258,6 @@
     return NO == isContainsSpecialCharacter;
 }
 
-// MARK: - Private
-/**
- 验证正则表达式
- 
- @param regularExpression 正则表达式
- @return BOOL
- */
-- (BOOL)verifyRegular:(NSString *)regularExpression {
-    if (self.length <= 0) return NO;
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regularExpression];;
-    BOOL isValid = [predicate evaluateWithObject:self];
-    return isValid;
-}
-
-/// 提取符合规则的内容
-/// @param regularExpression 正则表达式
 - (NSArray *)extractRegular:(NSString *)regularExpression {
     if (self.length <= 0) return @[];
     NSError *error;
@@ -289,6 +273,20 @@
         [resultArrM addObject:substringForMatch];
     }
     return resultArrM.copy;
+}
+
+// MARK: - Private
+/**
+ 验证正则表达式
+ 
+ @param regularExpression 正则表达式
+ @return BOOL
+ */
+- (BOOL)verifyRegular:(NSString *)regularExpression {
+    if (self.length <= 0) return NO;
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regularExpression];;
+    BOOL isValid = [predicate evaluateWithObject:self];
+    return isValid;
 }
 
 // MARK: - Deprecated
