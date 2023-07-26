@@ -12,7 +12,9 @@
 
 /** 根据文本的属性及内容，计算文本所占的宽、高 */
 - (CGSize)sizeWithAttributes:(NSDictionary *)attributes maxSize:(CGSize)maxSize {
-    
+    if (0 == self.length) {
+        return CGSizeMake(0, 0);
+    }
     NSStringDrawingOptions options = NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading;
     CGSize stringSize = [self boundingRectWithSize:maxSize
                                            options:options
