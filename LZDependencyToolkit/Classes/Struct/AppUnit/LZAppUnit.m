@@ -196,7 +196,7 @@ UIWindow * _keyWindow(void) {
         if (@available(iOS 13.0, *)) {
             
             NSArray *array = [[[UIApplication sharedApplication] connectedScenes] allObjects];
-            UIWindowScene* windowScene = (UIWindowScene *)array[0];
+            UIWindowScene *windowScene = (UIWindowScene *)array[0];
             /**
              如果是普通App开发，可以使用
              SceneDelegate * delegate = (SceneDelegate *)windowScene.delegate;
