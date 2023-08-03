@@ -10,7 +10,9 @@
 
 @interface NSString (LZPinYin)
 
-/** 拼音字符串 */
+/** 拼音字符串，中间以空格隔开 */
+@property (nonatomic, copy, readonly) NSString *fullPinyin;
+/** 拼音字符串，中间无空格隔开 */
 @property (nonatomic, copy, readonly) NSString *pinyinString;
 /** 拼音首字母 */
 @property (nonatomic, copy, readonly) NSString *pinyinFirstLetter;

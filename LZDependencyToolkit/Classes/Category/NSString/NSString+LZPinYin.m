@@ -11,15 +11,31 @@
 
 @implementation NSString (LZPinYin)
 
-- (NSString *)pinyinString {
-    if (NO == [self isValidString]) {
+- (NSString *)fullPinyin {
+    
+    NSString *result = self;
+    if (NO == [result isValidString]) {
         return @"";
     }
     
-    NSMutableString *pinyin = [self mutableCopy];
-    CFStringTransform((__bridge CFMutableStringRef)pinyin, NULL, kCFStringTransformMandarinLatin, NO);
-    CFStringTransform((__bridge CFMutableStringRef)pinyin, NULL, kCFStringTransformStripDiacritics, NO);
-    return pinyin;
+    NSMutableString *pinyinM = [NSMutableString stringWithString:result];
+    CFStringTransform((__bridge CFMutableStringRef)pinyinM, NULL, kCFStringTransformMandarinLatin, NO);
+    CFStringTransform((__bridge CFMutableStringRef)pinyinM, NULL, kCFStringTransformStripDiacritics, NO);
+    return pinyinM.copy;
+}
+
+- (NSString *)pinyinString {
+    
+    NSString *result = self.fullPinyin;
+    NSRange range = [result rangeOfCharacterFromSet:[NSCharacterSet whitespaceCharacterSet]];
+    if (range.location != NSNotFound) {
+        result = [result stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    }
+    range = [result rangeOfString:@" "];
+    if (range.location != NSNotFound) {
+        result = [result stringByReplacingOccurrencesOfString:@" " withString:@""];
+    }
+    return result;
 }
 
 - (NSString *)pinyinFirstLetter {

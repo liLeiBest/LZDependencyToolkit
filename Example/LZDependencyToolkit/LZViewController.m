@@ -49,6 +49,18 @@
 - (IBAction)eventIntervalTest:(UIButton *)sender {
     LZLog();
     
+    NSMutableArray *arrM = [NSMutableArray arrayWithArray:@[
+        @"A",
+        @"A娇娇",
+        @"A文宏",
+        @"Ahah",
+    ]];
+    [arrM sortUsingComparator:^NSComparisonResult(NSString * _Nonnull obj1, NSString * _Nonnull obj2) {
+        NSString *pinYin1 = obj1.pinyinString.uppercaseString;
+        NSString *pinYin2 = obj2.pinyinString.uppercaseString;
+        return [pinYin1 compare:pinYin2];
+    }];
+    LZLog(@"%@", arrM.copy);
 }
 
 - (void)leftDidClick {
