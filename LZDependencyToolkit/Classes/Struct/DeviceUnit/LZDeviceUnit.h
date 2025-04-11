@@ -134,6 +134,7 @@ typedef NS_ENUM(NSInteger, LZDeviceGeneration) {
     LZDeviceGenerationiPad7th,
     LZDeviceGenerationiPad8th,
     LZDeviceGenerationiPad9th,
+    LZDeviceGenerationiPad10th,
     LZDeviceGenerationiPad_air1st,
     LZDeviceGenerationiPad_air2nd,
 	LZDeviceGenerationiPad_air3rd,

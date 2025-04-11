@@ -201,6 +201,8 @@ LZDeviceGeneration _generation(void) {
         [deviceIdentifier isEqualToString:@"iPad11,7"]) return LZDeviceGenerationiPad8th;
     if ([deviceIdentifier isEqualToString:@"iPad12,1"] ||
         [deviceIdentifier isEqualToString:@"iPad12,2"]) return LZDeviceGenerationiPad9th;
+    if ([deviceIdentifier isEqualToString:@"iPad13,18"] ||
+        [deviceIdentifier isEqualToString:@"iPad13,19"]) return LZDeviceGenerationiPad10th;
     if ([deviceIdentifier isEqualToString:@"iPad4,1"] ||
         [deviceIdentifier isEqualToString:@"iPad4,2"] ||
         [deviceIdentifier isEqualToString:@"iPad4,3"]) return LZDeviceGenerationiPad_air1st;
@@ -502,6 +504,9 @@ NSString * _generation_desc(void) {
             break;
         case LZDeviceGenerationiPad9th:
             return @"iPad (9th generation)";
+            break;
+        case LZDeviceGenerationiPad10th:
+            return @"iPad (10th generation)";
             break;
         case LZDeviceGenerationiPad_air1st:
             return @"iPad Air (1st generation)";
