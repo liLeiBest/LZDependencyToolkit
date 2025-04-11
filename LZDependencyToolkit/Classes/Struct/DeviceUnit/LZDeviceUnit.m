@@ -18,6 +18,7 @@
 #import <dlfcn.h>
 #import <mach-o/dyld.h>
 #import <mach/mach.h>
+#import <os/proc.h>
 
 #include <arpa/inet.h>
 #include <ifaddrs.h>
@@ -824,43 +825,104 @@ NSString * _diskUsedSpace_desc(void) {
 }
 
 UInt64 _memoryTotalSpace(void) {
-    return [[NSProcessInfo processInfo] physicalMemory];
+    
+    int64_t totaolMemory = [[NSProcessInfo processInfo] physicalMemory];
+    if (totaolMemory < -1) {
+        totaolMemory = -1;
+    }
+    return totaolMemory;
 }
 
 NSString * _memoryTotalSpace_desc(void) {
-    return [NSString stringWithFormat:@"%.1fG", _memoryTotalSpace() / 1024.0 / 1024.0 / 1024.0];
+    return [NSString stringWithFormat:@"%.1fG", _memoryTotalSpace() * 0.001 * 0.001 * 0.001];
 }
 
 UInt64 _memoryAvaiableSpace(void) {
     
     mach_port_t host_port = mach_host_self();
-    mach_msg_type_number_t host_size = HOST_VM_INFO_COUNT;
+    mach_msg_type_number_t count = HOST_VM_INFO64_COUNT;
+    
     vm_size_t page_size;
-    vm_statistics_data_t vm_stat;
-    kern_return_t kern;
-    kern = host_page_size(host_port, &page_size);
-    if (kern != KERN_SUCCESS) return 0;
-    kern = host_statistics(host_port, HOST_VM_INFO, (host_info_t)&vm_stat, &host_size);
-    if (kern != KERN_SUCCESS) return 0;
-    return vm_stat.free_count * page_size;
+    vm_statistics64_data_t vminfo;
+    host_page_size(host_port, &page_size);
+    host_statistics64(host_port, HOST_VM_INFO64, (host_info64_t)&vminfo,&count);
+    
+    uint64_t free_size = (vminfo.free_count + vminfo.external_page_count + vminfo.purgeable_count - vminfo.speculative_count) * page_size;
+    return free_size;
+#if 0
+    NSInteger memoryLimit = 0;
+    // 获取当前内存使用数据
+    if (@available(iOS 13.0, *)) {
+        
+        task_vm_info_data_t vmInfo;
+        mach_msg_type_number_t count = TASK_VM_INFO_COUNT;
+        kern_return_t kr = task_info(mach_task_self(), TASK_VM_INFO, (task_info_t)&vmInfo, &count);
+        if (kr == KERN_SUCCESS) {
+            // 间接获取一下当前进程可用的最大内存上限
+            // iOS13+可以这样计算：当前进程占用内存+还可以使用的内存=上限值
+            NSInteger memoryCanBeUse = (NSInteger)(os_proc_available_memory());
+            if (memoryCanBeUse > 0) {
+                
+                NSInteger memoryUsed = (NSInteger)(vmInfo.phys_footprint);
+                memoryLimit = memoryUsed + memoryCanBeUse;
+            }
+        }
+    }
+    if (memoryLimit <= 0) {
+        
+        NSInteger deviceMemory = [NSProcessInfo processInfo].physicalMemory;
+        memoryLimit = deviceMemory * 0.55;
+    }
+    if (memoryLimit <= 0) {
+        // 这个值一般要小很多, 上面都获取不到才使用
+        mach_port_t host_port = mach_host_self();
+        mach_msg_type_number_t host_size = HOST_VM_INFO_COUNT;
+        vm_size_t page_size;
+        vm_statistics_data_t vm_stat;
+        kern_return_t kern;
+        kern = host_page_size(host_port, &page_size);
+        if (kern == KERN_SUCCESS) {
+            
+            kern = host_statistics(host_port, HOST_VM_INFO, (host_info_t)&vm_stat, &host_size);
+            if (kern == KERN_SUCCESS) {
+                memoryLimit = vm_stat.free_count * page_size;
+            }
+        }
+    }
+    return memoryLimit;
+#endif
 }
 
 NSString * _memoryAvaiableSpace_desc(void) {
-    return [NSString stringWithFormat:@"%.1fM", _memoryAvaiableSpace() / 1024.0 / 1024.0];
+    return [NSString stringWithFormat:@"%.1fG", _memoryAvaiableSpace() * 0.001 * 0.001 * 0.001];
 }
 
 UInt64 _memoryUsedSpace(void) {
     
-    mach_port_t host_port = mach_task_self();
-    task_basic_info_data_t taskInfo;
-    mach_msg_type_number_t host_size = TASK_BASIC_INFO_COUNT;
-    kern_return_t kernReturn = task_info(host_port, TASK_BASIC_INFO, (task_info_t)&taskInfo, &host_size);
-    if (kernReturn != KERN_SUCCESS) return 0;
-    return taskInfo.resident_size;
+    UInt64 memoryUsageInByte = 0;
+    task_vm_info_data_t vmInfo;
+    mach_msg_type_number_t count = TASK_VM_INFO_COUNT;
+    kern_return_t kernelReturn = task_info(mach_task_self(), TASK_VM_INFO, (task_info_t) &vmInfo, &count);
+    if (kernelReturn == KERN_SUCCESS) {
+        memoryUsageInByte = (int64_t) vmInfo.phys_footprint;
+        NSLog(@"Memory in use (in bytes): %lld", memoryUsageInByte);
+    } else {
+        
+        mach_port_t host_port = mach_task_self();
+        task_basic_info_data_t taskInfo;
+        mach_msg_type_number_t host_size = TASK_BASIC_INFO_COUNT;
+        kern_return_t kernReturn = task_info(host_port, TASK_BASIC_INFO, (task_info_t)&taskInfo, &host_size);
+        if (kernReturn == KERN_SUCCESS) {
+            memoryUsageInByte = taskInfo.resident_size;
+        } else {
+            NSLog(@"Error with task_info(): %s", mach_error_string(kernelReturn));
+        }
+    }
+    return memoryUsageInByte;
 }
 
 NSString * _memoryUsedSpace_desc(void) {
-    return [NSString stringWithFormat:@"%.1fM", _memoryUsedSpace() / 1024.0 / 1024.0];
+    return [NSString stringWithFormat:@"%.1fM", _memoryUsedSpace() * 0.001 * 0.001];
 }
 
 NSString * _CPUCount(void) {
