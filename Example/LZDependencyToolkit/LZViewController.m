@@ -31,50 +31,44 @@
 	
     [self setupNavBarItem];
     [self extendBtnHit];
+    self.imgView.image = [UIImage imageNamed:@"qrcode"];
 //    [self deviceInfo];
 //    [self appInfo];
 //    [self crypto];
 //    [self quick];
 //    [self customDescription];
 //    [self weakTimer];
+//    [self testCrash];
+//    LZLog(@"%@", self.contentLabel.linesOfString);
+    
 }
 
 #pragma mark - -> UI Action
 - (IBAction)touchExtendTest:(UIButton *)sender {
     LZLog();
-    self.imgView.image = [UIImage imageNamed:@"abc"];
-    [self testCrash];
+    
+    [self deviceInfo];
+//    [self appInfo];
+//    [self crypto];
 }
 
 - (IBAction)eventIntervalTest:(UIButton *)sender {
     LZLog();
     
-    NSMutableArray *arrM = [NSMutableArray arrayWithArray:@[
-        @"A",
-        @"A娇娇",
-        @"A文宏",
-        @"Ahah",
-    ]];
-    [arrM sortUsingComparator:^NSComparisonResult(NSString * _Nonnull obj1, NSString * _Nonnull obj2) {
-        NSString *pinYin1 = obj1.pinyinString.uppercaseString;
-        NSString *pinYin2 = obj2.pinyinString.uppercaseString;
-        return [pinYin1 compare:pinYin2];
-    }];
-    LZLog(@"%@", arrM.copy);
 }
 
 - (void)leftDidClick {
-    LZLog(@"点击了左边按钮");
-    LZLog(@"%@", self.contentLabel.linesOfString);
+    LZLog();
+    
 }
 
 - (void)rightDidClick {
-    LZLog(@"点击了右边按钮");
+    LZLog();
     
 }
 
 - (void)sysDidClick {
-	LZLog(@"点击了右边系统按钮");
+    LZLog();
     
 }
 
@@ -106,15 +100,15 @@
 
 - (void)runtime {
     
-//    LZPerson *p= [LZPerson new];
-//    [p personInstanceMethod];
+    LZPerson *p= [LZPerson new];
+    [p personInstanceMethod];
     
-//    LZPerson *person = [[LZPerson alloc] init];
-//    {
-//        LZPerson *temp = [[LZPerson alloc] init];
-//        objc_setAssociatedObject(person, @"temp", temp, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-//    }
-//    NSLog(@"%@", objc_getAssociatedObject(person, @"temp"));
+    LZPerson *person = [[LZPerson alloc] init];
+    {
+        LZPerson *temp = [[LZPerson alloc] init];
+        objc_setAssociatedObject(person, @"temp", temp, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    }
+    NSLog(@"%@", objc_getAssociatedObject(person, @"temp"));
 }
 
 - (void)quick {
@@ -244,6 +238,22 @@
     NSLog(@"%@", student);
 }
 
+- (void)pinyinString {
+    
+    NSMutableArray *arrM = [NSMutableArray arrayWithArray:@[
+        @"A",
+        @"A娇娇",
+        @"A文宏",
+        @"Ahah",
+    ]];
+    [arrM sortUsingComparator:^NSComparisonResult(NSString * _Nonnull obj1, NSString * _Nonnull obj2) {
+        NSString *pinYin1 = obj1.pinyinString.uppercaseString;
+        NSString *pinYin2 = obj2.pinyinString.uppercaseString;
+        return [pinYin1 compare:pinYin2];
+    }];
+    LZLog(@"%@", arrM.copy);
+}
+
 - (void)roundImageView {
     
     UIImage *image = [UIImage imageWithColor:LZOrangeColor size:CGSizeMake(100, 100) isRound:YES];
@@ -303,9 +313,9 @@
     
     self.imgView.image = [UIImage imageNamed:@"哈哈" allowNull:YES];
     self.imgView.image = [UIImage imageNamed:@"哈哈" allowNull:NO];
-//    self.imgView.image = [UIImage imageNamed:@"timg"];
-//    self.imgView.image = [UIImage imageNamed:@"哈哈"];
-//    self.imgView.image = [UIImage imageNamed:@"11"];
+    self.imgView.image = [UIImage imageNamed:@"timg"];
+    self.imgView.image = [UIImage imageNamed:@"哈哈"];
+    self.imgView.image = [UIImage imageNamed:@"11"];
 }
 
 - (void)testRegular {
