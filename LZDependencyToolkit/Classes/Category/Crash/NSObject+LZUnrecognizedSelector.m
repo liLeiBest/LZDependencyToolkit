@@ -48,7 +48,9 @@ id addMethod(LZUnrecognizedSelectorSolveObject *self, SEL _cmd) {
         keyWindow = [UIApplication sharedApplication].keyWindow;
     }
     UIViewController *target = keyWindow.rootViewController;
-    [target presentViewController:alertCtr animated:YES completion:nil];
+    if (nil == target.presentedViewController) {
+        [target presentViewController:alertCtr animated:YES completion:nil];
+    }
 #endif
     return 0;
 }
