@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
     s.name             = 'LZDependencyToolkit'
-    s.version          = '3.4.1'
+    s.version          = '3.5.0'
     s.summary          = 'Toolkit.'
     s.description      = <<-DESC
     Toolkit 常用工具箱，包括以下内容
@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
     s.social_media_url = 'https://github.com/liLeiBest'
     s.frameworks       = 'UIKit', 'Foundation', 'CoreGraphics', 'CoreImage'
     s.requires_arc     = true
-    s.ios.deployment_target = '9.0'
+    s.ios.deployment_target = '11.0'
 
     s.source_files        = 'LZDependencyToolkit/Classes/LZDependencyToolkit.h'
     s.public_header_files = 'LZDependencyToolkit/Classes/LZDependencyToolkit.h'
