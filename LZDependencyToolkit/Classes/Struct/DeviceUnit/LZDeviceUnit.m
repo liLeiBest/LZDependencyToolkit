@@ -135,6 +135,11 @@ LZDeviceGeneration _generation(void) {
     if ([deviceIdentifier isEqualToString:@"iPhone15,5"]) return LZDeviceGenerationiPhone15_plus;
     if ([deviceIdentifier isEqualToString:@"iPhone16,1"]) return LZDeviceGenerationiPhone15_pro;
     if ([deviceIdentifier isEqualToString:@"iPhone16,2"]) return LZDeviceGenerationiPhone15_pro_max;
+    if ([deviceIdentifier isEqualToString:@"iPhone17,1"]) return LZDeviceGenerationiPhone16;
+    if ([deviceIdentifier isEqualToString:@"iPhone17,2"]) return LZDeviceGenerationiPhone16_plus;
+    if ([deviceIdentifier isEqualToString:@"iPhone17,3"]) return LZDeviceGenerationiPhone16_pro;
+    if ([deviceIdentifier isEqualToString:@"iPhone17,4"]) return LZDeviceGenerationiPhone16_pro_max;
+    if ([deviceIdentifier isEqualToString:@"iPhone17,5"]) return LZDeviceGenerationiPhone16e;
     // iPod 型号
     if ([deviceIdentifier isEqualToString:@"iPod1,1"]) return LZDeviceGenerationiPodtouch1st;
     if ([deviceIdentifier isEqualToString:@"iPod2,1"]) return LZDeviceGenerationiPodtouch2nd;
@@ -517,6 +522,20 @@ NSString * _generation_desc(void) {
         case LZDeviceGenerationiPhone15_pro_max:
             return @"iPhone 15 Pro Max";
             break;
+        case LZDeviceGenerationiPhone16:
+            return @"iPhone 16";
+            break;
+        case LZDeviceGenerationiPhone16_plus:
+            return @"iPhone 16 Plus";
+            break;
+        case LZDeviceGenerationiPhone16_pro:
+            return @"iPhone 16 Pro";
+            break;
+        case LZDeviceGenerationiPhone16_pro_max:
+            return @"iPhone 16 Pro Max";
+            break;
+        case LZDeviceGenerationiPhone16e:
+            return @"iPhone 16e";
             // iPod 型号
         case LZDeviceGenerationiPodtouch1st:
             return @"iPod touch (1st generation)";
