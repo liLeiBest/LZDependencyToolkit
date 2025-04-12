@@ -131,6 +131,10 @@ LZDeviceGeneration _generation(void) {
     if ([deviceIdentifier isEqualToString:@"iPhone14,8"]) return LZDeviceGenerationiPhone14_plus;
     if ([deviceIdentifier isEqualToString:@"iPhone15,2"]) return LZDeviceGenerationiPhone14_pro;
     if ([deviceIdentifier isEqualToString:@"iPhone15,3"]) return LZDeviceGenerationiPhone14_pro_max;
+    if ([deviceIdentifier isEqualToString:@"iPhone15,4"]) return LZDeviceGenerationiPhone15;
+    if ([deviceIdentifier isEqualToString:@"iPhone15,5"]) return LZDeviceGenerationiPhone15_plus;
+    if ([deviceIdentifier isEqualToString:@"iPhone16,1"]) return LZDeviceGenerationiPhone15_pro;
+    if ([deviceIdentifier isEqualToString:@"iPhone16,2"]) return LZDeviceGenerationiPhone15_pro_max;
     // iPod 型号
     if ([deviceIdentifier isEqualToString:@"iPod1,1"]) return LZDeviceGenerationiPodtouch1st;
     if ([deviceIdentifier isEqualToString:@"iPod2,1"]) return LZDeviceGenerationiPodtouch2nd;
@@ -284,15 +288,98 @@ LZDeviceGeneration _generation(void) {
     // AirTag 型号
     if ([deviceIdentifier isEqualToString:@"AirTag1,1"]) return LZDeviceGenerationAirTag_1st;
     // Mac 型号
+    if ([deviceIdentifier isEqualToString:@"iMac9,1"] ||
+        [deviceIdentifier isEqualToString:@"iMac10,1"]) return LZDeviceGenerationiMac_Y2009;
+    if ([deviceIdentifier isEqualToString:@"iMac11,2"]) return LZDeviceGenerationiMac_inch_21__5_Y2010;
+    if ([deviceIdentifier isEqualToString:@"iMac11,3"]) return LZDeviceGenerationiMac_inch_27_Y2010;
+    if ([deviceIdentifier isEqualToString:@"iMac12,1"]) return LZDeviceGenerationiMac_inch_21__5_Y2011;
+    if ([deviceIdentifier isEqualToString:@"iMac12,2"]) return LZDeviceGenerationiMac_inch_27_Y2011;
+    if ([deviceIdentifier isEqualToString:@"iMac13,1"]) return LZDeviceGenerationiMac_inch_21__5_Y2012;
+    if ([deviceIdentifier isEqualToString:@"iMac13,2"]) return LZDeviceGenerationiMac_inch_27_Y2012;
+    if ([deviceIdentifier isEqualToString:@"iMac14,1"]) return LZDeviceGenerationiMac_inch_21__5_Y2013;
+    if ([deviceIdentifier isEqualToString:@"iMac14,2"]) return LZDeviceGenerationiMac_inch_27_Y2013;
+    if ([deviceIdentifier isEqualToString:@"iMac14,4"]) return LZDeviceGenerationiMac_inch_21__5_Y2014;
+    if ([deviceIdentifier isEqualToString:@"iMac15,1"]) return LZDeviceGenerationiMac_inch_27_5K_Y2014;
+    if ([deviceIdentifier isEqualToString:@"iMac16,1"]) return LZDeviceGenerationiMac_inch_21__5_Y2015;
+    if ([deviceIdentifier isEqualToString:@"iMac16,2"]) return LZDeviceGenerationiMac_inch_21__5_4K_Y2015;
+    if ([deviceIdentifier isEqualToString:@"iMac17,1"]) return LZDeviceGenerationiMac_inch_27_5K_Y2015;
+    if ([deviceIdentifier isEqualToString:@"iMac18,1"]) return LZDeviceGenerationiMac_inch_21__5_Y2017;
+    if ([deviceIdentifier isEqualToString:@"iMac18,2"]) return LZDeviceGenerationiMac_inch_21__5_4K_Y2017;
+    if ([deviceIdentifier isEqualToString:@"iMac18,3"]) return LZDeviceGenerationiMac_inch_27_5K_Y2017;
+    if ([deviceIdentifier isEqualToString:@"iMacPro1,1"]) return LZDeviceGenerationiMac_pro_inch_27_5K_Y2017;
+    if ([deviceIdentifier isEqualToString:@"iMac19,2"]) return LZDeviceGenerationiMac_inch_21__5_4K_Y2019;
+    if ([deviceIdentifier isEqualToString:@"iMac19,1"]) return LZDeviceGenerationiMac_inch_27_5K_Y2019;
+    if ([deviceIdentifier isEqualToString:@"iMac20,1"] ||
+        [deviceIdentifier isEqualToString:@"iMac20,2"]) return LZDeviceGenerationiMac_inch_27_5K_Y2020;
     if ([deviceIdentifier isEqualToString:@"iMac21,1"] ||
-        [deviceIdentifier isEqualToString:@"iMac21,2"]) return LZDeviceGenerationMac_iMac_inch_24_m1_1st;
-    if ([deviceIdentifier isEqualToString:@"Macmini9,1"]) return LZDeviceGenerationMac_mini_m1_1st;
-    if ([deviceIdentifier isEqualToString:@"MacBookAir10,1"]) return LZDeviceGenerationMac_air_m1_1st;
+        [deviceIdentifier isEqualToString:@"iMac21,2"]) return LZDeviceGenerationiMac_inch_24_m1_Y2021;
+    if ([deviceIdentifier isEqualToString:@"Mac15,4"] ||
+        [deviceIdentifier isEqualToString:@"Mac15,5"]) return LZDeviceGenerationiMac_inch_24_m3_Y2023;
+    if ([deviceIdentifier isEqualToString:@"Mac16,2"] ||
+        [deviceIdentifier isEqualToString:@"Mac16,3"]) return LZDeviceGenerationiMac_inch_24_m4_Y2024;
+    
+    if ([deviceIdentifier isEqualToString:@"MacBook5,2"] ||
+        [deviceIdentifier isEqualToString:@"MacBook6,1"]) return LZDeviceGenerationMacBook_inch_13_Y2009;
+    if ([deviceIdentifier isEqualToString:@"MacBook7,1"]) return LZDeviceGenerationMacBook_inch_13_Y2010;
+    if ([deviceIdentifier isEqualToString:@"MacBook8,1"]) return LZDeviceGenerationMacBook_inch_12_Y2015;
+    if ([deviceIdentifier isEqualToString:@"MacBook9,1"]) return LZDeviceGenerationMacBook_inch_12_Y2016;
+    if ([deviceIdentifier isEqualToString:@"MacBook10,1"]) return LZDeviceGenerationMacBook_inch_12_Y2017;
+    
+    if ([deviceIdentifier isEqualToString:@"MacBookAir2,1"]) return LZDeviceGenerationMacBook_air_inch_13_Y2009;
+    if ([deviceIdentifier isEqualToString:@"MacBookAir3,1"]) return LZDeviceGenerationMacBook_air_inch_11_Y2010;
+    if ([deviceIdentifier isEqualToString:@"MacBookAir3,2"]) return LZDeviceGenerationMacBook_air_inch_13_Y2010;
+    if ([deviceIdentifier isEqualToString:@"MacBookAir4,1"]) return LZDeviceGenerationMacBook_air_inch_11_Y2011;
+    if ([deviceIdentifier isEqualToString:@"MacBookAir4,2"]) return LZDeviceGenerationMacBook_air_inch_13_Y2011;
+    if ([deviceIdentifier isEqualToString:@"MacBookAir5,1"]) return LZDeviceGenerationMacBook_air_inch_11_Y2012;
+    if ([deviceIdentifier isEqualToString:@"MacBookAir5,2"]) return LZDeviceGenerationMacBook_air_inch_13_Y2012;
+    if ([deviceIdentifier isEqualToString:@"MacBookAir6,1"]) return LZDeviceGenerationMacBook_air_inch_11_Y2013;
+    if ([deviceIdentifier isEqualToString:@"MacBookAir6,2"]) return LZDeviceGenerationMacBook_air_inch_13_Y2013;
+    if ([deviceIdentifier isEqualToString:@"MacBookAir7,1"]) return LZDeviceGenerationMacBook_air_inch_11_Y2015;
+    if ([deviceIdentifier isEqualToString:@"MacBookAir7,2"]) return LZDeviceGenerationMacBook_air_inch_13_Y2015;
+    if ([deviceIdentifier isEqualToString:@"MacBookAir8,1"]) return LZDeviceGenerationMacBook_air_inch_13_Y2018;
+    if ([deviceIdentifier isEqualToString:@"MacBookAir8,2"]) return LZDeviceGenerationMacBook_air_inch_13_Y2019;
+    if ([deviceIdentifier isEqualToString:@"MacBookAir9,1"]) return LZDeviceGenerationMacBook_air_inch_13_Y2020;
+    if ([deviceIdentifier isEqualToString:@"MacBookAir10,1"]) return LZDeviceGenerationMacBook_air_inch_13_m1_Y2020;
+    if ([deviceIdentifier isEqualToString:@"Mac14,2"]) return LZDeviceGenerationMacBook_air_inch_13_m2_Y2022;
+    if ([deviceIdentifier isEqualToString:@"Mac14,15"]) return LZDeviceGenerationMacBook_air_inch_15_m2_Y2023;
+    if ([deviceIdentifier isEqualToString:@"Mac15,12"]) return LZDeviceGenerationMacBook_air_inch_13_m3_Y2024;
+    if ([deviceIdentifier isEqualToString:@"Mac15,13"]) return LZDeviceGenerationMacBook_air_inch_15_m3_Y2024;
+    if ([deviceIdentifier isEqualToString:@"Mac16,12"]) return LZDeviceGenerationMacBook_air_inch_13_m4_Y2025;
+    if ([deviceIdentifier isEqualToString:@"Mac16,13"]) return LZDeviceGenerationMacBook_air_inch_15_m4_Y2025;
+    
     if ([deviceIdentifier isEqualToString:@"MacBookPro17,1"]) return LZDeviceGenerationMac_pro_m1_inch_13_1st;
     if ([deviceIdentifier isEqualToString:@"MacBookPro18,3"] ||
         [deviceIdentifier isEqualToString:@"MacBookPro18,4"]) return LZDeviceGenerationMac_pro_m1_inch_14_1st;
     if ([deviceIdentifier isEqualToString:@"MacBookPro18,1"] ||
         [deviceIdentifier isEqualToString:@"MacBookPro18,2"]) return LZDeviceGenerationMac_pro_m1_inch_16_1st;
+    
+    if ([deviceIdentifier isEqualToString:@"Macmini3,1"]) return LZDeviceGenerationMacMini_Y2009;
+    if ([deviceIdentifier isEqualToString:@"Macmini4,1"]) return LZDeviceGenerationMacMini_Y2010;
+    if ([deviceIdentifier isEqualToString:@"Macmini5,1"] ||
+        [deviceIdentifier isEqualToString:@"Macmini5,2"]) return LZDeviceGenerationMacMini_Y2011;
+    if ([deviceIdentifier isEqualToString:@"Macmini6,1"] ||
+        [deviceIdentifier isEqualToString:@"Macmini6,2"]) return LZDeviceGenerationMacMini_Y2012;
+    if ([deviceIdentifier isEqualToString:@"Macmini7,1"]) return LZDeviceGenerationMacMini_Y2014;
+    if ([deviceIdentifier isEqualToString:@"Macmini8,1"]) return LZDeviceGenerationMacMini_Y2018;
+    if ([deviceIdentifier isEqualToString:@"Macmini9,1"]) return LZDeviceGenerationMacMini_m1_Y2020;
+    if ([deviceIdentifier isEqualToString:@"Mac14,3"]) return LZDeviceGenerationMacMini_m2_Y2023;
+    if ([deviceIdentifier isEqualToString:@"Mac14,12"]) return LZDeviceGenerationMacMini_m2_pro_Y2023;
+    if ([deviceIdentifier isEqualToString:@"Mac16,10"] ||
+        [deviceIdentifier isEqualToString:@"Mac16,11"]) return LZDeviceGenerationMacMini_m4_Y2024;
+    
+    if ([deviceIdentifier isEqualToString:@"Mac13,2"]) return LZDeviceGenerationMacStudio_m1_ultra_Y2022;
+    if ([deviceIdentifier isEqualToString:@"Mac13,1"]) return LZDeviceGenerationMacStudio_m1_max_Y2022;
+    if ([deviceIdentifier isEqualToString:@"Mac14,14"]) return LZDeviceGenerationMacStudio_m2_ultra_Y2023;
+    if ([deviceIdentifier isEqualToString:@"Mac14,13"]) return LZDeviceGenerationMacStudio_m2_max_Y2023;
+    if ([deviceIdentifier isEqualToString:@"Mac15,14"]) return LZDeviceGenerationMacStudio_m3_ultra_Y2025;
+    if ([deviceIdentifier isEqualToString:@"Mac16,9"]) return LZDeviceGenerationMacStudio_m4_max_Y2025;
+
+    if ([deviceIdentifier isEqualToString:@"MacPro4,1"]) return LZDeviceGenerationMacPro_Y2009;
+    if ([deviceIdentifier isEqualToString:@"MacPro5,1"]) return LZDeviceGenerationMacPro_Y2010;
+    if ([deviceIdentifier isEqualToString:@"MacPro6,1"]) return LZDeviceGenerationMacPro_Y2013;
+    if ([deviceIdentifier isEqualToString:@"MacPro7,1"]) return LZDeviceGenerationMacPro_Y2019;
+    if ([deviceIdentifier isEqualToString:@"Mac14,8"]) return LZDeviceGenerationMacPro_Y2023;
+    
     // 未知
     return LZDeviceGenerationUnspecified;
 }
@@ -417,6 +504,18 @@ NSString * _generation_desc(void) {
             break;
         case LZDeviceGenerationiPhone14_pro_max:
             return @"iPhone 14 Pro Max";
+            break;
+        case LZDeviceGenerationiPhone15:
+            return @"iPhone 15";
+            break;
+        case LZDeviceGenerationiPhone15_plus:
+            return @"iPhone 15 Plus";
+            break;
+        case LZDeviceGenerationiPhone15_pro:
+            return @"iPhone 15 Pro";
+            break;
+        case LZDeviceGenerationiPhone15_pro_max:
+            return @"iPhone 15 Pro Max";
             break;
             // iPod 型号
         case LZDeviceGenerationiPodtouch1st:
@@ -617,15 +716,168 @@ NSString * _generation_desc(void) {
             return @"AirTag";
             break;
             // Mac 型号
-        case LZDeviceGenerationMac_iMac_inch_24_m1_1st:
+        case LZDeviceGenerationiMac_Y2009:
+            return @"iMac (21.5~27-inch, 2009)";
+            break;
+        case LZDeviceGenerationiMac_inch_21__5_Y2010:
+            return @"iMac (21.5-inch, 2010)";
+            break;
+        case LZDeviceGenerationiMac_inch_27_Y2010:
+            return @"iMac (27-inch, 2010)";
+            break;
+        case LZDeviceGenerationiMac_inch_21__5_Y2011:
+            return @"iMac (21.5-inch, 2011)";
+            break;
+        case LZDeviceGenerationiMac_inch_27_Y2011:
+            return @"iMac (27-inch, 2011)";
+            break;
+        case LZDeviceGenerationiMac_inch_21__5_Y2012:
+            return @"iMac (21.5-inch, 2012)";
+            break;
+        case LZDeviceGenerationiMac_inch_27_Y2012:
+            return @"iMac (27-inch, 2012)";
+            break;
+        case LZDeviceGenerationiMac_inch_21__5_Y2013:
+            return @"iMac (21.5-inch, 2013)";
+            break;
+        case LZDeviceGenerationiMac_inch_27_Y2013:
+            return @"iMac (27-inch, 2013)";
+            break;
+        case LZDeviceGenerationiMac_inch_21__5_Y2014:
+            return @"iMac (21.5-inch, 2014)";
+            break;
+        case LZDeviceGenerationiMac_inch_27_5K_Y2014:
+            return @"iMac (27-inch, 5K, 2014)";
+            break;
+        case LZDeviceGenerationiMac_inch_21__5_Y2015:
+            return @"iMac (21.5-inch, 2015)";
+            break;
+        case LZDeviceGenerationiMac_inch_21__5_4K_Y2015:
+            return @"iMac (21.5-inch, 4K, 2015)";
+            break;
+        case LZDeviceGenerationiMac_inch_27_5K_Y2015:
+            return @"iMac (27-inch, 5K, 2015)";
+            break;
+        case LZDeviceGenerationiMac_inch_21__5_Y2017:
+            return @"iMac (21.5-inch, 2017)";
+            break;
+        case LZDeviceGenerationiMac_inch_21__5_4K_Y2017:
+            return @"iMac (21.5-inch, 4K, 2017)";
+            break;
+        case LZDeviceGenerationiMac_inch_27_5K_Y2017:
+            return @"iMac (27-inch, 5K, 2017)";
+            break;
+        case LZDeviceGenerationiMac_pro_inch_27_5K_Y2017:
+            return @"iMac Pro (27-inch, 5K, 2017)";
+            break;
+        case LZDeviceGenerationiMac_inch_21__5_4K_Y2019:
+            return @"iMac (21.5-inch, 2019)";
+            break;
+        case LZDeviceGenerationiMac_inch_27_5K_Y2019:
+            return @"iMac (27-inch, 5K, 2019)";
+            break;
+        case LZDeviceGenerationiMac_inch_27_5K_Y2020:
+            return @"iMac (27-inch, 5K, 2020)";
+            break;
+        case LZDeviceGenerationiMac_inch_24_m1_Y2021:
             return @"iMac (24-inch, M1, 2021)";
             break;
-        case LZDeviceGenerationMac_mini_m1_1st:
-            return @"Mac mini (M1, 2020)";
+        case LZDeviceGenerationiMac_inch_24_m3_Y2023:
+            return @"iMac (24-inch, M3, 2023)";
             break;
-        case LZDeviceGenerationMac_air_m1_1st:
-            return @"MacBook Air (Late 2020)";
+        case LZDeviceGenerationiMac_inch_24_m4_Y2024:
+            return @"iMac (24-inch, M4, 2024)";
             break;
+            
+        case LZDeviceGenerationMacBook_inch_13_Y2009:
+            return @"MacBook (13-inch, 2009)";
+            break;
+        case LZDeviceGenerationMacBook_inch_13_Y2010:
+            return @"MacBook (13-inch, 2010)";
+            break;
+        case LZDeviceGenerationMacBook_inch_12_Y2015:
+            return @"MacBook (12-inch, 2015)";
+            break;
+        case LZDeviceGenerationMacBook_inch_12_Y2016:
+            return @"MacBook (12-inch, 2016)";
+            break;
+        case LZDeviceGenerationMacBook_inch_12_Y2017:
+            return @"MacBook (12-inch, 2017)";
+            break;
+            
+        case LZDeviceGenerationMacBook_air_inch_13_Y2009:
+            return @"MacBook Air (13-inch, 2009)";
+            break;
+        case LZDeviceGenerationMacBook_air_inch_11_Y2010:
+            return @"MacBook Air (11-inch, 2010)";
+            break;
+        case LZDeviceGenerationMacBook_air_inch_13_Y2010:
+            return @"MacBook Air (13-inch, 2010)";
+            break;
+        case LZDeviceGenerationMacBook_air_inch_11_Y2011:
+            return @"MacBook Air (11-inch, 2011)";
+            break;
+        case LZDeviceGenerationMacBook_air_inch_13_Y2011:
+            return @"MacBook Air (13-inch, 2011)";
+            break;
+        case LZDeviceGenerationMacBook_air_inch_11_Y2012:
+            return @"MacBook Air (11-inch, 2012)";
+            break;
+        case LZDeviceGenerationMacBook_air_inch_13_Y2012:
+            return @"MacBook Air (13-inch, 2012)";
+            break;
+        case LZDeviceGenerationMacBook_air_inch_11_Y2013:
+            return @"MacBook Air (11-inch, 2013)";
+            break;
+        case LZDeviceGenerationMacBook_air_inch_13_Y2013:
+            return @"MacBook Air (13-inch, 2013)";
+            break;
+        case LZDeviceGenerationMacBook_air_inch_11_Y2014:
+            return @"MacBook Air (11-inch, 2014)";
+            break;
+        case LZDeviceGenerationMacBook_air_inch_13_Y2014:
+            return @"MacBook Air (13-inch, 2014)";
+            break;
+        case LZDeviceGenerationMacBook_air_inch_11_Y2015:
+            return @"MacBook Air (11-inch, 2015)";
+            break;
+        case LZDeviceGenerationMacBook_air_inch_13_Y2015:
+            return @"MacBook Air (13-inch, 2015)";
+            break;
+        case LZDeviceGenerationMacBook_air_inch_13_Y2017:
+            return @"MacBook Air (13-inch, 2017)";
+            break;
+        case LZDeviceGenerationMacBook_air_inch_13_Y2018:
+            return @"MacBook Air (13-inch, 2018)";
+            break;
+        case LZDeviceGenerationMacBook_air_inch_13_Y2019:
+            return @"MacBook Air (13-inch, 2019)";
+            break;
+        case LZDeviceGenerationMacBook_air_inch_13_Y2020:
+            return @"MacBook Air (13-inch, 2020)";
+            break;
+        case LZDeviceGenerationMacBook_air_inch_13_m1_Y2020:
+            return @"MacBook Air (13-inch, M1, 2020)";
+            break;
+        case LZDeviceGenerationMacBook_air_inch_13_m2_Y2022:
+            return @"MacBook Air (13-inch, M2, 2022)";
+            break;
+        case LZDeviceGenerationMacBook_air_inch_15_m2_Y2023:
+            return @"MacBook Air (15-inch, M2, 2023)";
+            break;
+        case LZDeviceGenerationMacBook_air_inch_13_m3_Y2024:
+            return @"MacBook Air (13-inch, M3, 2024)";
+            break;
+        case LZDeviceGenerationMacBook_air_inch_15_m3_Y2024:
+            return @"MacBook Air (15-inch, M3, 2024)";
+            break;
+        case LZDeviceGenerationMacBook_air_inch_13_m4_Y2025:
+            return @"MacBook Air (13-inch, M4, 2025)";
+            break;
+        case LZDeviceGenerationMacBook_air_inch_15_m4_Y2025:
+            return @"MacBook Air (15-inch, M4, 2025)";
+            break;
+            
         case LZDeviceGenerationMac_pro_m1_inch_13_1st:
             return @"MacBook Pro (13-inch, M1, 2020)";
             break;
@@ -635,6 +887,76 @@ NSString * _generation_desc(void) {
         case LZDeviceGenerationMac_pro_m1_inch_16_1st:
             return @"MacBook Pro (16-inch, 2021";
             break;
+            
+        case LZDeviceGenerationMacMini_Y2009:
+            return @"Mac Mini（2009）";
+            break;
+        case LZDeviceGenerationMacMini_Y2010:
+            return @"Mac Mini（2010）";
+            break;
+        case LZDeviceGenerationMacMini_Y2011:
+            return @"Mac Mini（2011）";
+            break;
+        case LZDeviceGenerationMacMini_Y2012:
+            return @"Mac Mini（2012）";
+            break;
+        case LZDeviceGenerationMacMini_Y2014:
+            return @"Mac Mini（2014）";
+            break;
+        case LZDeviceGenerationMacMini_Y2018:
+            return @"Mac Mini（2018）";
+            break;
+        case LZDeviceGenerationMacMini_m1_Y2020:
+            return @"Mac Mini (M1, 2020)";
+            break;
+        case LZDeviceGenerationMacMini_m2_Y2023:
+            return @"Mac Mini (M2, 2023)";
+            break;
+        case LZDeviceGenerationMacMini_m2_pro_Y2023:
+            return @"Mac Mini (M2 Pro, 2023)";
+            break;
+        case LZDeviceGenerationMacMini_m4_Y2024:
+            return @"Mac Mini (M4, 2024)";
+            break;
+            
+        case LZDeviceGenerationMacStudio_m1_ultra_Y2022:
+            return @"Mac Studio (M1 Ultra, 2022)";
+            break;
+        case LZDeviceGenerationMacStudio_m1_max_Y2022:
+            return @"Mac Studio (M1 Max, 2022)";
+            break;
+        case LZDeviceGenerationMacStudio_m2_ultra_Y2023:
+            return @"Mac Studio (M2 Ultra, 2023)";
+            break;
+        case LZDeviceGenerationMacStudio_m2_max_Y2023:
+            return @"Mac Studio (M2 Max, 2023)";
+            break;
+        case LZDeviceGenerationMacStudio_m3_ultra_Y2025:
+            return @"Mac Studio (M3 Ultra, 2025)";
+            break;
+        case LZDeviceGenerationMacStudio_m4_max_Y2025:
+            return @"Mac Studio (M4 Max, 2025)";
+            break;
+            
+        case LZDeviceGenerationMacPro_Y2009:
+            return @"Mac Pro (2009)";
+            break;
+        case LZDeviceGenerationMacPro_Y2010:
+            return @"Mac Pro (2010)";
+            break;
+        case LZDeviceGenerationMacPro_Y2012:
+            return @"Mac Pro (2012)";
+            break;
+        case LZDeviceGenerationMacPro_Y2013:
+            return @"Mac Pro (2013)";
+            break;
+        case LZDeviceGenerationMacPro_Y2019:
+            return @"Mac Pro (2019)";
+            break;
+        case LZDeviceGenerationMacPro_Y2023:
+            return @"Mac Pro (2023)";
+            break;
+            
         case LZDeviceGenerationUnspecified:
         default:
             return _deviceIdentifier();
