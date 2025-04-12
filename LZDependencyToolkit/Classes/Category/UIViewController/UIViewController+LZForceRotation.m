@@ -7,7 +7,6 @@
 
 #import "UIViewController+LZForceRotation.h"
 #import "NSObject+LZRuntime.h"
-#import "LZWeakDefine.h"
 #import <objc/runtime.h>
 
 @interface LZForceRotationWeakContainer : NSObject
